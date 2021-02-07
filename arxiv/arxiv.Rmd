@@ -1,0 +1,30 @@
+---
+authors:
+  - name: Emi Tanaka
+    thanks: emitanaka.org
+    department: Department of Econometrics and Business Statistics
+    affiliation: Monash University
+    location: Clayton, VIC 3800
+    email: emi.tanaka@monash.edu
+bibliography: references.bib
+biblio-style: unsrt
+#preamble: >
+output: 
+  rticles::arxiv_article:
+    keep_tex: true
+---
+
+```{r, include = FALSE}
+paper <- here::here("paper.Rmd")
+meta <- rmarkdown::yaml_front_matter(paper)
+```
+
+---
+title: "`r meta$title`"
+abstract: >
+  `r meta$abstract`
+---
+
+```{r child=paper}
+```
+

@@ -1,0 +1,336 @@
+---
+title: Current status and propsects of R-packages for the design of experiments
+author:
+  # see ?rjournal_article for more information
+  - name: Emi Tanaka
+    affiliation: Monash University
+    address:
+    - Monash University
+    - Clayton campus, VIC 3800, Australia
+    url: http://emitanaka.org/
+    orcid: 0000-0002-1455-259X
+    email:  emi.tanaka@monash.edu
+abstract: >
+  An abstract of less than 150 words.
+preamble: |
+  % Any extra LaTeX you need in the preamble
+  
+# per R journal requirement, the bib filename should be the same as the output 
+# tex file. Don't forget to rename the bib file and change this example value.
+bibliography: paper.bib
+
+output: rticles::rjournal_article
+---
+
+```{r setup, cache = FALSE, include = FALSE}
+library(tidyverse)
+library(rvest)
+library(lubridate)
+library(cranlogs)
+library(glue)
+library(scales)
+library(colorspace)
+library(tidytext)
+library(pluralize)
+library(kableExtra)
+library(igraph)
+library(ggraph)
+
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache = TRUE,
+                      cache.path = "cache/",
+                      fig.align='center', 
+                      fig.pos='htbp')
+
+myggtheme <- 
+  theme(panel.background = element_rect(fill = NA),
+        panel.grid = element_line(color = "#f6e5ee"),
+        axis.text = element_text(color = "#79003e"),
+        axis.line = element_line(color = "#79003e", size = 0.7),
+        axis.ticks.length = unit(1.4, "mm"),
+        axis.ticks = element_line(color = "#79003e", size = 0.7),
+        axis.title = element_text(color = "#79003e", face = "bold"),
+        strip.background = element_rect(color = "#79003e",
+                                        fill = "#AD0059"),
+        strip.text = element_text(color = "white"),
+        plot.title.position = "plot",
+        plot.title = element_text(color = "#79003e", face = "bold")) 
+```
+
+```{r cran-titles}
+# Thanks to Dirk Eddelbuettel's answer on SO:
+# https://stackoverflow.com/questions/11560865/list-and-description-of-all-packages-in-cran-from-within-r
+url <- "http://cran.rstudio.com/web/packages/packages.rds"
+db <- readRDS(url(url)) %>% 
+  as.data.frame()
+```
+
+```{r}
+nanalysis <- db %>% 
+  filter(str_detect(tolower(Title), "analysis")) %>% 
+  nrow()
+
+ndesign <- db %>% 
+  filter(str_detect(tolower(Title), "design")) %>% 
+  nrow()
+```
+
+```{r doe-cran}
+dat_DoE <- read_html("https://cran.r-project.org/web/views/ExperimentalDesign.html")
+date_download <- Sys.Date()
+cran_names <- available.packages(contriburl = "http://cran.rstudio.com/src/contrib") %>% 
+  rownames() %>% 
+  unique() # it should be unique
+doe_pkgs <- dat_DoE %>% 
+  html_nodes("li") %>% 
+  html_nodes("a") %>% 
+  html_text() %>% 
+  .[. %in% cran_names] %>% 
+  unique()
+
+dat_survey <- read_html("https://cran.r-project.org/web/views/OfficialStatistics.html")
+survey_pkgs <- dat_survey %>% 
+  html_nodes("li") %>% 
+  html_nodes("a") %>% 
+  html_text() %>% 
+  .[. %in% cran_names] %>% 
+  unique()
+```
+
+```{r bigram}
+stop_words_ext <- c(stop_words$word, "doi")
+
+doe_db <- db %>% 
+  filter(Package %in% doe_pkgs) %>% 
+  mutate(Description = str_replace_all(Description, "\n", " "),
+         Description = str_squish(Description),
+         Title = str_replace_all(Title, "\n", " "))
+
+bigram_tab <- function(data, col) {
+  data %>% 
+    unnest_tokens(word, {{col}}, token = "ngrams", n = 2) %>% 
+    separate(word, c("word1", "word2"), sep = " ") %>% 
+    mutate(word1 = singularize(word1),
+           word2 = singularize(word2)) %>% 
+    # don't count the same bigram within the same package
+    distinct(Package, word1, word2) %>% 
+    filter(!word1 %in% stop_words_ext,
+           !word2 %in% stop_words_ext,
+           !str_detect(word1, "^[0-9.]+$"),
+           !str_detect(word2, "^[0-9.]+$")) %>% 
+    count(word1, word2, sort = TRUE)  
+}
+```
+
+```{r bigram-title}
+bigram_tab(doe_db, Title) %>% 
+  filter(n > 3) %>% 
+  mutate(word = paste(word1, word2)) %>% 
+  select(word, n) %>% 
+  kbl(caption = "The bigram of the R-package titles as provided in the DESCRIPTION file in CRAN.", 
+      col.names = c("Bigram", "Count")) 
+```
+
+```{r bigram-desc}
+bigram_tab(doe_db, Description) %>% 
+  filter(n > 4) %>% 
+  mutate(word = paste(word1, word2)) %>% 
+  select(word, n) %>% 
+  kbl(caption = "The bigram of the R-package descriptions as provided in the DESCRIPTION file in CRAN.", 
+      col.names = c("Bigram", "Count"), 
+      booktabs = TRUE) 
+```
+
+```{r}
+doe_imports <- doe_db %>% 
+  mutate(Depends = str_replace_all(Depends, "\n", " "),
+         Depends = str_replace_all(Depends, fixed("("), " ("),
+         Imports = str_replace_all(Imports, "\n", " "),
+         Imports = str_replace_all(Imports, fixed("("), " ("),
+         imports = str_c(Depends, Imports, sep = ","),
+         imports = str_split(imports, ","),
+         imports = map(imports, ~{
+           str_squish(.x) %>% 
+             word() %>% 
+             .[.!=""]}
+         ),
+         imports_doe = map(imports, ~.x[.x %in% doe_pkgs])) %>% 
+  select(Package, imports_doe) %>% 
+  unnest_longer(imports_doe) %>% 
+  filter(!is.na(imports_doe)) %>% 
+  rename(from = imports_doe, to = Package) %>% 
+  select(from, to)
+```
+
+```{r doe-network, eval = FALSE}
+graph_from_data_frame(doe_imports) %>% 
+  ggraph(layout = 'fr') +
+  geom_edge_link(aes(start_cap = label_rect(node1.name),
+                     end_cap = label_rect(node2.name)), 
+                 arrow = arrow(length = unit(2, 'mm')),
+                 color = "#79003e") + 
+  geom_node_text(aes(label = name),
+                 color = "#79003e") +
+  theme(panel.background = element_rect(fill = "#f6e5ee",
+                                        color = "#79003e"),
+        plot.margin = margin(20, 20, 20, 20))
+```
+
+
+```{r cran-data}
+end <- Sys.Date() - 2 # usually 1-2 days are not available yet
+start <- end - years(5) + days(2)
+dldat <- cran_downloads(doe_pkgs, from = start, to = end)
+```
+
+```{r download-hist}
+dldat %>% 
+  group_by(package) %>% 
+  summarise(total = sum(count)) %>%
+  ggplot(aes(total)) + 
+  geom_histogram(color = "white", fill = "#AD0059") + 
+  scale_x_log10(label = comma) + 
+  myggtheme + 
+  labs(x = glue("Total download counts from {start} to {end}"),
+       y = "Number of packages") +
+  scale_y_continuous(expand = c(0, 0))
+```
+
+
+```{r top5}
+ntop <- 5
+
+top5sum_df <- dldat %>% 
+  group_by(package) %>% 
+  summarise(total = sum(count)) %>% 
+  ungroup() %>% 
+  slice_max(order_by = total, n = ntop)
+
+top5 <- top5sum_df %>% 
+  pull(package) 
+
+top5_df <- dldat %>% 
+  filter(package %in% top5) %>% 
+  mutate(package = fct_reorder(package, count, function(x) -sum(x))) 
+```
+
+
+
+```{r download-barplot}
+top5sum_df %>% 
+  mutate(package = fct_reorder(package, total)) %>% 
+  ggplot(aes(total, package)) +
+  geom_col(aes(fill = package)) +
+  labs(x = glue("Total downloads from {start} to {end}"),
+       y = "Package") + 
+  scale_x_continuous(labels = comma, expand = c(0, 0)) +
+  myggtheme + 
+  scale_fill_discrete_qualitative(rev = TRUE) + 
+  guides(fill = FALSE)
+```
+
+
+
+```{r pkg-updates, cache = TRUE, dependson="doe-cran"}
+pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
+pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
+pkg_updates <- map(top5, function(pkg) {
+  last_update <- read_html(glue(pkg_url)) %>% 
+    html_table() %>% 
+    .[[1]] %>% 
+    filter(X1=="Published:") %>% 
+    pull(X2) %>% 
+    ymd()
+  
+  archive_dates <- tryCatch({ 
+    read_html(glue(pkg_archive)) %>% 
+      html_table() %>%
+      .[[1]] %>% 
+      pull(`Last modified`) %>% 
+      ymd_hm() %>% 
+      na.omit() %>% 
+      as.Date()
+  }, error = function(e) {
+    NULL
+  })
+  c(archive_dates, last_update)
+})
+names(pkg_updates) <- top5
+
+updates <- unlist(pkg_updates) %>% 
+  enframe("package", "update") %>% 
+  # unlist converts date to integers
+  mutate(update = as.Date(update, origin = "1970-01-01"),
+         # need to get rid of the numbers appended to pkg names
+         package = str_extract(package, paste0(top5, collapse="|")),
+         package = factor(package, levels = top5)) %>% 
+  filter(between(update, start, end))
+```
+
+
+```{r download-timeplot, dependson="top5"}
+ggplot(top5_df, aes(date, count, color = package)) +
+  # add shadow lines
+  geom_line(data = rename(top5_df, package2 = package), 
+            color = "gray", aes(group = package2)) +
+  # add date when package was updated
+  geom_vline(data = updates, aes(xintercept = update),
+             linetype = "dashed", color = "#79003e") + 
+  # the trend line
+  geom_line() +
+  scale_y_log10() +
+  facet_grid(package ~ .) + 
+  labs(title = glue("Top 5 downloaded DoE packages from {start} to {end}")) + 
+  scale_color_discrete_qualitative() +
+  guides(color = FALSE) +
+  myggtheme
+```
+
+## Introduction
+
+`test`
+\code{test}
+
+\CRANpkg{agricolae}
+
+\ctv{ExperimentalDesign}
+
+\ctv{OfficialStatistics}
+
+
+## Helping info to get started
+
+Introductory section which may include references in parentheses
+[@R], or cite a reference such as @R in the text.
+
+## Section title in sentence case
+
+Let's check fi this works Figure \@ref(fig:Rlogo).
+
+This section may contain a figure such as Figure \ref{fig:Rlogo}.
+
+```{r, Rlogo, echo=FALSE, fig.cap='The logo of R.', out.width='2in', fig.align='center', fig.pos='htbp'}
+knitr::include_graphics(here::here('Rlogo.pdf'))
+```
+
+
+
+
+
+## Summary
+
+This file is only a basic article template. For full details of _The R Journal_ style and information on how to prepare your article for submission, see the [Instructions for Authors](https://journal.r-project.org/share/author-guide.pdf).
+
+### About this format and the R Journal requirements
+
+`rticles::rjournal_article` will help you build the correct files requirements: 
+
+* A R file will be generated automatically using `knitr::purl` - see
+https://bookdown.org/yihui/rmarkdown-cookbook/purl.html for more information.
+* A tex file will be generated from this Rmd file and correctly included in
+`RJwapper.tex` as expected to build `RJwrapper.pdf`.
+* All figure files will be kept in the default rmarkdown `*_files` folder. This
+happens because `keep_tex = TRUE` by default in `rticles::rjournal_article`
+* Only the bib filename is to modifed. An example bib file is included in the
+template (`RJreferences.bib`) and you will have to name your bib file as the
+tex, R, and pdf files.
