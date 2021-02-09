@@ -11,7 +11,7 @@ author:
     orcid: 0000-0002-1455-259X
     email:  emi.tanaka@monash.edu
 abstract: >
-  An abstract of less than 150 words.
+  The critical role of data collection is well captured in the expression ``garbage in, garbage out'' -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. The gold standard for data collection is through well-designed experiments.  Re-running an experiment is generally expensive and in some cases difficult due to limited resources, The design of experiment is important in getting a good value out of the collected data. In this article I describe the current state of the R-packages for the design of experiments through textual analysis and download trends. I discuss also the software design of widely utilised R packages in the field and conclude with discussion of some future prospects for the field.
 preamble: |
   % Any extra LaTeX you need in the preamble
   
@@ -21,6 +21,22 @@ bibliography: paper.bib
 
 output: rticles::rjournal_article
 ---
+
+# Introduction 
+
+# Explorative Analysis
+
+## What are the common types of experimental designs?
+
+## How do packages interplay with each other?
+
+## Which packages are widely utilised?
+
+# Software Design
+
+# Propsects and Discussion
+
+\newpage
 
 ```{r setup, cache = FALSE, include = FALSE}
 library(tidyverse)
@@ -40,21 +56,24 @@ knitr::opts_chunk$set(echo = FALSE,
                       cache = TRUE,
                       cache.path = "cache/",
                       fig.align='center', 
-                      fig.pos='htbp')
+                      fig.pos='htbp', 
+                      fig.width = 6,
+                      message = FALSE,
+                      warning = FALSE)
 
-myggtheme <- 
+theme_set(
   theme(panel.background = element_rect(fill = NA),
-        panel.grid = element_line(color = "#f6e5ee"),
-        axis.text = element_text(color = "#79003e"),
-        axis.line = element_line(color = "#79003e", size = 0.7),
+        panel.grid = element_line(color = "lightgray"),
+        axis.text = element_text(color = "black"),
+        axis.line = element_line(color = "black", size = 0.7),
         axis.ticks.length = unit(1.4, "mm"),
-        axis.ticks = element_line(color = "#79003e", size = 0.7),
-        axis.title = element_text(color = "#79003e", face = "bold"),
-        strip.background = element_rect(color = "#79003e",
-                                        fill = "#AD0059"),
+        axis.ticks = element_line(color = "black", size = 0.7),
+        axis.title = element_text(color = "black", face = "bold"),
+        strip.background = element_rect(color = "black",
+                                        fill = "black"),
         strip.text = element_text(color = "white"),
         plot.title.position = "plot",
-        plot.title = element_text(color = "#79003e", face = "bold")) 
+        plot.title = element_text(color = "black", face = "bold")))
 ```
 
 ```{r cran-titles}
@@ -128,7 +147,9 @@ bigram_tab(doe_db, Title) %>%
   mutate(word = paste(word1, word2)) %>% 
   select(word, n) %>% 
   kbl(caption = "The bigram of the R-package titles as provided in the DESCRIPTION file in CRAN.", 
-      col.names = c("Bigram", "Count")) 
+      col.names = c("Bigram", "Count"), 
+      booktabs = TRUE, 
+      linesep = "") 
 ```
 
 ```{r bigram-desc}
@@ -138,7 +159,8 @@ bigram_tab(doe_db, Description) %>%
   select(word, n) %>% 
   kbl(caption = "The bigram of the R-package descriptions as provided in the DESCRIPTION file in CRAN.", 
       col.names = c("Bigram", "Count"), 
-      booktabs = TRUE) 
+      booktabs = TRUE, 
+      linesep = "") 
 ```
 
 ```{r}
@@ -178,27 +200,35 @@ graph_from_data_frame(doe_imports) %>%
 
 
 ```{r cran-data}
-end <- Sys.Date() - 2 # usually 1-2 days are not available yet
-start <- end - years(5) + days(2)
+end <- Sys.Date() - 2 # usually 1-2 days data are not available yet
+start <- end - years(2) + days(2)
 dldat <- cran_downloads(doe_pkgs, from = start, to = end)
 ```
 
-```{r download-hist}
+```{r download-hist, dependson = "cran-data"}
 dldat %>% 
   group_by(package) %>% 
   summarise(total = sum(count)) %>%
   ggplot(aes(total)) + 
   geom_histogram(color = "white", fill = "#AD0059") + 
   scale_x_log10(label = comma) + 
-  myggtheme + 
   labs(x = glue("Total download counts from {start} to {end}"),
        y = "Number of packages") +
   scale_y_continuous(expand = c(0, 0))
 ```
 
+```{r, dependson = "cran-data"}
+dldat %>% 
+  group_by(package) %>% 
+  summarise(total = sum(count)) %>% 
+  filter(total > 100000) %>% 
+  pull(package)
+```
 
-```{r top5}
-ntop <- 5
+
+
+```{r top5, dependson = "cran-data"}
+ntop <- 10
 
 top5sum_df <- dldat %>% 
   group_by(package) %>% 
@@ -216,7 +246,7 @@ top5_df <- dldat %>%
 
 
 
-```{r download-barplot}
+```{r download-barplot, dependson="cran-data"}
 top5sum_df %>% 
   mutate(package = fct_reorder(package, total)) %>% 
   ggplot(aes(total, package)) +
@@ -224,14 +254,13 @@ top5sum_df %>%
   labs(x = glue("Total downloads from {start} to {end}"),
        y = "Package") + 
   scale_x_continuous(labels = comma, expand = c(0, 0)) +
-  myggtheme + 
   scale_fill_discrete_qualitative(rev = TRUE) + 
   guides(fill = FALSE)
 ```
 
 
 
-```{r pkg-updates, cache = TRUE, dependson="doe-cran"}
+```{r pkg-updates, cache = TRUE, dependson=c("doe-cran", "top5")}
 pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
 pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
 pkg_updates <- map(top5, function(pkg) {
@@ -282,8 +311,7 @@ ggplot(top5_df, aes(date, count, color = package)) +
   facet_grid(package ~ .) + 
   labs(title = glue("Top 5 downloaded DoE packages from {start} to {end}")) + 
   scale_color_discrete_qualitative() +
-  guides(color = FALSE) +
-  myggtheme
+  guides(color = FALSE) 
 ```
 
 ## Introduction

@@ -6,34 +6,64 @@ experiments}
 \maketitle
 
 \abstract{%
-An abstract of less than 150 words.
+The critical role of data collection is well captured in the expression
+``garbage in, garbage out'\,' -- in other words, if the collected data
+is rubbish then no analysis, however complex it may be, can make
+something out of it. The gold standard for data collection is through
+well-designed experiments. Re-running an experiment is generally
+expensive and in some cases difficult due to limited resources, The
+design of experiment is important in getting a good value out of the
+collected data. In this article I describe the current state of the
+R-packages for the design of experiments through textual analysis and
+download trends. I discuss also the software design of widely utilised R
+packages in the field and conclude with discussion of some future
+prospects for the field.
 }
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+\hypertarget{explorative-analysis}{%
+\section{Explorative Analysis}\label{explorative-analysis}}
+
+\hypertarget{what-are-the-common-types-of-experimental-designs}{%
+\subsection{What are the common types of experimental
+designs?}\label{what-are-the-common-types-of-experimental-designs}}
+
+\hypertarget{how-do-packages-interplay-with-each-other}{%
+\subsection{How do packages interplay with each
+other?}\label{how-do-packages-interplay-with-each-other}}
+
+\hypertarget{which-packages-are-widely-utilised}{%
+\subsection{Which packages are widely
+utilised?}\label{which-packages-are-widely-utilised}}
+
+\hypertarget{software-design}{%
+\section{Software Design}\label{software-design}}
+
+\hypertarget{propsects-and-discussion}{%
+\section{Propsects and Discussion}\label{propsects-and-discussion}}
+
+\newpage
 
 \begin{Schunk}
 \begin{table}
 
 \caption{\label{tab:bigram-title}The bigram of the R-package titles as provided in the DESCRIPTION file in CRAN.}
 \centering
-\begin{tabular}[t]{l|r}
-\hline
+\begin{tabular}[t]{lr}
+\toprule
 Bigram & Count\\
-\hline
+\midrule
 optimal design & 10\\
-\hline
 experimental design & 8\\
-\hline
 clinical trial & 5\\
-\hline
 dose finding & 5\\
-\hline
 sequential design & 5\\
-\hline
 block design & 4\\
-\hline
 microarray experiment & 4\\
-\hline
 response surface & 4\\
-\hline
+\bottomrule
 \end{tabular}
 \end{table}
 
@@ -53,19 +83,16 @@ optimal design & 10\\
 package provide & 7\\
 response surface & 7\\
 factorial design & 6\\
-\addlinespace
 graphical user & 6\\
 user interface & 6\\
 block design & 5\\
 contour plot & 5\\
 design based & 5\\
-\addlinespace
 effect model & 5\\
 fractional factorial & 5\\
 microarray experiment & 5\\
 mixed effect & 5\\
 provide function & 5\\
-\addlinespace
 sample size & 5\\
 sequential design & 5\\
 \bottomrule
@@ -75,13 +102,17 @@ sequential design & 5\\
 \end{Schunk}
 
 \begin{Schunk}
-\begin{Soutput}
-#> `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-\end{Soutput}
 
 
 \begin{center}\includegraphics{paper_files/figure-latex/download-hist-1} \end{center}
 
+\end{Schunk}
+
+\begin{Schunk}
+\begin{Soutput}
+#>  [1] "agricolae"   "AlgDesign"   "conf.design" "DiceDesign"  "DiceKriging"
+#>  [6] "DoE.base"    "ez"          "FrF2"        "lhs"         "rsm"
+\end{Soutput}
 \end{Schunk}
 
 \begin{Schunk}
@@ -98,8 +129,8 @@ sequential design & 5\\
 
 \end{Schunk}
 
-\hypertarget{introduction}{%
-\subsection{Introduction}\label{introduction}}
+\hypertarget{introduction-1}{%
+\subsection{Introduction}\label{introduction-1}}
 
 \texttt{test} \code{test}
 
