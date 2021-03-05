@@ -6,25 +6,55 @@ experiments}
 \maketitle
 
 \abstract{%
-The critical role of data collection is well captured in the expression
-``garbage in, garbage out'\,' -- in other words, if the collected data
-is rubbish then no analysis, however complex it may be, can make
-something out of it. The gold standard for data collection is through
-well-designed experiments. Re-running an experiment is generally
-expensive and in some cases difficult due to limited resources, The
-design of experiment is important in getting a good value out of the
-collected data. In this article I describe the current state of the
-R-packages for the design of experiments through textual analysis and
-download trends. I discuss also the software design of widely utilised R
-packages in the field and conclude with discussion of some future
+Re-running an experiment is generally costly and in some cases
+impossible due to limited resources, so the design of experiment plays a
+critical role in increasing the quality of experimental data. In this
+article I describe the current state of the R-packages for the design of
+experiments through textual analysis and download trends. I discuss also
+the software design of widely utilised R packages in the field of
+experimental design and conclude with discussion of some future
 prospects for the field.
 }
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
+The critical role of data collection is well captured in the expression
+``garbage in, garbage out'' -- in other words, if the collected data is
+rubbish then no analysis, however complex it may be, can make something
+out of it. Methods for data collection can be dichotomised by the type
+of data collected -- namely, experimental or observational -- or
+alternatively, categorised into experimental design or survey design.
+Survey designs often, although not always, aim to collect observational
+data whilst experimental designs are exclusively center on experimental
+data. This dichotomisation, to a great extent, is seen in CRAN task
+views where R-packages in experimental design are in
+\ctv{ExperimentalDesign} and R-packages in survey designs are in
+\ctv{OfficialStatistics}.
+
+In the CRAN task view of \ctv{ExperimentalDesign}, there are 113 R
+packages for experimental design and analysis of data from experiments,
+henceforth referred to as ``DoE packages'' in this paper. The sheer
+quantity and variation in the output experimental design in the
+R-packages are arguably unmatched with any other programming languages,
+e.g.~in Python \citep{python}, only a handful of libraries that generate
+design of experiment exist (namely \texttt{pyDOE}, \texttt{pyDOE2},
+\texttt{dexpy}, \texttt{experimenter} and \texttt{GPdoemd}) with limited
+outputs.
+
 \hypertarget{explorative-analysis}{%
 \section{Explorative Analysis}\label{explorative-analysis}}
+
+\begin{Schunk}
+\begin{figure}[htbp]
+
+{\centering \includegraphics{paper_files/figure-latex/unnamed-chunk-1-1} 
+
+}
+
+\caption[The above graph shows the total download counts from 2019-02-09 to 2021-02-07 of DoE packages]{The above graph shows the total download counts from 2019-02-09 to 2021-02-07 of DoE packages.}\label{fig:unnamed-chunk-1}
+\end{figure}
+\end{Schunk}
 
 \hypertarget{what-are-the-common-types-of-experimental-designs}{%
 \subsection{What are the common types of experimental
@@ -46,14 +76,10 @@ utilised?}\label{which-packages-are-widely-utilised}}
 
 \newpage
 
-\begin{Schunk}
-\begin{table}
-
-\caption{\label{tab:bigram-title}The bigram of the R-package titles as provided in the DESCRIPTION file in CRAN.}
-\centering
+\begin{table}[h] \centering  
 \begin{tabular}[t]{lr}
 \toprule
-Bigram & Count\\
+word & n\\
 \midrule
 optimal design & 10\\
 experimental design & 8\\
@@ -64,81 +90,31 @@ block design & 4\\
 microarray experiment & 4\\
 response surface & 4\\
 \bottomrule
-\end{tabular}
-\end{table}
-
-\end{Schunk}
-
-\begin{Schunk}
-\begin{table}
-
-\caption{\label{tab:bigram-desc}The bigram of the R-package descriptions as provided in the DESCRIPTION file in CRAN.}
-\centering
+\end{tabular} \hspace{1cm} \centering  
 \begin{tabular}[t]{lr}
 \toprule
-Bigram & Count\\
+word & n\\
 \midrule
 experimental design & 11\\
 optimal design & 10\\
 package provide & 7\\
-response surface & 7\\
-factorial design & 6\\
 graphical user & 6\\
+response surface & 6\\
 user interface & 6\\
 block design & 5\\
 contour plot & 5\\
 design based & 5\\
 effect model & 5\\
-fractional factorial & 5\\
+factorial design & 5\\
 microarray experiment & 5\\
 mixed effect & 5\\
 provide function & 5\\
 sample size & 5\\
 sequential design & 5\\
 \bottomrule
-\end{tabular}
-\end{table}
-
-\end{Schunk}
-
-\begin{Schunk}
-
-
-\begin{center}\includegraphics{paper_files/figure-latex/download-hist-1} \end{center}
-
-\end{Schunk}
-
-\begin{Schunk}
-\begin{Soutput}
-#>  [1] "agricolae"   "AlgDesign"   "conf.design" "DiceDesign"  "DiceKriging"
-#>  [6] "DoE.base"    "ez"          "FrF2"        "lhs"         "rsm"
-\end{Soutput}
-\end{Schunk}
-
-\begin{Schunk}
-
-
-\begin{center}\includegraphics{paper_files/figure-latex/download-barplot-1} \end{center}
-
-\end{Schunk}
-
-\begin{Schunk}
-
-
-\begin{center}\includegraphics{paper_files/figure-latex/download-timeplot-1} \end{center}
-
-\end{Schunk}
-
-\hypertarget{introduction-1}{%
-\subsection{Introduction}\label{introduction-1}}
-
-\texttt{test} \code{test}
+\end{tabular} \caption{My tables} \end{table}
 
 \CRANpkg{agricolae}
-
-\ctv{ExperimentalDesign}
-
-\ctv{OfficialStatistics}
 
 \hypertarget{helping-info-to-get-started}{%
 \subsection{Helping info to get
@@ -154,17 +130,6 @@ case}\label{section-title-in-sentence-case}}
 Let's check fi this works Figure @ref(fig:Rlogo).
 
 This section may contain a figure such as Figure \ref{fig:Rlogo}.
-
-\begin{Schunk}
-\begin{figure}[htbp]
-
-{\centering \includegraphics[width=2in]{/Users/etan0038/Dropbox/projects/paper-review-DoE-pkgs/Rlogo} 
-
-}
-
-\caption[The logo of R]{The logo of R.}\label{fig:Rlogo}
-\end{figure}
-\end{Schunk}
 
 \hypertarget{summary}{%
 \subsection{Summary}\label{summary}}
