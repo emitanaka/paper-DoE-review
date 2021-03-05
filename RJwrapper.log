@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  5 MAR 2021 18:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.5.15)  6 MAR 2021 10:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -804,43 +804,59 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `zi4' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-<paper_files/figure-latex/unnamed-chunk-1-1.pdf, id=56, 416.55624pt x 290.08376
-pt>
-File: paper_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type pdf)
-<use paper_files/figure-latex/unnamed-chunk-1-1.pdf>
-Package pdftex.def Info: paper_files/figure-latex/unnamed-chunk-1-1.pdf  used o
-n input line 51.
+<paper_files/figure-latex/dlplots-1.pdf, id=56, 416.55624pt x 290.08376pt>
+File: paper_files/figure-latex/dlplots-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/dlplots-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/dlplots-1.pdf  used on input 
+line 51.
 (pdftex.def)             Requested size: 416.55522pt x 290.08304pt.
 
 Overfull \hbox (18.21664pt too wide) in paragraph at lines 51--52
  [][] 
  []
 
+LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 6
+2.
+(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+)
+<paper_files/figure-latex/wordcloud-1.pdf, id=57, 424.58624pt x 221.82875pt>
+File: paper_files/figure-latex/wordcloud-1.pdf Graphic file (type pdf)
+<use paper_files/figure-latex/wordcloud-1.pdf>
+Package pdftex.def Info: paper_files/figure-latex/wordcloud-1.pdf  used on inpu
+t line 70.
+(pdftex.def)             Requested size: 424.5852pt x 221.82819pt.
+
+Overfull \hbox (26.24663pt too wide) in paragraph at lines 70--70
+ [] 
+ []
+
 [1{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
-]
-LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 8
-0.
+ <./paper_files/figure-latex/wordcloud-1.pdf>] [2 <./paper_files/figure-latex/d
+lplots-1.pdf>]
+LaTeX Font Info:    Trying to load font information for OT1+ppl on input line 9
+5.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ot1ppl.fd
 File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
 )
 LaTeX Font Info:    Trying to load font information for OML+zplm on input line 
-80.
+95.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMS+zplm on input line 
-80.
+95.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OMX+zplm on input line 
-80.
+95.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
 LaTeX Font Info:    Trying to load font information for OT1+zplm on input line 
-80.
+95.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ot1zplm.fd
 File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
@@ -849,48 +865,40 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 80.
+(Font)              scaled to size 10.42007pt on input line 95.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 80.
+(Font)              scaled to size 7.91925pt on input line 95.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 80.
+(Font)              scaled to size 6.25204pt on input line 95.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 10.42007pt on input line 80.
+(Font)              scaled to size 10.42007pt on input line 95.
 (/usr/local/texlive/2019/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.91925pt on input line 80.
+(Font)              scaled to size 7.91925pt on input line 95.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 6.25204pt on input line 80.
+(Font)              scaled to size 6.25204pt on input line 95.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `fig:Rlogo' on page 3 undefined on input line 147.
 
-
-LaTeX Warning: Reference `fig:Rlogo' on page 2 undefined on input line 132.
-
-LaTeX Font Info:    Trying to load font information for TS1+ppl on input line 1
-53.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/psnfss/ts1ppl.fd
-File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
-)
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 154.
+(Font)              scaled to size 9.37807pt on input line 169.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 154.
+(Font)              scaled to size 7.29405pt on input line 169.
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 154.
+(Font)              scaled to size 5.21004pt on input line 169.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 9.37807pt on input line 154.
+(Font)              scaled to size 9.37807pt on input line 169.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 7.29405pt on input line 154.
+(Font)              scaled to size 7.29405pt on input line 169.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 154.
+(Font)              scaled to size 5.21004pt on input line 169.
 
-Overfull \hbox (24.93854pt too wide) in paragraph at lines 165--168
+Overfull \hbox (24.93854pt too wide) in paragraph at lines 180--183
 []\T1/ppl/m/n/9 (-20) Only the bib file-name is to mod-ifed. An ex-am-ple bib f
 ile is in-cluded in the tem-plate (\T1/zi4/m/n/9 RJreferences.bib\T1/ppl/m/n/9 
 (-20) )
@@ -900,14 +908,14 @@ ile is in-cluded in the tem-plate (\T1/zi4/m/n/9 RJreferences.bib\T1/ppl/m/n/9
 \tf@brf=\write6
 \openout6 = `RJwrapper.brf'.
 
-[2 <./paper_files/figure-latex/unnamed-chunk-1-1.pdf>])
+)
 
 LaTeX Font Warning: Font shape `T1/zi4/m/it' undefined
-(Font)              using `T1/zi4/m/n' instead on input line 180.
+(Font)              using `T1/zi4/m/n' instead on input line 195.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/it' will be
-(Font)              scaled to size 9.18004pt on input line 180.
-) [3]
+(Font)              scaled to size 9.18004pt on input line 195.
+) [3] [4]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 29.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 29.
 (./RJwrapper.aux)
@@ -916,7 +924,7 @@ Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 29.
 Package rerunfilecheck Info: File `RJwrapper.out' has not changed.
 (rerunfilecheck)             Checksum: E83A311C333ABD9A874942C22A3B780B;878.
 Package rerunfilecheck Info: File `RJwrapper.brf' has not changed.
-(rerunfilecheck)             Checksum: C41180673DEFF01E3D9513939021E141;130.
+(rerunfilecheck)             Checksum: AF492ED1051948C3306F6FC405EBF843;130.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
@@ -926,23 +934,23 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 29.
  ) 
 Here is how much of TeX's memory you used:
- 22227 strings out of 480488
- 404613 string characters out of 5899970
+ 22244 strings out of 480488
+ 404927 string characters out of 5899970
  685723 words of memory out of 5000000
- 37653 multiletter control sequences out of 15000+600000
- 567593 words of font info for 136 fonts, out of 8000000 for 9000
+ 37659 multiletter control sequences out of 15000+600000
+ 568066 words of font info for 142 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 68i,11n,100p,425b,598s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,11n,100p,425b,549s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}{
 /usr/local/texlive/2019/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texl
 ive/2019/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/l
 ocal/texlive/2019/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2
 019/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on RJwrapper.pdf (3 pages, 97095 bytes).
+Output written on RJwrapper.pdf (4 pages, 105657 bytes).
 PDF statistics:
- 139 PDF objects out of 1000 (max. 8388607)
- 125 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 35434 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 152 PDF objects out of 1000 (max. 8388607)
+ 133 compressed objects within 2 object streams
+ 33 named destinations out of 1000 (max. 500000)
+ 35439 words of extra memory for PDF output out of 35830 (max. 10000000)
 
