@@ -83,13 +83,15 @@ dldat2 <- cran_downloads(doe_pkgs, from = start2, to = end)
 
 # Introduction 
 
-The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised into experimental design or survey design.  Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data. This dichotomisation, to a great extent, is seen in CRAN task views where R-packages in experimental design are in \ctv{ExperimentalDesign} and R-packages in survey designs are in \ctv{OfficialStatistics}.
+The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in CRAN task views where R-packages in experimental design are in \ctv{ExperimentalDesign} and R-packages in survey designs are in \ctv{OfficialStatistics}. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data. This paper is concerned with the latter.
 
 
-In the CRAN task view of \ctv{ExperimentalDesign}, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "DoE packages" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs.
+In the CRAN task view of \ctv{ExperimentalDesign}, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "DoE packages" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
+
+The paper is organisd as follows. Section @\ref{eda}
 
 
-# Explorative Analysis
+# Explorative analysis {#eda}
 
 ```{r download-dist, dependson = "cran-data"}
 dldat_sum <- dldat %>% 
@@ -231,9 +233,11 @@ ggplot(rbind(dldat_comb_bigram_desc,
 
 ## Which packages are widely utilised?
 
-# Software Design
+Figure \ref{fig:dlplots} suggests that the \CRANpkg{AlgDesign} followed by \CRANpkg{agricolae} are far more downloaded than any other DoE pacakges. It is worth noting that \CRANpkg{agricolae} imports \CRANpkg{AlgDesign} thus any download of \CRANpkg{agricolae} likely results also in a download of \CRANpkg{AlgDesign}. 
 
-# Propsects and Discussion
+# Software design
+
+# Discussion
 
 \newpage
 
@@ -327,7 +331,7 @@ graph_from_data_frame(doe_imports) %>%
 
 
 
-\CRANpkg{agricolae}
+
 
 
 
