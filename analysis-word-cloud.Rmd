@@ -1,0 +1,85 @@
+---
+title: "Word Cloud"
+author: "Emi Tanaka"
+date: "24/03/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(rvest)
+library(glue)
+library(pluralize)
+library(lubridate)
+library(plotly)
+library(ggwordcloud)
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      cache.path = "cache/")
+```
+
+```{r fns}
+singularize2 <- function(x) {
+    res <- singularize(x)
+    res <- ifelse(res=="bia", "bias", res)
+    ifelse(res=="baye", "bayes", res)
+}
+stop_words_rex <- c(paste0("^", stop_words$word, "$"), "^doi", "^[0-9.]+$")
+get_ngram <- function(ngram, desc = c("Title", "Description")) {
+  desc <- match.arg(desc)
+  words <- paste0("word", 1:ngram)
+  doe_db %>% 
+    unnest_tokens(word, desc, token = "ngrams", n = ngram) %>% 
+    separate(word, words, sep = " ") %>% 
+    mutate(across(num_range("word", 1:ngram), singularize2)) %>% 
+    distinct(!!!map(c("Package", words), as.name)) %>% 
+    # allow stop words in between
+    filter(if_all(num_range("word", c(1, ngram)), 
+                  ~!str_detect(., paste0(stop_words_rex, collapse = "|")))) %>% 
+    count(!!!map(words, as.name), sort = TRUE) %>% 
+    mutate(word = do.call("paste", map(words, ~eval(parse(text = .x))))) %>% 
+    select(word, n) 
+}
+
+combine_dl <- function(ngram_df, desc) {
+  dldat_sum %>% 
+    left_join(doe_db, by = c("package" = "Package")) %>% 
+    select(package, total, {{desc}}) %>% 
+    mutate(bigram_title = map({{desc}}, ~filter(ngram_df, 
+                                              n > 1,
+                                              str_detect(tolower(.x), word)))) %>% 
+    unnest_longer(bigram_title) %>% 
+    unpack(bigram_title) %>% 
+    group_by(word) %>% 
+    summarise(n = unique(n),
+              pkgs = list(package),
+              total = sum(total)) %>% 
+    filter(!is.na(word)) %>% 
+    arrange(desc(total))
+}
+```
+
+```{r ngrams, }
+bigram_title <- get_ngram(2, "Title")
+bigram_desc <- get_ngram(2, "Description")
+trigram_desc <- get_ngram(3, "Description")
+```
+
+```{r wordcloud, fig.height = 3.3}
+dldat_comb_bigram_title <- combine_dl(bigram_title, Title)
+dldat_comb_bigram_desc <- combine_dl(bigram_desc, Title)
+dldat_comb_trigram_desc <- combine_dl(trigram_desc, Title)
+
+set.seed(1)
+ggplot(rbind(dldat_comb_bigram_desc,
+             dldat_comb_trigram_desc),
+       aes(label = word, size = total, color = n)) +
+  geom_text_wordcloud(shape = "square",
+                      show.legend = TRUE) +
+  scale_size_area(max_size = 8) +
+  guides(size = FALSE) +
+  scale_color_continuous(breaks = 1:11) +
+  theme(legend.position = "bottom")
+```
