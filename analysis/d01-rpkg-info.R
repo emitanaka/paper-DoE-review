@@ -43,7 +43,8 @@ out <- pmap(dlsum, function(package, total2020, depends, imports, suggests, auth
                  title = ifelse(is.na(title), "", title), 
                  description = ifelse(is.na(description), "", description),
                  type = '',
-                 main = ''))
+                 main = '',
+                 data = ''))
   names(x) <- package
   x
 })

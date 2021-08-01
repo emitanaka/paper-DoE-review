@@ -14,6 +14,7 @@
       and within plot factors interact.
     type: ''
     main: ''
+    data: ''
 - agricolae:
     download2020: 266248
     depends: R (>= 2.10)
@@ -35,6 +36,7 @@
       non-parametric tests comparison, biodiversity indexes and consensus cluster.
     type: ''
     main: ''
+    data: ''
 - lhs:
     download2020: 216668
     depends: R (>= 3.4.0)
@@ -48,6 +50,7 @@
       Samples and Orthogonal Array Latin Hypercube Samples.
     type: ''
     main: ''
+    data: ''
 - DiceDesign:
     download2020: 116634
     depends: R (>= 2.10)
@@ -62,6 +65,7 @@
       and uniformity-based), with emphasis to computer experiments; <doi:10.18637/jss.v065.i11>.
     type: ''
     main: ''
+    data: ''
 - DiceKriging:
     download2020: 111269
     depends: methods
@@ -76,6 +80,7 @@
       functions : km, print.km, plot.km, predict.km.'
     type: ''
     main: ''
+    data: ''
 - ez:
     download2020: 105151
     depends: R (>= 3.1)
@@ -102,6 +107,7 @@
       design.
     type: ''
     main: ''
+    data: ''
 - FrF2:
     download2020: 92423
     depends: R(>= 2.13.0), DoE.base(>= 0.25)
@@ -121,6 +127,7 @@
       the built-in function alias).
     type: ''
     main: ''
+    data: ''
 - DoE.base:
     download2020: 91015
     depends: R (>= 2.10), grid, conf.design
@@ -138,6 +145,7 @@
       packages for designed experiments.
     type: ''
     main: ''
+    data: ''
 - rsm:
     download2020: 64632
     depends: ''
@@ -154,6 +162,7 @@
       and Parameter Design Optimization" ISBN 978-0-471-69946-0.'
     type: ''
     main: ''
+    data: ''
 - conf.design:
     download2020: 61649
     depends: ''
@@ -167,6 +176,7 @@
       and manipulating confounded and fractional factorial designs.
     type: ''
     main: ''
+    data: ''
 - tgp:
     download2020: 49868
     depends: R (>= 2.14.0)
@@ -188,6 +198,7 @@
       noisy black-box functions.
     type: ''
     main: ''
+    data: ''
 - BsMD:
     download2020: 36859
     depends: R(>= 3.5.0)
@@ -200,6 +211,7 @@
     description: Bayes screening and model discrimination follow-up designs.
     type: ''
     main: ''
+    data: ''
 - FrF2.catlg128:
     download2020: 27884
     depends: R(>= 2.13.0), FrF2(>= 1.4)
@@ -218,6 +230,7 @@
       can be downloaded from the authors website.
     type: ''
     main: ''
+    data: ''
 - Vdgraph:
     download2020: 24411
     depends: ''
@@ -235,6 +248,7 @@
       for several minimal run response surface designs.
     type: ''
     main: ''
+    data: ''
 - dae:
     download2020: 23048
     depends: R (>= 3.5.0), ggplot2
@@ -254,6 +268,7 @@
       be installed from <http://chris.brien.name/rpackages/>.'
     type: ''
     main: ''
+    data: ''
 - DoseFinding:
     download2020: 21987
     depends: lattice, mvtnorm, R (>= 2.15.0)
@@ -274,6 +289,7 @@
       al. (2014) <doi:10.1002/sim.6052>).'
     type: ''
     main: ''
+    data: ''
 - daewr:
     download2020: 21087
     depends: R (>= 3.5.0)
@@ -287,6 +303,7 @@
       of Experiments with R".
     type: ''
     main: ''
+    data: ''
 - agridat:
     download2020: 21052
     depends: ''
@@ -307,6 +324,7 @@
       multi-environment trials, uniformity trials, yield monitors, and more.
     type: ''
     main: ''
+    data: ''
 - DoE.wrapper:
     download2020: 19594
     depends: R(>= 3.1.0), FrF2(>= 1.6-5), DoE.base(>= 0.23-4), rsm
@@ -323,6 +341,7 @@
       AlgDesign have been implemented.
     type: ''
     main: ''
+    data: ''
 - RcmdrPlugin.DoE:
     download2020: 18558
     depends: |-
@@ -340,6 +359,7 @@
       accessed through the menu Design that is added to the R-Commander menus.
     type: ''
     main: ''
+    data: ''
 - crossdes:
     download2020: 18482
     depends: AlgDesign, gtools
@@ -353,6 +373,7 @@
       designs. In addition contains functions to check given designs for balance.
     type: ''
     main: ''
+    data: ''
 - BHH2:
     download2020: 17844
     depends: R (>= 2.0.0)
@@ -367,6 +388,7 @@
       experiments.
     type: ''
     main: ''
+    data: ''
 - SensoMineR:
     download2020: 16786
     depends: R (>= 3.0), FactoMineR (>= 2.3)
@@ -380,6 +402,7 @@
       for sensory data analysis. S. Le and F. Husson (2008) <DOI:10.1111/j.1745-459X.2007.00137.x>.'
     type: ''
     main: ''
+    data: ''
 - BOIN:
     download2020: 16462
     depends: ''
@@ -405,6 +428,7 @@
       tutorial, please check Yan et al. (2020) <doi:10.18637/jss.v094.i13>.
     type: ''
     main: ''
+    data: ''
 - blocksdesign:
     download2020: 15259
     depends: R (>= 3.1)
@@ -431,6 +455,7 @@
       Experiments. JABES 25, 500–522 (2020) <doi:10.1007/s13253-020-00416-0>.
     type: ''
     main: ''
+    data: ''
 - blockTools:
     download2020: 13342
     depends: ''
@@ -448,6 +473,7 @@
       conditions. Write outputs to .tex and .csv files.
     type: ''
     main: ''
+    data: ''
 - dfcrm:
     download2020: 12562
     depends: ''
@@ -461,6 +487,7 @@
       and calibration tools for trial planning purposes.
     type: ''
     main: ''
+    data: ''
 - powerAnalysis:
     download2020: 12224
     depends: ''
@@ -473,6 +500,7 @@
     description: Basic functions for power analysis and effect size calculation.
     type: ''
     main: ''
+    data: ''
 - acebayes:
     download2020: 12140
     depends: R (>= 3.5.0), lhs
@@ -486,6 +514,7 @@
       exchange (ACE) algorithm. See <doi:10.18637/jss.v095.i13>.
     type: ''
     main: ''
+    data: ''
 - desplot:
     download2020: 11957
     depends: ''
@@ -499,6 +528,7 @@
       are laid out in grids.
     type: ''
     main: ''
+    data: ''
 - support.CEs:
     download2020: 11900
     depends: ''
@@ -515,6 +545,7 @@
       (2012) <doi:10.18637/jss.v050.c02> for the package.
     type: ''
     main: ''
+    data: ''
 - BatchExperiments:
     download2020: 11677
     depends: R (>= 3.0.0), BatchJobs (>= 1.7)
@@ -531,6 +562,7 @@
       computing clusters. For further details see the project web page.
     type: ''
     main: ''
+    data: ''
 - GAD:
     download2020: 11214
     depends: R (>= 2.7.0), stats, matrixStats, R.methodsS3
@@ -548,6 +580,7 @@
       (SNK) procedure.'
     type: ''
     main: ''
+    data: ''
 - bcrm:
     download2020: 11141
     depends: ''
@@ -565,6 +598,7 @@
       characteristics. See Sweeting et al. (2013): <doi:10.18637/jss.v054.i13>.'
     type: ''
     main: ''
+    data: ''
 - ibd:
     download2020: 10962
     depends: R (>= 3.1.1)
@@ -587,6 +621,7 @@
       set up is supported.
     type: ''
     main: ''
+    data: ''
 - pid:
     download2020: 10882
     depends: ''
@@ -603,6 +638,7 @@
       the book.'
     type: ''
     main: ''
+    data: ''
 - mixexp:
     download2020: 10670
     depends: gdata, lattice, grid, daewr
@@ -616,6 +652,7 @@
       contour plots, and making mixture effect plots.
     type: ''
     main: ''
+    data: ''
 - desirability:
     download2020: 10628
     depends: ''
@@ -629,6 +666,7 @@
       by Derringer and Suich (1980).
     type: ''
     main: ''
+    data: ''
 - CombinS:
     download2020: 10624
     depends: ''
@@ -643,6 +681,7 @@
       and it gives their associated U-type design.
     type: ''
     main: ''
+    data: ''
 - FMC:
     download2020: 10547
     depends: ''
@@ -657,6 +696,7 @@
       as well as asymmetrical factorial designs.
     type: ''
     main: ''
+    data: ''
 - granova:
     download2020: 10327
     depends: R (>= 3.1.1), car (>= 2.0-21)
@@ -696,6 +736,7 @@
       functions.
     type: ''
     main: ''
+    data: ''
 - designGG:
     download2020: 10302
     depends: R (>= 2.2.0)
@@ -710,6 +751,7 @@
     description: The package provides R scripts for designing genetical genomics experiments.
     type: ''
     main: ''
+    data: ''
 - MAMS:
     download2020: 10205
     depends: mvtnorm, methods
@@ -724,6 +766,7 @@
       endpoints and known variance.
     type: ''
     main: ''
+    data: ''
 - asd:
     download2020: 10004
     depends: mvtnorm
@@ -737,6 +780,7 @@
       early outcomes for treatment selection and subpopulation type designs.
     type: ''
     main: ''
+    data: ''
 - PopED:
     download2020: 9928
     depends: R (>= 2.14)
@@ -762,6 +806,7 @@
       and Foracchia et al. (2004) <doi:10.1016/S0169-2607(03)00073-7>.
     type: ''
     main: ''
+    data: ''
 - geospt:
     download2020: 9902
     depends: R (>= 2.15.0), gstat, genalg, MASS, sp, minqa
@@ -779,6 +824,7 @@
       simultaneous points methods.
     type: ''
     main: ''
+    data: ''
 - JMdesign:
     download2020: 9859
     depends: methods
@@ -794,6 +840,7 @@
       Sigma_theta, is unknown.
     type: ''
     main: ''
+    data: ''
 - qtlDesign:
     download2020: 9858
     depends: ''
@@ -806,6 +853,7 @@
     description: Tools for the design of QTL experiments
     type: ''
     main: ''
+    data: ''
 - experiment:
     download2020: 9808
     depends: boot, MASS, R (>= 2.4.0)
@@ -824,6 +872,7 @@
       with missing data.
     type: ''
     main: ''
+    data: ''
 - mkssd:
     download2020: 9805
     depends: R(>= 2.13.0)
@@ -843,6 +892,7 @@
       4-5 rounds) of interchange may be required for larger designs.
     type: ''
     main: ''
+    data: ''
 - ssize.fdr:
     download2020: 9768
     depends: ''
@@ -862,6 +912,7 @@
       values at different sample sizes.
     type: ''
     main: ''
+    data: ''
 - dfmta:
     download2020: 9592
     depends: R (>= 3.4.0)
@@ -877,6 +928,7 @@
       Riviere Marie-Karelle et al. (2016) <doi:10.1177/0962280216631763>.'
     type: ''
     main: ''
+    data: ''
 - DiceEval:
     download2020: 9564
     depends: DiceKriging
@@ -890,6 +942,7 @@
       : linear models, additive models, MARS,PolyMARS and Kriging.'
     type: ''
     main: ''
+    data: ''
 - ALTopt:
     download2020: 9534
     depends: R (>= 3.0.0)
@@ -912,6 +965,7 @@
       see Seo and Pan (2015) <doi:10.32614/RJ-2015-029>.
     type: ''
     main: ''
+    data: ''
 - choiceDes:
     download2020: 9526
     depends: R (>= 2.15.2), AlgDesign
@@ -925,6 +979,7 @@
       MaxDiff and other tradeoffs).
     type: ''
     main: ''
+    data: ''
 - TEQR:
     download2020: 9479
     depends: ''
@@ -943,6 +998,7 @@
       de-escalated only if an unacceptable level of toxicity is experienced.
     type: ''
     main: ''
+    data: ''
 - designmatch:
     download2020: 9452
     depends: R (>= 3.2), lattice, MASS, slam, Rglpk
@@ -966,6 +1022,7 @@
       have also included directions in the gurobi_installation file in the inst folder.
     type: ''
     main: ''
+    data: ''
 - minimalRSD:
     download2020: 9334
     depends: ''
@@ -981,6 +1038,7 @@
       changed run sequence.
     type: ''
     main: ''
+    data: ''
 - SLHD:
     download2020: 9321
     depends: ''
@@ -998,6 +1056,7 @@
       Important function in this package is "maximinSLHD".
     type: ''
     main: ''
+    data: ''
 - skpr:
     download2020: 9318
     depends: R (>= 3.0.2), shiny
@@ -1021,6 +1080,7 @@
       analyses more reproducible.
     type: ''
     main: ''
+    data: ''
 - plgp:
     download2020: 9272
     depends: R (>= 2.4), mvtnorm, tgp
@@ -1043,6 +1103,7 @@
       See the examples section of ?plgp and demo(package="plgp") for an index of demos
     type: ''
     main: ''
+    data: ''
 - dfpk:
     download2020: 9231
     depends: R (>= 3.4.0), Rcpp (>= 0.12.11), rstan (>= 2.18.1)
@@ -1066,6 +1127,7 @@
       their objective is to determine the maximum tolerated dose (MTD).
     type: ''
     main: ''
+    data: ''
 - dfcomb:
     download2020: 9212
     depends: R (>= 3.2.3)
@@ -1079,6 +1141,7 @@
       toxicity rates are supposed to increase with both agents.
     type: ''
     main: ''
+    data: ''
 - GroupSeq:
     download2020: 9178
     depends: ''
@@ -1096,6 +1159,7 @@
       being available to choose among.
     type: ''
     main: ''
+    data: ''
 - binseqtest:
     download2020: 9113
     depends: methods, graphics, stats, clinfun
@@ -1109,6 +1173,7 @@
       results after stopping, allowing updating for missing assessments.
     type: ''
     main: ''
+    data: ''
 - mxkssd:
     download2020: 9108
     depends: R(>= 2.13.0)
@@ -1128,6 +1193,7 @@
       of interchange may be required for larger designs.
     type: ''
     main: ''
+    data: ''
 - ICAOD:
     download2020: 9088
     depends: R (>= 3.1.3)
@@ -1147,6 +1213,7 @@
       <doi:10.1080/10618600.2019.1601097>.
     type: ''
     main: ''
+    data: ''
 - PGM2:
     download2020: 9066
     depends: ''
@@ -1162,6 +1229,7 @@
       and A. Boudraa et al. (See references).
     type: ''
     main: ''
+    data: ''
 - dynaTree:
     download2020: 9062
     depends: R (>= 2.14.0), methods
@@ -1179,6 +1247,7 @@
       by demos in the package; see demo(package="dynaTree").
     type: ''
     main: ''
+    data: ''
 - MBHdesign:
     download2020: 9051
     depends: ''
@@ -1195,6 +1264,7 @@
       current randomisation (legacy sites).
     type: ''
     main: ''
+    data: ''
 - OptGS:
     download2020: 8874
     depends: ''
@@ -1209,6 +1279,7 @@
       outcomes.
     type: ''
     main: ''
+    data: ''
 - PBIBD:
     download2020: 8871
     depends: ''
@@ -1236,6 +1307,7 @@
       Bose and K. R. Nair (1939) <http://www.jstor.org/stable/40383923>.
     type: ''
     main: ''
+    data: ''
 - DiceView:
     download2020: 8805
     depends: |-
@@ -1251,6 +1323,7 @@
       experiments designs, surrogates or test functions.
     type: ''
     main: ''
+    data: ''
 - RPPairwiseDesign:
     download2020: 8801
     depends: ''
@@ -1265,6 +1338,7 @@
       partially pairwise balanced designs (RPPBD) and space-filling designs.
     type: ''
     main: ''
+    data: ''
 - toxtestD:
     download2020: 8756
     depends: ''
@@ -1282,6 +1356,7 @@
       scheme).
     type: ''
     main: ''
+    data: ''
 - bioOED:
     download2020: 8718
     depends: ''
@@ -1300,6 +1375,7 @@
       Analysis and Optimum Experiment Design.
     type: ''
     main: ''
+    data: ''
 - EngrExpt:
     download2020: 8493
     depends: R (>= 2.9.0), lattice
@@ -1314,6 +1390,7 @@
       for Engineering Experimentation" (Elsevier, 2003) with sample code.
     type: ''
     main: ''
+    data: ''
 - docopulae:
     download2020: 8265
     depends: R (>= 3.1.2)
@@ -1333,6 +1410,7 @@
       tasks.
     type: ''
     main: ''
+    data: ''
 - MaxPro:
     download2020: 8157
     depends: nloptr
@@ -1350,6 +1428,7 @@
       to appear.'
     type: ''
     main: ''
+    data: ''
 - crmPack:
     download2020: 8058
     depends: R (>= 3.0.0), ggplot2 (>= 2.0.0), graphics
@@ -1372,6 +1451,7 @@
       flexible for adaptation to new models, escalation or stopping rules.
     type: ''
     main: ''
+    data: ''
 - OPDOE:
     download2020: 8005
     depends: gmp
@@ -1386,6 +1466,7 @@
       see "Optimal Experimental Design with R" by Rasch D. et. al (ISBN 9781439816974).
     type: ''
     main: ''
+    data: ''
 - DoE.MIParray:
     download2020: 7847
     depends: ''
@@ -1408,6 +1489,7 @@
       or use the functionality in the stump CRAN R package ''Rmosek''.'
     type: ''
     main: ''
+    data: ''
 - ssizeRNA:
     download2020: 7831
     depends: R (>= 3.2.3)
@@ -1433,6 +1515,7 @@
       quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install("ssizeRNA")'.
     type: ''
     main: ''
+    data: ''
 - easypower:
     download2020: 7814
     depends: ''
@@ -1451,6 +1534,7 @@
       used to calculate the recommended sample sizes are from the 'pwr' package.
     type: ''
     main: ''
+    data: ''
 - gset:
     download2020: 7725
     depends: R (>= 3.0.2), Hmisc, mvtnorm, MCMCpack, graphics
@@ -1465,6 +1549,7 @@
       hypotheses.
     type: ''
     main: ''
+    data: ''
 - hiPOD:
     download2020: 7636
     depends: rgl
@@ -1478,6 +1563,7 @@
       functions to find and present the optimal designs for a pooled NGS design.
     type: ''
     main: ''
+    data: ''
 - LDOD:
     download2020: 7612
     depends: R (>= 2.10.0), Rsolnp, Rmpfr
@@ -1495,6 +1581,7 @@
       on some input variables and without user-interfere.
     type: ''
     main: ''
+    data: ''
 - odr:
     download2020: 7595
     depends: |-
@@ -1519,6 +1606,7 @@
       from <https://CRAN.R-project.org/package=pwr>.'
     type: ''
     main: ''
+    data: ''
 - OptimalDesign:
     download2020: 7512
     depends: R (>= 3.1.1)
@@ -1536,6 +1624,7 @@
       and the file gurobi_inst.txt, respectively.
     type: ''
     main: ''
+    data: ''
 - vdg:
     download2020: 7377
     depends: R (>= 3.4.0), parallel, ggplot2, quantreg
@@ -1556,6 +1645,7 @@
       package uses quantile regression as an alternative.
     type: ''
     main: ''
+    data: ''
 - pipe.design:
     download2020: 7249
     depends: ''
@@ -1570,6 +1660,7 @@
       MJ (2015) <DOI:10.1002/sim.6434>.
     type: ''
     main: ''
+    data: ''
 - VNM:
     download2020: 7121
     depends: methods
@@ -1589,6 +1680,7 @@
       design.
     type: ''
     main: ''
+    data: ''
 - seqDesign:
     download2020: 7118
     depends: R (>= 2.16), survival
@@ -1625,6 +1717,7 @@
       design.
     type: ''
     main: ''
+    data: ''
 - powerGWASinteraction:
     download2020: 7062
     depends: R (>= 2.10), mvtnorm, pwr
@@ -1640,6 +1733,7 @@
       It can also calculate power for GxE and GxG without any screening.
     type: ''
     main: ''
+    data: ''
 - unrepx:
     download2020: 7014
     depends: ''
@@ -1657,6 +1751,7 @@
       approaches are added and integrated in one package.
     type: ''
     main: ''
+    data: ''
 - VdgRsm:
     download2020: 6987
     depends: R (>= 3.1.2)
@@ -1672,6 +1767,7 @@
       response surface designs can be generated.
     type: ''
     main: ''
+    data: ''
 - ThreeArmedTrials:
     download2020: 6920
     depends: R (>= 3.0.0)
@@ -1692,6 +1788,7 @@
       al. (2017) <doi:10.1002/sim.7176>), exponential (Mielke and Munk (2009) <arXiv:0912.4169>).'
     type: ''
     main: ''
+    data: ''
 - ph2bye:
     download2020: 6857
     depends: stats, graphics, animation, nleqslv
@@ -1705,6 +1802,7 @@
       the sample size and stopping boundaries for single-arm Phase II design.
     type: ''
     main: ''
+    data: ''
 - OptInterim:
     download2020: 6818
     depends: mvtnorm, clinfun, stats, graphics, R (>= 2.14.1)
@@ -1719,6 +1817,7 @@
       at a specified timepoint
     type: ''
     main: ''
+    data: ''
 - OptimaRegion:
     download2020: 6763
     depends: R (>= 3.3.0)
@@ -1733,6 +1832,7 @@
     description: Computes confidence regions on the location of response surface optima.
     type: ''
     main: ''
+    data: ''
 - powerbydesign:
     download2020: 6689
     depends: ''
@@ -1747,6 +1847,7 @@
       of the boot.power.anova() function for further details.
     type: ''
     main: ''
+    data: ''
 - rodd:
     download2020: 6667
     depends: R (>= 3.0.0)
@@ -1763,6 +1864,7 @@
       package.
     type: ''
     main: ''
+    data: ''
 - ph2bayes:
     download2020: 6656
     depends: ''
@@ -1777,6 +1879,7 @@
       and predictive probability (Lee and Liu (2008) <doi:10.1177/1740774508089279>).
     type: ''
     main: ''
+    data: ''
 - sp23design:
     download2020: 6573
     depends: R (>= 3.0), mvtnorm, survival
@@ -1792,6 +1895,7 @@
       with the relevant mathematical details.
     type: ''
     main: ''
+    data: ''
 - sFFLHD:
     download2020: 6459
     depends: DoE.base
@@ -1806,6 +1910,7 @@
       Technometrics, <doi:10.1080/00401706.2015.1108233>).
     type: ''
     main: ''
+    data: ''
 - optbdmaeAT:
     download2020: 6340
     depends: R (>= 3.3.1), MASS, Matrix, igraph, tcltk
@@ -1824,6 +1929,7 @@
       user interface (GUI) R package tcltk to ensure that it is user friendly.
     type: ''
     main: ''
+    data: ''
 - optrcdmaeAT:
     download2020: 6333
     depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
@@ -1843,6 +1949,7 @@
       (GUI) R package tcltk to ensure that it is user friendly.
     type: ''
     main: ''
+    data: ''
 - soptdmaeA:
     download2020: 6272
     depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
@@ -1860,6 +1967,7 @@
       to ensure that it is user friendly.
     type: ''
     main: ''
+    data: ''
 - rsurface:
     download2020: 5197
     depends: R (>= 3.5)
@@ -1886,3 +1994,4 @@
       among others.
     type: ''
     main: ''
+    data: ''
