@@ -49,4 +49,4 @@ out <- pmap(dlsum, function(package, total2020, depends, imports, suggests, auth
 })
 saveRDS(out, file = here("data/derived/doe-pkgs.rds"))
 out <- readRDS(here::here("data/derived/doe-pkgs.rds"))
-yaml::write_yaml(out, here::here("data/input/doe-pkgs.yml"))
+yaml::write_yaml(out, here::here("data/input/doe-pkgs-original.yml"))

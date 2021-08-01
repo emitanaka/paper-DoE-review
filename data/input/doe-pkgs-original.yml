@@ -1,0 +1,1888 @@
+- AlgDesign:
+    download2020: 483218
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Bob Wheeler <bwheelerg@gmail.com>
+    date: ''
+    version: 1.2.0
+    title: Algorithmic Experimental Design
+    description: Algorithmic experimental designs. Calculates exact and approximate
+      theory experimental designs for D,A, and I criteria. Very large designs may
+      be created. Experimental designs may be blocked or blocked designs created from
+      a candidate list, using several criteria. The blocking can be done when whole
+      and within plot factors interact.
+    type: ''
+    main: ''
+- agricolae:
+    download2020: 266248
+    depends: R (>= 2.10)
+    imports: klaR, MASS, nlme, cluster, AlgDesign, graphics
+    suggests: ''
+    author: Felipe de Mendiburu
+    date: '2021-06-05'
+    version: 1.3-5
+    title: Statistical Procedures for Agricultural Research
+    description: Original idea was presented in the thesis "A statistical analysis
+      tool for agricultural research" to obtain the degree of Master on science, National
+      Engineering University (UNI), Lima-Peru. Some experimental data for the examples
+      come from the CIP and others research. Agricolae offers extensive functionality
+      on experimental design especially for agricultural and plant breeding experiments,
+      which can also be useful for other purposes. It supports planning of lattice,
+      Alpha, Cyclic, Complete Block, Latin Square, Graeco-Latin Squares, augmented
+      block, factorial, split and strip plot designs. There are also various analysis
+      facilities for experimental data, e.g. treatment comparison procedures and several
+      non-parametric tests comparison, biodiversity indexes and consensus cluster.
+    type: ''
+    main: ''
+- lhs:
+    download2020: 216668
+    depends: R (>= 3.4.0)
+    imports: Rcpp
+    suggests: testthat, assertthat, DoE.base, knitr, rmarkdown, covr
+    author: Rob Carnell [aut, cre]
+    date: ''
+    version: 1.1.1
+    title: Latin Hypercube Samples
+    description: Provides a number of methods for creating and augmenting Latin Hypercube
+      Samples and Orthogonal Array Latin Hypercube Samples.
+    type: ''
+    main: ''
+- DiceDesign:
+    download2020: 116634
+    depends: R (>= 2.10)
+    imports: ''
+    suggests: rgl, randtoolbox, lattice
+    author: Jessica Franco, Delphine Dupuy, Olivier Roustant, Patrice Kiener, Guillaume
+      Damblin and Bertrand Iooss.
+    date: '2021-02-10'
+    version: '1.9'
+    title: Designs of Computer Experiments
+    description: Space-Filling Designs and space-filling criteria (distance-based
+      and uniformity-based), with emphasis to computer experiments; <doi:10.18637/jss.v065.i11>.
+    type: ''
+    main: ''
+- DiceKriging:
+    download2020: 111269
+    depends: methods
+    imports: ''
+    suggests: rgenoud (>= 5.8-2.0), foreach, doParallel, testthat, numDeriv
+    author: 'Olivier Roustant, David Ginsbourger, Yves Deville. Contributors: Clement
+      Chevalier, Yann Richet.'
+    date: '2021-02-23'
+    version: 1.6.0
+    title: Kriging Methods for Computer Experiments
+    description: 'Estimation, validation and prediction of kriging models. Important
+      functions : km, print.km, plot.km, predict.km.'
+    type: ''
+    main: ''
+- ez:
+    download2020: 105151
+    depends: R (>= 3.1)
+    imports: |-
+      car (>= 2.1-3), ggplot2 (>= 2.1.0), lme4 (>= 1.1-12), MASS (>=
+      7.3-45), Matrix (>= 1.2-7.1), mgcv (>= 1.8-12), plyr (>=
+      1.8.4), reshape2 (>= 1.4.2), scales (>= 0.4.0), stringr (>=
+      1.1.0)
+    suggests: ''
+    author: Michael A. Lawrence <mike.lwrnc@gmail.com>
+    date: '2016-11-01'
+    version: 4.4-0
+    title: Easy Analysis and Visualization of Factorial Experiments
+    description: Facilitates easy analysis of factorial experiments, including purely
+      within-Ss designs (a.k.a. "repeated measures"), purely between-Ss designs, and
+      mixed within-and-between-Ss designs. The functions in this package aim to provide
+      simple, intuitive and consistent specification of data analysis and visualization.
+      Visualization functions also include design visualization for pre-analysis data
+      auditing, and correlation matrix visualization. Finally, this package includes
+      functions for non-parametric analysis, including permutation tests and bootstrap
+      resampling. The bootstrap function obtains predictions either by cell means
+      or by more advanced/powerful mixed effects models, yielding predictions and
+      confidence intervals that may be easily visualized at any level of the experiment's
+      design.
+    type: ''
+    main: ''
+- FrF2:
+    download2020: 92423
+    depends: R(>= 2.13.0), DoE.base(>= 0.25)
+    imports: |-
+      sfsmisc(>= 1.0-26), utils, scatterplot3d, igraph(>= 0.7),
+      methods
+    suggests: FrF2.catlg128, BsMD
+    author: Ulrike Groemping
+    date: '2020-05-29'
+    version: 2.2-2
+    title: Fractional Factorial Designs with 2-Level Factors
+    description: Regular and non-regular Fractional Factorial 2-level designs can
+      be created. Furthermore, analysis tools for Fractional Factorial designs with
+      2-level factors are offered (main effects and interaction plots for all factors
+      simultaneously, cube plot for looking at the simultaneous effects of three factors,
+      full or half normal plot, alias structure in a more readable format than with
+      the built-in function alias).
+    type: ''
+    main: ''
+- DoE.base:
+    download2020: 91015
+    depends: R (>= 2.10), grid, conf.design
+    imports: |-
+      stats, utils, graphics, grDevices, vcd, combinat, MASS,
+      lattice, numbers, partitions
+    suggests: FrF2, DoE.wrapper, RColorBrewer
+    author: Ulrike Groemping [aut, cre], Boyko Amarov [ctb], Hongquan Xu [ctb]
+    date: '2021-02-05'
+    version: 1.1-6
+    title: Full Factorials, Orthogonal Arrays and Base Utilities for DoE Packages
+    description: Creates full factorial experimental designs and designs based on
+      orthogonal arrays for (industrial) experiments. Provides diverse quality criteria.
+      Provides utility functions for the class design, which is also used by other
+      packages for designed experiments.
+    type: ''
+    main: ''
+- rsm:
+    download2020: 64632
+    depends: ''
+    imports: estimability
+    suggests: emmeans (> 1.3.5.1), Vdgraph, conf.design, DoE.base, FrF2
+    author: Russell Lenth [aut, cre]
+    date: '2020-09-03'
+    version: 2.10.2
+    title: Response-Surface Analysis
+    description: 'Provides functions to generate response-surface designs, fit first-
+      and second-order response-surface models, make surface plots, obtain the path
+      of steepest ascent, and do canonical analysis. A good reference on these methods
+      is Chapter 10 of Wu, C-F J and Hamada, M (2009) "Experiments: Planning, Analysis,
+      and Parameter Design Optimization" ISBN 978-0-471-69946-0.'
+    type: ''
+    main: ''
+- conf.design:
+    download2020: 61649
+    depends: ''
+    imports: ''
+    suggests: stats, utils
+    author: Bill Venables
+    date: '2013-02-22'
+    version: 2.0.0
+    title: Construction of factorial designs
+    description: This small library contains a series of simple tools for constructing
+      and manipulating confounded and fractional factorial designs.
+    type: ''
+    main: ''
+- tgp:
+    download2020: 49868
+    depends: R (>= 2.14.0)
+    imports: maptree
+    suggests: MASS
+    author: Robert B. Gramacy <rbg@vt.edu> and Matt A. Taddy <mataddy@amazon.com>
+    date: '2020-09-11'
+    version: 2.4-17
+    title: Bayesian Treed Gaussian Process Models
+    description: Bayesian nonstationary, semiparametric nonlinear regression and design
+      by treed Gaussian processes (GPs) with jumps to the limiting linear model (LLM).
+      Special cases also implemented include Bayesian linear models, CART, treed linear
+      models, stationary separable and isotropic GPs, and GP single-index models.
+      Provides 1-d and 2-d plotting functions (with projection and slice capabilities)
+      and tree drawing, designed for visualization of tgp-class output. Sensitivity
+      analysis and multi-resolution models are supported. Sequential experimental
+      design and adaptive sampling functions are also provided, including ALM, ALC,
+      and expected improvement. The latter supports derivative-free optimization of
+      noisy black-box functions.
+    type: ''
+    main: ''
+- BsMD:
+    download2020: 36859
+    depends: R(>= 3.5.0)
+    imports: ''
+    suggests: ''
+    author: Ernesto Barrios based on Daniel Meyer's code.
+    date: '2020-04-30'
+    version: 2020.4.30
+    title: Bayes Screening and Model Discrimination
+    description: Bayes screening and model discrimination follow-up designs.
+    type: ''
+    main: ''
+- FrF2.catlg128:
+    download2020: 27884
+    depends: R(>= 2.13.0), FrF2(>= 1.4)
+    imports: ''
+    suggests: ''
+    author: Ulrike Groemping
+    date: '2013-04-19'
+    version: 1.2-1
+    title: Catalogues of resolution IV 128 run 2-level fractional factorials up to
+      33 factors that do have 5-letter words
+    description: This package provides catalogues of resolution IV regular fractional
+      factorial designs in 128 runs for up to 33 2-level factors. The catalogues are
+      complete, excluding resolution IV designs without 5-letter words, because these
+      do not add value for a search for clear designs. The previous package version
+      1.0 with complete catalogues up to 24 runs (24 runs and a namespace added later)
+      can be downloaded from the authors website.
+    type: ''
+    main: ''
+- Vdgraph:
+    download2020: 24411
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: John Lawson <lawson@byu.edu>, with contributions from G. Vining
+    date: '2014-12-12'
+    version: 2.2-2
+    title: Variance dispersion graphs and Fraction of design space plots for response
+      surface designs
+    description: Uses a modification of the published FORTRAN code in "A Computer
+      Program for Generating Variance Dispersion Graphs" by G. Vining, Journal of
+      Quality Technology, Vol. 25 No. 1 January 1993, to produce variance dispersion
+      graphs. Also produces fraction of design space plots, and contains data frames
+      for several minimal run response surface designs.
+    type: ''
+    main: ''
+- dae:
+    download2020: 23048
+    depends: R (>= 3.5.0), ggplot2
+    imports: graphics, methods, plyr, stats
+    suggests: testthat, R.rsp
+    author: Chris Brien [aut, cre]
+    date: '2021-03-17'
+    version: 3.1-37
+    title: Functions Useful in the Design and ANOVA of Experiments
+    description: 'The content falls into the following groupings: (i) Data, (ii) Factor
+      manipulation functions, (iii) Design functions, (iv) ANOVA functions, (v) Matrix
+      functions, (vi) Projector and canonical efficiency functions, and (vii) Miscellaneous
+      functions. There is a vignette describing how to use the design functions for
+      randomizing and assessing designs available as a vignette called ''DesignNotes''.
+      The ANOVA functions facilitate the extraction of information when the ''Error''
+      function has been used in the call to ''aov''. The package ''dae'' can also
+      be installed from <http://chris.brien.name/rpackages/>.'
+    type: ''
+    main: ''
+- DoseFinding:
+    download2020: 21987
+    depends: lattice, mvtnorm, R (>= 2.15.0)
+    imports: ''
+    suggests: |-
+      numDeriv, Rsolnp, quadprog, parallel, multcomp, ggplot2,
+      knitr, rmarkdown, MASS, testthat
+    author: Bjoern Bornkamp [aut, cre] , Jose Pinheiro [aut], Frank Bretz [aut], Ludger
+      Sandig [aut]
+    date: '2021-06-24'
+    version: 1.0-1
+    title: Planning and Analyzing Dose Finding Experiments
+    description: 'The DoseFinding package provides functions for the design and analysis
+      of dose-finding experiments (with focus on pharmaceutical Phase II clinical
+      trials). It provides functions for: multiple contrast tests, fitting non-linear
+      dose-response models (using Bayesian and non-Bayesian estimation), calculating
+      optimal designs and an implementation of the MCPMod methodology (Pinheiro et
+      al. (2014) <doi:10.1002/sim.6052>).'
+    type: ''
+    main: ''
+- daewr:
+    download2020: 21087
+    depends: R (>= 3.5.0)
+    imports: lattice, FrF2, graphics, grDevices, stats, stringi
+    suggests: R.rsp
+    author: John Lawson [aut, cre], Gerhard Krennrich [aut]
+    date: 2021-2-18
+    version: 1.2-7
+    title: Design and Analysis of Experiments with R
+    description: Contains Data frames and functions used in the book "Design and Analysis
+      of Experiments with R".
+    type: ''
+    main: ''
+- agridat:
+    download2020: 21052
+    depends: ''
+    imports: ''
+    suggests: |-
+      AER, agricolae, betareg, broom, car, coin, corrgram, desplot,
+      dplyr, effects, equivalence, emmeans, FrF2, gam, gge, ggplot2,
+      gnm, gstat, HH, knitr, lattice, latticeExtra, lme4, lucid,
+      mapproj, maps, MASS, MCMCglmm, metafor, mgcv, NADA, nlme,
+      nullabor, ordinal, pbkrtest, pls, pscl, reshape2, rgdal,
+      rmarkdown, qicharts, qtl, sp, SpATS, survival, vcd, testthat
+    author: Kevin Wright [aut, cre]
+    date: ''
+    version: '1.18'
+    title: Agricultural Datasets
+    description: Datasets from books, papers, and websites related to agriculture.
+      Example graphics and analyses are included. Data come from small-plot trials,
+      multi-environment trials, uniformity trials, yield monitors, and more.
+    type: ''
+    main: ''
+- DoE.wrapper:
+    download2020: 19594
+    depends: R(>= 3.1.0), FrF2(>= 1.6-5), DoE.base(>= 0.23-4), rsm
+    imports: stats, lhs, DiceDesign, AlgDesign(>= 1.1)
+    suggests: skpr
+    author: Ulrike Groemping [aut, cre], Lenth Russ [ctb]
+    date: '2020-01-06'
+    version: '0.11'
+    title: Wrapper Package for Design of Experiments Functionality
+    description: Various kinds of designs for (industrial) experiments can be created.
+      The package uses, and sometimes enhances, design generation routines from other
+      packages. So far, response surface designs from package rsm, latin hypercube
+      samples from packages lhs and DiceDesign, and D-optimal designs from package
+      AlgDesign have been implemented.
+    type: ''
+    main: ''
+- RcmdrPlugin.DoE:
+    download2020: 18558
+    depends: |-
+      R (>= 2.10.0), utils, DoE.base (>= 0.22-8), FrF2 (>= 1.2-10),
+      DoE.wrapper (>= 0.8-6), tcltk, relimp
+    imports: Rcmdr, RcmdrMisc
+    suggests: FrF2.catlg128
+    author: Ulrike Groemping [aut, cre], Fox John [ctb]
+    date: '2014-08-28'
+    version: 0.12-3
+    title: R Commander Plugin for (industrial) Design of Experiments
+    description: The package provides a platform-independent GUI for design of experiments.
+      It is implemented as a plugin to the R-Commander, which is a more general graphical
+      user interface for statistics in R based on tcl/tk. DoE functionality can be
+      accessed through the menu Design that is added to the R-Commander menus.
+    type: ''
+    main: ''
+- crossdes:
+    download2020: 18482
+    depends: AlgDesign, gtools
+    imports: ''
+    suggests: ''
+    author: Martin Oliver Sailer
+    date: '2013-03-18'
+    version: 1.1-1
+    title: Construction of Crossover Designs
+    description: Contains functions for the construction of carryover balanced crossover
+      designs. In addition contains functions to check given designs for balance.
+    type: ''
+    main: ''
+- BHH2:
+    download2020: 17844
+    depends: R (>= 2.0.0)
+    imports: ''
+    suggests: FrF2
+    author: Ernesto Barrios
+    date: '2016-05-31'
+    version: 2016.05.31
+    title: Useful Functions for Box, Hunter and Hunter II
+    description: Functions and data sets reproducing some examples in Box, Hunter
+      and Hunter II. Useful for statistical design of experiments, especially factorial
+      experiments.
+    type: ''
+    main: ''
+- SensoMineR:
+    download2020: 16786
+    depends: R (>= 3.0), FactoMineR (>= 2.3)
+    imports: cluster,KernSmooth,ggplot2,reshape2,AlgDesign,gtools,ggrepel
+    suggests: ''
+    author: Francois Husson, Sebastien Le, Marine Cadoret
+    date: '2020-05-19'
+    version: '1.26'
+    title: Sensory Data Analysis
+    description: 'Statistical Methods to Analyse Sensory Data. SensoMineR: A package
+      for sensory data analysis. S. Le and F. Husson (2008) <DOI:10.1111/j.1745-459X.2007.00137.x>.'
+    type: ''
+    main: ''
+- BOIN:
+    download2020: 16462
+    depends: ''
+    imports: Iso
+    suggests: ''
+    author: Ying Yuan and Suyu Liu
+    date: '2021-01-19'
+    version: 2.7.2
+    title: Bayesian Optimal INterval (BOIN) Design for Single-Agent and Drug- Combination
+      Phase I Clinical Trials
+    description: The Bayesian optimal interval (BOIN) design is a novel phase I clinical
+      trial design for finding the maximum tolerated dose (MTD). It can be used to
+      design both single-agent and drug-combination trials. The BOIN design is motivated
+      by the top priority and concern of clinicians when testing a new drug, which
+      is to effectively treat patients and minimize the chance of exposing them to
+      subtherapeutic or overly toxic doses. The prominent advantage of the BOIN design
+      is that it achieves simplicity and superior performance at the same time. The
+      BOIN design is algorithm-based and can be implemented in a simple way similar
+      to the traditional 3+3 design. The BOIN design yields an average performance
+      that is comparable to that of the continual reassessment method (CRM, one of
+      the best model-based designs) in terms of selecting the MTD, but has a substantially
+      lower risk of assigning patients to subtherapeutic or overly toxic doses. For
+      tutorial, please check Yan et al. (2020) <doi:10.18637/jss.v094.i13>.
+    type: ''
+    main: ''
+- blocksdesign:
+    download2020: 15259
+    depends: R (>= 3.1)
+    imports: plyr,PolynomF
+    suggests: R.rsp
+    author: R. N. Edmondson.
+    date: 2021-04-07"
+    version: '4.9'
+    title: Nested and Crossed Block Designs for Factorial and Unstructured Treatment
+      Sets
+    description: Constructs treatment and block designs for linear treatment models
+      with crossed or nested block factors. The treatment design can be any feasible
+      linear model and the block design can be any feasible combination of crossed
+      or nested block factors. The block design is a sum of one or more block factors
+      and the block design is optimized sequentially with the levels of each successive
+      block factor optimized conditional on all previously optimized block factors.
+      D-optimality is used throughout except for square or rectangular lattice block
+      designs which are constructed algebraically using mutually orthogonal Latin
+      squares. Crossed block designs with interaction effects are optimized using
+      a weighting scheme which allows for differential weighting of first and second-order
+      block effects. Outputs include a table showing the allocation of treatments
+      to blocks and tables showing the achieved D-efficiency factors for each block
+      and treatment design. Edmondson, R.N. Multi-level Block Designs for Comparative
+      Experiments. JABES 25, 500–522 (2020) <doi:10.1007/s13253-020-00416-0>.
+    type: ''
+    main: ''
+- blockTools:
+    download2020: 13342
+    depends: ''
+    imports: MASS, tibble
+    suggests: nbpMatching, RItools, xtable
+    author: Ryan T. Moore and Keith Schnakenberg
+    date: '2016-12-02'
+    version: 0.6-3
+    title: Block, Assign, and Diagnose Potential Interference in Randomized Experiments
+    description: Blocks units into experimental blocks, with one unit per treatment
+      condition, by creating a measure of multivariate distance between all possible
+      pairs of units. Maximum, minimum, or an allowable range of differences between
+      units on one variable can be set. Randomly assign units to treatment conditions.
+      Diagnose potential interference between units assigned to different treatment
+      conditions. Write outputs to .tex and .csv files.
+    type: ''
+    main: ''
+- dfcrm:
+    download2020: 12562
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Ken Cheung <yc632@columbia.edu>
+    date: '2013-08-01'
+    version: 0.2-2.1
+    title: Dose-Finding by the Continual Reassessment Method
+    description: Provides functions to run the CRM and TITE-CRM in phase I trials
+      and calibration tools for trial planning purposes.
+    type: ''
+    main: ''
+- powerAnalysis:
+    download2020: 12224
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Felix Yanhui Fan <nolanfyh@gmail.com>
+    date: '2017-02-02'
+    version: 0.2.1
+    title: Power Analysis in Experimental Design
+    description: Basic functions for power analysis and effect size calculation.
+    type: ''
+    main: ''
+- acebayes:
+    download2020: 12140
+    depends: R (>= 3.5.0), lhs
+    imports: Rcpp (>= 0.12.9), compare, randtoolbox, parallel
+    suggests: ''
+    author: Antony M. Overstall, David C. Woods, Maria Adamou & Damianos Michaelides
+    date: '2020-10-04'
+    version: '1.10'
+    title: Optimal Bayesian Experimental Design using the ACE Algorithm
+    description: Optimal Bayesian experimental design using the approximate coordinate
+      exchange (ACE) algorithm. See <doi:10.18637/jss.v095.i13>.
+    type: ''
+    main: ''
+- desplot:
+    download2020: 11957
+    depends: ''
+    imports: ggplot2, grid, lattice, reshape2,
+    suggests: agridat, knitr, rmarkdown, testthat
+    author: Kevin Wright [aut, cre]
+    date: ''
+    version: '1.8'
+    title: Plotting Field Plans for Agricultural Experiments
+    description: A function for plotting maps of agricultural field experiments that
+      are laid out in grids.
+    type: ''
+    main: ''
+- support.CEs:
+    download2020: 11900
+    depends: ''
+    imports: DoE.base, MASS, simex, stats
+    suggests: survival
+    author: Hideo Aizaki
+    date: '2021-01-07'
+    version: 0.5-0
+    title: Basic Functions for Supporting an Implementation of Choice Experiments
+    description: Provides basic functions that support an implementation of (discrete)
+      choice experiments (CEs). CEs is a question-based survey method measuring people's
+      preferences for goods/services and their characteristics. Refer to Louviere
+      et al. (2000) <doi:10.1017/CBO9780511753831> for details on CEs, and Aizaki
+      (2012) <doi:10.18637/jss.v050.c02> for the package.
+    type: ''
+    main: ''
+- BatchExperiments:
+    download2020: 11677
+    depends: R (>= 3.0.0), BatchJobs (>= 1.7)
+    imports: |-
+      backports, utils, stats, checkmate (>= 1.8.5), BBmisc (>=
+      1.11), DBI, RSQLite (>= 2.0), data.table (>= 1.9.6)
+    suggests: plyr, randomForest, rpart, testthat
+    author: Bernd Bischl <bernd_bischl@gmx.net>, Michel Lang <michellang@gmail.com>,
+      Olaf Mersmann <olafm@p-value.net>
+    date: ''
+    version: 1.4.2
+    title: Statistical Experiments on Batch Computing Clusters
+    description: Extends the BatchJobs package to run statistical experiments on batch
+      computing clusters. For further details see the project web page.
+    type: ''
+    main: ''
+- GAD:
+    download2020: 11214
+    depends: R (>= 2.7.0), stats, matrixStats, R.methodsS3
+    imports: ''
+    suggests: ''
+    author: Leonardo Sandrini-Neto & Mauricio G. Camargo
+    date: '2011-02-21'
+    version: 1.1.1
+    title: 'GAD: Analysis of variance from general principles'
+    description: 'This package analyses complex ANOVA models with any combination
+      of orthogonal/nested and fixed/random factors, as described by Underwood (1997).
+      There are two restrictions: (i) data must be balanced; (ii) fixed nested factors
+      are not allowed. Homogeneity of variances is checked using Cochran''s C test
+      and ''a posteriori'' comparisons of means are done using Student-Newman-Keuls
+      (SNK) procedure.'
+    type: ''
+    main: ''
+- bcrm:
+    download2020: 11141
+    depends: ''
+    imports: |-
+      graphics, stats, mvtnorm, rlang, ggplot2 (>= 1.0.1), grid,
+      knitr
+    suggests: BRugs, R2WinBUGS, rjags
+    author: Michael Sweeting [aut], Graham Wheeler [aut, cre]
+    date: '2019-07-29'
+    version: 0.5.4
+    title: Bayesian Continual Reassessment Method for Phase I Dose-Escalation Trials
+    description: 'Implements a wide variety of one- and two-parameter Bayesian CRM
+      designs. The program can run interactively, allowing the user to enter outcomes
+      after each cohort has been recruited, or via simulation to assess operating
+      characteristics. See Sweeting et al. (2013): <doi:10.18637/jss.v054.i13>.'
+    type: ''
+    main: ''
+- ibd:
+    download2020: 10962
+    depends: R (>= 3.1.1)
+    imports: lpSolve, car, emmeans, multcomp
+    suggests: multcompView
+    author: B N Mandal [aut, cre]
+    date: '2019-04-24'
+    version: '1.5'
+    title: Incomplete Block Designs
+    description: A collection of several utility functions related to binary incomplete
+      block designs. The package contains function to generate A- and D-efficient
+      binary incomplete block designs with given numbers of treatments, number of
+      blocks and block size. The package also contains function to generate an incomplete
+      block design with specified concurrence matrix. There are functions to generate
+      balanced treatment incomplete block designs and incomplete block designs for
+      test versus control treatments comparisons with specified concurrence matrix.
+      Package also allows performing analysis of variance of data and computing estimated
+      marginal means of factors from experiments using a connected incomplete block
+      design. Tests of hypothesis of treatment contrasts in incomplete block design
+      set up is supported.
+    type: ''
+    main: ''
+- pid:
+    download2020: 10882
+    depends: ''
+    imports: ggplot2, stats, png, FrF2, DoE.base, FrF2.catlg128
+    suggests: MASS
+    author: Kevin Dunn [aut, cre]
+    date: '2018-11-21'
+    version: '0.50'
+    title: Process Improvement using Data
+    description: 'A collection of scripts and data files for the statistics text:
+      "Process Improvement using Data" <https://learnche.org/pid> and the online course
+      "Experimentation for Improvement" found on Coursera. The package contains code
+      for designed experiments, data sets and other convenience functions used in
+      the book.'
+    type: ''
+    main: ''
+- mixexp:
+    download2020: 10670
+    depends: gdata, lattice, grid, daewr
+    imports: ''
+    suggests: ''
+    author: John Lawson [aut, cre], Cameron Willden [aut], Greg Piepel [ctb]
+    date: 2016-8-12
+    version: 1.2.5
+    title: Design and Analysis of Mixture Experiments
+    description: Functions for creating designs for mixture experiments, making ternary
+      contour plots, and making mixture effect plots.
+    type: ''
+    main: ''
+- desirability:
+    download2020: 10628
+    depends: ''
+    imports: stats, graphics, grDevices
+    suggests: lattice
+    author: Max Kuhn
+    date: '2016-09-22'
+    version: '2.1'
+    title: Function Optimization and Ranking via Desirability Functions
+    description: S3 classes for multivariate optimization using the desirability function
+      by Derringer and Suich (1980).
+    type: ''
+    main: ''
+- CombinS:
+    download2020: 10624
+    depends: ''
+    imports: stats, utils
+    suggests: ''
+    author: Mohamed Laib, Imane Rezgui, Zebida Gheribi-Aoulmi and Herve Monod
+    date: '2016-11-22'
+    version: 1.1-1
+    title: Construction Methods of some Series of PBIB Designs
+    description: Series of partially balanced incomplete block designs (PBIB) based
+      on the combinatory method (S) introduced in (Imane Rezgui et al, 2014) <doi:10.3844/jmssp.2014.45.48>;
+      and it gives their associated U-type design.
+    type: ''
+    main: ''
+- FMC:
+    download2020: 10547
+    depends: ''
+    imports: utils, minimalRSD, stats
+    suggests: ''
+    author: Shwetank Lall [aut, cre], Arpan Bhowmik [ctb], Eldho Varghese [aut], Seema
+      Jaggi [ctb], Cini Varghese [ctb]
+    date: ''
+    version: 1.0.0
+    title: Factorial Experiments with Minimum Level Changes
+    description: Generate cost effective minimally changed run sequences for symmetrical
+      as well as asymmetrical factorial designs.
+    type: ''
+    main: ''
+- granova:
+    download2020: 10327
+    depends: R (>= 3.1.1), car (>= 2.0-21)
+    imports: ''
+    suggests: mgcv, rgl, tcltk, MASS
+    author: Robert M. Pruzek <RMPruzek@yahoo.com> and James E. Helmreich <James.Helmreich@Marist.edu>
+    date: '2014-08-25'
+    version: '2.1'
+    title: Graphical Analysis of Variance
+    description: This small collection of functions provides what we call elemental
+      graphics for display of anova results. The term elemental derives from the fact
+      that each function is aimed at construction of graphical displays that afford
+      direct visualizations of data with respect to the fundamental questions that
+      drive the particular anova methods. The two main functions are granova.1w (a
+      graphic for one way anova) and granova.2w (a corresponding graphic for two way
+      anova). These functions were written to display data for any number of groups,
+      regardless of their sizes (however, very large data sets or numbers of groups
+      can be problematic). For these two functions a specialized approach is used
+      to construct data-based contrast vectors for which anova data are displayed.
+      The result is that the graphics use straight lines, and when appropriate flat
+      surfaces, to facilitate clear interpretations while being faithful to the standard
+      effect tests in anova. The graphic results are complementary to standard summary
+      tables for these two basic kinds of analysis of variance; numerical summary
+      results of analyses are also provided as side effects. Two additional functions
+      are granova.ds (for comparing two dependent samples), and granova.contr (which
+      provides graphic displays for a priori contrasts). All functions provide relevant
+      numerical results to supplement the graphic displays of anova data. The graphics
+      based on these functions should be especially helpful for learning how the methods
+      have been applied to answer the question(s) posed. This means they can be particularly
+      helpful for students and non-statistician analysts. But these methods should
+      be quite generally helpful for work-a-day applications of all kinds, as they
+      can help to identify outliers, clusters or patterns, as well as highlight the
+      role of non-linear transformations of data. In the case of granova.1w and granova.ds
+      especially, several arguments are provided to facilitate flexibility in the
+      construction of graphics that accommodate diverse features of data, according
+      to their corresponding display requirements. See the help files for individual
+      functions.
+    type: ''
+    main: ''
+- designGG:
+    download2020: 10302
+    depends: R (>= 2.2.0)
+    imports: ''
+    suggests: ''
+    author: Yang Li <yang.li@rug.nl>, Morris Swertz <m.a.swertz@rug.nl>, Gonzalo Vera
+      <gonzalo.vera.rodriguez@gmail.com>, Rainer Breitling <r.breitling@rug.nl>, Ritsert
+      Jansen <r.c.jansen@rug.nl>
+    date: 19-02-2013
+    version: '1.1'
+    title: Computational tool for designing genetical genomics experiments
+    description: The package provides R scripts for designing genetical genomics experiments.
+    type: ''
+    main: ''
+- MAMS:
+    download2020: 10205
+    depends: mvtnorm, methods
+    imports: ''
+    suggests: ''
+    author: Thomas Jaki <thomas.jaki@pm.me>, Dominic Magirr <d.magirr@gmail.com>,
+      Philip Pallmann <philip.pallmann@gmx.de>
+    date: ''
+    version: 1.4.2
+    title: Designing Multi-Arm Multi-Stage Studies
+    description: Designing multi-arm multi-stage studies with (asymptotically) normal
+      endpoints and known variance.
+    type: ''
+    main: ''
+- asd:
+    download2020: 10004
+    depends: mvtnorm
+    imports: ''
+    suggests: ''
+    author: Nick Parsons
+    date: '2016-05-23'
+    version: '2.2'
+    title: Simulations for Adaptive Seamless Designs
+    description: Package runs simulations for adaptive seamless designs with and without
+      early outcomes for treatment selection and subpopulation type designs.
+    type: ''
+    main: ''
+- PopED:
+    download2020: 9928
+    depends: R (>= 2.14)
+    imports: |-
+      ggplot2, MASS, mvtnorm, dplyr (>= 0.7.0), codetools, stats,
+      utils, magrittr, boot, purrr, stringr, tibble, gtools
+    suggests: |-
+      testthat, Hmisc, nlme, GA, deSolve, Rcpp, shiny,
+      rhandsontable, knitr, rmarkdown, gridExtra, covr, devtools,
+      mrgsolve
+    author: Andrew C. Hooker [aut, cre, trl, cph] , Marco Foracchia [aut] , Eric Stroemberg
+      [ctb] , Martin Fink [ctb] , Giulia Lestini [ctb] (Streamlining code, added functionality,
+      vignettes), Sebastian Ueckert [aut] (MATLAB version, <https://orcid.org/0000-0002-3712-0255>),
+      Joakim Nyberg [aut]
+    date: ''
+    version: 0.6.0
+    title: Population (and Individual) Optimal Experimental Design
+    description: Optimal experimental designs for both population and individual studies
+      based on nonlinear mixed-effect models. Often this is based on a computation
+      of the Fisher Information Matrix. This package was developed for pharmacometric
+      problems, and examples and predefined models are available for these types of
+      systems. The methods are described in Nyberg et al. (2012) <doi:10.1016/j.cmpb.2012.05.005>,
+      and Foracchia et al. (2004) <doi:10.1016/S0169-2607(03)00073-7>.
+    type: ''
+    main: ''
+- geospt:
+    download2020: 9902
+    depends: R (>= 2.15.0), gstat, genalg, MASS, sp, minqa
+    imports: |-
+      limSolve, fields, gsl, plyr, TeachingDemos, sgeostat,
+      grDevices, stats, methods, graphics, utils
+    suggests: ''
+    author: Carlos Melo <cmelo@udistrital.edu.co>, Alí Santacruz, Oscar Melo <oomelom@unal.edu.co>
+    date: '2015-08-12'
+    version: 1.0-2
+    title: Geostatistical Analysis and Design of Optimal Spatial Sampling Networks
+    description: Estimation of the variogram through trimmed mean, radial basis functions
+      (optimization, prediction and cross-validation), summary statistics from cross-validation,
+      pocket plot, and design of optimal sampling networks through sequential and
+      simultaneous points methods.
+    type: ''
+    main: ''
+- JMdesign:
+    download2020: 9859
+    depends: methods
+    imports: ''
+    suggests: ''
+    author: Emil A. Cornea, Liddy M. Chen, Bahjat F. Qaqish, Haitao Chu, and Joseph
+      G. Ibrahim
+    date: '2014-10-21'
+    version: '1.1'
+    title: Joint Modeling of Longitudinal and Survival Data - Power Calculation
+    description: Performs power calculations for joint modeling of longitudinal and
+      survival data with k-th order trajectories when the variance-covariance matrix,
+      Sigma_theta, is unknown.
+    type: ''
+    main: ''
+- qtlDesign:
+    download2020: 9858
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Saunak Sen, Jaya Satagopan, Karl Broman, and Gary Churchill
+    date: 03 September 2010
+    version: '0.941'
+    title: Design of QTL experiments
+    description: Tools for the design of QTL experiments
+    type: ''
+    main: ''
+- experiment:
+    download2020: 9808
+    depends: boot, MASS, R (>= 2.4.0)
+    imports: ''
+    suggests: ''
+    author: Kosuke Imai [aut, cre], Zhichao Jiang [aut], Michael Li [aut]
+    date: '2019-08-14'
+    version: 1.2.0
+    title: R Package for Designing and Analyzing Randomized Experiments
+    description: Provides various statistical methods for designing and analyzing
+      randomized experiments. One functionality of the package is the implementation
+      of randomized-block and matched-pair designs based on possibly multivariate
+      pre-treatment covariates. The package also provides the tools to analyze various
+      randomized experiments including cluster randomized experiments, two-stage randomized
+      experiments, randomized experiments with noncompliance, and randomized experiments
+      with missing data.
+    type: ''
+    main: ''
+- mkssd:
+    download2020: 9805
+    depends: R(>= 2.13.0)
+    imports: ''
+    suggests: ''
+    author: B N Mandal <mandal.stat@gmail.com>
+    date: '2011-08-04'
+    version: '1.1'
+    title: Efficient multi-level k-circulant supersaturated designs
+    description: mkssd is a package that generates efficient balanced non-aliased
+      multi-level k-circulant supersaturated designs by interchanging the elements
+      of the generator vector. The package tries to generate a supersaturated design
+      that has chisquare efficiency more than user specified efficiency level (mef).
+      The package also displays the progress of generation of an efficient multi-level
+      k-circulant design through a progress bar. The progress of 100% means that one
+      full round of interchange is completed. More than one full round (typically
+      4-5 rounds) of interchange may be required for larger designs.
+    type: ''
+    main: ''
+- ssize.fdr:
+    download2020: 9768
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Megan Orr, Peng Liu
+    date: '2015-02-21'
+    version: '1.2'
+    title: Sample Size Calculations for Microarray Experiments
+    description: This package contains a set of functions that calculates appropriate
+      sample sizes for one-sample t-tests, two-sample t-tests, and F-tests for microarray
+      experiments based on desired power while controlling for false discovery rates.
+      For all tests, the standard deviations (variances) among genes can be assumed
+      fixed or random. This is also true for effect sizes among genes in one-sample
+      and two sample experiments. Functions also output a chart of power versus sample
+      size, a table of power at different sample sizes, and a table of critical test
+      values at different sample sizes.
+    type: ''
+    main: ''
+- dfmta:
+    download2020: 9592
+    depends: R (>= 3.4.0)
+    imports: ''
+    suggests: ''
+    author: Marie-Karelle Riviere and Jacques-Henri Jourdan
+    date: '2020-01-31'
+    version: 1.7-1
+    title: Phase I/II Adaptive Dose-Finding Design for MTA
+    description: 'Phase I/II adaptive dose-finding design for single-agent Molecularly
+      Targeted Agent (MTA), according to the paper "Phase I/II Dose-Finding Design
+      for Molecularly Targeted Agent: Plateau Determination using Adaptive Randomization",
+      Riviere Marie-Karelle et al. (2016) <doi:10.1177/0962280216631763>.'
+    type: ''
+    main: ''
+- DiceEval:
+    download2020: 9564
+    depends: DiceKriging
+    imports: ''
+    suggests: gam, akima, mda, polspline
+    author: D. Dupuy and C. Helbert
+    date: '2020-05-04'
+    version: '1.5'
+    title: Construction and Evaluation of Metamodels
+    description: 'Estimation, validation and prediction of models of different types
+      : linear models, additive models, MARS,PolyMARS and Kriging.'
+    type: ''
+    main: ''
+- ALTopt:
+    download2020: 9534
+    depends: R (>= 3.0.0)
+    imports: cubature (>= 1.0), lattice (>= 0.20), methods
+    suggests: ''
+    author: Kangwon Seo [aut, cre], Rong Pan [aut]
+    date: ''
+    version: 0.1.2
+    title: Optimal Experimental Designs for Accelerated Life Testing
+    description: Creates the optimal (D, U and I) designs for the accelerated life
+      testing with right censoring or interval censoring. It uses generalized linear
+      model (GLM) approach to derive the asymptotic variance-covariance matrix of
+      regression coefficients. The failure time distribution is assumed to follow
+      Weibull distribution with a known shape parameter and log-linear link functions
+      are used to model the relationship between failure time parameters and stress
+      variables. The acceleration model may have multiple stress factors, although
+      most ALTs involve only two or less stress factors. ALTopt package also provides
+      several plotting functions including contour plot, Fraction of Use Space (FUS)
+      plot and Variance Dispersion graphs of Use Space (VDUS) plot. For more details,
+      see Seo and Pan (2015) <doi:10.32614/RJ-2015-029>.
+    type: ''
+    main: ''
+- choiceDes:
+    download2020: 9526
+    depends: R (>= 2.15.2), AlgDesign
+    imports: ''
+    suggests: ''
+    author: Jack Horne [aut, cre]
+    date: '2018-06-18'
+    version: 0.9-3
+    title: Design Functions for Choice Studies
+    description: Design functions for DCMs and other types of choice studies (including
+      MaxDiff and other tradeoffs).
+    type: ''
+    main: ''
+- TEQR:
+    download2020: 9479
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: M. Suzette Blanchard
+    date: '2016-02-02'
+    version: 6.0-0
+    title: Target Equivalence Range Design
+    description: The TEQR package contains software to calculate the operating characteristics
+      for the TEQR and the ACT designs.The TEQR (toxicity equivalence range) design
+      is a toxicity based cumulative cohort design with added safety rules. The ACT
+      (Activity constrained for toxicity) design is also a cumulative cohort design
+      with additional safety rules. The unique feature of this design is that dose
+      is escalated based on lack of activity rather than on lack of toxicity and is
+      de-escalated only if an unacceptable level of toxicity is experienced.
+    type: ''
+    main: ''
+- designmatch:
+    download2020: 9452
+    depends: R (>= 3.2), lattice, MASS, slam, Rglpk
+    imports: ''
+    suggests: ''
+    author: Jose R. Zubizarreta <zubizarreta@hcp.med.harvard.edu>, Cinar Kilcioglu
+      <ckilcioglu16@gsb.columbia.edu>, Juan P. Vielma <jvielma@mit.edu>
+    date: '2018-06-18'
+    version: 0.3.1
+    title: Matched Samples that are Balanced and Representative by Design
+    description: Includes functions for the construction of matched samples that are
+      balanced and representative by design. Among others, these functions can be
+      used for matching in observational studies with treated and control units, with
+      cases and controls, in related settings with instrumental variables, and in
+      discontinuity designs. Also, they can be used for the design of randomized experiments,
+      for example, for matching before randomization. By default, 'designmatch' uses
+      the 'GLPK' optimization solver, but its performance is greatly enhanced by the
+      'Gurobi' optimization solver and its associated R interface. For their installation,
+      please follow the instructions at <http://user.gurobi.com/download/gurobi-optimizer>
+      and <http://www.gurobi.com/documentation/7.0/refman/r_api_overview.html>. We
+      have also included directions in the gurobi_installation file in the inst folder.
+    type: ''
+    main: ''
+- minimalRSD:
+    download2020: 9334
+    depends: ''
+    imports: utils, stats
+    suggests: ''
+    author: Shwetank Lall [aut, cre], Eldho Varghese [aut], Seema Jaggi [ctb], Cini
+      Varghese [ctb], Arpan Bhowmik [ctb]
+    date: ''
+    version: 1.0.0
+    title: Minimally Changed CCD and BBD
+    description: Generate central composite designs (CCD)with full as well as fractional
+      factorial points (half replicate) and Box Behnken designs (BBD) with minimally
+      changed run sequence.
+    type: ''
+    main: ''
+- SLHD:
+    download2020: 9321
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Shan Ba
+    date: '2015-01-26'
+    version: 2.1-1
+    title: Maximin-Distance (Sliced) Latin Hypercube Designs
+    description: Generate the optimal Latin Hypercube Designs (LHDs) for computer
+      experiments with quantitative factors and the optimal Sliced Latin Hypercube
+      Designs (SLHDs) for computer experiments with both quantitative and qualitative
+      factors. Details of the algorithm can be found in Ba, S., Brenneman, W. A. and
+      Myers, W. R. (2015), "Optimal Sliced Latin Hypercube Designs," Technometrics.
+      Important function in this package is "maximinSLHD".
+    type: ''
+    main: ''
+- skpr:
+    download2020: 9318
+    depends: R (>= 3.0.2), shiny
+    imports: |-
+      utils, iterators, stats, lme4, Rcpp (>= 0.11.0), rintrojs,
+      shinythemes, foreach, doParallel, survival, doRNG, future,
+      promises, shinyjs, car, viridis, magrittr, lmerTest, methods,
+      lazyeval, progress, gt, scales
+    suggests: testthat
+    author: Tyler Morgan-Wall [aut, cre], George Khoury [aut]
+    date: ''
+    version: 0.66.5
+    title: 'Design of Experiments Suite: Generate and Evaluate Optimal Designs'
+    description: Generates and evaluates D, I, A, Alias, E, T, and G optimal designs.
+      Supports generation and evaluation of blocked and split/split-split/.../N-split
+      plot designs. Includes parametric and Monte Carlo power evaluation functions,
+      and supports calculating power for censored responses. Provides a framework
+      to evaluate power using functions provided in other packages or written by the
+      user. Includes a Shiny graphical user interface that displays the underlying
+      code used to create and evaluate the design to improve ease-of-use and make
+      analyses more reproducible.
+    type: ''
+    main: ''
+- plgp:
+    download2020: 9272
+    depends: R (>= 2.4), mvtnorm, tgp
+    imports: ''
+    suggests: ellipse, splancs, akima
+    author: Robert B. Gramacy <rbgramacy@chicagobooth.edu>
+    date: '2014-11-27'
+    version: 1.1-7
+    title: Particle Learning of Gaussian Processes
+    description: Sequential Monte Carlo inference for fully Bayesian Gaussian process
+      (GP) regression and classification models by particle learning (PL). The sequential
+      nature of inference and the active learning (AL) hooks provided facilitate thrifty
+      sequential design (by entropy) and optimization (by improvement) for classification
+      and regression models, respectively. This package essentially provides a generic
+      PL interface, and functions (arguments to the interface) which implement the
+      GP models and AL heuristics. Functions for a special, linked, regression/classification
+      GP model and an integrated expected conditional improvement (IECI) statistic
+      is provides for optimization in the presence of unknown constraints. Separable
+      and isotropic Gaussian, and single-index correlation functions are supported.
+      See the examples section of ?plgp and demo(package="plgp") for an index of demos
+    type: ''
+    main: ''
+- dfpk:
+    download2020: 9231
+    depends: R (>= 3.4.0), Rcpp (>= 0.12.11), rstan (>= 2.18.1)
+    imports: |-
+      ggplot2 (>= 2.0.0), dfcrm, methods, stats, graphics,
+      grDevices, PK
+    suggests: ''
+    author: Artemis Toumazi [cre, aut], Sarah Zohar [aut], Moreno Ursino [aut], Trustees
+      of Columbia University [cph] , French National Institute of Health and Medical
+      Research [cph]
+    date: '2018-11-07'
+    version: 3.5.1
+    title: Bayesian Dose-Finding Designs using Pharmacokinetics (PK) for Phase I Clinical
+      Trials
+    description: Statistical methods involving PK measures are provided, in the dose
+      allocation process during a Phase I clinical trials. These methods, proposed
+      by Ursino et al, (2017) <doi:10.1002/bimj.201600084>, enter pharmacokinetics
+      (PK) in the dose finding designs in different ways, including covariates models,
+      dependent variable or hierarchical models. This package provides functions to
+      generate data from several scenarios and functions to run simulations which
+      their objective is to determine the maximum tolerated dose (MTD).
+    type: ''
+    main: ''
+- dfcomb:
+    download2020: 9212
+    depends: R (>= 3.2.3)
+    imports: ''
+    suggests: ''
+    author: Marie-Karelle Riviere and Jacques-Henri Jourdan
+    date: '2019-02-25'
+    version: 3.0-0
+    title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
+    description: Phase I/II adaptive dose-finding design for combination studies where
+      toxicity rates are supposed to increase with both agents.
+    type: ''
+    main: ''
+- GroupSeq:
+    download2020: 9178
+    depends: ''
+    imports: tcltk
+    suggests: testthat
+    author: Roman Pahl [aut, cre]
+    date: ''
+    version: 1.3.5
+    title: A GUI-Based Program to Compute Probabilities Regarding Group Sequential
+      Designs
+    description: A graphical user interface to compute group sequential designs based
+      on normally distributed test statistics, particularly critical boundaries, power,
+      drift, and confidence intervals of such designs. All computations are based
+      on the alpha spending approach by Lan-DeMets with various alpha spending functions
+      being available to choose among.
+    type: ''
+    main: ''
+- binseqtest:
+    download2020: 9113
+    depends: methods, graphics, stats, clinfun
+    imports: ''
+    suggests: ''
+    author: Jenn Kirk, Michael P. Fay
+    date: '2016-12-15'
+    version: 1.0.3
+    title: Exact Binary Sequential Designs and Analysis
+    description: For a series of binary responses, create stopping boundary with exact
+      results after stopping, allowing updating for missing assessments.
+    type: ''
+    main: ''
+- mxkssd:
+    download2020: 9108
+    depends: R(>= 2.13.0)
+    imports: ''
+    suggests: ''
+    author: B N Mandal <mandal.stat@gmail.com>
+    date: '2011-08-05'
+    version: '1.1'
+    title: Efficient mixed-level k-circulant supersaturated designs
+    description: mxkssd is a package that generates efficient balanced mixed-level
+      k-circulant supersaturated designs by interchanging the elements of the generator
+      vector. The package tries to generate a supersaturated design that has EfNOD
+      efficiency more than user specified efficiency level (mef). The package also
+      displays the progress of generation of an efficient mixed-level k-circulant
+      design through a progress bar. The progress of 100 per cent means that one full
+      round of interchange is completed. More than one full round (typically 4-5 rounds)
+      of interchange may be required for larger designs.
+    type: ''
+    main: ''
+- ICAOD:
+    download2020: 9088
+    depends: R (>= 3.1.3)
+    imports: |-
+      Rcpp, nloptr, stats, utils, graphics, grDevices, cubature, sn,
+      mnormt, methods, mvQuad
+    suggests: rgl, lattice, R.rsp
+    author: Ehsan Masoudi [aut, cre], Heinz Holling [aut], Weng Kee Wong [aut], Seongho
+      Kim [ctb]
+    date: ''
+    version: 1.0.1
+    title: Optimal Designs for Nonlinear Statistical Models by Imperialist Competitive
+      Algorithm (ICA)
+    description: Finds optimal designs for nonlinear models using a metaheuristic
+      algorithm called Imperialist Competitive Algorithm (ICA). See, for details,
+      Masoudi et al. (2017) <doi:10.1016/j.csda.2016.06.014> and Masoudi et al. (2019)
+      <doi:10.1080/10618600.2019.1601097>.
+    type: ''
+    main: ''
+- PGM2:
+    download2020: 9066
+    depends: ''
+    imports: stats
+    suggests: ''
+    author: Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
+    date: '2016-12-17'
+    version: 1.0-1
+    title: Nested Resolvable Designs and their Associated Uniform Designs
+    description: Construction method of nested resolvable designs from a projective
+      geometry defined on Galois field of order 2. The obtained Resolvable designs
+      are used to build uniform design. The presented results are based on <https://eudml.org/doc/219563>
+      and A. Boudraa et al. (See references).
+    type: ''
+    main: ''
+- dynaTree:
+    download2020: 9062
+    depends: R (>= 2.14.0), methods
+    imports: ''
+    suggests: akima, tgp, plgp, MASS
+    author: Robert B. Gramacy <rbgramacy@chicagobooth.edu>, Matt A. Taddy <taddy@chicagobooth.edu>
+      and Christoforos Anagnostopoulos <christoforos.anagnostopoulos06@imperial.ac.uk>
+    date: '2017-03-13'
+    version: 1.2-10
+    title: Dynamic Trees for Learning and Design
+    description: Inference by sequential Monte Carlo for dynamic tree regression and
+      classification models with hooks provided for sequential design and optimization,
+      fully online learning with drift, variable selection, and sensitivity analysis
+      of inputs. Illustrative examples from the original dynamic trees paper are facilitated
+      by demos in the package; see demo(package="dynaTree").
+    type: ''
+    main: ''
+- MBHdesign:
+    download2020: 9051
+    depends: ''
+    imports: mgcv, geometry, randtoolbox, mvtnorm, stats, class, parallel
+    suggests: fields, graphics, knitr, spsurvey, MASS
+    author: Scott D. Foster
+    date: ''
+    version: 2.1.8
+    title: Spatial Designs for Ecological and Environmental Surveys
+    description: Provides spatially balanced designs from a set of (contiguous) potential
+      sampling locations in a study region for point-based and for transect-based
+      surveys. Accommodates, without detrimental effects on spatial balance, sites
+      that the researcher wishes to include in the survey for reasons other than the
+      current randomisation (legacy sites).
+    type: ''
+    main: ''
+- OptGS:
+    download2020: 8874
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: James Wason [aut, cre], John Burkardt [ctb]
+    date: '2015-09-14'
+    version: 1.1.1
+    title: Near-Optimal and Balanced Group-Sequential Designs for Clinical Trials
+      with Continuous Outcomes
+    description: Functions to find near-optimal multi-stage designs for continuous
+      outcomes.
+    type: ''
+    main: ''
+- PBIBD:
+    download2020: 8871
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Parneet Kaur <parneet.nonu93@gmail.com>, Kush Sharma <kush.vashishtha@gmail.com>,
+      Davinder Kumar Garg <dkgarg_stat@yahoo.co.in>
+    date: '2017-12-20'
+    version: '1.3'
+    title: Partially Balanced Incomplete Block Designs
+    description: The PBIB designs are important type of incomplete block designs having
+      wide area of their applications for example in agricultural experiments, in
+      plant breeding, in sample surveys etc. This package constructs various series
+      of PBIB designs and assists in checking all the necessary conditions of PBIB
+      designs and the association scheme on which these designs are based on. It also
+      assists in calculating the efficiencies of PBIB designs with any number of associate
+      classes. The package also constructs Youden-m square designs which are Row-Column
+      designs for the two-way elimination of heterogeneity. The incomplete columns
+      of these Youden-m square designs constitute PBIB designs. With the present functionality,
+      the package will be of immense importance for the researchers as it will help
+      them to construct PBIB designs, to check if their PBIB designs and association
+      scheme satisfy various necessary conditions for the existence, to calculate
+      the efficiencies of PBIB designs based on any association scheme and to construct
+      Youden-m square designs for the two-way elimination of heterogeneity. R. C.
+      Bose and K. R. Nair (1939) <http://www.jstor.org/stable/40383923>.
+    type: ''
+    main: ''
+- DiceView:
+    download2020: 8805
+    depends: |-
+      methods, utils, stats, grDevices, graphics, DiceKriging,
+      DiceEval
+    imports: DiceDesign, R.cache, geometry, scatterplot3d
+    suggests: ''
+    author: Yann Richet, Yves Deville, Clement Chevalier
+    date: '2020-11-27'
+    version: 2.0-1
+    title: Methods for Visualization of Computer Experiments Design and Surrogate
+    description: View 2D/3D sections, contour plots, mesh of excursion sets for computer
+      experiments designs, surrogates or test functions.
+    type: ''
+    main: ''
+- RPPairwiseDesign:
+    download2020: 8801
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Mohamed Laib, Imane Rezgui and Zebida Gheribi-Aoulmi
+    date: '2015-01-19'
+    version: '1.0'
+    title: Resolvable partially pairwise balanced design and Space-filling design
+      via association scheme
+    description: Using some association schemes to obtain a new series of resolvable
+      partially pairwise balanced designs (RPPBD) and space-filling designs.
+    type: ''
+    main: ''
+- toxtestD:
+    download2020: 8756
+    depends: ''
+    imports: ''
+    suggests: ''
+    author: Nadia Keddig and Werner Wosniok
+    date: '2014-11-12'
+    version: '2.0'
+    title: Experimental design for binary toxicity tests
+    description: Calculates sample size and dose allocation for binary toxicity tests,
+      using the Fish Embryo Toxicity Test as example. An optimal test design is obtained
+      by running (i) spoD (calculate the number of individuals to test under control
+      conditions), (ii) setD (estimate the minimal sample size per treatment given
+      the users precision requirements) and (iii) doseD (construct an individual dose
+      scheme).
+    type: ''
+    main: ''
+- bioOED:
+    download2020: 8718
+    depends: ''
+    imports: |-
+      FME (>= 1.3.2), bioinactivation (>= 1.1.2), corrplot(>= 0.73),
+      dplyr (>= 0.5.0), ggplot2 (>= 2.1.0), stats (>= 3.3.2),
+      graphics(>= 3.3.2), MEIGOR (>= 1.0.0), rlang (>= 0.1.6), tidyr
+      (>= 0.7.2), tidyverse(>= 1.2.1), tidyselect(>= 0.2.5)
+    suggests: knitr (>= 1.9), testthat (>= 0.9.1), rmarkdown (>= 1.12)
+    author: Alberto Garre [aut, cre], Jose Lucas Penalver-Soto [aut], Pablo S. Fernandez
+      [aut], Jose A. Egea [aut]
+    date: '2019-08-07'
+    version: 0.2.1
+    title: Sensitivity Analysis and Optimum Experiment Design for Microbial Inactivation
+    description: Extends the bioinactivation package with functions for Sensitivity
+      Analysis and Optimum Experiment Design.
+    type: ''
+    main: ''
+- EngrExpt:
+    download2020: 8493
+    depends: R (>= 2.9.0), lattice
+    imports: ''
+    suggests: ''
+    author: R port by Douglas Bates <bates@stat.wisc.edu> and Karen A.F. Copeland
+      <karen@boulderstats.com>
+    date: '2009-08-21'
+    version: 0.1-8
+    title: Data sets from "Introductory Statistics for Engineering Experimentation"
+    description: Datasets from Nelson, Coffin and Copeland "Introductory Statistics
+      for Engineering Experimentation" (Elsevier, 2003) with sample code.
+    type: ''
+    main: ''
+- docopulae:
+    download2020: 8265
+    depends: R (>= 3.1.2)
+    imports: graphics, grDevices, methods, stats, utils
+    suggests: |-
+      copula, numDeriv, Deriv (>= 3.8.5), cubature, SparseGrid,
+      mvtnorm, testthat
+    author: Andreas Rappold [aut, cre]
+    date: '2018-10-26'
+    version: 0.4.0
+    title: Optimal Designs for Copula Models
+    description: A direct approach to optimal designs for copula models based on the
+      Fisher information. Provides flexible functions for building joint PDFs, evaluating
+      the Fisher information and finding optimal designs. It includes an extensible
+      solution to summation and integration called 'nint', functions for transforming,
+      plotting and comparing designs, as well as a set of tools for common low-level
+      tasks.
+    type: ''
+    main: ''
+- MaxPro:
+    download2020: 8157
+    depends: nloptr
+    imports: ''
+    suggests: ''
+    author: Shan Ba and V. Roshan Joseph
+    date: '2018-09-27'
+    version: 4.1-2
+    title: Maximum Projection Designs
+    description: 'Generate maximum projection (MaxPro) designs for quantitative and/or
+      qualitative factors. Details of the MaxPro criterion can be found in: (1) Joseph,
+      Gul, and Ba. (2015) "Maximum Projection Designs for Computer Experiments", Biometrika,
+      102, 371-380, and (2) Joseph, Gul, and Ba. (2018) "Designing Computer Experiments
+      with Multiple Types of Factors: The MaxPro Approach", Journal of Quality Technology,
+      to appear.'
+    type: ''
+    main: ''
+- crmPack:
+    download2020: 8058
+    depends: R (>= 3.0.0), ggplot2 (>= 2.0.0), graphics
+    imports: |-
+      methods, grid, gridExtra, GenSA, mvtnorm, parallel, rjags,
+      utils, tools, MASS
+    suggests: ggmcmc, knitr, Rcpp, RcppArmadillo
+    author: Daniel Sabanes Bove [aut], Wai Yin Yeung [aut], Giuseppe Palermo [aut,
+      cre], Thomas Jaki [aut]
+    date: ''
+    version: 1.0.0
+    title: Object-Oriented Implementation of CRM Designs
+    description: Implements a wide range of model-based dose escalation designs, ranging
+      from classical and modern continual reassessment methods (CRMs) based on dose-limiting
+      toxicity endpoints to dual-endpoint designs taking into account a biomarker/efficacy
+      outcome. The focus is on Bayesian inference, making it very easy to setup a
+      new design with its own JAGS code. However, it is also possible to implement
+      3+3 designs for comparison or models with non-Bayesian estimation. The whole
+      package is written in a modular form in the S4 class system, making it very
+      flexible for adaptation to new models, escalation or stopping rules.
+    type: ''
+    main: ''
+- OPDOE:
+    download2020: 8005
+    depends: gmp
+    imports: mvtnorm, orthopolynom, nlme, crossdes, polynom
+    suggests: ''
+    author: Petr Simecek <simecek@gmail.com>, Juergen Pilz <juergen.pilz@aau.at>,
+      Mingui Wang <mail.mwang@gmail.com>, Albrecht Gebhardt <albrecht.gebhardt@aau.at>.
+    date: ''
+    version: 1.0-10
+    title: Optimal Design of Experiments
+    description: Several function related to Experimental Design are implemented here,
+      see "Optimal Experimental Design with R" by Rasch D. et. al (ISBN 9781439816974).
+    type: ''
+    main: ''
+- DoE.MIParray:
+    download2020: 7847
+    depends: ''
+    imports: stats, methods, combinat, DoE.base
+    suggests: slam (>= 0.1-9), Matrix (>= 1.1.0)
+    author: Ulrike Groemping
+    date: '2019-07-13'
+    version: '0.13'
+    title: Creation of Arrays by Mixed Integer Programming
+    description: '''CRAN'' packages ''DoE.base'' and ''Rmosek'' and non-''CRAN'' package
+      ''gurobi'' are enhanced with functionality for the creation of optimized arrays
+      for experimentation, where optimization is in terms of generalized minimum aberration.
+      It is also possible to optimally extend existing arrays to larger run size.
+      Optimization requires the availability of at least one of the commercial products
+      ''Gurobi'' or ''Mosek'' (free academic licenses available for both). For installing
+      ''Gurobi'' and its R package ''gurobi'', follow instructions at <http://www.gurobi.com/downloads/gurobi-optimizer>
+      and <http://www.gurobi.com/documentation/7.5/refman/r_api_overview.html> (or
+      higher version). For installing ''Mosek'' and its R package ''Rmosek'', follow
+      instructions at <https://www.mosek.com/downloads/> and <http://docs.mosek.com/8.1/rmosek/install-interface.html>,
+      or use the functionality in the stump CRAN R package ''Rmosek''.'
+    type: ''
+    main: ''
+- ssizeRNA:
+    download2020: 7831
+    depends: R (>= 3.2.3)
+    imports: |-
+      MASS, Biobase, edgeR, limma, qvalue, ssize.fdr, graphics,
+      stats
+    suggests: knitr
+    author: Ran Bi [aut, cre], Peng Liu [aut], Tim Triche [ctb]
+    date: '2019-08-15'
+    version: 1.3.2
+    title: Sample Size Calculation for RNA-Seq Experimental Design
+    description: We propose a procedure for sample size calculation while controlling
+      false discovery rate for RNA-seq experimental design. Our procedure depends
+      on the Voom method proposed for RNA-seq data analysis by Law et al. (2014) <DOI:10.1186/gb-2014-15-2-r29>
+      and the sample size calculation method proposed for microarray experiments by
+      Liu and Hwang (2007) <DOI:10.1093/bioinformatics/btl664>. We develop a set of
+      functions that calculates appropriate sample sizes for two-sample t-test for
+      RNA-seq experiments with fixed or varied set of parameters. The outputs also
+      contain a plot of power versus sample size, a table of power at different sample
+      sizes, and a table of critical test values at different sample sizes. To install
+      this package, please use 'source("http://bioconductor.org/biocLite.R"); biocLite("ssizeRNA")'.
+      For R version 3.5 or greater, please use 'if(!requireNamespace("BiocManager",
+      quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install("ssizeRNA")'.
+    type: ''
+    main: ''
+- easypower:
+    download2020: 7814
+    depends: ''
+    imports: pwr (>= 1.1-3)
+    suggests: knitr
+    author: Aaron McGarvey
+    date: '2015-11-04'
+    version: 1.0.1
+    title: Sample Size Estimation for Experimental Designs
+    description: Power analysis is used in the estimation of sample sizes for experimental
+      designs. Most programs and R packages will only output the highest recommended
+      sample size to the user. Often the user input can be complicated and computing
+      multiple power analyses for different treatment comparisons can be time consuming.
+      This package simplifies the user input and allows the user to view all of the
+      sample size recommendations or just the ones they want to see. The calculations
+      used to calculate the recommended sample sizes are from the 'pwr' package.
+    type: ''
+    main: ''
+- gset:
+    download2020: 7725
+    depends: R (>= 3.0.2), Hmisc, mvtnorm, MCMCpack, graphics
+    imports: ''
+    suggests: ''
+    author: Fang Liu [aut, cre]
+    date: '2014-11-16'
+    version: 1.1.0
+    title: Group Sequential Design in Equivalence Studies
+    description: calculate equivalence and futility boundaries based on the exact
+      bivariate $t$ test statistics for group sequential designs in studies with equivalence
+      hypotheses.
+    type: ''
+    main: ''
+- hiPOD:
+    download2020: 7636
+    depends: rgl
+    imports: ''
+    suggests: ''
+    author: Wei E. Liang
+    date: '2012-04-27'
+    version: '1.0'
+    title: hierarchical Pooled Optimal Design
+    description: Based on hierarchical modeling, this package provides a few practical
+      functions to find and present the optimal designs for a pooled NGS design.
+    type: ''
+    main: ''
+- LDOD:
+    download2020: 7612
+    depends: R (>= 2.10.0), Rsolnp, Rmpfr
+    imports: ''
+    suggests: ''
+    author: Ehsan Masoudi, Majid Sarmad and Hooshang Talebi
+    date: '2013-02-25'
+    version: '1.0'
+    title: Finding Locally D-optimal optimal designs for some nonlinear and generalized
+      linear models
+    description: this package provides functions for Finding Locally D-optimal designs
+      for Logistic, Negative Binomial, Poisson, Michaelis-Menten, Exponential, Log-Linear,
+      Emax, Richards, Weibull and Inverse Quadratic regression models and also functions
+      for auto-constructing Fisher information matrix and Frechet derivative based
+      on some input variables and without user-interfere.
+    type: ''
+    main: ''
+- odr:
+    download2020: 7595
+    depends: |-
+      R (>= 3.3.0), stats (>= 3.0.0), graphics (>= 3.0.0), base(>=
+      3.0.0)
+    imports: ''
+    suggests: knitr, rmarkdown
+    author: Zuchao Shen [aut, cre], Ben Kelcey [aut]
+    date: 2020-3-13
+    version: 1.0.2
+    title: Optimal Design and Statistical Power of Multilevel Randomized Trials
+    description: 'Calculate the optimal sample allocation that produces smallest variance
+      of a treatment effect or the highest statistical power for experimental studies
+      under a budget constraint, perform power analyses with and without accommodating
+      cost structures of sampling, and calculate the relative efficiency between two
+      sample allocations. The references for the proposed methods are: (1) Shen, Z.
+      (2019). Optimal sample allocation in multilevel Experiments. (Doctoral dissertation).
+      University of Cincinnati, Cincinnati, OH. (2) Shen, Z., & Kelcey, B. (in press).
+      Optimal sample allocation under unequal costs in cluster-randomized trials.
+      Journal of Educational and Behavioral Statistics. (3) Champely., S. (2018).
+      pwr: Basic functions for power analysis (Version 1.2-2) [Software]. Available
+      from <https://CRAN.R-project.org/package=pwr>.'
+    type: ''
+    main: ''
+- OptimalDesign:
+    download2020: 7512
+    depends: R (>= 3.1.1)
+    imports: |-
+      grDevices, graphics, Matrix, lpSolve, matrixStats, matrixcalc,
+      plyr, quadprog, rgl, stats, utils
+    suggests: ''
+    author: Radoslav Harman, Lenka Filova
+    date: ''
+    version: 1.0.1
+    title: A Toolbox for Computing Efficient Designs of Experiments
+    description: Algorithms for D-, A-, I-, and c-optimal designs. Some of the functions
+      in this package require the 'gurobi' software and its accompanying R package.
+      For their installation, please follow the instructions at <https://www.gurobi.com>
+      and the file gurobi_inst.txt, respectively.
+    type: ''
+    main: ''
+- vdg:
+    download2020: 7377
+    depends: R (>= 3.4.0), parallel, ggplot2, quantreg
+    imports: proxy, splines, gridExtra, grDevices, methods, stats, utils
+    suggests: rsm, Vdgraph, AlgDesign, knitr, lhs
+    author: Pieter Schoonees [aut, cre, cph], Niel le Roux [ctb]
+    date: '2020-12-16'
+    version: 1.2.1
+    title: Variance Dispersion Graphs and Fraction of Design Space Plots
+    description: Facilities for constructing variance dispersion graphs, fraction-
+      of-design-space plots and similar graphics for exploring the properties of experimental
+      designs. The design region is explored via random sampling, which allows for
+      more flexibility than traditional variance dispersion graphs. A formula interface
+      is leveraged to provide access to complex model formulae. Graphics can be constructed
+      simultaneously for multiple experimental designs and/or multiple model formulae.
+      Instead of using pointwise optimization to find the minimum and maximum scaled
+      prediction variance curves, which can be inaccurate and time consuming, this
+      package uses quantile regression as an alternative.
+    type: ''
+    main: ''
+- pipe.design:
+    download2020: 7249
+    depends: ''
+    imports: ggplot2 (>= 1.0.1), gtools, xtable
+    suggests: shiny
+    author: Michael Sweeting
+    date: '2017-06-16'
+    version: 0.5.1
+    title: Dual-Agent Dose Escalation for Phase I Trials using the PIPE Design
+    description: Implements the Product of Independent beta Probabilities dose Escalation
+      (PIPE) design for dual-agent Phase I trials as described in Mander AP, Sweeting
+      MJ (2015) <DOI:10.1002/sim.6434>.
+    type: ''
+    main: ''
+- VNM:
+    download2020: 7121
+    depends: methods
+    imports: graphics, Rcpp
+    suggests: ''
+    author: Seung Won Hyun, Weng Kee Wong, and Yarong Yang
+    date: '2018-05-16'
+    version: '7.1'
+    title: Finding Multiple-Objective Optimal Designs for the 4-Parameter Logistic
+      Model
+    description: Provide tools for finding multiple-objective optimal designs for
+      estimating the shape of dose-response, the ED50 (the dose producing an effect
+      midway between the expected responses at the extreme doses) and the MED (the
+      minimum effective dose level) for the 2,3,4-parameter logistic models and for
+      evaluating its efficiencies for the three objectives. The acronym VNM stands
+      for V-algorithm using Newton Raphson method to search multiple-objective optimal
+      design.
+    type: ''
+    main: ''
+- seqDesign:
+    download2020: 7118
+    depends: R (>= 2.16), survival
+    imports: ''
+    suggests: knitr, R.rsp
+    author: Michal Juraska [aut, cre], Doug Grove [aut], Xuesong Yu [ctb], Peter Gilbert
+      [ctb], Stephanie Wu [ctb]
+    date: '2019-05-14'
+    version: '1.2'
+    title: Simulation and Group Sequential Monitoring of Randomized Two-Stage Treatment
+      Efficacy Trials with Time-to-Event Endpoints
+    description: A modification of the preventive vaccine efficacy trial design of
+      Gilbert, Grove et al. (2011, Statistical Communications in Infectious Diseases)
+      is implemented, with application generally to individual-randomized clinical
+      trials with multiple active treatment groups and a shared control group, and
+      a study endpoint that is a time-to-event endpoint subject to right-censoring.
+      The design accounts for the issues that the efficacy of the treatment/vaccine
+      groups may take time to accrue while the multiple treatment administrations/vaccinations
+      are given; there is interest in assessing the durability of treatment efficacy
+      over time; and group sequential monitoring of each treatment group for potential
+      harm, non-efficacy/efficacy futility, and high efficacy is warranted. The design
+      divides the trial into two stages of time periods, where each treatment is first
+      evaluated for efficacy in the first stage of follow-up, and, if and only if
+      it shows significant treatment efficacy in stage one, it is evaluated for longer-term
+      durability of efficacy in stage two. The package produces plots and tables describing
+      operating characteristics of a specified design including an unconditional power
+      for intention-to-treat and per-protocol/as-treated analyses; trial duration;
+      probabilities of the different possible trial monitoring outcomes (e.g., stopping
+      early for non-efficacy); unconditional power for comparing treatment efficacies;
+      and distributions of numbers of endpoint events occurring after the treatments/vaccinations
+      are given, useful as input parameters for the design of studies of the association
+      of biomarkers with a clinical outcome (surrogate endpoint problem). The code
+      can be used for a single active treatment versus control design and for a single-stage
+      design.
+    type: ''
+    main: ''
+- powerGWASinteraction:
+    download2020: 7062
+    depends: R (>= 2.10), mvtnorm, pwr
+    imports: stats
+    suggests: ''
+    author: Charles Kooperberg <clk@fredhutch.org> and Li Hsu <lih@fredhutch.org>
+    date: '2015-07-02'
+    version: 1.1.3
+    title: Power Calculations for GxE and GxG Interactions for GWAS
+    description: Analytical power calculations for GxE and GxG interactions for case-control
+      studies of candidate genes and genome-wide association studies (GWAS). This
+      includes power calculation for four two-step screening and testing procedures.
+      It can also calculate power for GxE and GxG without any screening.
+    type: ''
+    main: ''
+- unrepx:
+    download2020: 7014
+    depends: ''
+    imports: ''
+    suggests: knitr
+    author: Russell Lenth [aut, cre, cph]
+    date: '2017-07-26'
+    version: '1.0'
+    title: Analysis and Graphics for Unreplicated Experiments
+    description: Provides half-normal plots, reference plots, and Pareto plots of
+      effects from an unreplicated experiment, along with various pseudo-standard-error
+      measures, simulated reference distributions, and other tools. Many of these
+      methods are described in Daniel C. (1959) <doi:10.1080/00401706.1959.10489866>
+      and/or Lenth R.V. (1989) <doi:10.1080/00401706.1989.10488595>, but some new
+      approaches are added and integrated in one package.
+    type: ''
+    main: ''
+- VdgRsm:
+    download2020: 6987
+    depends: R (>= 3.1.2)
+    imports: permute, AlgDesign
+    suggests: akima
+    author: Patchanok Srisuradetchai, John J. Borkowski
+    date: '2015-03-29'
+    version: '1.5'
+    title: Plots of Scaled Prediction Variances for Response Surface Designs
+    description: Functions for creating variance dispersion graphs, fraction of design
+      space plots, and contour plots of scaled prediction variances for second-order
+      response surface designs in spherical and cuboidal regions. Also, some standard
+      response surface designs can be generated.
+    type: ''
+    main: ''
+- ThreeArmedTrials:
+    download2020: 6920
+    depends: R (>= 3.0.0)
+    imports: stats, MASS, numDeriv
+    suggests: testthat, knitr, rmarkdown
+    author: Tobias Mütze [aut, cre] , Tim Friede [ctb]
+    date: '2019-02-17'
+    version: 1.0-3
+    title: Design and Analysis of Clinical Non-Inferiority or Superiority Trials with
+      Active and Placebo Control
+    description: 'Design and analyze three-arm non-inferiority or superiority trials
+      which follow a gold-standard design, i.e. trials with an experimental treatment,
+      an active, and a placebo control. Method for the following distributions are
+      implemented: Poisson (Mielke and Munk (2009) <arXiv:0912.4169>), negative binomial
+      (Muetze et al. (2016) <doi:10.1002/sim.6738>), normal (Pigeot et al. (2003)
+      <doi:10.1002/sim.1450>; Hasler et al. (2009) <doi:10.1002/sim.3052>), binary
+      (Friede and Kieser (2007) <doi:10.1002/sim.2543>), nonparametric (Muetze et
+      al. (2017) <doi:10.1002/sim.7176>), exponential (Mielke and Munk (2009) <arXiv:0912.4169>).'
+    type: ''
+    main: ''
+- ph2bye:
+    download2020: 6857
+    depends: stats, graphics, animation, nleqslv
+    imports: Rcpp, VGAM
+    suggests: clinfun, gsDesign, survival
+    author: Yalin Zhu, Rui Qin
+    date: ''
+    version: 0.1.4
+    title: Phase II Clinical Trial Design Using Bayesian Methods
+    description: Calculate the Bayesian posterior/predictive probability and determine
+      the sample size and stopping boundaries for single-arm Phase II design.
+    type: ''
+    main: ''
+- OptInterim:
+    download2020: 6818
+    depends: mvtnorm, clinfun, stats, graphics, R (>= 2.14.1)
+    imports: ''
+    suggests: ''
+    author: Bo Huang <bo.huang@pfizer.com> and Neal Thomas <neal.thomas@pfizer.com>
+    date: 2012-9-30
+    version: 3.0.1
+    title: Optimal Two and Three Stage Designs for Single-Arm and Two-Arm Randomized
+      Controlled Trials with a Long-Term Binary Endpoint
+    description: Optimal two and three stage designs monitoring time-to-event endpoints
+      at a specified timepoint
+    type: ''
+    main: ''
+- OptimaRegion:
+    download2020: 6763
+    depends: R (>= 3.3.0)
+    imports: |-
+      boot, DepthProc, fields, geometry, magrittr, mclust, nloptr,
+      rsm, Rdpack, Rdsdp, spam, stringr
+    suggests: knitr, lhs, rmarkdown
+    author: Enrique del Castillo, Peng Chen, Adam Meyers, John Hunt, and James Rapkin
+    date: ''
+    version: '1.1'
+    title: Confidence Regions for Optima
+    description: Computes confidence regions on the location of response surface optima.
+    type: ''
+    main: ''
+- powerbydesign:
+    download2020: 6689
+    depends: ''
+    imports: lme4, gdata, MASS, reshape2, stringr, plyr, ggplot2
+    suggests: testthat
+    author: Frank Papenmeier [aut, cre]
+    date: '2021-02-25'
+    version: 1.0.5
+    title: Power Estimates for ANOVA Designs
+    description: Functions for bootstrapping the power of ANOVA designs based on estimated
+      means and standard deviations of the conditions. Please refer to the documentation
+      of the boot.power.anova() function for further details.
+    type: ''
+    main: ''
+- rodd:
+    download2020: 6667
+    depends: R (>= 3.0.0)
+    imports: numDeriv, quadprog, Matrix, rootSolve, matrixcalc
+    suggests: mvtnorm
+    author: Roman Guchenko [aut, cre]
+    date: ''
+    version: 0.2-1
+    title: Optimal Discriminating Designs
+    description: A collection of functions for numerical construction of optimal discriminating
+      designs. At the current moment T-optimal designs (which maximize the lower bound
+      for the power of F-test for regression model discrimination), KL-optimal designs
+      (for lognormal errors) and their robust analogues can be calculated with the
+      package.
+    type: ''
+    main: ''
+- ph2bayes:
+    download2020: 6656
+    depends: ''
+    imports: stats, Rcpp (>= 0.12.15)
+    suggests: ''
+    author: Kengo Nagashima [aut, cre]
+    date: ''
+    version: 0.0.2
+    title: Bayesian Single-Arm Phase II Designs
+    description: An implementation of Bayesian single-arm phase II design methods
+      for binary outcome based on posterior probability (Thall and Simon (1994) <doi:10.2307/2533377>)
+      and predictive probability (Lee and Liu (2008) <doi:10.1177/1740774508089279>).
+    type: ''
+    main: ''
+- sp23design:
+    download2020: 6573
+    depends: R (>= 3.0), mvtnorm, survival
+    imports: ''
+    suggests: RUnit
+    author: Balasubramanian Narasimhan [aut, cre], Mei-Chiung Shih [aut], Pei He [aut]
+    date: '2012-01-01'
+    version: '0.9'
+    title: Design and Simulation of seamless Phase II-III Clinical Trials
+    description: Provides methods for generating, exploring and executing seamless
+      Phase II-III designs of Lai, Lavori and Shih using generalized likelihood ratio
+      statistics. Includes pdf and source files that describe the entire R implementation
+      with the relevant mathematical details.
+    type: ''
+    main: ''
+- sFFLHD:
+    download2020: 6459
+    depends: DoE.base
+    imports: methods, stats, conf.design, R6
+    suggests: testthat
+    author: Collin Erickson
+    date: ''
+    version: 0.1.2
+    title: Sequential Full Factorial-Based Latin Hypercube Design
+    description: Gives design points from a sequential full factorial-based Latin
+      hypercube design, as described in Duan, Ankenman, Sanchez, and Sanchez (2015,
+      Technometrics, <doi:10.1080/00401706.2015.1108233>).
+    type: ''
+    main: ''
+- optbdmaeAT:
+    download2020: 6340
+    depends: R (>= 3.3.1), MASS, Matrix, igraph, tcltk
+    imports: ''
+    suggests: ''
+    author: Dibaba Bayisa Gemechu, Legesse Kassa Debusho, and Linda Haines
+    date: '2017-02-07'
+    version: 1.0.1
+    title: Optimal Block Designs for Two-Colour cDNA Microarray Experiments
+    description: Computes A-, MV-, D- and E-optimal or near-optimal block designs
+      for two-colour cDNA microarray experiments using the linear fixed effects and
+      mixed effects models where the interest is in a comparison of all possible elementary
+      treatment contrasts. The algorithms used in this package are based on the treatment
+      exchange and array exchange algorithms of Debusho, Gemechu and Haines (2016,
+      unpublished). The package also provides an optional method of using the graphical
+      user interface (GUI) R package tcltk to ensure that it is user friendly.
+    type: ''
+    main: ''
+- optrcdmaeAT:
+    download2020: 6333
+    depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
+    imports: ''
+    suggests: ''
+    author: Legesse Kassa Debusho, Dibaba Bayisa Gemechu, and Linda Haines
+    date: '2017-04-12'
+    version: 1.0.0
+    title: Optimal Row-Column Designs for Two-Colour cDNA Microarray Experiments
+    description: Computes A-, MV-, D- and E-optimal or near-optimal row-column designs
+      for two-colour cDNA microarray experiments using the linear fixed effects and
+      mixed effects models where the interest is in a comparison of all pairwise treatment
+      contrasts. The algorithms used in this package are based on the array exchange
+      and treatment exchange algorithms adopted from Debusho, Gemechu and Haines (2016,
+      unpublished) algorithms after adjusting for the row-column designs setup. The
+      package also provides an optional method of using the graphical user interface
+      (GUI) R package tcltk to ensure that it is user friendly.
+    type: ''
+    main: ''
+- soptdmaeA:
+    download2020: 6272
+    depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
+    imports: ''
+    suggests: ''
+    author: Dibaba Bayisa Gemechu, Legesse Kassa Debusho, and Linda Haines
+    date: '2017-06-10'
+    version: 1.0.0
+    title: Sequential Optimal Designs for Two-Colour cDNA Microarray Experiments
+    description: Computes sequential A-, MV-, D- and E-optimal or near-optimal block
+      and row-column designs for two-colour cDNA microarray experiments using the
+      linear fixed effects and mixed effects models where the interest is in a comparison
+      of all possible elementary treatment contrasts. The package also provides an
+      optional method of using the graphical user interface (GUI) R package 'tcltk'
+      to ensure that it is user friendly.
+    type: ''
+    main: ''
+- rsurface:
+    download2020: 5197
+    depends: R (>= 3.5)
+    imports: grDevices, plotly, rsm, stats
+    suggests: ''
+    author: Timothy Schwinghamer [aut, cre], Dutilleul Pierre [aut, cph]
+    date: ''
+    version: 1.1.0
+    title: Design of Rotatable Central Composite Experiments and Response Surface
+      Analysis
+    description: Produces tables with the level of replication (number of replicates)
+      and the experimental uncoded values of the quantitative factors to be used for
+      rotatable Central Composite Design (CCD) experimentation and a 2-D contour plot
+      of the corresponding variance of the predicted response according to Mead et
+      al. (2012) <doi:10.1017/CBO9781139020879> design_ccd(), and analyzes CCD data
+      with response surface methodology ccd_analysis(). A rotatable CCD provides values
+      of the variance of the predicted response that are concentrically distributed
+      around the average treatment combination used in the experimentation, which
+      with uniform precision (implied by the use of several replicates at the average
+      treatment combination) improves greatly the search and finding of an optimum
+      response. These properties of a rotatable CCD represent undeniable advantages
+      over the classical factorial design, as discussed by Panneton et al. (1999)
+      <doi:10.13031/2013.13267> and Mead et al. (2012) <doi:10.1017/CBO9781139020879.018>
+      among others.
+    type: ''
+    main: ''
