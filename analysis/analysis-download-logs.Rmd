@@ -1,0 +1,194 @@
+---
+title: "Download logs"
+author: "Emi Tanaka"
+date: "24/03/2021"
+output: html_document
+---
+
+```{r library, include=FALSE}
+library(tidyverse)
+library(magrittr)
+library(rvest)
+library(glue)
+library(lubridate)
+library(plotly)
+library(cranlogs)
+library(ggbeeswarm)
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      cache.path = "cache/")
+```
+
+```{r cache, eval = FALSE}
+fs::dir_ls("cache") %>% 
+  str_subset(".RData$") %>% 
+  walk(load)
+```
+
+
+```{r ctv}
+doe_pkgs <- ctv:::.get_pkgs_from_ctv_or_repos("ExperimentalDesign", 
+                                              repos = "http://cran.rstudio.com/")[[1]]
+survey_pkgs <- ctv:::.get_pkgs_from_ctv_or_repos("OfficialStatistics", 
+                                              repos = "http://cran.rstudio.com/")[[1]]
+npkgs <- length(doe_pkgs)
+```
+
+```{r all_pkgs}
+url <- "http://cran.rstudio.com/web/packages/packages.rds"
+db <- readRDS(url(url)) %>% 
+  as.data.frame()%>% 
+  mutate(Description = str_replace_all(Description, "\n", " "),
+         Description = str_squish(Description),
+         Title = str_replace_all(Title, "\n", " "))
+```
+
+```{r extra-pkgs}
+exclude_pkgs <- c("argonR", "card", "crispRdesignR", "genotypeR", "genepi", "recipes",
+                  "agridat", "desplot", "DiceView", "DOS", "DOS2", "EngrExpt")
+cdoe_pkgs <- db %>% 
+  filter(str_detect(Title, "[dD]esign") | Package %in% doe_pkgs) %>% 
+  filter(!Title %in% exclude_pkgs) %>% 
+  pull(Package) 
+```
+
+```{r}
+fdoe_pkgs <- db %>% 
+  filter(str_detect(Title, "[dD]esign") | 
+           Package %in% doe_pkgs) %>% 
+  mutate(taskview_doe = ifelse(Package %in% doe_pkgs, "yes", "no"),
+         taskview_survey = ifelse(Package %in% survey_pkgs, "yes", "no"),
+         criteria = case_when(str_detect(tolower(paste(Title, Description)),
+                                         "(experiment|block design|factorial design|clinical trial|optimal design|response surface design|stepped wedge design|split-plot design|phase i|crossover design|cluster randomi[sz]ed|non-inferiority trial)") ~ "DoE",
+                              TRUE ~ "No")) %>% 
+  mutate(construct = case_when(str_detect(tolower(paste(Title, Description)), "construct|comput(e|ing)|creat(e|ing)|find(ing)") ~ "yes",
+                               TRUE ~ "no"
+                                          )) %>% 
+  arrange(desc(criteria), construct) %>% 
+  select(Package, Title, Description, taskview_doe, taskview_survey, criteria, construct) %T>% 
+  write_csv(file = "output/design_classification.csv") %>% 
+  filter(criteria=="DoE") %>% 
+  pull(Package)
+```
+
+```{r}
+Rd2list <- function(Rd){
+    names(Rd) <- substring(sapply(Rd, attr, "Rd_tag"),2);
+    temp_args <- Rd$arguments;
+
+    Rd$arguments <- NULL;
+    myrd <- lapply(Rd, unlist);
+    myrd <- lapply(myrd, paste, collapse="");
+
+    temp_args <- temp_args[sapply(temp_args , attr, "Rd_tag") == "\\item"];
+    temp_args <- lapply(temp_args, lapply, paste, collapse="");
+    temp_args <- lapply(temp_args, "names<-", c("arg", "description"));
+    myrd$arguments <- temp_args;
+    return(myrd);
+}
+
+getHelpList <- function(fn, pkg){
+    thefile <- do.call("help", list(topic = fn, package = pkg))
+    myrd <- utils:::.getHelpFile(thefile);
+    Rd2list(myrd)$description %>% 
+      str_replace_all("\\n", "") %>% 
+      str_squish() %>% 
+      str_trim() 
+}
+pkg <- "agricolae"
+library(pkg, character.only = TRUE)
+fn <- lsf.str(glue::glue("package:{pkg}"))[2]
+getHelpList(fn, pkg)
+```
+
+
+
+```{r cran-data}
+end <- Sys.Date() - 2 # usually 1-2 days data are not available yet
+start <- end - years(2) + days(2)
+dldat <- cran_downloads(fdoe_pkgs, from = start, to = end)
+```
+
+```{r summary}
+dldat_sum <- dldat %>% 
+  group_by(package) %>% 
+  summarise(total = sum(count)) %>% 
+  arrange(desc(total)) %>% 
+  mutate(rank = 1:n(),
+         taskview = package %in% doe_pkgs)
+```
+
+```{r graph}
+g1 <- ggplot(dldat_sum, aes(x = taskview, y = total/1000, label = package, text = rank, color = taskview)) + 
+  geom_beeswarm() +
+  scale_y_log10(label = comma) + 
+  labs(x = "",
+       y = "Download counts in the last 2 year ('000s)") + 
+  theme(axis.ticks.length.x = unit(0, "mm"))
+
+ggplotly(g1)
+```
+
+```{r updates}
+pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
+pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
+pkg_updates <- map(fdoe_pkgs, function(pkg) {
+    last_update <- read_html(glue(pkg_url)) %>% 
+      html_table() %>% 
+      .[[1]] %>% 
+      filter(X1=="Published:") %>% 
+      pull(X2) %>% 
+      ymd()
+      
+    archive_dates <- tryCatch({ 
+        read_html(glue(pkg_archive)) %>% 
+          html_table() %>%
+          .[[1]] %>% 
+          pull(`Last modified`) %>% 
+          ymd_hm() %>% 
+          na.omit() %>% 
+          as.Date()
+      }, error = function(e) {
+        NULL
+      })
+    c(archive_dates, last_update)
+  })
+names(pkg_updates) <- doe_pkgs
+
+updates <- unlist(pkg_updates) %>% 
+  enframe("package", "update") %>% 
+  # unlist converts date to integers
+  mutate(update = as.Date(update, origin = "1970-01-01"),
+         # need to get rid of the numbers appended to pkg names
+         package = str_extract(package, paste0(doe_pkgs, collapse="|"))) 
+```
+
+```{r first}
+pkgsum <- updates %>% 
+  group_by(package) %>% 
+  summarise(first = min(update),
+            nupdates = n()) %>% 
+  left_join(dldat_sum, by = "package")
+
+g2 <- ggplot(pkgsum, aes(first, total, label = package, text = rank, size = nupdates)) + 
+  geom_point(alpha = 0.4) + 
+  scale_y_log10() + 
+  #geom_smooth() +
+  NULL
+ggplotly(g2)
+```
+
+* Packages released after 2017 September doesn't seem to be listed in CRAN Task View
+
+```{r}
+g3 <- ggplot(pkgsum, aes(nupdates, total, label = package, text = rank)) + 
+  geom_point(alpha = 0.4) + 
+  scale_y_log10() + 
+  scale_x_log10() + 
+  #geom_smooth() +
+  NULL
+ggplotly(g3)
+```
+

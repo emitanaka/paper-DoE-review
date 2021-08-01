@@ -1,0 +1,37 @@
+---
+author:
+  # see ?rjournal_article for more information
+  # Dai Dai to add her own name here
+  - name: Emi Tanaka
+    affiliation: Monash University
+    address:
+    - Monash University
+    - Clayton campus, VIC 3800, Australia
+    url: http://emitanaka.org/
+    orcid: 0000-0002-1455-259X
+    email:  emi.tanaka@monash.edu
+preamble: |
+  % Any extra LaTeX you need in the preamble
+  
+# per R journal requirement, the bib filename should be the same as the output 
+# tex file. Don't forget to rename the bib file and change this example value.
+bibliography: ../paper.bib
+
+output: rticles::rjournal_article
+---
+
+
+```{r, include = FALSE}
+paper <- here::here("paper/index.Rmd")
+meta <- rmarkdown::yaml_front_matter(paper)
+```
+
+---
+title: "`r meta$title`"
+abstract: >
+  `r meta$abstract`
+---
+
+```{r child=paper}
+```
+

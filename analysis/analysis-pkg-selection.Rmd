@@ -1,0 +1,195 @@
+---
+title: "Selection of R-packages for review"
+author: "Emi Tanaka"
+date: "24/03/2021"
+output: html_document
+---
+
+```{r library, include=FALSE}
+library(tidyverse)
+library(magrittr)
+library(glue)
+library(kableExtra)
+library(lubridate)
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache = TRUE,
+                      warning = FALSE,
+                      message = FALSE,
+                      cache.path = "cache/")
+```
+
+```{r cache, eval = FALSE}
+fs::dir_ls("cache") %>% 
+  str_subset(".RData$") %>% 
+  walk(load)
+```
+
+```{r ctv}
+doe_pkgs <- ctv:::.get_pkgs_from_ctv_or_repos("ExperimentalDesign", 
+                                              repos = "http://cran.rstudio.com/")[[1]]
+survey_pkgs <- ctv:::.get_pkgs_from_ctv_or_repos("OfficialStatistics", 
+                                              repos = "http://cran.rstudio.com/")[[1]]
+npkgs <- length(doe_pkgs)
+```
+
+```{r all_pkgs}
+url <- "http://cran.rstudio.com/web/packages/packages.rds"
+db <- readRDS(url(url)) %>% 
+  as.data.frame()%>% 
+  mutate(Description = str_replace_all(Description, "\n", " "),
+         Description = str_squish(Description),
+         Title = str_replace_all(Title, "\n", " "))
+```
+
+```{r extra-pkgs}
+#exclude_pkgs <- c("argonR", "card", "crispRdesignR", "genotypeR", "genepi", "recipes", "agridat", "desplot", "DiceView", "DOS", "DOS2", "EngrExpt")
+cdoe_pkgs <- db %>% 
+  filter(str_detect(Title, "[dD]esign") | Package %in% doe_pkgs) %>% 
+  #filter(!Title %in% exclude_pkgs) %>% 
+  pull(Package) 
+```
+
+```{r}
+# installation issues
+exclude_pkgs <- c("osmgeosample", "secrdesign", "tanaka", "bioOED", "doebioresearch", "ssizeRNA", "SurvGSD", "RcmdrPlugin.SCDA")
+design_pkgs <- db %>% 
+  filter(str_detect(Title, "[dD]esign") | 
+           Package %in% doe_pkgs) %>% 
+  mutate(taskview_doe = ifelse(Package %in% doe_pkgs, "yes", "no"),
+         taskview_survey = ifelse(Package %in% survey_pkgs, "yes", "no"),
+         criteria = case_when(str_detect(tolower(paste(Title, Description)),
+                                         "(experiment|block design|factorial design|clinical trial|optimal design|response surface design|stepped wedge design|split-plot design|phase i|crossover design|cluster randomi[sz]ed|non-inferiority trial|supersaturated design|resolvable design|sequential design|sequential enrichment design|space-filling design|latin hypercube|dose[- ]finding|dose-escalation)") ~ "DoE",
+                              TRUE ~ "No")) %>% 
+  arrange(desc(criteria)) %>% 
+  dplyr::select(Package, Title, Description, taskview_doe, taskview_survey, criteria) %>% 
+  filter(!Package %in% exclude_pkgs)
+
+write_csv(design_pkgs, file = "output/design_classification.csv")
+```
+
+```{r, include = FALSE, cache = FALSE}
+pacman::p_load(char = design_pkgs$Package, install = FALSE, update = FALSE)
+```
+
+```{css, echo = FALSE}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  opacity: 1;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+```
+
+
+```{r}
+# https://stackoverflow.com/questions/8918753/r-help-page-as-object
+Rd2list <- function(Rd){
+    names(Rd) <- substring(sapply(Rd, attr, "Rd_tag"),2)
+    temp_args <- Rd$arguments
+
+    Rd$arguments <- NULL
+    myrd <- lapply(Rd, unlist)
+    myrd <- lapply(myrd, paste, collapse="")
+
+    temp_args <- temp_args[sapply(temp_args , attr, "Rd_tag") == "\\item"]
+    temp_args <- lapply(temp_args, lapply, paste, collapse="")
+    temp_args <- lapply(temp_args, "names<-", c("arg", "description"))
+    myrd$arguments <- temp_args
+    return(myrd)
+}
+
+getHelpList <- function(fns, pkg){
+  map_chr(fns, function(fn) {
+    thefile <- do.call("help", list(topic = fn, package = pkg))
+    tryCatch(myrd <- utils:::.getHelpFile(thefile),
+             error = function(...) "")
+    if(exists("myrd")) {
+      Rd2list(myrd)$description %>% 
+        str_replace_all("\\n", "") %>% 
+        str_squish() %>% 
+        str_trim()     
+    } else {
+      ""
+    }
+  })
+}
+```
+
+## Results {.tabset}
+
+### Adaptive
+
+```{r}
+exclude_pkgs2 <- c(
+  "augmentedRCBD", # analysis only
+  "BayesCTDesign" # power and sample size calcuation only
+)
+include_pkgs <- c(
+  "binseqtest", # Exact Binary Sequential Designs and Analysis
+  "esDesign",
+  "factorial2x2",
+  "FSSF",
+  "PharmPow"
+)
+
+design_pkgs %>% 
+    filter(criteria == "DoE") %>% 
+    filter(str_detect(tolower(Description), "sequential|adaptive|sample size")) %>% 
+    mutate(fns = map(Package, ~as.character(lsf.str(glue("package:{.x}"))))) %>%
+    mutate(func = map2_chr(fns, Package, ~paste0("<div class='tooltip'>", .x, "<span class='tooltiptext'>", getHelpList(.x, .y), "</span></div>", collapse = ", ")))  %>% 
+  mutate(Package = glue("<a href='https://cran.r-project.org/web/packages/{Package}/index.html'>{Package}</a>")) %>% 
+  dplyr::select(-fns, -criteria) %>% 
+  DT::datatable(escape = FALSE)
+```
+
+### DoE 
+
+```{r}
+design_pkgs %>% 
+    filter(criteria == "DoE") %>% 
+    filter(!str_detect(tolower(Description), "sequential |adaptive|sample size")) %>% 
+    mutate(fns = map(Package, ~as.character(lsf.str(glue("package:{.x}"))))) %>%
+    mutate(func = map2_chr(fns, Package, ~paste0("<div class='tooltip'>", .x, "<span class='tooltiptext'>", getHelpList(.x, .y), "</span></div>", collapse = ", ")))  %>% 
+  mutate(Package = glue("<a href='https://cran.r-project.org/web/packages/{Package}/index.html'>{Package}</a>")) %>% 
+  dplyr::select(-fns, -criteria) %>% 
+  DT::datatable(escape = FALSE)
+```
+### Nope
+
+```{r}
+design_pkgs %>% 
+  filter(criteria == "No") %>% 
+    mutate(fns = map(Package, ~as.character(lsf.str(glue("package:{.x}"))))) %>%
+    mutate(func = map2_chr(fns, Package, ~paste0("<div class='tooltip'>", .x, "<span class='tooltiptext'>", getHelpList(.x, .y), "</span></div>", collapse = ", ")))  %>% 
+    mutate(Package = glue("<a href='https://cran.r-project.org/web/packages/{Package}/index.html'>{Package}</a>")) %>% 
+  dplyr::select(-fns, -criteria) %>% 
+  DT::datatable(escape = FALSE)
+
+```
+
+## {-}
+
+```{r}
+fdoe_pkgs <- design_pkgs %>% 
+  filter(criteria=="DoE") %>% 
+  pull(Package)
+```
+
