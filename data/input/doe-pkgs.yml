@@ -12,8 +12,19 @@
       be created. Experimental designs may be blocked or blocked designs created from
       a candidate list, using several criteria. The blocking can be done when whole
       and within plot factors interact.
-    type: ''
-    main: ''
+    type:
+      - randomised design
+      - optimised design
+    main:
+      - optBlock:
+        - randomised/optmised design
+        -
+      - optFederov:
+        - optimised design
+        - optFederov(frml,data,nTrials,center=FALSE,approximate=FALSE,criterion="D",
+        evaluateI=FALSE,space=NULL,augment=FALSE,rows,nullify=0,maxIteration=100,nRepeats=5,DFrac=1,CFrac=1,args=FALSE)
+      - optMonteCarlo:
+        - optimised design
     data: ''
 - agricolae:
     download2020: 266248
@@ -34,8 +45,17 @@
       block, factorial, split and strip plot designs. There are also various analysis
       facilities for experimental data, e.g. treatment comparison procedures and several
       non-parametric tests comparison, biodiversity indexes and consensus cluster.
-    type: ''
-    main: ''
+    type:
+      - randomised design
+      - domain:
+        - agriculture
+    main:
+      - design.lsd
+      - design.split
+      - design.bib
+      - design.ab
+      - comments:
+        "bla bla"
     data: ''
 - lhs:
     download2020: 216668
@@ -48,7 +68,10 @@
     title: Latin Hypercube Samples
     description: Provides a number of methods for creating and augmenting Latin Hypercube
       Samples and Orthogonal Array Latin Hypercube Samples.
-    type: ''
+    type:
+      - space filling
+      - sampling Design
+      - latin hypercube
     main: ''
     data: ''
 - DiceDesign:
@@ -63,7 +86,8 @@
     title: Designs of Computer Experiments
     description: Space-Filling Designs and space-filling criteria (distance-based
       and uniformity-based), with emphasis to computer experiments; <doi:10.18637/jss.v065.i11>.
-    type: ''
+    type:
+      - space filling
     main: ''
     data: ''
 - DiceKriging:
@@ -78,7 +102,9 @@
     title: Kriging Methods for Computer Experiments
     description: 'Estimation, validation and prediction of kriging models. Important
       functions : km, print.km, plot.km, predict.km.'
-    type: ''
+    type:
+      - computer experiment
+      - irrelevant
     main: ''
     data: ''
 - ez:
@@ -105,7 +131,8 @@
       or by more advanced/powerful mixed effects models, yielding predictions and
       confidence intervals that may be easily visualized at any level of the experiment's
       design.
-    type: ''
+    type:
+      - "irrelevant"
     main: ''
     data: ''
 - FrF2:
@@ -125,7 +152,8 @@
       simultaneously, cube plot for looking at the simultaneous effects of three factors,
       full or half normal plot, alias structure in a more readable format than with
       the built-in function alias).
-    type: ''
+    type:
+      - fractional factorial design
     main: ''
     data: ''
 - DoE.base:
@@ -143,7 +171,9 @@
       orthogonal arrays for (industrial) experiments. Provides diverse quality criteria.
       Provides utility functions for the class design, which is also used by other
       packages for designed experiments.
-    type: ''
+    type:
+      - factorial design
+      - paper: https://www.jstatsoft.org/article/view/v085i05/v85i05.pdf
     main: ''
     data: ''
 - rsm:
@@ -160,7 +190,9 @@
       of steepest ascent, and do canonical analysis. A good reference on these methods
       is Chapter 10 of Wu, C-F J and Hamada, M (2009) "Experiments: Planning, Analysis,
       and Parameter Design Optimization" ISBN 978-0-471-69946-0.'
-    type: ''
+    type:
+      - response-surface designs
+      - optmisation designs
     main: ''
     data: ''
 - conf.design:
@@ -174,7 +206,8 @@
     title: Construction of factorial designs
     description: This small library contains a series of simple tools for constructing
       and manipulating confounded and fractional factorial designs.
-    type: ''
+    type:
+      - factorial design
     main: ''
     data: ''
 - tgp:
@@ -196,7 +229,8 @@
       design and adaptive sampling functions are also provided, including ALM, ALC,
       and expected improvement. The latter supports derivative-free optimization of
       noisy black-box functions.
-    type: ''
+    type:
+      - irrelevant
     main: ''
     data: ''
 - BsMD:
@@ -209,7 +243,8 @@
     version: 2020.4.30
     title: Bayes Screening and Model Discrimination
     description: Bayes screening and model discrimination follow-up designs.
-    type: ''
+    type:
+      - irrelevant
     main: ''
     data: ''
 - FrF2.catlg128:
@@ -228,9 +263,10 @@
       do not add value for a search for clear designs. The previous package version
       1.0 with complete catalogues up to 24 runs (24 runs and a namespace added later)
       can be downloaded from the authors website.
-    type: ''
+    type:
+      - irrelevant
     main: ''
-    data: ''
+    data: yes
 - Vdgraph:
     download2020: 24411
     depends: ''
@@ -246,7 +282,8 @@
       Quality Technology, Vol. 25 No. 1 January 1993, to produce variance dispersion
       graphs. Also produces fraction of design space plots, and contains data frames
       for several minimal run response surface designs.
-    type: ''
+    type:
+      - response-surface designs
     main: ''
     data: ''
 - dae:
@@ -266,7 +303,8 @@
       The ANOVA functions facilitate the extraction of information when the ''Error''
       function has been used in the call to ''aov''. The package ''dae'' can also
       be installed from <http://chris.brien.name/rpackages/>.'
-    type: ''
+    type:
+      - randomised design
     main: ''
     data: ''
 - DoseFinding:
@@ -287,7 +325,9 @@
       dose-response models (using Bayesian and non-Bayesian estimation), calculating
       optimal designs and an implementation of the MCPMod methodology (Pinheiro et
       al. (2014) <doi:10.1002/sim.6052>).'
-    type: ''
+    type:
+      - domain: clinical trial
+      - aim: dose-finding
     main: ''
     data: ''
 - daewr:
@@ -301,7 +341,8 @@
     title: Design and Analysis of Experiments with R
     description: Contains Data frames and functions used in the book "Design and Analysis
       of Experiments with R".
-    type: ''
+    type:
+      - "irrelevant"
     main: ''
     data: ''
 - agridat:
@@ -322,9 +363,10 @@
     description: Datasets from books, papers, and websites related to agriculture.
       Example graphics and analyses are included. Data come from small-plot trials,
       multi-environment trials, uniformity trials, yield monitors, and more.
-    type: ''
+    type:
+      - "irrelevant"
     main: ''
-    data: ''
+    data: 'yes'
 - DoE.wrapper:
     download2020: 19594
     depends: R(>= 3.1.0), FrF2(>= 1.6-5), DoE.base(>= 0.23-4), rsm
