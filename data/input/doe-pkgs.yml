@@ -4,7 +4,7 @@
     imports: ''
     suggests: ''
     author: Bob Wheeler <bwheelerg@gmail.com>
-    date: ''
+    date: '2019-11-29'
     version: 1.2.0
     title: Algorithmic Experimental Design
     description: Algorithmic experimental designs. Calculates exact and approximate
@@ -18,14 +18,18 @@
     main:
       - optBlock:
         - randomised/optmised design
-        -
+        - optBlock(frml,withinData,blocksizes,rows=NULL,wholeBlockData=NULL,center=FALSE,
+    nRepeats=5,criterion="D",args=FALSE)
       - optFederov:
         - optimised design
         - optFederov(frml,data,nTrials,center=FALSE,approximate=FALSE,criterion="D",
         evaluateI=FALSE,space=NULL,augment=FALSE,rows,nullify=0,maxIteration=100,nRepeats=5,DFrac=1,CFrac=1,args=FALSE)
       - optMonteCarlo:
         - optimised design
-    data: ''
+        - optMonteCarlo(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,
+    space=NULL,mixtureSum=1,constraints=NULL,RandomStart=TRUE,nRepeats=5,nCand,
+    nCandNull,DFrac=1,CFrac=1,args=FALSE)
+    data: 'no'
 - agricolae:
     download2020: 266248
     depends: R (>= 2.10)
@@ -49,21 +53,62 @@
       - randomised design
       - domain:
         - agriculture
+      - paper: https://peerj.com/preprints/1404v1.pdf
     main:
-      - design.lsd
-      - design.split
-      - design.bib
       - design.ab
+        - randomised design
+        - design.ab(trt, r, serie = 2, design=c("rcbd","crd","lsd"), seed = 0, kinds = "Super-Duper",first=TRUE,randomization=TRUE)
+      - design.alpha
+        - randomised design
+        - design.alpha(trt, k, r, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
+      - design.bib
+        - randomised design
+        - design.bib(trt, k, r=NULL, serie = 2, seed = 0, kinds = "Super-Duper", maxRep=20,randomization=TRUE)
+      - design.crd
+        - randomised design
+        - design.crd(trt, r, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
+      - design.cyclic
+        - randomised design
+        - design.cyclic(trt, k, r, serie = 2, rowcol = FALSE, seed = 0, kinds = "Super-Duper" ,randomization=TRUE)
+      - design.dau 
+        - randomised design
+        - design.dau(trt1, trt2, r, serie = 2, seed = 0, kinds = "Super-Duper", name="trt" ,randomization=TRUE)
+      - design.graeco
+        - randomised design
+        - latin square design
+        - design.graeco(trt1, trt2, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
+      - design.lattice
+        - randomised design
+        - design.lattice(trt, r=3, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
+      - design.lsd
+        - randomised design
+        - latin square design
+        - design.lsd(trt, serie = 2, seed = 0, kinds = "Super-Duper",first=TRUE,randomization=TRUE)
+      - design.mat 
+        - ?
+        - design.mat(book, locations)
+      - design.rcbd 
+        - randomised design 
+        - design.rcbd(trt, r, serie = 2, seed = 0, kinds = "Super-Duper", first=TRUE, continue=FALSE,randomization=TRUE)
+      - design.split
+        - randomised design
+        - design.split(trt1, trt2,r=NULL, design=c("rcbd","crd","lsd"),serie = 2, seed = 0, kinds = "Super-Duper", first=TRUE,randomization=TRUE)
+      - design.strip
+        - randomised design 
+        - design.strip(trt1, trt2,r, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
+      - design.youden 
+        - randomised design
+        - design.youden(trt, r, serie = 2, seed = 0, kinds = "Super-Duper",first=TRUE ,randomization=TRUE)
       - comments:
-        "bla bla"
-    data: ''
+        ''
+    data: 'yes'
 - lhs:
     download2020: 216668
     depends: R (>= 3.4.0)
     imports: Rcpp
     suggests: testthat, assertthat, DoE.base, knitr, rmarkdown, covr
-    author: Rob Carnell [aut, cre]
-    date: ''
+    author: Rob Carnell [aut, cre] <bertcarnell@gmail.com>
+    date: '2020-10-05'
     version: 1.1.1
     title: Latin Hypercube Samples
     description: Provides a number of methods for creating and augmenting Latin Hypercube
@@ -72,8 +117,35 @@
       - space filling
       - sampling Design
       - latin hypercube
-    main: ''
-    data: ''
+    main: 
+      - randomLHS
+        - randomised design 
+        - Latin hypercube design
+        - randomLHS(n, k, preserveDraw = FALSE)
+      - augmentLHS
+        - Latin hypercube design
+        - ?
+        - augmentLHS(lhs, m = 1)
+      - geneticLHS
+        - optimised design
+        - Latin hypercube design
+        - geneticLHS(n = 10,k = 2,pop = 100,gen = 4,pMut = 0.1, criterium = "S", verbose = FALSE)
+      - maximinLHS 
+        - optimised design
+        - Latin hypercube design
+        - maximinLHS(n,k,method = "build",dup = 1,eps = 0.05,maxIter = 100, optimize.on = "grid", debug = FALSE)
+      - improvedLHS 
+        - optimised design
+        - Latin hypercube design
+        - improvedLHS(n, k, dup = 1)
+      - optimumLHS
+        - optimised design 
+        - Latin hypercube design
+        - optimumLHS(n = 10, k = 2, maxSweeps = 2, eps = 0.1, verbose = FALSE)
+      - create_oalhs
+        - Latin hypercube design
+        - create_oalhs(n, k, bChooseLargerDesign, bverbose)
+    data: 'no'
 - DiceDesign:
     download2020: 116634
     depends: R (>= 2.10)
