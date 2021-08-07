@@ -117,7 +117,7 @@
       - space filling
       - sampling design
       - optimisation design
-      - latin hypercube design
+      - latin hypercube sample design
     main: 
       - randomLHS
         - randomised design 
@@ -626,11 +626,36 @@
       - paper: https://arxiv.org/pdf/1305.0889.pdf
     main: 
       - MCTtest
+        - dose-response modeling
+        - MCTtest(dose, resp, data = NULL, models, S = NULL, type = c("normal", "general"), addCovars = ~1, 
+        placAdj = FALSE, alpha = 0.025, df = NULL, critV = NULL, pVal = TRUE, 
+        alternative = c("one.sided", "two.sided"), na.action = na.fail, mvtcontrol = mvtnorm.control(), 
+        contMat = NULL)
       - powMCT
+        - dose-response modeling
+        - powMCT(contMat, alpha = 0.025, altModels, n, sigma, S, placAdj=FALSE, 
+        alternative = c("one.sided", "two.sided"), df, critV, control = mvtnorm.control())
       - fitMod
+        - dose-response modeling 
+        - fitMod(dose, resp, data = NULL, model, S = NULL, type = c("normal", "general"), 
+        addCovars = ~1, placAdj start = NULL, na.action addArgs = NULL)
       - optDesign
+        - optimisation design 
+        - optDesign(models, probs, doses, designCrit = c("Dopt", "TD", "Dopt&TD", "userCrit"),
+        Delta, standDopt = TRUE, weights, nold = rep(0, length(doses)), n, control=list(), 
+        optimizer = c("solnp", "Nelder-Mead", "nlminb", "exact"), lowbnd = rep(0, length(doses)), 
+        uppbnd = rep(1, length(doses)), userCrit, ...)
       - MCPMod
+        - dose-response modeling 
+        - MCPMod(dose, resp, data, models, S = NULL, type = c("normal", "general"), 
+        addCovars = ~1, placAdj = FALSE, selModel = c("AIC", "maxT", "aveAIC"), alpha = 0.025, df = NULL, 
+        critV = NULL, doseType = c("TD", "ED"), Delta, p, pVal = TRUE, 
+        alternative = c("one.sided", "two.sided"), na.action = na.fail, mvtcontrol = mvtnorm.control(),
+        bnds, control = NULL)
       - sampSize 
+        - sample size calculation
+        - sampSize(upperN, lowerN = floor(upperN/2), targFunc, target, tol = 0.001, alRatio, 
+        Ntype = c("arm", "total"), verbose = FALSE)
     data: 'yes'
 - daewr:
     download2020: 21087
@@ -660,7 +685,7 @@
       nullabor, ordinal, pbkrtest, pls, pscl, reshape2, rgdal,
       rmarkdown, qicharts, qtl, sp, SpATS, survival, vcd, testthat
     author: Kevin Wright [aut, cre]
-    date: ''
+    date: '2021-01-12'
     version: '1.18'
     title: Agricultural Datasets
     description: Datasets from books, papers, and websites related to agriculture.
@@ -687,9 +712,33 @@
       packages. So far, response surface designs from package rsm, latin hypercube
       samples from packages lhs and DiceDesign, and D-optimal designs from package
       AlgDesign have been implemented.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - response-surface design
+      - latin hypercube sample
+      - optimisation design
+      - domain:
+        - industrial experiment 
+    main: 
+      - bbd.design
+        - response-surface design
+        - bbd.design(nfactors, ncenter=4, factor.names = NULL, default.levels=c(-1,1), block.name=NULL, 
+        randomize=TRUE, seed=NULL, ...)
+      - ccd.design 
+        - response-surface design
+        - ccd.design(nfactors=NULL, factor.names=NULL, default.levels=c(-1,1), ncube=NULL, 
+        resolution=if (identical(blocks,1) & is.null(ncube)) 5 else NULL, generators=NULL, 
+        ncenter = 4, alpha = "orthogonal",replications=1, block.name="Block.ccd", blocks=1, 
+        randomize=TRUE, seed=NULL, ...)
+      - Dopt.design 
+        - optimisation design
+        - Dopt.design(nruns, data=NULL, formula=~., factor.names=NULL, nlevels=NULL, digits=NULL, 
+        constraint=NULL, center=FALSE, nRepeats=5, seed=NULL, randomize=TRUE, blocks=1, 
+        block.name="Blocks", wholeBlockData=NULL, qual=NULL, ...)
+      - lhs.design 
+        - latin hypercube sample
+        - lhs.design(nruns, nfactors, type="optimum", factor.names=NULL, seed=NULL, digits=NULL, 
+        nlevels = nruns, default.levels = c(0, 1), randomize = FALSE, ...)
+    data: 'no'
 - RcmdrPlugin.DoE:
     download2020: 18558
     depends: |-
@@ -705,9 +754,14 @@
       It is implemented as a plugin to the R-Commander, which is a more general graphical
       user interface for statistics in R based on tcl/tk. DoE functionality can be
       accessed through the menu Design that is added to the R-Commander menus.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - domain: 
+        - industrial experiment 
+      - GUI for experimental design 
+      - irrelevant
+    main: 
+      ?
+    data: 'no'
 - crossdes:
     download2020: 18482
     depends: AlgDesign, gtools
@@ -719,9 +773,41 @@
     title: Construction of Crossover Designs
     description: Contains functions for the construction of carryover balanced crossover
       designs. In addition contains functions to check given designs for balance.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - domain:
+        - clinical trial
+      - repeated measurement design
+      - crossover design
+      - dose-finding experiment
+      - analysis of experiment
+    main: 
+      - get.plan 
+        - crossover design
+        - get.plan(trt, k = trt, maxsub = 1000)
+      - allcombs
+        - crossover design 
+        - allcombs(trt, k)
+      - williams
+        - latin square design 
+        - williams(trt)
+      - williams.BIB 
+        - latin square design 
+        - crossover design 
+        - balanced incomplete block design
+        - williams.BIB(d)
+      - des.MOLS 
+        - crossover design 
+        - des.MOLS(trt, k = trt)
+      - balmin.RMD 
+        - crossover design 
+        - balmin.RMD(trt, n, p)
+      - isCbalanced
+        - crossover design
+        - isCbalanced(d, preperiod = FALSE)
+      - isGYD 
+        - crossover design
+        - isGYD(d, tables=FALSE, type=TRUE)
+    data: 'yes'
 - BHH2:
     download2020: 17844
     depends: R (>= 2.0.0)
@@ -734,29 +820,58 @@
     description: Functions and data sets reproducing some examples in Box, Hunter
       and Hunter II. Useful for statistical design of experiments, especially factorial
       experiments.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - book dataset
+      - book example 
+      - factorial design 
+      - irrelevant?
+    main: 
+      - ffDesMatrix
+        - factorial design 
+        - fractional factorial design 
+        - ffDesMatrix(k, gen = NULL)
+      - ffFullMatrix(X, x, maxInt, blk = NULL)
+        - factorial design 
+        - fractional factorial design 
+        - ffFullMatrix(X, x, maxInt, blk = NULL)
+    data: 'yes'
 - SensoMineR:
     download2020: 16786
     depends: R (>= 3.0), FactoMineR (>= 2.3)
     imports: cluster,KernSmooth,ggplot2,reshape2,AlgDesign,gtools,ggrepel
     suggests: ''
-    author: Francois Husson, Sebastien Le, Marine Cadoret
+    author: Francois Husson <husson at agrocampus-ouest.fr>, Sebastien Le, Marine Cadoret
     date: '2020-05-19'
     version: '1.26'
     title: Sensory Data Analysis
     description: 'Statistical Methods to Analyse Sensory Data. SensoMineR: A package
       for sensory data analysis. S. Le and F. Husson (2008) <DOI:10.1111/j.1745-459X.2007.00137.x>.'
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - irrelevant?
+      - sensory data analysis
+      - domain:
+        - sensory studies
+      - paper: https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-459X.2007.00137.x
+    main: 
+      - ?
+    data: 'yes'
+    note: 
+    - function related to experimental design 
+      - optimaldesign
+        - optimisation design 
+        - optimaldesign(nbPanelist, nbProd, nbProdByPanelist=nbProd, seed=NULL)
+      - triangle.design
+        - triangle test
+        - triangle.design (nbprod , nbpanelist, bypanelist = nbprod*(nbprod-1)/2, labprod=1:nbprod, labpanelist=1:nbpanelist)
+      - WilliamsDesign
+        - latin square design 
+        - WilliamsDesign(nbprod,seed=NULL)
 - BOIN:
     download2020: 16462
     depends: ''
     imports: Iso
     suggests: ''
-    author: Ying Yuan and Suyu Liu
+    author: Ying Yuan <yyuan@mdanderson.org> and Suyu Liu
     date: '2021-01-19'
     version: 2.7.2
     title: Bayesian Optimal INterval (BOIN) Design for Single-Agent and Drug- Combination
@@ -774,9 +889,27 @@
       the best model-based designs) in terms of selecting the MTD, but has a substantially
       lower risk of assigning patients to subtherapeutic or overly toxic doses. For
       tutorial, please check Yan et al. (2020) <doi:10.18637/jss.v094.i13>.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - domain:
+        - clinical trial
+      - dose-finding experiment 
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v094i13/v94i13.pdf
+    main: 
+      - get.boundary
+        - dose-finding 
+        - get.boundary( target, ncohort, cohortsize, n.earlystop = 100, 
+        p.saf = 0.6 * target, p.tox = 1.4 * target,  cutoff.eli = 0.95, 
+        extrasafe = FALSE, offset = 0.05)
+      - get.oc
+        - dose-finding 
+        - get.oc(target, p.true, ncohort, cohortsize, n.earlystop=100, startdose=1, titration=FALSE, 
+        p.saf=0.6*target, p.tox=1.4*target, cutoff.eli=0.95,extrasafe=FALSE, offset=0.05, 
+        boundMTD=FALSE, ntrial=1000, seed=6)
+      - select.mtd
+        - dose-finding 
+        - select.mtd(target, npts, ntox, cutoff.eli=0.95, extrasafe=FALSE, offset=0.05, boundMTD=FALSE,
+        p.tox=1.4*target)
+    data: 'no'
 - blocksdesign:
     download2020: 15259
     depends: R (>= 3.1)
@@ -801,9 +934,18 @@
       to blocks and tables showing the achieved D-efficiency factors for each block
       and treatment design. Edmondson, R.N. Multi-level Block Designs for Comparative
       Experiments. JABES 25, 500–522 (2020) <doi:10.1007/s13253-020-00416-0>.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - randomised design 
+      - paper: https://link.springer.com/content/pdf/10.1007/s13253-020-00416-0.pdf
+    main: 
+      - blocks
+        - randomised design 
+        - blocks(treatments, replicates, blocks = NULL, searches = NULL, seed = NULL, jumps = 1)
+      - design
+        - optimisation design 
+        - design(treatments, blocks, treatments_model = NULL, weighting = 0.5, searches = NULL, 
+        seed = NULL, jumps = 1)
+    data: 'yes'
 - blockTools:
     download2020: 13342
     depends: ''
