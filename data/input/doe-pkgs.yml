@@ -116,7 +116,7 @@
     type:
       - space filling
       - sampling design
-      - optimisation design
+      - optimised design
       - latin hypercube sample design
     main: 
       - randomLHS
@@ -359,13 +359,13 @@
         bbreps=replications, wbreps=1, block.old.behavior=FALSE)
       - oa.design 
         - factorial design
-        - optimisation design
+        - optimised design
         - oa.design(ID=NULL, nruns=NULL, nfactors=NULL, nlevels=NULL, factor.names = if (!is.null(nfactors)) 
         {if (nfactors <= 50) Letters[1:nfactors] else paste("F", 1:nfactors, sep = "")} else NULL,
         columns="order", replications=1, repeat.only=FALSE, randomize=TRUE, seed=NULL, min.residual.df=0, 
         levordold = FALSE)
       - generalized.word.length
-        - optimisation design
+        - optimised design
         - lengths(design, ...)
     data: 'no'
 - rsm:
@@ -384,7 +384,7 @@
       and Parameter Design Optimization" ISBN 978-0-471-69946-0.'
     type:
       - response-surface designs
-      - optmisation design
+      - optmised design
       - analysis of exeperiment 
       - paper: https://www.jstatsoft.org/index.php/jss/article/view/v032i07/v32i07.pdf
     main: 
@@ -395,10 +395,10 @@
         coding, oneblock = FALSE)
       - bbd
         - response-surface design
-        - optimisation design
+        - optimised design
         - bbd(k, n0 = 4, block = (k == 4 | k == 5), randomize = TRUE, coding)
       - ccd.pick
-        - optimisation design
+        - optimised design
         - ccd.pick(k, n.c = 2^k, n0.c = 1:10, blks.c = 1, n0.s = 1:10, bbr.c = 1, wbr.s = 1, 
         bbr.s = 1, best = 10, sortby = c("agreement", "N"), restrict)
       - rsm 
@@ -621,32 +621,32 @@
       - domain: 
         - clinical trial
       - dose-finding experiment
-      - optimisation design
+      - optimised design
       - analysis of experiment
       - paper: https://arxiv.org/pdf/1305.0889.pdf
     main: 
       - MCTtest
-        - dose-response modeling
+        - dose-finding
         - MCTtest(dose, resp, data = NULL, models, S = NULL, type = c("normal", "general"), addCovars = ~1, 
         placAdj = FALSE, alpha = 0.025, df = NULL, critV = NULL, pVal = TRUE, 
         alternative = c("one.sided", "two.sided"), na.action = na.fail, mvtcontrol = mvtnorm.control(), 
         contMat = NULL)
       - powMCT
-        - dose-response modeling
+        - dose-finding
         - powMCT(contMat, alpha = 0.025, altModels, n, sigma, S, placAdj=FALSE, 
         alternative = c("one.sided", "two.sided"), df, critV, control = mvtnorm.control())
       - fitMod
-        - dose-response modeling 
+        - dose-finding 
         - fitMod(dose, resp, data = NULL, model, S = NULL, type = c("normal", "general"), 
         addCovars = ~1, placAdj start = NULL, na.action addArgs = NULL)
       - optDesign
-        - optimisation design 
+        - optimised design 
         - optDesign(models, probs, doses, designCrit = c("Dopt", "TD", "Dopt&TD", "userCrit"),
         Delta, standDopt = TRUE, weights, nold = rep(0, length(doses)), n, control=list(), 
         optimizer = c("solnp", "Nelder-Mead", "nlminb", "exact"), lowbnd = rep(0, length(doses)), 
         uppbnd = rep(1, length(doses)), userCrit, ...)
       - MCPMod
-        - dose-response modeling 
+        - dose-finding
         - MCPMod(dose, resp, data, models, S = NULL, type = c("normal", "general"), 
         addCovars = ~1, placAdj = FALSE, selModel = c("AIC", "maxT", "aveAIC"), alpha = 0.025, df = NULL, 
         critV = NULL, doseType = c("TD", "ED"), Delta, p, pVal = TRUE, 
@@ -715,7 +715,7 @@
     type: 
       - response-surface design
       - latin hypercube sample
-      - optimisation design
+      - optimised design
       - domain:
         - industrial experiment 
     main: 
@@ -730,7 +730,7 @@
         ncenter = 4, alpha = "orthogonal",replications=1, block.name="Block.ccd", blocks=1, 
         randomize=TRUE, seed=NULL, ...)
       - Dopt.design 
-        - optimisation design
+        - optimised design
         - Dopt.design(nruns, data=NULL, formula=~., factor.names=NULL, nlevels=NULL, digits=NULL, 
         constraint=NULL, center=FALSE, nRepeats=5, seed=NULL, randomize=TRUE, blocks=1, 
         block.name="Blocks", wholeBlockData=NULL, qual=NULL, ...)
@@ -858,7 +858,7 @@
     note: 
     - function related to experimental design 
       - optimaldesign
-        - optimisation design 
+        - optimised design 
         - optimaldesign(nbPanelist, nbProd, nbProdByPanelist=nbProd, seed=NULL)
       - triangle.design
         - triangle test
@@ -935,14 +935,16 @@
       and treatment design. Edmondson, R.N. Multi-level Block Designs for Comparative
       Experiments. JABES 25, 500–522 (2020) <doi:10.1007/s13253-020-00416-0>.
     type: 
-      - randomised design 
+      - randomised design
+      - block design
       - paper: https://link.springer.com/content/pdf/10.1007/s13253-020-00416-0.pdf
     main: 
       - blocks
-        - randomised design 
+        - randomised design
+        - block design 
         - blocks(treatments, replicates, blocks = NULL, searches = NULL, seed = NULL, jumps = 1)
       - design
-        - optimisation design 
+        - optimised design 
         - design(treatments, blocks, treatments_model = NULL, weighting = 0.5, searches = NULL, 
         seed = NULL, jumps = 1)
     data: 'yes'
@@ -951,7 +953,7 @@
     depends: ''
     imports: MASS, tibble
     suggests: nbpMatching, RItools, xtable
-    author: Ryan T. Moore and Keith Schnakenberg
+    author: Ryan T. Moore <rtm@american.edu> and Keith Schnakenberg
     date: '2016-12-02'
     version: 0.6-3
     title: Block, Assign, and Diagnose Potential Interference in Randomized Experiments
@@ -961,9 +963,38 @@
       units on one variable can be set. Randomly assign units to treatment conditions.
       Diagnose potential interference between units assigned to different treatment
       conditions. Write outputs to .tex and .csv files.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - randomised design 
+      - block design
+    main: 
+      - block
+        - randomised design 
+        - block design 
+        - block(data, vcov.data = NULL, groups = NULL, n.tr = 2, id.vars, block.vars = NULL, 
+        algorithm = "optGreedy", distance = "mahalanobis", weight = NULL, optfactor = 10^7, 
+        row.sort = NULL, level.two = FALSE, valid.var = NULL, valid.range = NULL, seed.dist, 
+        namesCol = NULL, verbose = FALSE, ...)
+      - assignment
+        - randomised design 
+        - assignment(block.obj, seed = NULL, namesCol = NULL)
+      - diagnose
+        - randomised design?
+        - diagnose(object, data, id.vars, suspect.var, suspect.range = NULL)
+      - outTeX
+        - randomised design output
+        - outTeX(block.obj, namesCol = NULL, file.names = NULL, 
+        captions = NULL, digits = 2, ...)
+      - outCSV
+        - randomised design output
+        - outCSV(block.obj, namesCol = NULL, file.names = NULL, digits = 2, ...)
+      - seqblock
+        - randomised design
+        - seqblock(object = NULL, id.vars, id.vals, exact.vars = NULL, exact.vals = NULL, 
+        exact.restr = NULL, exact.alg = "single", covar.vars = NULL, covar.vals = NULL, 
+        covar.restr = NULL, covars.ord = NULL, n.tr = 2, tr.names = NULL, assg.prob = NULL, 
+        seed = NULL, seed.dist, assg.prob.stat = NULL, trim = NULL, assg.prob.method = NULL,
+        assg.prob.kfac = NULL, distance = NULL, file.name = NULL, query = FALSE, verbose = TRUE, ...)
+    data: 'yes'
 - dfcrm:
     download2020: 12562
     depends: ''
@@ -975,9 +1006,26 @@
     title: Dose-Finding by the Continual Reassessment Method
     description: Provides functions to run the CRM and TITE-CRM in phase I trials
       and calibration tools for trial planning purposes.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - dose-finding experiment 
+      - continual reassessment method
+      - domain:
+        - clinical trial
+    main: 
+      - crm 
+        - dose-finding 
+        - continual reassessment method
+        - crm(prior, target, tox, level, n = length(level), dosename = NULL, include = 1:n, 
+        pid = 1:n, conf.level = 0.9, method = "bayes", model = "empiric", intcpt = 3, 
+        scale = sqrt(1.34), model.detail = TRUE, patient.detail = TRUE, var.est = TRUE)
+      - titecrm
+        - dose-finding
+        - continual reassessment method
+        - titecrm(prior, target, tox, level, n = length(level), weights = NULL, followup = NULL, 
+        entry = NULL, exit = NULL, obswin = NULL, scheme = "linear", conf.level = 0.9, dosename = NULL, 
+        include = 1:n, pid = 1:n, method = "bayes", model = "empiric", var.est = TRUE, 
+        scale = sqrt(1.34), intcpt = 3, model.detail = TRUE, patient.detail = TRUE, tite = TRUE)
+    data: 'no'
 - powerAnalysis:
     download2020: 12224
     depends: ''
@@ -988,9 +1036,54 @@
     version: 0.2.1
     title: Power Analysis in Experimental Design
     description: Basic functions for power analysis and effect size calculation.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - analysis of exeperiment 
+      - power analysis
+      - irrelevant?
+    main: 
+      - ES.anova.oneway
+        - Effect size calculation
+        - ES.anova.oneway(data = NULL, sst = NULL, ssb = NULL)
+      - ES.chisq.assoc
+        - Effect size calculation
+        - ES.chisq.assoc(ct = NULL, chisq = NULL, p = NULL, n = NULL, df = NULL, mindf = NULL)
+      - ES.chisq.gof
+        - Effect size calculation
+        - ES.chisq.gof(p1 = NULL, p0 = rep(1/length(p1), length(p1)))
+      - ES.proportions
+        - Effect size calculation
+        - ES.proportions(p1 = NULL, p2 = NULL, alternative = c("two.sided", "one.sided"))
+      - ES.t.one
+        - Effect size calculation
+        - ES.t.one(m = NULL, sd = NULL, n = NULL, t = NULL, se = NULL, df = NULL, mu = NULL, 
+        alternative = c("two.sided", "one.sided"))
+      - ES.t.paired
+        - Effect size calculation
+        - ES.t.paired(md = NULL, sd = NULL, n = NULL, t = NULL, se = NULL, df = NULL, 
+        alternative = c("two.sided", "one.sided"))
+      - ES.t.two
+        - Effect size calculation
+        - ES.t.two(m1 = NULL, m2 = NULL, sd1 = NULL, sd2 = NULL, n1 = NULL, n2 = NULL, t = NULL, 
+        se1 = NULL, se2 = NULL, df = NULL, alternative = c("two.sided", "one.sided"))
+      - power.anova.oneway
+        - power analysis
+        - power.anova.oneway(groups = NULL, n = NULL, f = NULL, power = NULL, sig.level = 0.05)
+      - power.chisq
+        - power analysis
+        - power.chisq(es = NULL, df = NULL, n = NULL, power = NULL, sig.level = NULL)
+      - power.plot.chisq
+        - power analysis
+        - power.plot.chisq(es = NULL, power = NULL, df = NULL, sig.level = NULL, 
+        allele = FALSE, xlab = NULL, ylab = NULL, main = NULL, grid = FALSE, type = c("np", "ne"))
+      - power.proportions
+        - power analysis
+        - power.proportions(n = NULL, h = NULL, power = NULL, sig.level = 0.05, 
+        type = c("two", "one", "unequal"), ratio = 1)
+      - power.t
+        - power analysis
+        - power.t(es = NULL, n = NULL, power = NULL, sig.level = NULL, ratio = 1, 
+        type = c("two", "paired", "one", "unequal"), alternative = c("two.sided", "left", "right"))
+    data: 'no'
 - acebayes:
     download2020: 12140
     depends: R (>= 3.5.0), lhs
@@ -1002,23 +1095,67 @@
     title: Optimal Bayesian Experimental Design using the ACE Algorithm
     description: Optimal Bayesian experimental design using the approximate coordinate
       exchange (ACE) algorithm. See <doi:10.18637/jss.v095.i13>.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v095i13/v95i13.pdf
+    main: 
+      - ace
+        - optimised design 
+        - ace(utility, start.d, B, Q = 20, N1 = 20, N2 = 100, lower = -1, upper = 1, limits = NULL, 
+        progress = FALSE, binary = FALSE, deterministic = FALSE)
+      - pace 
+        - optimised design
+        - pace(utility, start.d, B, Q = 20, N1 = 20, N2 = 100, lower = -1, upper = 1, limits = NULL, binary = FALSE, 
+        deterministic = FALSE, mc.cores = 1, n.assess = 20)
+      - aceglm 
+        - optimised design
+        - aceglm(formula, start.d, family, prior, B, 
+        criterion = c("D", "A", "E", "SIG", "NSEL", "SIG-Norm", "NSEL-Norm"), 
+        method = c("quadrature", "MC"), Q = 20, N1 = 20, N2 = 100, lower = -1, upper = 1, 
+        progress = FALSE, limits = NULL)
+      - paceglm 
+        - optimised design
+        - paceglm(formula, start.d, family, prior, B,
+        criterion = c("D", "A", "E", "SIG", "NSEL", "SIG-Norm", "NSEL-Norm"),
+        method = c("quadrature", "MC"), Q = 20, N1 = 20, N2 = 100, lower = -1, upper = 1, limits = NULL, 
+        mc.cores = 1, n.assess = 20)
+      - acnlm 
+        - optimised design
+        - acenlm(formula, start.d, prior, B, criterion = c("D", "A", "E", "SIG", "NSEL"), 
+        method = c("quadrature", "MC"), Q = 20, N1 = 20, N2 = 100, lower = -1, upper = 1, 
+        progress = FALSE, limits = NULL)
+      - pacenlm 
+        - optimised design
+        - pacenlm(formula, start.d, prior, B, criterion = c("D", "A", "E", "SIG", "NSEL"), 
+        method = c("quadrature", "MC"), Q = 20, N1 = 20, N2 = 100, lower = -1, upper = 1, 
+        limits = NULL, mc.cores = 1, n.assess = 20)
+    data: 'no'
 - desplot:
     download2020: 11957
     depends: ''
     imports: ggplot2, grid, lattice, reshape2,
     suggests: agridat, knitr, rmarkdown, testthat
     author: Kevin Wright [aut, cre]
-    date: ''
+    date: '2020-10-21'
     version: '1.8'
     title: Plotting Field Plans for Agricultural Experiments
     description: A function for plotting maps of agricultural field experiments that
       are laid out in grids.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - visualisation (design)
+      - domain:
+        - agriculture
+    main: 
+      - desplot
+        - design visualisation
+        - desplot(data, form = formula(NULL ~ x + y), num = NULL, num.string = NULL, col = NULL, 
+        col.string = NULL, text = NULL, text.string = NULL, out1 = NULL, out1.string = NULL,out2 = NULL,
+        out2.string = NULL, dq = NULL, dq.string = NULL, col.regions = RedGrayBlue, col.text = NULL,
+        text.levels = NULL, out1.gpar = list(col = "black", lwd = 3), 
+        out2.gpar = list(col = "yellow", lwd = 1, lty = 1), at, midpoint = "median", ticks = FALSE,
+        flip = FALSE, main = NULL, xlab, ylab, shorten = "abb", show.key = TRUE, key.cex, 
+        cex = 0.4, strip.cex = 0.75, subset = TRUE, gg = FALSE, ...)
+    data: 'no'
 - support.CEs:
     download2020: 11900
     depends: ''
@@ -1033,9 +1170,28 @@
       preferences for goods/services and their characteristics. Refer to Louviere
       et al. (2000) <doi:10.1017/CBO9780511753831> for details on CEs, and Aizaki
       (2012) <doi:10.18637/jss.v050.c02> for the package.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - choice experiments design
+      - domain: 
+        - consumer behaviour 
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v050c02/v50c02.pdf
+    main: 
+      - Lma.design
+        - choice experiments design
+        - Lma.design(candidate.array = NULL, attribute.names, nalternatives, nblocks, 
+        row.renames = TRUE, seed = NULL)
+      - make.design.matrix
+        - choice experiments design
+        - make.design.matrix(choice.experiment.design,optout = TRUE, categorical.attributes = NULL, 
+        continuous.attributes = NULL, unlabeled = TRUE, common = NULL, binary = FALSE)
+      - questionnaire
+        - questionairre of choice experiments design
+        - questionnaire(choice.experiment.design, common = NULL, quote = TRUE)
+      - rotation.design
+        - choice experiments design
+        - rotation.design(candidate.array = NULL, attribute.names, nalternatives, nblocks, row.renames = TRUE,
+        randomize = FALSE, seed = NULL)
+    data: 'yes'
 - BatchExperiments:
     download2020: 11677
     depends: R (>= 3.0.0), BatchJobs (>= 1.7)
@@ -1045,20 +1201,49 @@
     suggests: plyr, randomForest, rpart, testthat
     author: Bernd Bischl <bernd_bischl@gmx.net>, Michel Lang <michellang@gmail.com>,
       Olaf Mersmann <olafm@p-value.net>
-    date: ''
+    date: '2017-11-30'
     version: 1.4.2
     title: Statistical Experiments on Batch Computing Clusters
     description: Extends the BatchJobs package to run statistical experiments on batch
       computing clusters. For further details see the project web page.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - irrelevant? 
+      - algortihm abstraction
+      - domain:
+        - computer experiment 
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v064i11/v64i11.pdf
+    main: 
+      - makeExperimentRegistry
+        - ?
+        - makeExperimentRegistry(id = "BatchExperimentRegistry", file.dir, sharding = TRUE, 
+        work.dir, multiple.result.files = FALSE, seed, packages = character(0L), 
+        src.dirs = character(0L), src.files = character(0L), skip = TRUE)
+      - addProblem
+        - algortihm abstraction
+        - addProblem(reg, id, static = NULL, dynamic = NULL, seed = NULL, overwrite = FALSE)
+      - addAlgorithm
+        - algortihm abstraction
+        - addAlgorithm(reg, id, fun, overwrite = FALSE)
+      - makeDesign
+        - parameter design for algorithm abstraction
+        - makeDesign(id, design = data.frame(), exhaustive = list())
+      - addExperiments
+        - ?
+        - addExperiments(reg, prob.designs, algo.designs, repls = 1L, skip.defined = FALSE)
+      - summarizeExperiments
+        - experiment result 
+        - summarizeExperiments(reg, ids, show = c("prob", "algo"))
+      - findExperiments
+        - ?
+        - findExperiments(reg, ids, prob.pattern, prob.pars, algo.pattern, algo.pars, 
+        repls, match.substring = TRUE, regexp = FALSE)
+    data: 'no'
 - GAD:
     download2020: 11214
     depends: R (>= 2.7.0), stats, matrixStats, R.methodsS3
     imports: ''
     suggests: ''
-    author: Leonardo Sandrini-Neto & Mauricio G. Camargo
+    author: Leonardo Sandrini-Neto <leonardosandrini@gmail.com> & Mauricio G. Camargo
     date: '2011-02-21'
     version: 1.1.1
     title: 'GAD: Analysis of variance from general principles'
@@ -1068,9 +1253,21 @@
       are not allowed. Homogeneity of variances is checked using Cochran''s C test
       and ''a posteriori'' comparisons of means are done using Student-Newman-Keuls
       (SNK) procedure.'
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - analysis of experiment 
+      - modeling
+      - irrelevant?
+    main: 
+      - gad 
+        - modeling 
+        - gad(object)
+      - C.test
+        - ?
+        - C.test(object) 
+      - snk.test
+        - modeling 
+        - snk.test(object, term, among = NULL, within = NULL)
+    data: 'yes'
 - bcrm:
     download2020: 11141
     depends: ''
@@ -1086,9 +1283,24 @@
       designs. The program can run interactively, allowing the user to enter outcomes
       after each cohort has been recruited, or via simulation to assess operating
       characteristics. See Sweeting et al. (2013): <doi:10.18637/jss.v054.i13>.'
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - dose-finding experiment 
+      - continual reassessment method 
+      - domain:
+        - clinical trial
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v054i13/bcrm_Bayesian_Continual_Reassessment_Method_Designs_for_Phase_I_Dose-Finding_Trials.pdf
+    main: 
+      - bcrm 
+        - continual reassessment method 
+        - dose-finding 
+        - bcrm(stop = list(nmax = NULL, nmtd = NULL, precision = NULL, nmin = NULL, safety = NULL), 
+        data = NULL, p.tox0 = NULL, sdose = NULL, dose = NULL, ff, prior.alpha, cohort = 3, target.tox,
+        constrain = TRUE, only.below = FALSE, sdose.calculate = "mean", pointest = "plugin", 
+        tox.cutpoints = NULL, loss = NULL, start = NULL, simulate = FALSE, nsims = 1, truep = NULL, 
+        threep3 = FALSE, threep3.start = 1, threep3.esc.only = FALSE, method = "exact", 
+        burnin.itr = 2000, production.itr = 2000, bugs.directory = "c:/Program Files/WinBUGS14/", 
+        plot = FALSE, seed = NULL, quietly = 10, file = NULL, N, tox, notox)
+    data: 'no'
 - ibd:
     download2020: 10962
     depends: R (>= 3.1.1)
@@ -1109,9 +1321,20 @@
       marginal means of factors from experiments using a connected incomplete block
       design. Tests of hypothesis of treatment contrasts in incomplete block design
       set up is supported.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - block design 
+      - randomised design 
+    main: 
+      - ibd 
+        - incomplete block design
+        - ibd(v,b,k,NNPo,ntrial,pbar=FALSE)
+      - bibd
+        - incomplete block design
+        - bibd(v,b,r,k,lambda,ntrial,pbar=FALSE)
+      - btib
+        - incomplete block design
+        - btib(v,b,r,r0,k,lambda,lambda0,ntrial=5,pbar=FALSE)
+    data: 'yes'
 - pid:
     download2020: 10882
     depends: ''
@@ -1126,23 +1349,38 @@
       "Experimentation for Improvement" found on Coursera. The package contains code
       for designed experiments, data sets and other convenience functions used in
       the book.'
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - irrelevant 
+      - book dataset
+      - book example 
+    main: 
+      - ?
+    data: 'yes'
 - mixexp:
     download2020: 10670
     depends: gdata, lattice, grid, daewr
     imports: ''
     suggests: ''
-    author: John Lawson [aut, cre], Cameron Willden [aut], Greg Piepel [ctb]
+    author: John Lawson [aut, cre] <lawson@byu.edu>, Cameron Willden [aut], Greg Piepel [ctb]
     date: 2016-8-12
     version: 1.2.5
     title: Design and Analysis of Mixture Experiments
     description: Functions for creating designs for mixture experiments, making ternary
       contour plots, and making mixture effect plots.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - mixture design
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v072c02/v72c02.pdf
+    main: 
+      - SLD 
+        - mixture design
+        - SLD(fac, lev)
+      - Xvert
+        - mixture design
+        - Xvert(nfac=3,uc=c(0,0),lc=c(0,0),nlc=0,lb=c(0,0),ub=c(0,0),coef,ndm=0,plot=TRUE,
+          cornerlabs = c("x1","x2","x3"), axislabs = c("x1","x2","x3"), pseudo=TRUE)
+    note: 
+      - There are also other functions for analysis and visualisation
+    data: 'yes'
 - desirability:
     download2020: 10628
     depends: ''
@@ -1154,9 +1392,17 @@
     title: Function Optimization and Ranking via Desirability Functions
     description: S3 classes for multivariate optimization using the desirability function
       by Derringer and Suich (1980).
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design 
+      - response-surface design
+    main: 
+      - dMax
+        - optimised design
+        - dMax(low, high, scale = 1, toll = NULL, ...)
+      - predict.dMax
+        - optimised design
+        - predict(object, newdata = NA, missing = object$missing, ...)
+    data: 'no'
 - CombinS:
     download2020: 10624
     depends: ''
@@ -1169,9 +1415,15 @@
     description: Series of partially balanced incomplete block designs (PBIB) based
       on the combinatory method (S) introduced in (Imane Rezgui et al, 2014) <doi:10.3844/jmssp.2014.45.48>;
       and it gives their associated U-type design.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - randomised design 
+      - block design 
+    main: 
+      - CombS
+        - block design 
+        - incomplete block design 
+        - CombS(n, l, s)
+    data: 'no'
 - FMC:
     download2020: 10547
     depends: ''
@@ -1179,14 +1431,21 @@
     suggests: ''
     author: Shwetank Lall [aut, cre], Arpan Bhowmik [ctb], Eldho Varghese [aut], Seema
       Jaggi [ctb], Cini Varghese [ctb]
-    date: ''
+    date: '2017-03-21'
     version: 1.0.0
     title: Factorial Experiments with Minimum Level Changes
     description: Generate cost effective minimally changed run sequences for symmetrical
       as well as asymmetrical factorial designs.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - factorial design 
+    main: 
+      - gen.level
+        - factorial design 
+        - gen.level(x)
+      - minimal.factorial
+        - factorial design 
+        - minimal.factorial(z)
+    data: 'no'
 - granova:
     download2020: 10327
     depends: R (>= 3.1.1), car (>= 2.0-21)
@@ -1224,9 +1483,21 @@
       construction of graphics that accommodate diverse features of data, according
       to their corresponding display requirements. See the help files for individual
       functions.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - analysis of experiment 
+      - visualisation 
+      - irrelevant
+      - paper: http://moderngraphics11.pbworks.com/f/ElementalGraphics4ANOVA.RP+JH.pdf
+    main: 
+      - granova.1w 
+        - visualisation
+        - granova.1w(data, group = NULL, dg = 2, h.rng = 1.25, v.rng = 0.2, box = FALSE, 
+        jj = 1, kx = 1, px = 1, size.line = -2.5, top.dot = 0.15, trmean = FALSE, resid = FALSE, 
+        dosqrs = TRUE, ident = FALSE, pt.lab = NULL, xlab = NULL, ylab = NULL, main = NULL, ...)
+      - granova.2w
+        - visualisation
+        - granova.2w(data, formula = NULL, fit = "linear", ident = FALSE, offset = NULL, ...)
+    data: 'yes'
 - designGG:
     download2020: 10302
     depends: R (>= 2.2.0)
@@ -1239,9 +1510,19 @@
     version: '1.1'
     title: Computational tool for designing genetical genomics experiments
     description: The package provides R scripts for designing genetical genomics experiments.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design 
+      - domain:
+        - genetical genomic 
+      - paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2706229/pdf/1471-2105-10-188.pdf
+    main: 
+      - designGG
+        - optimised design
+        - designGG ( genotype, nSlides, nTuple, nEnvFactors, nLevels, Level=NULL, bTwoColorArray=TRUE, 
+        initial=NULL, weight=1, region=NULL, optimality="A", method="SA", nIterations=3000, 
+        n.search=2, endTemp=1e-10, startTemp=1, maxTempStep=0.9, plotScores=TRUE, directory=NULL, 
+        fileName=NULL, envFactorNames=NULL, writingProcess=TRUE )
+    data: 'yes'
 - MAMS:
     download2020: 10205
     depends: mvtnorm, methods
@@ -1249,14 +1530,27 @@
     suggests: ''
     author: Thomas Jaki <thomas.jaki@pm.me>, Dominic Magirr <d.magirr@gmail.com>,
       Philip Pallmann <philip.pallmann@gmx.de>
-    date: ''
+    date: '2021-06-16'
     version: 1.4.2
     title: Designing Multi-Arm Multi-Stage Studies
     description: Designing multi-arm multi-stage studies with (asymptotically) normal
       endpoints and known variance.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - multi-arm multi-stage design 
+      - domain: 
+        - clinical trial 
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v088i04/v88i04.pdf
+    main: 
+      - mams
+        - multi-arm multi-stage design
+        - mams(K=4, J=2, alpha=0.05, power=0.9, r=1:2, r0=1:2, p=0.75, p0=0.5, delta=NULL, 
+        delta0=NULL, sd=NULL, ushape="obf", lshape="fixed", ufix=NULL, lfix=0, nstart=1, nstop=NULL, 
+        sample.size=TRUE, N=20, type="normal")
+      - tite.mams
+        - multi-arm multi-stage design
+        - tite.mams(hr=1.5, hr0=1.1, K=4, J=2, alpha=0.05, power=0.9, r=1:2, r0=1:2, ushape="obf", 
+        lshape="fixed", ufix=NULL, lfix=0, nstart=1, nstop=NULL, sample.size=TRUE, N=20)
+    data: 'no'
 - asd:
     download2020: 10004
     depends: mvtnorm
@@ -1268,9 +1562,27 @@
     title: Simulations for Adaptive Seamless Designs
     description: Package runs simulations for adaptive seamless designs with and without
       early outcomes for treatment selection and subpopulation type designs.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - adaptive seamless design
+      - optimised design
+      - paper: https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.201900020
+      - domain:
+        - clinical trial 
+    main: 
+      - treatsel.sim
+        - adaptive seamless design
+        - optimised design 
+        - treatsel.sim(n=list(stage1=32,stage2=32), effect=list(early=c(0,0,0),final=c(0,0,0)),
+        outcome=list(early="N",final="N"),nsim=1000, corr=0,seed=12345678,select=0,epsilon=1, 
+        weight=NULL,thresh=1,level=0.025,ptest=c(1), method="invnorm",fu=FALSE,file = "")
+      - subpop.sim
+        - adaptive seamless design
+        - optimised design
+        - subpop.sim(n=list(stage1=32,enrich=NULL,stage2=32), effect=list(early=c(0,0),final=c(0, 0)),
+        outcome=list(early="N",final="N"), control=list(early=NULL,final=NULL),sprev=0.5, 
+        nsim=1000,corr=0,seed=12345678,select="thresh", weight=NULL,selim=NULL,level=0.025,
+        method="CT-SD", sprev.fixed=TRUE,file="")
+    data: 'no'
 - PopED:
     download2020: 9928
     depends: R (>= 2.14)
@@ -1285,7 +1597,7 @@
       [ctb] , Martin Fink [ctb] , Giulia Lestini [ctb] (Streamlining code, added functionality,
       vignettes), Sebastian Ueckert [aut] (MATLAB version, <https://orcid.org/0000-0002-3712-0255>),
       Joakim Nyberg [aut]
-    date: ''
+    date: '2021-05-21'
     version: 0.6.0
     title: Population (and Individual) Optimal Experimental Design
     description: Optimal experimental designs for both population and individual studies
@@ -1294,9 +1606,14 @@
       problems, and examples and predefined models are available for these types of
       systems. The methods are described in Nyberg et al. (2012) <doi:10.1016/j.cmpb.2012.05.005>,
       and Foracchia et al. (2004) <doi:10.1016/S0169-2607(03)00073-7>.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design
+      - domain:
+        - pharmacometrics
+      - paper: https://www.sciencedirect.com/science/article/pii/S0169260703000737?via%3Dihub
+    main: 
+      - ?
+    data: 'no'
 - geospt:
     download2020: 9902
     depends: R (>= 2.15.0), gstat, genalg, MASS, sp, minqa
@@ -1312,9 +1629,28 @@
       (optimization, prediction and cross-validation), summary statistics from cross-validation,
       pocket plot, and design of optimal sampling networks through sequential and
       simultaneous points methods.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - variogram estimation
+      - sampling design
+      - optimised sampling design
+      - irrelevant?
+      - domain:
+        - geospatial 
+    main: 
+      - est.variograms
+        - variogram estimation 
+        - est.variograms(point.obj, pair.obj, a1, a2, trim)
+      - seqPtsOptNet
+        - sampling design 
+        - optimised sampling design 
+        - seqPtsOptNet(formula, loc=NULL, data, fitmodel, BLUE=FALSE, n=1, prevSeqs=NULL, 
+        popSize, generations, xmin, ymin, xmax, ymax, plotMap=FALSE, spMap=NULL, ...)
+      - simPtsOptNet
+        - sampling design 
+        - optimised sampling design
+        - simPtsOptNet(formula, loc=NULL, data, fitmodel, BLUE=FALSE, n, popSize, generations, 
+        xmin, ymin, xmax, ymax, plotMap=FALSE, spMap=NULL, ...)
+    data: 'yes'
 - JMdesign:
     download2020: 9859
     depends: methods
@@ -1328,22 +1664,59 @@
     description: Performs power calculations for joint modeling of longitudinal and
       survival data with k-th order trajectories when the variance-covariance matrix,
       Sigma_theta, is unknown.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - power analysis
+      - irrelevant? 
+    main: 
+      - powerLongSurv
+        - power analysis 
+        - powerLongSurv(N, nevents, tmedian, meantf, p, t, SigmaTheta, sigmae_2, ordtraj, beta = 0, 
+        alpha = 0.05, tol = 1.5e-8)
+    data: 'no'
 - qtlDesign:
     download2020: 9858
     depends: ''
     imports: ''
     suggests: ''
-    author: Saunak Sen, Jaya Satagopan, Karl Broman, and Gary Churchill
-    date: 03 September 2010
+    author: Saunak Sen <sen@biostat.ucsf.edu>, Jaya Satagopan, Karl Broman, and Gary Churchill
+    date: '2012-10-29'    
     version: '0.941'
     title: Design of QTL experiments
     description: Tools for the design of QTL experiments
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - quantitative trait locus
+      - domain:
+        - genetical genomic 
+      - paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2366108/pdf/nihms-43556.pdf
+    main: 
+      - powercalc
+        - power calculation 
+        - powercalc(cross,n,effect,sigma2,env.var,gen.var,thresh=3,
+        sel.frac=1, theta=0,bio.reps=1)
+      - detectable
+        - effect size calculation
+        - detectable(cross,n,effect=NULL,sigma2,env.var,gen.var,power=0.8,
+        thresh=3, sel.frac=1,theta=0,bio.reps=1)
+      - samplesize
+        - sample size calculation
+        - samplesize(cross,effect,sigma2,env.var,gen.var,power=0.8,
+        thresh=3, sel.frac=1,theta=0,bio.reps=1)
+      - info
+        - information under H0 calculation 
+        - info(sel.frac,theta=0,cross)
+      - optspacing
+        - optimised design 
+        - optspacing(cost,G=NULL,sel.frac,cross)
+      - optselection
+        - optimised design 
+        - optselection(cost,d=0,G=NULL,cross)
+      - error.var
+        - error calculation 
+        - error.var(cross,env.var=1,gen.var=0,bio.reps=1)
+      - thresh
+        - threshold calculation 
+        - thresh(G,cross,type="1",p=c(0.10,0.05,0.01),d=0.01,cov.dim=0,interval=c(1,40))
+    data: 'no'
 - experiment:
     download2020: 9808
     depends: boot, MASS, R (>= 2.4.0)
@@ -1360,9 +1733,15 @@
       randomized experiments including cluster randomized experiments, two-stage randomized
       experiments, randomized experiments with noncompliance, and randomized experiments
       with missing data.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - randomised design 
+      - domain: clinical trial 
+    main: 
+      - randomize 
+        - randomised design 
+        - randomize(data, group = c("Treat", "Control"), ratio = NULL, indx = NULL, block = NULL, 
+        n.block = NULL, match = NULL, complete = TRUE)
+    data: 'yes'
 - mkssd:
     download2020: 9805
     depends: R(>= 2.13.0)
@@ -1380,9 +1759,14 @@
       k-circulant design through a progress bar. The progress of 100% means that one
       full round of interchange is completed. More than one full round (typically
       4-5 rounds) of interchange may be required for larger designs.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - fractional factorial design 
+    main: 
+      - mkssd 
+        - fractional factorial design
+        - multi-level k-circulant supersaturated designs
+        - mkssd(m,n,q,k,mef)
+    data: 'no'
 - ssize.fdr:
     download2020: 9768
     depends: ''
@@ -1400,9 +1784,39 @@
       and two sample experiments. Functions also output a chart of power versus sample
       size, a table of power at different sample sizes, and a table of critical test
       values at different sample sizes.
-    type: ''
-    main: ''
-    data: ''
+    type:
+      - sample size calculation
+      - microarray experiment 
+      - irrelevant?
+      - domain:
+        - genetical genomic 
+      - paper: https://journal.r-project.org/archive/2009/RJ-2009-019/RJ-2009-019.pdf
+    main: 
+      - ssize.oneSamp
+        - sample size calculation 
+        - ssize.oneSamp(delta, sigma, fdr = 0.05, power = 0.8, pi0 = 0.95, maxN = 35, side = "two-sided", 
+        cex.title=1.15, cex.legend=1)
+      - ssize.oneSampVary
+        - sample size calculation
+        - ssize.oneSampVary(deltaMean, deltaSE, a, b, fdr = 0.05, power = 0.8, pi0 = 0.95, maxN = 35, 
+        side = "two-sided", cex.title=1.15, cex.legend=1)
+      - ssize.twoSamp
+        - sample size calculation
+        - ssize.twoSamp(delta, sigma, fdr = 0.05, power = 0.8, pi0 = 0.95, maxN = 35, side = "two-sided", 
+        cex.title=1.15, cex.legend=1)
+      - ssize.twoSampVary
+        - sample size calculation
+        - ssize.twoSampVary(deltaMean, deltaSE, a, b, fdr = 0.05, power = 0.8, pi0 = 0.95, maxN = 35, 
+        side = "two-sided", cex.title=1.15, cex.legend=1)
+      - ssize.F
+        - sample size calculation
+        - ssize.F(X, beta, L = NULL, dn, sigma, fdr = 0.05, power = 0.8, pi0 = 0.95, maxN = 20, 
+        cex.title=1.15, cex.legend=1)
+      - ssize.Fvary
+        - sample size calculation
+        - ssize.Fvary(X, beta, L = NULL, dn, a, b, fdr = 0.05, power = 0.8, pi0 = 0.95, maxN = 20, 
+        cex.title=1.15, cex.legend=1)
+    data: 'no'
 - dfmta:
     download2020: 9592
     depends: R (>= 3.4.0)
@@ -1416,9 +1830,25 @@
       Targeted Agent (MTA), according to the paper "Phase I/II Dose-Finding Design
       for Molecularly Targeted Agent: Plateau Determination using Adaptive Randomization",
       Riviere Marie-Karelle et al. (2016) <doi:10.1177/0962280216631763>.'
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - randomised design
+      - optimised design 
+      - does-finding experiment 
+      - paper: https://journals.sagepub.com/doi/10.1177/0962280216631763
+      - domain:
+        - clinical trial 
+    main: 
+      - mtaBin_next
+        - optimised dose-finding 
+        - mtaBin_next(ngroups=1, group_cur=1, ndose, prior_tox, prior_eff, tox_max, eff_min, 
+        cohort_start, cohort, final=FALSE, method="MTA-RA", s_1=function(n_cur){0.2}, s_2=0.07, 
+        group_pat, id_dose, toxicity, tite=TRUE, efficacy, seed = 8)
+      - mtaBin_sim
+        - randomised design 
+        - mtaBin_sim(ngroups=1, ndose, p_tox, p_eff, tox_max, eff_min, prior_tox, prior_eff, 
+        poisson_rate=1, n, cohort_start=3, cohort=3, tite=TRUE, time_full, method="MTA-RA", 
+        s_1=function(n_cur){0.2}, s_2=0.07, cycle, nsim, c_tox=0.90, c_eff=0.40, seed=8, threads=0)
+    data: 'no'
 - DiceEval:
     download2020: 9564
     depends: DiceKriging
@@ -1430,16 +1860,33 @@
     title: Construction and Evaluation of Metamodels
     description: 'Estimation, validation and prediction of models of different types
       : linear models, additive models, MARS,PolyMARS and Kriging.'
-    type: ''
-    main: ''
-    data: ''
+    type:
+      - modeling 
+      - irrelevant?
+      - domain:
+        - computer experiment 
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v065i11/v65i11.pdf
+    main: 
+      - modelFit 
+        - model fitting 
+        - modelFit (X,Y, type, ...)
+      - modelPredict 
+        - model prediction 
+        - modelPredict(model,newdata)
+      - crossValidation 
+        - model selection 
+        - crossValidation(model, K)
+      - modelComparison 
+        - model selection
+        - modelComparison(X,Y, type="all",K=10,test=NULL,...)
+    data: 'yes'
 - ALTopt:
     download2020: 9534
     depends: R (>= 3.0.0)
     imports: cubature (>= 1.0), lattice (>= 0.20), methods
     suggests: ''
-    author: Kangwon Seo [aut, cre], Rong Pan [aut]
-    date: ''
+    author: Kangwon Seo <seoka@missouri.edu> [aut, cre], Rong Pan [aut]
+    date: '2019-12-12'
     version: 0.1.2
     title: Optimal Experimental Designs for Accelerated Life Testing
     description: Creates the optimal (D, U and I) designs for the accelerated life
@@ -1453,23 +1900,42 @@
       several plotting functions including contour plot, Fraction of Use Space (FUS)
       plot and Variance Dispersion graphs of Use Space (VDUS) plot. For more details,
       see Seo and Pan (2015) <doi:10.32614/RJ-2015-029>.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design 
+      - accelerated life testing 
+      - paper: https://journal.r-project.org/archive/2015/RJ-2015-029/RJ-2015-029.pdf
+    main: 
+      - altopt.ic
+        - optimised design
+        - altopt.ic( optType, N, t, k, nf, alpha, formula, coef, useCond, useLower, useUpper, nOpt = 1,
+        nKM = 30, nCls = NULL)
+      - altopt.rc
+        - optimised design
+        - altopt.rc( optType, N, tc, nf, alpha, formula, coef, useCond, useLower, useUpper, 
+        nOpt = 1, nKM = 30, nCls = NULL)
+    data: 'no'
 - choiceDes:
     download2020: 9526
     depends: R (>= 2.15.2), AlgDesign
     imports: ''
     suggests: ''
-    author: Jack Horne [aut, cre]
+    author: Jack Horne  <jack@jackhorne.net> [aut, cre]
     date: '2018-06-18'
     version: 0.9-3
     title: Design Functions for Choice Studies
     description: Design functions for DCMs and other types of choice studies (including
       MaxDiff and other tradeoffs).
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - choice experiments design
+      - optimised design 
+    main: 
+      - dcm.design
+        - optimised design
+        - dcm.design(cand, nb, sets, alts, fname=NULL, Rd=20, print=TRUE)
+      - dcm.design.cand
+        - optimised design 
+        - dcm.design.cand(cand, nb, sets, alts, fname=NULL, Rd=20, print=TRUE)
+    data: 'no'
 - TEQR:
     download2020: 9479
     depends: ''
@@ -1486,9 +1952,15 @@
       with additional safety rules. The unique feature of this design is that dose
       is escalated based on lack of activity rather than on lack of toxicity and is
       de-escalated only if an unacceptable level of toxicity is experienced.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - dose-finding experiment 
+      - target equivalence range design 
+      - domain:
+        - clinical trial 
+      - paper: https://www.sciencedirect.com/science/article/pii/S1551714410001710?via%3Dihub
+    main: 
+      - 
+    data: 'no'
 - designmatch:
     download2020: 9452
     depends: R (>= 3.2), lattice, MASS, slam, Rglpk
