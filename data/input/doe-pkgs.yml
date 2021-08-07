@@ -115,35 +115,36 @@
       Samples and Orthogonal Array Latin Hypercube Samples.
     type:
       - space filling
-      - sampling Design
-      - latin hypercube
+      - sampling design
+      - optimisation design
+      - latin hypercube design
     main: 
       - randomLHS
         - randomised design 
-        - Latin hypercube design
+        - latin hypercube design
         - randomLHS(n, k, preserveDraw = FALSE)
       - augmentLHS
-        - Latin hypercube design
+        - latin hypercube design
         - ?
         - augmentLHS(lhs, m = 1)
       - geneticLHS
         - optimised design
-        - Latin hypercube design
+        - latin hypercube design
         - geneticLHS(n = 10,k = 2,pop = 100,gen = 4,pMut = 0.1, criterium = "S", verbose = FALSE)
       - maximinLHS 
         - optimised design
-        - Latin hypercube design
+        - latin hypercube design
         - maximinLHS(n,k,method = "build",dup = 1,eps = 0.05,maxIter = 100, optimize.on = "grid", debug = FALSE)
       - improvedLHS 
         - optimised design
-        - Latin hypercube design
+        - latin hypercube design
         - improvedLHS(n, k, dup = 1)
       - optimumLHS
         - optimised design 
-        - Latin hypercube design
+        - latin hypercube design
         - optimumLHS(n = 10, k = 2, maxSweeps = 2, eps = 0.1, verbose = FALSE)
       - create_oalhs
-        - Latin hypercube design
+        - latin hypercube design
         - create_oalhs(n, k, bChooseLargerDesign, bverbose)
     data: 'no'
 - DiceDesign:
@@ -160,14 +161,35 @@
       and uniformity-based), with emphasis to computer experiments; <doi:10.18637/jss.v065.i11>.
     type:
       - space filling
-    main: ''
-    data: ''
+      - domain:
+        - computer experiment      
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v065i11/v65i11.pdf
+    main: 
+      - dmaxDesign
+        - space filling design 
+        - dmaxDesign(n, dimension, range, niter_max=1000, seed=NULL)
+      - straussDesign
+        - space filling design
+        - straussDesign(n,dimension, RND, alpha=0.5, repulsion=0.001, NMC=1000, constraints1D=0, repulsion1D=0.0001, seed=NULL)
+      - coverage
+        - distance-based space filling criteria
+        - coverage(design)
+      - meshRatio
+        - distance-based space filling criteria
+        - meshRatio(design)
+      - mindist
+        - distance-based space filling criteria
+        - mindist(design)
+      - discrepancyCriteria
+        - uniformity-based space filling criteria
+        - discrepancyCriteria(design,type='all')
+    data: 'yes'
 - DiceKriging:
     download2020: 111269
     depends: methods
     imports: ''
     suggests: rgenoud (>= 5.8-2.0), foreach, doParallel, testthat, numDeriv
-    author: 'Olivier Roustant, David Ginsbourger, Yves Deville. Contributors: Clement
+    author: 'Olivier Roustant <roustant@insa-toulouse.fr>, David Ginsbourger, Yves Deville. Contributors: Clement
       Chevalier, Yann Richet.'
     date: '2021-02-23'
     version: 1.6.0
@@ -175,10 +197,30 @@
     description: 'Estimation, validation and prediction of kriging models. Important
       functions : km, print.km, plot.km, predict.km.'
     type:
-      - computer experiment
+      - modeling
       - irrelevant
-    main: ''
-    data: ''
+      - domain:
+        - computer experiment
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v051i01/v51i01.pdf
+    main: 
+      - km
+        - model estimation
+        - km(formula=~1, design, response, covtype="matern5_2",
+        coef.trend = NULL, coef.cov = NULL, coef.var = NULL,
+        nugget = NULL, nugget.estim=FALSE, noise.var=NULL, estim.method="MLE", penalty = NULL, 
+        optim.method = "BFGS", lower = NULL, upper = NULL, parinit = NULL, multistart = 1, 
+        control = NULL, gr = TRUE, iso=FALSE, scaling=FALSE, knots=NULL, kernel=NULL)
+      - predict
+        - model prediction
+        - predict(object, newdata, type, se.compute = TRUE, cov.compute = FALSE, light.return = FALSE, 
+        bias.correct = FALSE, checkNames = TRUE, ...)
+      - plot
+        - model visualisation
+        - plot(x, y, kriging.type = "UK", trend.reestim = FALSE, ...)
+      - simulate
+        - model simulation
+        - simulate(object, nsim=1, seed=NULL, newdata=NULL,cond=FALSE, nugget.sim=0, checkNames=TRUE, ...)
+    data: 'no'
 - ez:
     download2020: 105151
     depends: R (>= 3.1)
@@ -204,9 +246,45 @@
       confidence intervals that may be easily visualized at any level of the experiment's
       design.
     type:
-      - "irrelevant"
-    main: ''
-    data: ''
+      - modeling
+      - visualisation 
+      - analysis of experiment
+      - irrelevant
+    main: 
+      - ezANOVA
+        - model estimation
+        - ezANOVA(data, dv, wid, within = NULL, within_full = NULL, within_covariates = NULL , 
+        between = NULL, between_covariates = NULL , observed = NULL, diff = NULL, reverse_diff = FALSE,
+        type = 2, white.adjust = FALSE, detailed = FALSE, return_aov = FALSE)
+      - ezMixed
+        - model estimation 
+        - ezMixed(data, dv, family = gaussian , random, fixed, covariates = NULL , add_q = FALSE,
+        fix_gam = TRUE, cov_gam = TRUE, gam_smooth = c('s','te') , gam_bs = 'ts', gam_k = Inf,
+        use_bam = FALSE, alarm = FALSE , term_labels = NULL, highest = Inf , return_models = TRUE, 
+        correction = AIC, progress_dir = NULL , resume = FALSE, parallelism = 'none' , gam_args = NULL,
+        mer_args = NULL )
+      - ezPredict
+        - model prediction
+        - ezPredict(fit, to_predict = NULL, numeric_res = 0, boot = TRUE, iterations = 1e3, zero_intercept_variance = FALSE)
+      - ezBoot
+        - resampling
+        - ezBoot( data, dv, wid, within = NULL, between = NULL, resample_within = TRUE , iterations = 1e3, 
+        lmer = FALSE, lmer_family = gaussian , parallel = FALSE, alarm = FALSE)
+      - ezPlot
+        - factorial experiment data visualisation
+        - ezPlot(data, dv, wid, within = NULL, within_full = NULL, within_covariates = NULL, 
+        between = NULL, between_full = NULL, between_covariates = NULL ,x, do_lines = TRUE,
+        do_bars = TRUE, bar_width = NULL, bar_size = NULL, split = NULL, row = NULL, col = NULL,
+        to_numeric = NULL, x_lab = NULL, y_lab = NULL, split_lab = NULL, levels = NULL, diff = NULL,
+        reverse_diff = FALSE, type = 2, dv_levs = NULL, dv_labs = NULL, y_free = FALSE, print_code = FALSE)
+      - ezPlot2
+        - model visualisation
+        - ezPlot2(preds, CI = .95, x = NULL, split = NULL, row = NULL, col = NULL, do_lines = TRUE, 
+        ribbon = FALSE, CI_alpha = .5, point_alpha = .8 , line_alpha = .8 , bar_width = NULL,
+        to_numeric = NULL , x_lab = NULL, y_lab = NULL, split_lab = NULL , levels = NULL, diff = NULL,
+        reverse_diff = NULL , y_free = FALSE, alarm = FALSE, do_plot = TRUE, print_code = FALSE , 
+        parallel = FALSE)
+    data: 'yes'
 - FrF2:
     download2020: 92423
     depends: R(>= 2.13.0), DoE.base(>= 0.25)
@@ -214,7 +292,7 @@
       sfsmisc(>= 1.0-26), utils, scatterplot3d, igraph(>= 0.7),
       methods
     suggests: FrF2.catlg128, BsMD
-    author: Ulrike Groemping
+    author: Ulrike Groemping <groemping@beuth-hochschule.de>
     date: '2020-05-29'
     version: 2.2-2
     title: Fractional Factorial Designs with 2-Level Factors
@@ -226,8 +304,33 @@
       the built-in function alias).
     type:
       - fractional factorial design
-    main: ''
-    data: ''
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v056i01/v56i01.pdf
+    main: 
+      - FrF2
+        - fractional factorial design
+        - FrF2(nruns = NULL, nfactors = NULL, factor.names = if (!is.null(nfactors)) 
+        { if (nfactors <= 50) Letters[1:nfactors] else paste("F", 1:nfactors, sep = "")} else NULL, 
+        default.levels = c(-1, 1), ncenter=0, center.distribute=NULL, generators = NULL, design = NULL,
+        resolution = NULL, select.catlg=catlg,estimable = NULL, clear = TRUE, method="VF2", 
+        sort="natural", ignore.dom = !isTRUE(all.equal(blocks,1)), useV = TRUE, firsthit=FALSE, 
+        res3 = FALSE, max.time = 60, perm.start=NULL, perms = NULL,MaxC2 = FALSE, replications = 1, 
+        repeat.only = FALSE, randomize = TRUE, seed = NULL, alias.info = 2,
+        blocks = 1, block.name = "Blocks", block.old=FALSE, force.godolphin=FALSE, bbreps=replications, 
+        wbreps=1,alias.block.2fis = FALSE,hard = NULL, check.hard=10, WPs=1,nfac.WP=0, WPfacs=NULL, 
+        check.WPs = 10, ...)
+      - pb
+        - fractional factorial design
+        - pb(nruns, nfactors = nruns - 1, factor.names = if (nfactors <= 50) Letters[1:nfactors] 
+        else paste("F", 1:nfactors, sep = ""), default.levels = c(-1, 1), ncenter=0, 
+        center.distribute=NULL, boxtyssedal = TRUE, n12.taguchi = FALSE, replications = 1, 
+        repeat.only = FALSE, randomize = TRUE, seed = NULL, oldver = FALSE, ...)
+      - FrF2Large
+        - fractional factorial design
+        - FrF2Large(nruns, nfactors = NULL, factor.names = if (!is.null(nfactors)){ if (nfactors <= 50)
+        Letters[1:nfactors] else paste("F", 1:nfactors, sep = "")} 
+        else NULL, default.levels = c(-1, 1), ncenter = 0, center.distribute = NULL, generators = NULL,
+        replications = 1, repeat.only = FALSE, randomize = TRUE, seed = NULL, alias.info = 2, ...)
+    data: 'no'
 - DoE.base:
     download2020: 91015
     depends: R (>= 2.10), grid, conf.design
@@ -245,9 +348,26 @@
       packages for designed experiments.
     type:
       - factorial design
+      - domain:
+        - industrial experiment
       - paper: https://www.jstatsoft.org/article/view/v085i05/v85i05.pdf
-    main: ''
-    data: ''
+    main: 
+      - fac.design
+        - factorial design
+        - fac.design(nlevels=NULL, nfactors=NULL, factor.names = NULL, replications=1, 
+        repeat.only = FALSE, randomize=TRUE, seed=NULL, blocks=1, block.gen=NULL, block.name="Blocks", 
+        bbreps=replications, wbreps=1, block.old.behavior=FALSE)
+      - oa.design 
+        - factorial design
+        - optimisation design
+        - oa.design(ID=NULL, nruns=NULL, nfactors=NULL, nlevels=NULL, factor.names = if (!is.null(nfactors)) 
+        {if (nfactors <= 50) Letters[1:nfactors] else paste("F", 1:nfactors, sep = "")} else NULL,
+        columns="order", replications=1, repeat.only=FALSE, randomize=TRUE, seed=NULL, min.residual.df=0, 
+        levordold = FALSE)
+      - generalized.word.length
+        - optimisation design
+        - lengths(design, ...)
+    data: 'no'
 - rsm:
     download2020: 64632
     depends: ''
@@ -264,15 +384,33 @@
       and Parameter Design Optimization" ISBN 978-0-471-69946-0.'
     type:
       - response-surface designs
-      - optmisation designs
-    main: ''
-    data: ''
+      - optmisation design
+      - analysis of exeperiment 
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v032i07/v32i07.pdf
+    main: 
+      - ccd
+        - response-surface designs
+        - ccd(basis, generators, blocks = "Block", n0 = 4, alpha = "orthogonal",
+        wbreps = 1, bbreps = 1, randomize = TRUE, inscribed = FALSE,
+        coding, oneblock = FALSE)
+      - bbd
+        - response-surface design
+        - optimisation design
+        - bbd(k, n0 = 4, block = (k == 4 | k == 5), randomize = TRUE, coding)
+      - ccd.pick
+        - optimisation design
+        - ccd.pick(k, n.c = 2^k, n0.c = 1:10, blks.c = 1, n0.s = 1:10, bbr.c = 1, wbr.s = 1, 
+        bbr.s = 1, best = 10, sortby = c("agreement", "N"), restrict)
+      - rsm 
+        - model estimation 
+        - rsm(formula, data, ...)
+    data: 'no'
 - conf.design:
     download2020: 61649
     depends: ''
     imports: ''
     suggests: stats, utils
-    author: Bill Venables
+    author: Bill Venables <Bill.Venables@gmail.com>
     date: '2013-02-22'
     version: 2.0.0
     title: Construction of factorial designs
@@ -280,8 +418,17 @@
       and manipulating confounded and fractional factorial designs.
     type:
       - factorial design
-    main: ''
-    data: ''
+    main: 
+      - conf.design
+        - factorial design
+        - conf.design(G, p, block.name = "Blocks", treatment.names = NULL)
+      - rjoin
+        - factorial design
+        - rjoin(..., part.name="Part")
+      - direct.sum
+        - factorial design
+        - direct.sum(D1, ..., tiebreak=letters)
+    data: 'no'
 - tgp:
     download2020: 49868
     depends: R (>= 2.14.0)
@@ -302,9 +449,50 @@
       and expected improvement. The latter supports derivative-free optimization of
       noisy black-box functions.
     type:
+      - modeling
       - irrelevant
-    main: ''
-    data: ''
+      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v019i09/v19i09.pdf
+    main: 
+      - blm
+        - modeling 
+        - blm(X, Z, XX = NULL, meanfn = "linear", bprior = "bflat", BTE = c(1000, 4000, 3), 
+        R = 1, m0r1 = TRUE, itemps = NULL, pred.n = TRUE, krige = TRUE, zcov = FALSE, Ds2x = FALSE, 
+        improv = FALSE, sens.p = NULL, trace = FALSE, verb = 1, ...)
+      - btlm
+        - modeling
+        - btlm(X, Z, XX = NULL, meanfn = "linear", bprior = "bflat", tree = c(0.5, 2), 
+        BTE = c(2000, 7000, 2), R = 1, m0r1 = TRUE, itemps = NULL, pred.n = TRUE, krige = TRUE, 
+        zcov = FALSE, Ds2x = FALSE, improv = FALSE, sens.p = NULL, trace = FALSE, verb = 1, ...)
+      - bcart 
+        - modeling
+        - bcart(X, Z, XX = NULL, bprior = "bflat", tree = c(0.5, 2),
+        BTE = c(2000, 7000, 2), R = 1, m0r1 = TRUE, itemps = NULL, pred.n = TRUE, krige = TRUE, 
+        zcov = FALSE, Ds2x = FALSE, improv=FALSE, sens.p = NULL, trace = FALSE, verb = 1, ...)
+      - bgp
+        - modeling
+        - bgp(X, Z, XX = NULL, meanfn = "linear", bprior = "bflat",
+        corr = "expsep", BTE = c(1000, 4000, 2), R = 1, m0r1 = TRUE, itemps = NULL, pred.n = TRUE, 
+        krige = TRUE, zcov = FALSE, Ds2x = FALSE, improv = FALSE, sens.p = NULL, nu = 1.5, 
+        trace = FALSE, verb = 1, ...)
+      - bgpllm 
+        - modeling
+        - bgpllm(X, Z, XX = NULL, meanfn = "linear", bprior = "bflat", 
+        corr = "expsep", gamma=c(10,0.2,0.7), BTE = c(1000, 4000, 2), R = 1, m0r1 = TRUE, itemps = NULL, 
+        pred.n = TRUE, krige = TRUE, zcov = FALSE, Ds2x = FALSE, improv = FALSE, sens.p = NULL, 
+        nu = 1.5, trace = FALSE, verb = 1, ...)
+      - btgp 
+        - modeling
+        - btgp(X, Z, XX = NULL, meanfn = "linear", bprior = "bflat", corr = "expsep", tree = c(0.5, 2), 
+        BTE = c(2000, 7000, 2), R = 1, m0r1 = TRUE, linburn = FALSE, itemps = NULL, pred.n = TRUE, 
+        krige = TRUE, zcov = FALSE, Ds2x = FALSE, improv = FALSE, sens.p = NULL, nu = 1.5, trace = FALSE, 
+        verb = 1, ...)
+      - btgpllm 
+        - modeling
+        - btgpllm(X, Z, XX = NULL, meanfn = "linear", bprior = "bflat", corr = "expsep", tree = c(0.5, 2), 
+        gamma=c(10,0.2,0.7), BTE = c(2000, 7000, 2), R = 1, m0r1 = TRUE, linburn = FALSE, itemps = NULL, 
+        pred.n = TRUE, krige = TRUE, zcov = FALSE, Ds2x = FALSE, improv = FALSE, sens.p = NULL, nu = 1.5, 
+        trace = FALSE, verb = 1, ...)
+    data: 'yes'
 - BsMD:
     download2020: 36859
     depends: R(>= 3.5.0)
@@ -316,9 +504,17 @@
     title: Bayes Screening and Model Discrimination
     description: Bayes screening and model discrimination follow-up designs.
     type:
+      - modeling
       - irrelevant
-    main: ''
-    data: ''
+    main: 
+      - BsProb
+        - modeling
+        - BsProb(X, y, blk, mFac, mInt = 2, p = 0.25, g = 2, ng = 1, nMod = 10)
+      - MD
+        - modeling
+        - MD(X,y,nFac,nBlk=0,mInt=3,g=2, nMod,p,s2,nf,facs,nFDes=4, Xcand, mIter = 20, nStart = 5, 
+        startDes = NULL, top = 20, eps = 1e-05)
+    data: 'yes'
 - FrF2.catlg128:
     download2020: 27884
     depends: R(>= 2.13.0), FrF2(>= 1.4)
@@ -337,8 +533,13 @@
       can be downloaded from the authors website.
     type:
       - irrelevant
-    main: ''
-    data: yes
+      - fractional factorial design
+    main: 
+      - Catalogues
+        - fractional factorial designs
+        - catlg128.8to15, catlg128.16, catlg128.17, catlg128.18, catlg128.19, catlg128.20, catlg128.21, 
+        catlg128.22, catlg128.23, catlg128.24, catlg128.25, catlg128.26to33
+    data: 'no'
 - Vdgraph:
     download2020: 24411
     depends: ''
@@ -356,8 +557,19 @@
       for several minimal run response surface designs.
     type:
       - response-surface designs
-    main: ''
-    data: ''
+      - visualisation (design)
+      - paper: https://journal.r-project.org/archive/2012/RJ-2012-005/RJ-2012-005.pdf
+    main: 
+      - Vdgraph
+        - visualisation of response-surface design 
+        - Vdgraph(des)
+      - FDSPlot
+        - visualisation of response-surface design 
+        - FDSPlot(des, mod=2)
+      - Compare2Vdg
+        - visualisation of response-surface design 
+        - Compare2Vdg(des,des2,name1,name2,ncolleg)
+    data: 'yes'
 - dae:
     download2020: 23048
     depends: R (>= 3.5.0), ggplot2
@@ -377,8 +589,16 @@
       be installed from <http://chris.brien.name/rpackages/>.'
     type:
       - randomised design
-    main: ''
-    data: ''
+      - visualisation (design)
+      - analysis of exeperiment
+    main: 
+      - designRandomize
+        - randomised design 
+        - designRandomize(allocated = NULL, recipient, nested.recipients = NULL, except = NULL, seed = NULL, unit.permutation = FALSE, ...)
+      - fitted.aovlist 
+        - analysis of exeperiment
+        - fitted(object, error.term=NULL, ...)
+    data: 'yes'
 - DoseFinding:
     download2020: 21987
     depends: lattice, mvtnorm, R (>= 2.15.0)
@@ -398,10 +618,20 @@
       optimal designs and an implementation of the MCPMod methodology (Pinheiro et
       al. (2014) <doi:10.1002/sim.6052>).'
     type:
-      - domain: clinical trial
-      - aim: dose-finding
-    main: ''
-    data: ''
+      - domain: 
+        - clinical trial
+      - dose-finding experiment
+      - optimisation design
+      - analysis of experiment
+      - paper: https://arxiv.org/pdf/1305.0889.pdf
+    main: 
+      - MCTtest
+      - powMCT
+      - fitMod
+      - optDesign
+      - MCPMod
+      - sampSize 
+    data: 'yes'
 - daewr:
     download2020: 21087
     depends: R (>= 3.5.0)
@@ -415,8 +645,9 @@
       of Experiments with R".
     type:
       - "irrelevant"
+      - data container package
     main: ''
-    data: ''
+    data: 'yes'
 - agridat:
     download2020: 21052
     depends: ''
@@ -437,6 +668,9 @@
       multi-environment trials, uniformity trials, yield monitors, and more.
     type:
       - "irrelevant"
+      - data container package
+      - domain:
+        - agriculture
     main: ''
     data: 'yes'
 - DoE.wrapper:
