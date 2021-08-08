@@ -3529,23 +3529,29 @@
     depends: ''
     imports: lme4, gdata, MASS, reshape2, stringr, plyr, ggplot2
     suggests: testthat
-    author: Frank Papenmeier [aut, cre]
+    author: Frank Papenmeier <frank.papenmeier@uni-tuebingen.de> [aut, cre]
     date: '2021-02-25'
     version: 1.0.5
     title: Power Estimates for ANOVA Designs
     description: Functions for bootstrapping the power of ANOVA designs based on estimated
       means and standard deviations of the conditions. Please refer to the documentation
       of the boot.power.anova() function for further details.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - power analysis 
+      - analysis of experiment 
+      - irrelevant?
+    main: 
+      - boot.power.anova 
+        - power calculation 
+        - boot.power.anova(design, n_from, n_to, num_iterations_bootstrap, alpha = 0.05)
+    data: 'no'
 - rodd:
     download2020: 6667
     depends: R (>= 3.0.0)
     imports: numDeriv, quadprog, Matrix, rootSolve, matrixcalc
     suggests: mvtnorm
-    author: Roman Guchenko [aut, cre]
-    date: ''
+    author: Roman Guchenko <RomanGuchenko@yandex.ru> [aut, cre]
+    date: '2016-01-12'
     version: 0.2-1
     title: Optimal Discriminating Designs
     description: A collection of functions for numerical construction of optimal discriminating
@@ -3553,24 +3559,42 @@
       for the power of F-test for regression model discrimination), KL-optimal designs
       (for lognormal errors) and their robust analogues can be calculated with the
       package.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design?
+      - irrelevant?
+      - modeling 
+    main: 
+      - tpopt
+        - optimised design 
+        - tpopt(x, w = rep(1, length(x)) / length(x), eta, theta.fix, theta.var = NULL, p, x.lb = min(x), x.rb = max(x), opt = list())
+      - KLopt.lnorm
+        - optimised design 
+        - KLopt.lnorm(x, w = rep(1, length(x)) / length(x), eta, sq.var, theta.fix, theta.var = NULL, p, x.lb = min(x), x.rb = max(x), opt = list())
+    data: 'no'
 - ph2bayes:
     download2020: 6656
     depends: ''
     imports: stats, Rcpp (>= 0.12.15)
     suggests: ''
     author: Kengo Nagashima [aut, cre]
-    date: ''
+    date: '2018-02-26'
     version: 0.0.2
     title: Bayesian Single-Arm Phase II Designs
     description: An implementation of Bayesian single-arm phase II design methods
       for binary outcome based on posterior probability (Thall and Simon (1994) <doi:10.2307/2533377>)
       and predictive probability (Lee and Liu (2008) <doi:10.1177/1740774508089279>).
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - optimised design?
+      - domain: 
+        - clinical trial 
+    main: 
+      - postprob
+        - bayesian optimised design 
+        - postprob(y, n, alpha_e, beta_e, alpha_s, beta_s, delta)
+      - predprob
+        - bayesian optimised design 
+        - predprob(y, n, nmax, alpha_e, beta_e, p_s, theta_t)
+    data: 'no'
 - sp23design:
     download2020: 6573
     depends: R (>= 3.0), mvtnorm, survival
@@ -3584,24 +3608,52 @@
       Phase II-III designs of Lai, Lavori and Shih using generalized likelihood ratio
       statistics. Includes pdf and source files that describe the entire R implementation
       with the relevant mathematical details.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - seamless Phase II-III design
+      - optimised design 
+      - analysis of experiment 
+      - domain:   
+        - clinical trial 
+    main: 
+      - generateSP23Design
+        - seamless Phase II-III design
+        - generateSP23Design(trueParameters, trialParameters)
+      - exploreSP23Design 
+        - seamless Phase II-III design
+        - optimised design 
+        - exploreSP23Design(sp23Design, numberOfSimulations = 25, rngSeed = 12345, showProgress = TRUE)
+      - executeSP23Design 
+        - analysis of experiment 
+        - executeSP23Design(sp23DesignObject, data, currentCalendarTime)
+      - analyzeSP23Design 
+        - analysis of experiment 
+        - analyzeSP23Design(sp23Design, trialHistory = NULL, data = NULL, col=c("red", "red", "brown", "brown"), lty=c(1,2,1,2))
+    data: 'no'
 - sFFLHD:
     download2020: 6459
     depends: DoE.base
     imports: methods, stats, conf.design, R6
     suggests: testthat
     author: Collin Erickson
-    date: ''
+    date: '2018-05-17'
     version: 0.1.2
     title: Sequential Full Factorial-Based Latin Hypercube Design
     description: Gives design points from a sequential full factorial-based Latin
       hypercube design, as described in Duan, Ankenman, Sanchez, and Sanchez (2015,
       Technometrics, <doi:10.1080/00401706.2015.1108233>).
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - latin hypercube design
+      - space filling 
+      - optimised design 
+    main: 
+      - sFFLHDmm
+        - optimised design 
+        - latin hypercube design
+        - R6 object 
+      - sFFLHD_Lflex
+        - latin hypercube design
+        - R6 object
+    data: 'no'
 - optbdmaeAT:
     download2020: 6340
     depends: R (>= 3.3.1), MASS, Matrix, igraph, tcltk
@@ -3618,9 +3670,17 @@
       exchange and array exchange algorithms of Debusho, Gemechu and Haines (2016,
       unpublished). The package also provides an optional method of using the graphical
       user interface (GUI) R package tcltk to ensure that it is user friendly.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - microarray experiment 
+      - domain:
+        - genomic sequencing 
+      - optimised design 
+      - block design 
+    main: 
+      - optbdmaeAT
+        - optimised design 
+        - optbdmaeAT(trt.N, blk.N, theta, nrep, itr.cvrgval, Optcrit = "", Alg = "", ...)
+    data: 'no'
 - optrcdmaeAT:
     download2020: 6333
     depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
@@ -3639,8 +3699,15 @@
       package also provides an optional method of using the graphical user interface
       (GUI) R package tcltk to ensure that it is user friendly.
     type: ''
-    main: ''
-    data: ''
+      - microarray experiment 
+      - domain:
+        - genomic sequencing 
+      - optimised design 
+    main: 
+      - optrcdmaeAT
+        - optimised design 
+        - optrcdmaeAT(trt.N, col.N, theta, nrep, itr.cvrgval, Optcrit = "", Alg = "", ...)
+    data: 'no'
 - soptdmaeA:
     download2020: 6272
     depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
@@ -3656,16 +3723,23 @@
       of all possible elementary treatment contrasts. The package also provides an
       optional method of using the graphical user interface (GUI) R package 'tcltk'
       to ensure that it is user friendly.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - microarray experiment 
+      - domain:
+        - genomic sequencing 
+      - optimised design 
+    main: 
+      - soptdmaeA
+        - optimised design 
+        - soptdmaeA(trt.N, blk.N, theta, nrep, strt, sary, des0, dtype, Optcrit = "", ...)
+    data: 'no'
 - rsurface:
     download2020: 5197
     depends: R (>= 3.5)
     imports: grDevices, plotly, rsm, stats
     suggests: ''
     author: Timothy Schwinghamer [aut, cre], Dutilleul Pierre [aut, cph]
-    date: ''
+    date: '2018-05-18'
     version: 1.1.0
     title: Design of Rotatable Central Composite Experiments and Response Surface
       Analysis
@@ -3683,6 +3757,15 @@
       over the classical factorial design, as discussed by Panneton et al. (1999)
       <doi:10.13031/2013.13267> and Mead et al. (2012) <doi:10.1017/CBO9781139020879.018>
       among others.
-    type: ''
-    main: ''
-    data: ''
+    type: 
+      - response surface design 
+      - analysis of experiment 
+    main: 
+      - design_ccd()
+        - response surface design
+        - design_ccd(j, k)
+      - ccd_analysis()
+        - analysis of experiment 
+        - response surface design
+        - ccd_analysis(x)
+    data: 'yes'
