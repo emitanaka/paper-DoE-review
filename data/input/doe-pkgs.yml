@@ -12,23 +12,22 @@
       be created. Experimental designs may be blocked or blocked designs created from
       a candidate list, using several criteria. The blocking can be done when whole
       and within plot factors interact.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type:
       - randomised design
       - optimised design
     main:
-      - optBlock:
-        - randomised/optmised design
-        - optBlock(frml,withinData,blocksizes,rows=NULL,wholeBlockData=NULL,center=FALSE,
-    nRepeats=5,criterion="D",args=FALSE)
-      - optFederov:
+      - optBlock
+        - randomised/optimised design
+        - optBlock(frml,withinData,blocksizes,rows=NULL,wholeBlockData=NULL,center=FALSE,nRepeats=5,criterion="D",args=FALSE)
+      - optFederov
         - optimised design
-        - optFederov(frml,data,nTrials,center=FALSE,approximate=FALSE,criterion="D",
-        evaluateI=FALSE,space=NULL,augment=FALSE,rows,nullify=0,maxIteration=100,nRepeats=5,DFrac=1,CFrac=1,args=FALSE)
-      - optMonteCarlo:
+        - optFederov(frml,data,nTrials,center=FALSE,approximate=FALSE,criterion="D",evaluateI=FALSE,space=NULL,augment=FALSE,rows,nullify=0,maxIteration=100,nRepeats=5,DFrac=1,CFrac=1,args=FALSE)
+      - optMonteCarlo
         - optimised design
-        - optMonteCarlo(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,
-    space=NULL,mixtureSum=1,constraints=NULL,RandomStart=TRUE,nRepeats=5,nCand,
-    nCandNull,DFrac=1,CFrac=1,args=FALSE)
+        - optMonteCarlo(frml,data,nTrials,approximate=FALSE,criterion="D",evaluateI=FALSE,space=NULL,mixtureSum=1,constraints=NULL,RandomStart=TRUE,nRepeats=5,nCand,nCandNull,DFrac=1,CFrac=1,args=FALSE)
     data: 'no'
 - agricolae:
     download2020: 266248
@@ -49,11 +48,11 @@
       block, factorial, split and strip plot designs. There are also various analysis
       facilities for experimental data, e.g. treatment comparison procedures and several
       non-parametric tests comparison, biodiversity indexes and consensus cluster.
+    paper: https://peerj.com/preprints/1404v1.pdf
+    domain: agriculture
+    relevance: 'yes'
     type:
       - randomised design
-      - domain:
-        - agriculture
-      - paper: https://peerj.com/preprints/1404v1.pdf
     main:
       - design.ab
         - randomised design
@@ -70,24 +69,19 @@
       - design.cyclic
         - randomised design
         - design.cyclic(trt, k, r, serie = 2, rowcol = FALSE, seed = 0, kinds = "Super-Duper" ,randomization=TRUE)
-      - design.dau 
+      - design.dau
         - randomised design
         - design.dau(trt1, trt2, r, serie = 2, seed = 0, kinds = "Super-Duper", name="trt" ,randomization=TRUE)
       - design.graeco
-        - randomised design
-        - latin square design
+        - randomised design, latin square design
         - design.graeco(trt1, trt2, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
       - design.lattice
         - randomised design
         - design.lattice(trt, r=3, serie = 2, seed = 0, kinds = "Super-Duper",randomization=TRUE)
       - design.lsd
-        - randomised design
-        - latin square design
+        - randomised design, latin square design
         - design.lsd(trt, serie = 2, seed = 0, kinds = "Super-Duper",first=TRUE,randomization=TRUE)
-      - design.mat 
-        - ?
-        - design.mat(book, locations)
-      - design.rcbd 
+      - design.rcbd
         - randomised design 
         - design.rcbd(trt, r, serie = 2, seed = 0, kinds = "Super-Duper", first=TRUE, continue=FALSE,randomization=TRUE)
       - design.split
@@ -99,8 +93,6 @@
       - design.youden 
         - incomplete block design 
         - design.youden(trt, r, serie = 2, seed = 0, kinds = "Super-Duper",first=TRUE ,randomization=TRUE)
-      - comments:
-        ''
     data: 'yes'
 - lhs:
     download2020: 216668
@@ -113,34 +105,32 @@
     title: Latin Hypercube Samples
     description: Provides a number of methods for creating and augmenting Latin Hypercube
       Samples and Orthogonal Array Latin Hypercube Samples.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type:
       - space filling
       - sampling design
       - optimised design
-      - latin hypercube sample design
+      - latin hypercube sample
     main: 
       - randomLHS
-        - randomised design 
-        - latin hypercube sample design
+        - randomised design, latin hypercube sample design
         - randomLHS(n, k, preserveDraw = FALSE)
       - augmentLHS
         - latin hypercube sample design
         - augmentLHS(lhs, m = 1)
       - geneticLHS
-        - optimised design
-        - latin hypercube sample design
+        - optimised design, latin hypercube sample design
         - geneticLHS(n = 10,k = 2,pop = 100,gen = 4,pMut = 0.1, criterium = "S", verbose = FALSE)
       - maximinLHS 
-        - optimised design
-        - latin hypercube sample design
+        - optimised design, latin hypercube sample design
         - maximinLHS(n,k,method = "build",dup = 1,eps = 0.05,maxIter = 100, optimize.on = "grid", debug = FALSE)
       - improvedLHS 
-        - optimised design
-        - latin hypercube design
+        - optimised design, latin hypercube design
         - improvedLHS(n, k, dup = 1)
       - optimumLHS
-        - optimised design 
-        - latin hypercube sample design
+        - optimised design, latin hypercube sample design
         - optimumLHS(n = 10, k = 2, maxSweeps = 2, eps = 0.1, verbose = FALSE)
       - create_oalhs
         - latin hypercube sample design
@@ -158,11 +148,11 @@
     title: Designs of Computer Experiments
     description: Space-Filling Designs and space-filling criteria (distance-based
       and uniformity-based), with emphasis to computer experiments; <doi:10.18637/jss.v065.i11>.
+    domain: computer experiment
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v065i11/v65i11.pdf
+    relevance: 'yes'
     type:
       - space filling
-      - domain:
-        - computer experiment      
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v065i11/v65i11.pdf
     main: 
       - dmaxDesign
         - space filling design 
@@ -195,12 +185,11 @@
     title: Kriging Methods for Computer Experiments
     description: 'Estimation, validation and prediction of kriging models. Important
       functions : km, print.km, plot.km, predict.km.'
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v051i01/v51i01.pdf
+    domain: computer experiment
+    relevance: 'no'
     type:
       - modeling
-      - irrelevant
-      - domain:
-        - computer experiment
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v051i01/v51i01.pdf
     main: 
       - km
         - model estimation
@@ -244,11 +233,13 @@
       or by more advanced/powerful mixed effects models, yielding predictions and
       confidence intervals that may be easily visualized at any level of the experiment's
       design.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type:
       - modeling
       - visualisation 
       - analysis of experiment
-      - irrelevant
     main: 
       - ezANOVA
         - model estimation
@@ -301,9 +292,11 @@
       simultaneously, cube plot for looking at the simultaneous effects of three factors,
       full or half normal plot, alias structure in a more readable format than with
       the built-in function alias).
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v056i01/v56i01.pdf
+    domain: 'general'
+    relevance: 'yes'
     type:
       - fractional factorial design
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v056i01/v56i01.pdf
     main: 
       - FrF2
         - fractional factorial design
@@ -319,7 +312,7 @@
         check.WPs = 10, ...)
       - pb
         - fractional factorial design
-        - pb(nruns, nfactors = nruns - 1, factor.names = if (nfactors <= 50) Letters[1:nfactors] 
+        - pb(nruns, nfactors = nruns-1, factor.names = if (nfactors <= 50) Letters[1:nfactors] 
         else paste("F", 1:nfactors, sep = ""), default.levels = c(-1, 1), ncenter=0, 
         center.distribute=NULL, boxtyssedal = TRUE, n12.taguchi = FALSE, replications = 1, 
         repeat.only = FALSE, randomize = TRUE, seed = NULL, oldver = FALSE, ...)
@@ -345,11 +338,11 @@
       orthogonal arrays for (industrial) experiments. Provides diverse quality criteria.
       Provides utility functions for the class design, which is also used by other
       packages for designed experiments.
+    paper: https://www.jstatsoft.org/article/view/v085i05/v85i05.pdf
+    domain: industrial experiment
+    relevance: 'yes'
     type:
       - factorial design
-      - domain:
-        - industrial experiment
-      - paper: https://www.jstatsoft.org/article/view/v085i05/v85i05.pdf
     main: 
       - fac.design
         - factorial design
@@ -357,8 +350,7 @@
         repeat.only = FALSE, randomize=TRUE, seed=NULL, blocks=1, block.gen=NULL, block.name="Blocks", 
         bbreps=replications, wbreps=1, block.old.behavior=FALSE)
       - oa.design 
-        - factorial design
-        - optimised design
+        - factorial design, optimised design
         - oa.design(ID=NULL, nruns=NULL, nfactors=NULL, nlevels=NULL, factor.names = if (!is.null(nfactors)) 
         {if (nfactors <= 50) Letters[1:nfactors] else paste("F", 1:nfactors, sep = "")} else NULL,
         columns="order", replications=1, repeat.only=FALSE, randomize=TRUE, seed=NULL, min.residual.df=0, 
@@ -381,11 +373,13 @@
       of steepest ascent, and do canonical analysis. A good reference on these methods
       is Chapter 10 of Wu, C-F J and Hamada, M (2009) "Experiments: Planning, Analysis,
       and Parameter Design Optimization" ISBN 978-0-471-69946-0.'
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v032i07/v32i07.pdf
+    domain: 'general'
+    relevance: 'yes'
     type:
       - response-surface design
-      - optmised design
-      - analysis of exeperiment 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v032i07/v32i07.pdf
+      - optimised design
+      - analysis of experiment 
     main: 
       - ccd
         - response-surface design
@@ -393,8 +387,7 @@
         wbreps = 1, bbreps = 1, randomize = TRUE, inscribed = FALSE,
         coding, oneblock = FALSE)
       - bbd
-        - response-surface design
-        - optimised design
+        - response-surface design, optimised design
         - bbd(k, n0 = 4, block = (k == 4 | k == 5), randomize = TRUE, coding)
       - ccd.pick
         - optimised design
@@ -415,6 +408,9 @@
     title: Construction of factorial designs
     description: This small library contains a series of simple tools for constructing
       and manipulating confounded and fractional factorial designs.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type:
       - factorial design
     main: 
@@ -437,6 +433,7 @@
     date: '2020-09-11'
     version: 2.4-17
     title: Bayesian Treed Gaussian Process Models
+    domain: 'general'
     description: Bayesian nonstationary, semiparametric nonlinear regression and design
       by treed Gaussian processes (GPs) with jumps to the limiting linear model (LLM).
       Special cases also implemented include Bayesian linear models, CART, treed linear
@@ -447,10 +444,10 @@
       design and adaptive sampling functions are also provided, including ALM, ALC,
       and expected improvement. The latter supports derivative-free optimization of
       noisy black-box functions.
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v019i09/v19i09.pdf
+    relevance: 'no'
     type:
       - modeling
-      - irrelevant
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v019i09/v19i09.pdf
     main: 
       - blm
         - modeling 
@@ -502,9 +499,11 @@
     version: 2020.4.30
     title: Bayes Screening and Model Discrimination
     description: Bayes screening and model discrimination follow-up designs.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type:
       - modeling
-      - irrelevant
     main: 
       - BsProb
         - modeling
@@ -530,8 +529,10 @@
       do not add value for a search for clear designs. The previous package version
       1.0 with complete catalogues up to 24 runs (24 runs and a namespace added later)
       can be downloaded from the authors website.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type:
-      - irrelevant
       - fractional factorial design
     main: 
       - Catalogues
@@ -554,15 +555,16 @@
       Quality Technology, Vol. 25 No. 1 January 1993, to produce variance dispersion
       graphs. Also produces fraction of design space plots, and contains data frames
       for several minimal run response surface designs.
+    paper: https://journal.r-project.org/archive/2012/RJ-2012-005/RJ-2012-005.pdf
+    domain: 'general'
+    relevance: 'no'
     type:
       - response-surface design
       - visualisation (design)
-      - paper: https://journal.r-project.org/archive/2012/RJ-2012-005/RJ-2012-005.pdf
     main: 
       - Vdgraph
-        - visualisation of response-surface design 
+        - visualisation of response-surface design, variance dispersion graph 
         - Vdgraph(des)
-        - variance dispersion graph 
       - FDSPlot
         - visualisation of response-surface design 
         - FDSPlot(des, mod=2)
@@ -587,9 +589,12 @@
       The ANOVA functions facilitate the extraction of information when the ''Error''
       function has been used in the call to ''aov''. The package ''dae'' can also
       be installed from <http://chris.brien.name/rpackages/>.'
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type:
       - randomised design
-      - analysis of exeperiment
+      - analysis of experiment
       - visualisation (design)
     main: 
       - designRandomize
@@ -617,13 +622,13 @@
       dose-response models (using Bayesian and non-Bayesian estimation), calculating
       optimal designs and an implementation of the MCPMod methodology (Pinheiro et
       al. (2014) <doi:10.1002/sim.6052>).'
+    domain: clinical trial
+    paper: https://arxiv.org/pdf/1305.0889.pdf
+    relevance: 'yes'
     type:
-      - domain: 
-        - clinical trial
       - dose-finding experiment
       - optimised design
       - analysis of experiment
-      - paper: https://arxiv.org/pdf/1305.0889.pdf
     main: 
       - MCTtest
         - dose-finding
@@ -663,13 +668,15 @@
     imports: lattice, FrF2, graphics, grDevices, stats, stringi
     suggests: R.rsp
     author: John Lawson [aut, cre], Gerhard Krennrich [aut]
-    date: 2021-2-18
+    date: 2021-02-18
     version: 1.2-7
     title: Design and Analysis of Experiments with R
     description: Contains Data frames and functions used in the book "Design and Analysis
       of Experiments with R".
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type:
-      - "irrelevant"
       - data container package
     main: ''
     data: 'yes'
@@ -691,11 +698,11 @@
     description: Datasets from books, papers, and websites related to agriculture.
       Example graphics and analyses are included. Data come from small-plot trials,
       multi-environment trials, uniformity trials, yield monitors, and more.
+    paper: ''
+    domain: agriculture
+    relevance: 'no'
     type:
-      - "irrelevant"
       - data container package
-      - domain:
-        - agriculture
     main: ''
     data: 'yes'
 - DoE.wrapper:
@@ -712,12 +719,13 @@
       packages. So far, response surface designs from package rsm, latin hypercube
       samples from packages lhs and DiceDesign, and D-optimal designs from package
       AlgDesign have been implemented.
+    paper: ''
+    domain: industrial experiment 
+    relevance: 'yes'
     type: 
       - response-surface design
       - latin hypercube sample
       - optimised design
-      - domain:
-        - industrial experiment 
     main: 
       - bbd.design
         - response-surface design
@@ -754,13 +762,12 @@
       It is implemented as a plugin to the R-Commander, which is a more general graphical
       user interface for statistics in R based on tcl/tk. DoE functionality can be
       accessed through the menu Design that is added to the R-Commander menus.
+    paper: ''
+    domain: industrial experiment
+    relevance: 'no'
     type: 
-      - domain: 
-        - industrial experiment 
-      - GUI for experimental design 
-      - irrelevant
-    main: 
-      ?
+      - GUI 
+    main: ''
     data: 'no'
 - crossdes:
     download2020: 18482
@@ -773,9 +780,10 @@
     title: Construction of Crossover Designs
     description: Contains functions for the construction of carryover balanced crossover
       designs. In addition contains functions to check given designs for balance.
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
-      - domain:
-        - clinical trial
       - repeated measurement design
       - crossover design
       - dose-finding experiment
@@ -791,9 +799,7 @@
         - latin square design 
         - williams(trt)
       - williams.BIB 
-        - latin square design 
-        - crossover design 
-        - balanced incomplete block design
+        - latin square design, crossover design, balanced incomplete block design
         - williams.BIB(d)
       - des.MOLS 
         - crossover design 
@@ -820,19 +826,19 @@
     description: Functions and data sets reproducing some examples in Box, Hunter
       and Hunter II. Useful for statistical design of experiments, especially factorial
       experiments.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type: 
       - book dataset
       - book example 
       - factorial design 
-      - irrelevant?
     main: 
       - ffDesMatrix
-        - factorial design 
-        - fractional factorial design 
+        - factorial design, fractional factorial design 
         - ffDesMatrix(k, gen = NULL)
       - ffFullMatrix(X, x, maxInt, blk = NULL)
-        - factorial design 
-        - fractional factorial design 
+        - factorial design, fractional factorial design 
         - ffFullMatrix(X, x, maxInt, blk = NULL)
     data: 'yes'
 - SensoMineR:
@@ -846,17 +852,12 @@
     title: Sensory Data Analysis
     description: 'Statistical Methods to Analyse Sensory Data. SensoMineR: A package
       for sensory data analysis. S. Le and F. Husson (2008) <DOI:10.1111/j.1745-459X.2007.00137.x>.'
+    paper: https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-459X.2007.00137.x
+    domain: sensory studies
+    relevance: 'yes'
     type: 
-      - irrelevant?
       - sensory data analysis
-      - domain:
-        - sensory studies
-      - paper: https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1745-459X.2007.00137.x
     main: 
-      - ?
-    data: 'yes'
-    note: 
-    - function related to experimental design 
       - optimaldesign
         - optimised design 
         - optimaldesign(nbPanelist, nbProd, nbProdByPanelist=nbProd, seed=NULL)
@@ -866,6 +867,7 @@
       - WilliamsDesign
         - latin square design 
         - WilliamsDesign(nbprod,seed=NULL)
+    data: 'yes'
 - BOIN:
     download2020: 16462
     depends: ''
@@ -889,11 +891,11 @@
       the best model-based designs) in terms of selecting the MTD, but has a substantially
       lower risk of assigning patients to subtherapeutic or overly toxic doses. For
       tutorial, please check Yan et al. (2020) <doi:10.18637/jss.v094.i13>.
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v094i13/v94i13.pdf
+    domain: clinical trial
+    relevance: 'yes'
     type: 
-      - domain:
-        - clinical trial
       - dose-finding experiment 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v094i13/v94i13.pdf
     main: 
       - get.boundary
         - dose-finding 
@@ -916,7 +918,7 @@
     imports: plyr,PolynomF
     suggests: R.rsp
     author: R. N. Edmondson.
-    date: 2021-04-07"
+    date: 2021-04-07
     version: '4.9'
     title: Nested and Crossed Block Designs for Factorial and Unstructured Treatment
       Sets
@@ -934,14 +936,15 @@
       to blocks and tables showing the achieved D-efficiency factors for each block
       and treatment design. Edmondson, R.N. Multi-level Block Designs for Comparative
       Experiments. JABES 25, 500–522 (2020) <doi:10.1007/s13253-020-00416-0>.
+    paper: https://link.springer.com/content/pdf/10.1007/s13253-020-00416-0.pdf
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - randomised design
       - block design
-      - paper: https://link.springer.com/content/pdf/10.1007/s13253-020-00416-0.pdf
     main: 
       - blocks
-        - randomised design
-        - block design 
+        - randomised design, block design 
         - blocks(treatments, replicates, blocks = NULL, searches = NULL, seed = NULL, jumps = 1)
       - design
         - optimised design 
@@ -963,13 +966,15 @@
       units on one variable can be set. Randomly assign units to treatment conditions.
       Diagnose potential interference between units assigned to different treatment
       conditions. Write outputs to .tex and .csv files.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - randomised design 
       - block design
     main: 
       - block
-        - randomised design 
-        - block design 
+        - randomised design, block design 
         - block(data, vcov.data = NULL, groups = NULL, n.tr = 2, id.vars, block.vars = NULL, 
         algorithm = "optGreedy", distance = "mahalanobis", weight = NULL, optfactor = 10^7, 
         row.sort = NULL, level.two = FALSE, valid.var = NULL, valid.range = NULL, seed.dist, 
@@ -1006,21 +1011,20 @@
     title: Dose-Finding by the Continual Reassessment Method
     description: Provides functions to run the CRM and TITE-CRM in phase I trials
       and calibration tools for trial planning purposes.
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
       - continual reassessment method
-      - domain:
-        - clinical trial
     main: 
       - crm 
-        - dose-finding 
-        - continual reassessment method
+        - dose-finding, continual reassessment method
         - crm(prior, target, tox, level, n = length(level), dosename = NULL, include = 1:n, 
         pid = 1:n, conf.level = 0.9, method = "bayes", model = "empiric", intcpt = 3, 
         scale = sqrt(1.34), model.detail = TRUE, patient.detail = TRUE, var.est = TRUE)
       - titecrm
-        - dose-finding
-        - continual reassessment method
+        - dose-finding, continual reassessment method
         - titecrm(prior, target, tox, level, n = length(level), weights = NULL, followup = NULL, 
         entry = NULL, exit = NULL, obswin = NULL, scheme = "linear", conf.level = 0.9, dosename = NULL, 
         include = 1:n, pid = 1:n, method = "bayes", model = "empiric", var.est = TRUE, 
@@ -1036,10 +1040,12 @@
     version: 0.2.1
     title: Power Analysis in Experimental Design
     description: Basic functions for power analysis and effect size calculation.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - analysis of exeperiment 
       - power analysis
-      - irrelevant?
     main: 
       - ES.anova.oneway
         - Effect size calculation
@@ -1095,9 +1101,11 @@
     title: Optimal Bayesian Experimental Design using the ACE Algorithm
     description: Optimal Bayesian experimental design using the approximate coordinate
       exchange (ACE) algorithm. See <doi:10.18637/jss.v095.i13>.
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v095i13/v95i13.pdf 
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v095i13/v95i13.pdf
     main: 
       - ace
         - optimised design 
@@ -1141,10 +1149,11 @@
     title: Plotting Field Plans for Agricultural Experiments
     description: A function for plotting maps of agricultural field experiments that
       are laid out in grids.
+    paper: ''
+    domain: agriculture
+    relevance: 'no'
     type: 
       - visualisation (design)
-      - domain:
-        - agriculture
     main: 
       - desplot
         - design visualisation
@@ -1170,11 +1179,11 @@
       preferences for goods/services and their characteristics. Refer to Louviere
       et al. (2000) <doi:10.1017/CBO9780511753831> for details on CEs, and Aizaki
       (2012) <doi:10.18637/jss.v050.c02> for the package.
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v050c02/v50c02.pdf
+    domain: consumer behaviour 
+    relevance: 'yes'
     type: 
       - choice experiments design
-      - domain: 
-        - consumer behaviour 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v050c02/v50c02.pdf
     main: 
       - Lma.design
         - choice experiments design
@@ -1206,15 +1215,14 @@
     title: Statistical Experiments on Batch Computing Clusters
     description: Extends the BatchJobs package to run statistical experiments on batch
       computing clusters. For further details see the project web page.
+    domain: computer experiment 
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v064i11/v64i11.pdf
+    relevance: 'yes'
     type: 
-      - irrelevant? 
       - algortihm abstraction
-      - domain:
-        - computer experiment 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v064i11/v64i11.pdf
     main: 
       - makeExperimentRegistry
-        - ?
+        - experiment register 
         - makeExperimentRegistry(id = "BatchExperimentRegistry", file.dir, sharding = TRUE, 
         work.dir, multiple.result.files = FALSE, seed, packages = character(0L), 
         src.dirs = character(0L), src.files = character(0L), skip = TRUE)
@@ -1228,13 +1236,12 @@
         - parameter design for algorithm abstraction
         - makeDesign(id, design = data.frame(), exhaustive = list())
       - addExperiments
-        - ?
+        - add experiment 
         - addExperiments(reg, prob.designs, algo.designs, repls = 1L, skip.defined = FALSE)
       - summarizeExperiments
         - experiment result 
         - summarizeExperiments(reg, ids, show = c("prob", "algo"))
       - findExperiments
-        - ?
         - findExperiments(reg, ids, prob.pattern, prob.pars, algo.pattern, algo.pars, 
         repls, match.substring = TRUE, regexp = FALSE)
     data: 'no'
@@ -1253,16 +1260,18 @@
       are not allowed. Homogeneity of variances is checked using Cochran''s C test
       and ''a posteriori'' comparisons of means are done using Student-Newman-Keuls
       (SNK) procedure.'
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type: 
       - analysis of experiment 
       - modeling
-      - irrelevant?
     main: 
       - gad 
         - modeling 
         - gad(object)
       - C.test
-        - ?
+        - testing
         - C.test(object) 
       - snk.test
         - modeling 
@@ -1283,16 +1292,15 @@
       designs. The program can run interactively, allowing the user to enter outcomes
       after each cohort has been recruited, or via simulation to assess operating
       characteristics. See Sweeting et al. (2013): <doi:10.18637/jss.v054.i13>.'
+    domain: clinical trial
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v054i13/bcrm_Bayesian_Continual_Reassessment_Method_Designs_for_Phase_I_Dose-Finding_Trials.pdf
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
       - continual reassessment method 
-      - domain:
-        - clinical trial
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v054i13/bcrm_Bayesian_Continual_Reassessment_Method_Designs_for_Phase_I_Dose-Finding_Trials.pdf
     main: 
       - bcrm 
-        - continual reassessment method 
-        - dose-finding 
+        - continual reassessment method, dose-finding 
         - bcrm(stop = list(nmax = NULL, nmtd = NULL, precision = NULL, nmin = NULL, safety = NULL), 
         data = NULL, p.tox0 = NULL, sdose = NULL, dose = NULL, ff, prior.alpha, cohort = 3, target.tox,
         constrain = TRUE, only.below = FALSE, sdose.calculate = "mean", pointest = "plugin", 
@@ -1321,6 +1329,9 @@
       marginal means of factors from experiments using a connected incomplete block
       design. Tests of hypothesis of treatment contrasts in incomplete block design
       set up is supported.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - block design 
       - incomplete block design 
@@ -1349,8 +1360,10 @@
       "Experimentation for Improvement" found on Coursera. The package contains code
       for designed experiments, data sets and other convenience functions used in
       the book.'
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type: 
-      - irrelevant 
       - book dataset
       - book example 
     main: ''
@@ -1361,14 +1374,16 @@
     imports: ''
     suggests: ''
     author: John Lawson [aut, cre] <lawson@byu.edu>, Cameron Willden [aut], Greg Piepel [ctb]
-    date: 2016-8-12
+    date: 2016-08-12
     version: 1.2.5
     title: Design and Analysis of Mixture Experiments
     description: Functions for creating designs for mixture experiments, making ternary
       contour plots, and making mixture effect plots.
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v072c02/v72c02.pdf
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - mixture design
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v072c02/v72c02.pdf
     main: 
       - SLD 
         - mixture design
@@ -1391,6 +1406,9 @@
     title: Function Optimization and Ranking via Desirability Functions
     description: S3 classes for multivariate optimization using the desirability function
       by Derringer and Suich (1980).
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design 
       - response-surface design
@@ -1414,14 +1432,16 @@
     description: Series of partially balanced incomplete block designs (PBIB) based
       on the combinatory method (S) introduced in (Imane Rezgui et al, 2014) <doi:10.3844/jmssp.2014.45.48>;
       and it gives their associated U-type design.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
-      - partially balanced incomplete block designs
+      - partially balanced incomplete block design
       - incomplete block design  
       - block design 
     main: 
       - CombS
-        - block design 
-        - incomplete block design 
+        - block design, incomplete block design 
         - CombS(n, l, s)
     data: 'no'
 - FMC:
@@ -1436,6 +1456,9 @@
     title: Factorial Experiments with Minimum Level Changes
     description: Generate cost effective minimally changed run sequences for symmetrical
       as well as asymmetrical factorial designs.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - factorial design 
     main: 
@@ -1483,11 +1506,12 @@
       construction of graphics that accommodate diverse features of data, according
       to their corresponding display requirements. See the help files for individual
       functions.
+    paper: http://moderngraphics11.pbworks.com/f/ElementalGraphics4ANOVA.RP+JH.pdf 
+    domain: 'general'
+    relevance: 'no'
     type: 
       - analysis of experiment 
       - visualisation 
-      - irrelevant
-      - paper: http://moderngraphics11.pbworks.com/f/ElementalGraphics4ANOVA.RP+JH.pdf
     main: 
       - granova.1w 
         - visualisation
@@ -1506,15 +1530,15 @@
     author: Yang Li <yang.li@rug.nl>, Morris Swertz <m.a.swertz@rug.nl>, Gonzalo Vera
       <gonzalo.vera.rodriguez@gmail.com>, Rainer Breitling <r.breitling@rug.nl>, Ritsert
       Jansen <r.c.jansen@rug.nl>
-    date: 19-02-2013
+    date: 2013-02-19
     version: '1.1'
     title: Computational tool for designing genetical genomics experiments
     description: The package provides R scripts for designing genetical genomics experiments.
+    paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2706229/pdf/1471-2105-10-188.pdf
+    domain: genetics
+    relevance: 'yes'
     type: 
       - optimised design 
-      - domain:
-        - genetical genomic 
-      - paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2706229/pdf/1471-2105-10-188.pdf
     main: 
       - designGG
         - optimised design
@@ -1535,11 +1559,11 @@
     title: Designing Multi-Arm Multi-Stage Studies
     description: Designing multi-arm multi-stage studies with (asymptotically) normal
       endpoints and known variance.
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v088i04/v88i04.pdf
+    domain: clinical trial
+    relevance: 'yes'
     type: 
       - multi-arm multi-stage design 
-      - domain: 
-        - clinical trial 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v088i04/v88i04.pdf
     main: 
       - mams
         - multi-arm multi-stage design
@@ -1562,22 +1586,20 @@
     title: Simulations for Adaptive Seamless Designs
     description: Package runs simulations for adaptive seamless designs with and without
       early outcomes for treatment selection and subpopulation type designs.
+    paper: https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.201900020
+    domain: clinical trial
+    relevance: 'yes'
     type: 
       - adaptive seamless design
       - optimised design
-      - paper: https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.201900020
-      - domain:
-        - clinical trial 
     main: 
       - treatsel.sim
-        - adaptive seamless design
-        - optimised design 
+        - adaptive seamless design, optimised design 
         - treatsel.sim(n=list(stage1=32,stage2=32), effect=list(early=c(0,0,0),final=c(0,0,0)),
         outcome=list(early="N",final="N"),nsim=1000, corr=0,seed=12345678,select=0,epsilon=1, 
         weight=NULL,thresh=1,level=0.025,ptest=c(1), method="invnorm",fu=FALSE,file = "")
       - subpop.sim
-        - adaptive seamless design
-        - optimised design
+        - adaptive seamless design, optimised design
         - subpop.sim(n=list(stage1=32,enrich=NULL,stage2=32), effect=list(early=c(0,0),final=c(0, 0)),
         outcome=list(early="N",final="N"), control=list(early=NULL,final=NULL),sprev=0.5, 
         nsim=1000,corr=0,seed=12345678,select="thresh", weight=NULL,selim=NULL,level=0.025,
@@ -1606,13 +1628,13 @@
       problems, and examples and predefined models are available for these types of
       systems. The methods are described in Nyberg et al. (2012) <doi:10.1016/j.cmpb.2012.05.005>,
       and Foracchia et al. (2004) <doi:10.1016/S0169-2607(03)00073-7>.
+    paper: https://www.sciencedirect.com/science/article/pii/S0169260703000737?via%3Dihub
+    domain: pharmacometrics
+    relevance: 'yes'
     type: 
       - optimised design
-      - domain:
-        - pharmacometrics
-      - paper: https://www.sciencedirect.com/science/article/pii/S0169260703000737?via%3Dihub
     main: 
-      - ?
+      - "?"
     data: 'no'
 - geospt:
     download2020: 9902
@@ -1629,25 +1651,23 @@
       (optimization, prediction and cross-validation), summary statistics from cross-validation,
       pocket plot, and design of optimal sampling networks through sequential and
       simultaneous points methods.
+    paper: ''
+    domain: geospatial study
+    relevance: '?'
     type: 
       - variogram estimation
       - sampling design
       - optimised sampling design
-      - irrelevant?
-      - domain:
-        - geospatial study
     main: 
       - est.variograms
         - variogram estimation 
         - est.variograms(point.obj, pair.obj, a1, a2, trim)
       - seqPtsOptNet
-        - sampling design 
-        - optimised sampling design 
+        - sampling design, optimised sampling design 
         - seqPtsOptNet(formula, loc=NULL, data, fitmodel, BLUE=FALSE, n=1, prevSeqs=NULL, 
         popSize, generations, xmin, ymin, xmax, ymax, plotMap=FALSE, spMap=NULL, ...)
       - simPtsOptNet
-        - sampling design 
-        - optimised sampling design
+        - sampling design, optimised sampling design
         - simPtsOptNet(formula, loc=NULL, data, fitmodel, BLUE=FALSE, n, popSize, generations, 
         xmin, ymin, xmax, ymax, plotMap=FALSE, spMap=NULL, ...)
     data: 'yes'
@@ -1664,9 +1684,11 @@
     description: Performs power calculations for joint modeling of longitudinal and
       survival data with k-th order trajectories when the variance-covariance matrix,
       Sigma_theta, is unknown.
+    paper: ''
+    domain: 'general'
+    relevance: '?'
     type: 
       - power analysis
-      - irrelevant? 
     main: 
       - powerLongSurv
         - power analysis 
@@ -1683,11 +1705,11 @@
     version: '0.941'
     title: Design of QTL experiments
     description: Tools for the design of QTL experiments
+    domain: genetics
+    paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2366108/pdf/nihms-43556.pdf
+    relevance: 'yes'
     type: 
       - quantitative trait locus
-      - domain:
-        - genetical genomic 
-      - paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2366108/pdf/nihms-43556.pdf
     main: 
       - powercalc
         - power calculation 
@@ -1733,6 +1755,9 @@
       randomized experiments including cluster randomized experiments, two-stage randomized
       experiments, randomized experiments with noncompliance, and randomized experiments
       with missing data.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - randomised design 
     main: 
@@ -1758,13 +1783,15 @@
       k-circulant design through a progress bar. The progress of 100% means that one
       full round of interchange is completed. More than one full round (typically
       4-5 rounds) of interchange may be required for larger designs.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - fractional factorial design
       - multi-level k-circulant supersaturated design
     main: 
       - mkssd 
-        - fractional factorial design
-        - multi-level k-circulant supersaturated design
+        - fractional factorial design, multi-level k-circulant supersaturated design
         - mkssd(m,n,q,k,mef)
     data: 'no'
 - ssize.fdr:
@@ -1784,13 +1811,12 @@
       and two sample experiments. Functions also output a chart of power versus sample
       size, a table of power at different sample sizes, and a table of critical test
       values at different sample sizes.
+    domain: genetics
+    paper: https://journal.r-project.org/archive/2009/RJ-2009-019/RJ-2009-019.pdf
+    relevance: '?'
     type:
       - sample size calculation
       - microarray experiment 
-      - irrelevant?
-      - domain:
-        - genetical genomic 
-      - paper: https://journal.r-project.org/archive/2009/RJ-2009-019/RJ-2009-019.pdf
     main: 
       - ssize.oneSamp
         - sample size calculation 
@@ -1830,17 +1856,16 @@
       Targeted Agent (MTA), according to the paper "Phase I/II Dose-Finding Design
       for Molecularly Targeted Agent: Plateau Determination using Adaptive Randomization",
       Riviere Marie-Karelle et al. (2016) <doi:10.1177/0962280216631763>.'
+    paper: https://journals.sagepub.com/doi/10.1177/0962280216631763
+    domain: clinical trial
+    relevance: 'yes'
     type: 
-      - does-finding experiment
+      - dose-finding experiment
       - randomised design
       - optimised design 
-      - paper: https://journals.sagepub.com/doi/10.1177/0962280216631763
-      - domain:
-        - clinical trial 
     main: 
       - mtaBin_next
-        - optimised design 
-        - optimised dose-finding 
+        - optimised design, optimised dose-finding 
         - mtaBin_next(ngroups=1, group_cur=1, ndose, prior_tox, prior_eff, tox_max, eff_min, 
         cohort_start, cohort, final=FALSE, method="MTA-RA", s_1=function(n_cur){0.2}, s_2=0.07, 
         group_pat, id_dose, toxicity, tite=TRUE, efficacy, seed = 8)
@@ -1861,12 +1886,11 @@
     title: Construction and Evaluation of Metamodels
     description: 'Estimation, validation and prediction of models of different types
       : linear models, additive models, MARS,PolyMARS and Kriging.'
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v065i11/v65i11.pdf
+    domain: computer experiment 
+    relevance: 'no'
     type:
       - modeling 
-      - irrelevant?
-      - domain:
-        - computer experiment 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v065i11/v65i11.pdf
     main: 
       - modelFit 
         - model fitting 
@@ -1901,10 +1925,12 @@
       several plotting functions including contour plot, Fraction of Use Space (FUS)
       plot and Variance Dispersion graphs of Use Space (VDUS) plot. For more details,
       see Seo and Pan (2015) <doi:10.32614/RJ-2015-029>.
+    paper: https://journal.r-project.org/archive/2015/RJ-2015-029/RJ-2015-029.pdf
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design 
       - accelerated life testing 
-      - paper: https://journal.r-project.org/archive/2015/RJ-2015-029/RJ-2015-029.pdf
     main: 
       - altopt.ic
         - optimised design
@@ -1926,6 +1952,9 @@
     title: Design Functions for Choice Studies
     description: Design functions for DCMs and other types of choice studies (including
       MaxDiff and other tradeoffs).
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - choice experiments design
       - optimised design 
@@ -1953,21 +1982,19 @@
       with additional safety rules. The unique feature of this design is that dose
       is escalated based on lack of activity rather than on lack of toxicity and is
       de-escalated only if an unacceptable level of toxicity is experienced.
+    domain: clinical trial
+    paper: https://www.sciencedirect.com/science/article/pii/S1551714410001710?via%3Dihub
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
       - target equivalence range design 
       - activity constrained for toxicity
-      - domain:
-        - clinical trial 
-      - paper: https://www.sciencedirect.com/science/article/pii/S1551714410001710?via%3Dihub
     main: 
       - teqrDG
-        - dose-finding
-        - target equivalence range design 
+        - dose-finding, target equivalence range design 
         - teqrDG(TotalN,pTarget,eq1,eq2,tootoxic)
       - teqrOCact
-        - target equivalence range design
-        - activity constrained for toxicity
+        - target equivalence range design, activity constrained for toxicity
         - teqrOCact(sim,firstdose,proba,probc,cohortSize,MaxNoCohorts,
         RP2Dss,pTarget,eq1,eq2,tootoxic,toxcon,llactivity)
       - teqrOCtox
@@ -1995,20 +2022,20 @@
       please follow the instructions at <http://user.gurobi.com/download/gurobi-optimizer>
       and <http://www.gurobi.com/documentation/7.0/refman/r_api_overview.html>. We
       have also included directions in the gurobi_installation file in the inst folder.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - sampling design 
       - randomised design
       - optimised design 
     main: 
       - bmatch 
-        - sampling design
-        - optimised design 
+        - sampling design, optimised design 
         - match(t_ind, dist_mat = NULL, subset_weight = NULL, n_controls = 1, total_groups = NULL, 
         mom = NULL, ks = NULL, exact = NULL, near_exact = NULL, fine = NULL, near_fine = NULL, near = NULL, far = NULL, solver = NULL)
       - nmatch
-        - sampling design
-        - randomised design
-        - optimised design 
+        - sampling design, randomised design, optimised design 
         - nmatch(dist_mat, subset_weight = NULL, total_pairs = NULL, mom = NULL, exact = NULL, 
         near_exact = NULL, fine = NULL, near_fine = NULL, near = NULL, far = NULL, solver = NULL)
     data: 'yes'
@@ -2025,6 +2052,9 @@
     description: Generate central composite designs (CCD)with full as well as fractional
       factorial points (half replicate) and Box Behnken designs (BBD) with minimally
       changed run sequence.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type:
       - response-surface design
       - factorial design
@@ -2032,16 +2062,13 @@
       - optimised design 
     main: 
       - min_bbd
-        - response-surface design
-        - optimised design
+        - response-surface design, optimised design
         - min_bbd(k)
       - min_ccd
-        - response-surface design
-        - factorial design
+        - response-surface design, factorial design
         - min_ccd(k)
       - min_ccd_2
-        - response-surface design
-        - fractional factorial design 
+        - response-surface design, fractional factorial design 
         - min_ccd_2(k)
     data: 'no'
 - SLHD:
@@ -2059,16 +2086,15 @@
       factors. Details of the algorithm can be found in Ba, S., Brenneman, W. A. and
       Myers, W. R. (2015), "Optimal Sliced Latin Hypercube Designs," Technometrics.
       Important function in this package is "maximinSLHD".
+    domain: computer experiment
+    paper: https://www.asc.ohio-state.edu/statistics/comp_exp//jour.club/optimal_sliced_lhd_ba2015.pdf
+    relevance: 'yes'
     type: 
       - latin hypercube design 
       - optimised design 
-      - domain:
-        - computer experiment
-      - paper: https://www.asc.ohio-state.edu/statistics/comp_exp//jour.club/optimal_sliced_lhd_ba2015.pdf
     main: 
       - maximinSLHD
-        - latin hypercube design 
-        - optimised design
+        - latin hypercube design, optimised design
         - maximinSLHD(t, m, k, power = 15, nstarts = 1, itermax = 100, total_iter = 1e+06)
     data: 'no'
 - skpr:
@@ -2092,6 +2118,9 @@
       user. Includes a Shiny graphical user interface that displays the underlying
       code used to create and evaluate the design to improve ease-of-use and make
       analyses more reproducible.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design
       - power analysis
@@ -2144,15 +2173,15 @@
       is provides for optimization in the presence of unknown constraints. Separable
       and isotropic Gaussian, and single-index correlation functions are supported.
       See the examples section of ?plgp and demo(package="plgp") for an index of demos
+    paper: https://arxiv.org/pdf/0909.5262.pdf
+    domain: 'general'
+    relevance: '?'
     type:
       - modeling 
       - model optimisation
-      - irrelevant?
-      - paper: https://arxiv.org/pdf/0909.5262.pdf
     main: 
       - PL
-        - modeling
-        - model optimisation
+        - modeling, model optimisation
         - PL(dstream, start, end, init, lpredprob, propagate, prior = NULL, addpall = NULL, params = NULL, 
         save = NULL, P = 100, progress = 10, cont = FALSE, verb = 1)
     data: 'no'
@@ -2177,12 +2206,11 @@
       dependent variable or hierarchical models. This package provides functions to
       generate data from several scenarios and functions to run simulations which
       their objective is to determine the maximum tolerated dose (MTD).
+    paper: https://www.sciencedirect.com/science/article/pii/S0169260717308349 
+    domain: clinical trial, pharmacokinetics
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
-      - domain: 
-        - clinical trial 
-        - pharmacokinetics
-      - paper: https://www.sciencedirect.com/science/article/pii/S0169260717308349 
     main: 
       - sim.data
         - dose-finding
@@ -2207,11 +2235,11 @@
     title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
     description: Phase I/II adaptive dose-finding design for combination studies where
       toxicity rates are supposed to increase with both agents.
+    domain: clinical trial 
+    paper: https://www.sciencedirect.com/science/article/pii/S0169260715002783?via%3Dihub
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
-      - domain:
-        - clinical trial 
-      - paper: https://www.sciencedirect.com/science/article/pii/S0169260715002783?via%3Dihub
     main: 
       - CombIncrease_nex
         - dose-finding 
@@ -2241,14 +2269,14 @@
       drift, and confidence intervals of such designs. All computations are based
       on the alpha spending approach by Lan-DeMets with various alpha spending functions
       being available to choose among.
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
-      - domain:
-        - clinical trial 
       - group sequential design 
     main: 
       - groupseq 
-        - group sequential design
-        - GUI 
+        - group sequential design, GUI 
         - groupseq(mode = "g")
     data: ''
 - binseqtest:
@@ -2262,11 +2290,12 @@
     title: Exact Binary Sequential Designs and Analysis
     description: For a series of binary responses, create stopping boundary with exact
       results after stopping, allowing updating for missing assessments.
+    paper: https://www.tandfonline.com/doi/abs/10.1080/00031305.2014.951126
+    domain: 'general'
+    relevance: 'no'
     type: 
       - analysis of experiment
       - hypohothesis testing 
-      - irrelevant?
-      - paper: https://www.tandfonline.com/doi/abs/10.1080/00031305.2014.951126
     main: 
       - designAb
         - hypohothesis testing
@@ -2309,6 +2338,9 @@
       design through a progress bar. The progress of 100 per cent means that one full
       round of interchange is completed. More than one full round (typically 4-5 rounds)
       of interchange may be required for larger designs.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - fractional factorial design
       - mixed-level k-circulant supersaturated design
@@ -2334,9 +2366,11 @@
       algorithm called Imperialist Competitive Algorithm (ICA). See, for details,
       Masoudi et al. (2017) <doi:10.1016/j.csda.2016.06.014> and Masoudi et al. (2019)
       <doi:10.1080/10618600.2019.1601097>.
+    paper: http://rmirror.lau.edu.lb/web/packages/ICAOD/vignettes/ICAOD.pdf
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design
-      - paper: http://rmirror.lau.edu.lb/web/packages/ICAOD/vignettes/ICAOD.pdf
     main: 
       - locally 
         - optimised design
@@ -2374,6 +2408,9 @@
       geometry defined on Galois field of order 2. The obtained Resolvable designs
       are used to build uniform design. The presented results are based on <https://eudml.org/doc/219563>
       and A. Boudraa et al. (See references).
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - block design 
       - resolvable design
@@ -2383,8 +2420,7 @@
         - block design
         - BIB(m)
       - Resolvable
-        - block design 
-        - resolvable design
+        - block design, resolvable design
         - Resolvable(n, mat)
       - Uniform
         - space filling design 
@@ -2405,11 +2441,12 @@
       fully online learning with drift, variable selection, and sensitivity analysis
       of inputs. Illustrative examples from the original dynamic trees paper are facilitated
       by demos in the package; see demo(package="dynaTree").
+    paper: https://arxiv.org/pdf/0912.1586.pdf
+    domain: 'general'
+    relevance: '?'
     type: 
       - modeling 
       - model optimisation 
-      - irrelevant? 
-      - paper: https://arxiv.org/pdf/0912.1586.pdf
     main: 
       - dynaTrees
         - object with several methods for modeling 
@@ -2420,7 +2457,7 @@
     imports: mgcv, geometry, randtoolbox, mvtnorm, stats, class, parallel
     suggests: fields, graphics, knitr, spsurvey, MASS
     author: Scott D. Foster
-    date: ''
+    date: '2020-08-25'
     version: 2.1.8
     title: Spatial Designs for Ecological and Environmental Surveys
     description: Provides spatially balanced designs from a set of (contiguous) potential
@@ -2428,12 +2465,12 @@
       surveys. Accommodates, without detrimental effects on spatial balance, sites
       that the researcher wishes to include in the survey for reasons other than the
       current randomisation (legacy sites).
+    paper: ''
+    domain: geospatial study, ecological and environmental study 
+    relevance: 'yes'
     type: 
       - spatially balanced design 
       - survey design 
-      - domain:
-        - geospatial study
-        - ecological and environmental study 
     main: 
       - alterInclProbs
         - spatially balanced design 
@@ -2454,16 +2491,15 @@
       with Continuous Outcomes
     description: Functions to find near-optimal multi-stage designs for continuous
       outcomes.
+    domain: clinical trial 
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v066i02/v66i02.pdf
+    relevance: 'yes'
     type: 
       - group sequential design 
       - optimised design
-      - domain:
-        - clinical trial
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v066i02/v66i02.pdf
     main: 
       - optgs
-        - group sequential design
-        - optimised design
+        - group sequential design, optimised design
         - optgs(delta0 = 0, delta1 = 1/3, J = 2, sigma = 1, sd.known = TRUE, alpha = 0.05, 
         power = 0.9, weights = c(0.95, 0, 0, 0.05), initial = NULL)
     data: 'no'
@@ -2492,12 +2528,13 @@
       the efficiencies of PBIB designs based on any association scheme and to construct
       Youden-m square designs for the two-way elimination of heterogeneity. R. C.
       Bose and K. R. Nair (1939) <http://www.jstor.org/stable/40383923>.
+    paper: ''
+    domain: agriculture
+    relevance: 'yes'
     type: 
       - block design 
       - incomplete block design 
       - partially balanced incomplete block design
-      - domain:
-        - agriculture
     main: 
       - series1
         - partially balanced incomplete block design
@@ -2531,12 +2568,13 @@
     title: Methods for Visualization of Computer Experiments Design and Surrogate
     description: View 2D/3D sections, contour plots, mesh of excursion sets for computer
       experiments designs, surrogates or test functions.
+    paper: ''
+    domain: computer experiment
+    relevance: 'no'
     type: 
-      - domain:
-        - computer experiment 
       - visualisation (design)
     main: 
-      - ?
+      - "?"
     data: 'no'
 - RPPairwiseDesign:
     download2020: 8801
@@ -2550,6 +2588,9 @@
       via association scheme
     description: Using some association schemes to obtain a new series of resolvable
       partially pairwise balanced designs (RPPBD) and space-filling designs.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - resolvable design 
       - space filling 
@@ -2582,14 +2623,12 @@
       conditions), (ii) setD (estimate the minimal sample size per treatment given
       the users precision requirements) and (iii) doseD (construct an individual dose
       scheme).
+    domain: toxicity test, environmental science, toxicology research
+    paper: https://enveurope.springeropen.com/articles/10.1186/s12302-015-0046-5
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
       - sample size calculation
-      - domain:
-        - toxicity test
-        - environmental science 
-        - toxicology research
-      - paper: https://enveurope.springeropen.com/articles/10.1186/s12302-015-0046-5
     main: 
       - spoD
         - sample size calculation
@@ -2620,11 +2659,11 @@
     title: Sensitivity Analysis and Optimum Experiment Design for Microbial Inactivation
     description: Extends the bioinactivation package with functions for Sensitivity
       Analysis and Optimum Experiment Design.
+    paper: https://www.sciencedirect.com/science/article/pii/S0963996919306003?via%3Dihub
+    domain: microbiology
+    relevance: 'yes'
     type: 
       - optimised design 
-      - domain:
-        - microbiology
-      - paper: https://www.sciencedirect.com/science/article/pii/S0963996919306003?via%3Dihub
     main: 
       - inactivation_OED
         - optimised design
@@ -2655,10 +2694,12 @@
     title: Data sets from "Introductory Statistics for Engineering Experimentation"
     description: Datasets from Nelson, Coffin and Copeland "Introductory Statistics
       for Engineering Experimentation" (Elsevier, 2003) with sample code.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type: 
       - data container package 
       - book dataset
-      - irrelevant
     main: ''
     data: 'yes'
 - docopulae:
@@ -2678,11 +2719,12 @@
       solution to summation and integration called 'nint', functions for transforming,
       plotting and comparing designs, as well as a set of tools for common low-level
       tasks.
+    paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4936440/ 
+    domain: 'general'
+    relevance: 'no'
     type: 
       - modeling 
       - model optimisation 
-      - irrelevant
-      - paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4936440/
     main: 
       - Dsensitivity
         - model optimisation
@@ -2707,20 +2749,19 @@
       102, 371-380, and (2) Joseph, Gul, and Ba. (2018) "Designing Computer Experiments
       with Multiple Types of Factors: The MaxPro Approach", Journal of Quality Technology,
       to appear.'
+    paper: https://www.osti.gov/servlets/purl/1405144
+    domain: computer experiment 
+    relevance: 'yes'
     type: 
       - space filling 
       - optimised design
       - maximum projection design
-      - domain:
-        - computer experiment 
-      - paper: https://www.osti.gov/servlets/purl/1405144
     main: 
       - MaxProLHD
         - maximum projection design
         - MaxProLHD(n, p, s=2, temp0=0, nstarts = 1, itermax = 400, total_iter = 1e+06)
       - MaxPro
-        - maximum projection design
-        - optimised design 
+        - maximum projection design, optimised design 
         - MaxPro(InitialDesign,s=2,iteration=10)
       - MaxProQQ
         - maximum projection design
@@ -2755,14 +2796,14 @@
       3+3 designs for comparison or models with non-Bayesian estimation. The whole
       package is written in a modular form in the S4 class system, making it very
       flexible for adaptation to new models, escalation or stopping rules.
+    domain: clinical trial 
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v089i10/v89i10.pdf
+    relevance: 'yes'
     type: 
       - continual reassessment methods
       - dose-finding experiment 
-      - domain:
-        - clinical trial
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v089i10/v89i10.pdf
     main: 
-      - ?
+      - "?"
     data: 'no'
 - OPDOE:
     download2020: 8005
@@ -2776,12 +2817,14 @@
     title: Optimal Design of Experiments
     description: Several function related to Experimental Design are implemented here,
       see "Optimal Experimental Design with R" by Rasch D. et. al (ISBN 9781439816974).
+    paper: https://www.jstatsoft.org/article/view/v043b05/v43b05.pdf
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design
       - analysis of experiment 
-      - paper: https://www.jstatsoft.org/article/view/v043b05/v43b05.pdf
     main: 
-      - ?
+      - "?"
     data: 'yes'
 - DoE.MIParray:
     download2020: 7847
@@ -2803,12 +2846,12 @@
       higher version). For installing ''Mosek'' and its R package ''Rmosek'', follow
       instructions at <https://www.mosek.com/downloads/> and <http://docs.mosek.com/8.1/rmosek/install-interface.html>,
       or use the functionality in the stump CRAN R package ''Rmosek''.'
+    domain: industrial experiment 
+    paper: https://openresearchsoftware.metajnl.com/article/10.5334/jors.286/
+    relevance: 'yes'
     type: 
       - optimised design
       - factorial design 
-      - domain:
-        - industrial experiment 
-      - paper: https://openresearchsoftware.metajnl.com/article/10.5334/jors.286/
     main: 
       - gurobi_MIParray 
         - factorial design
@@ -2871,14 +2914,12 @@
       this package, please use 'source("http://bioconductor.org/biocLite.R"); biocLite("ssizeRNA")'.
       For R version 3.5 or greater, please use 'if(!requireNamespace("BiocManager",
       quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install("ssizeRNA")'.
+    paper: https://pubmed.ncbi.nlm.nih.gov/27029470/
+    domain: genetics, genome sequencing
+    relevance: '?'
     type: 
       - sample size calculation
       - microarray experiment 
-      - domain:
-        - genetical genomic
-        - genome sequencing
-      - irrelevant? 
-      - paper: https://pubmed.ncbi.nlm.nih.gov/27029470/
     main: 
       - ssize.twoSampVaryDelta
         - sample size calculation
@@ -2909,9 +2950,11 @@
       This package simplifies the user input and allows the user to view all of the
       sample size recommendations or just the ones they want to see. The calculations
       used to calculate the recommended sample sizes are from the 'pwr' package.
+    paper: ''
+    domain: 'general'
+    relevance: '?'
     type: 
       - sample size calculation
-      - irrelevant?
     main: 
       - n.multiway
         - sample size calculation
@@ -2933,11 +2976,11 @@
     description: calculate equivalence and futility boundaries based on the exact
       bivariate $t$ test statistics for group sequential designs in studies with equivalence
       hypotheses.
+    domain: equivalence studies
+    paper: https://journal.r-project.org/archive/2014/RJ-2014-033/RJ-2014-033.pdf
+    relevance: 'yes'
     type: 
       - group sequential design 
-      - domain:
-        - equivalence studies 
-      - paper: https://journal.r-project.org/archive/2014/RJ-2014-033/RJ-2014-033.pdf
     main: 
       - equivonly
         - group sequential design
@@ -2969,19 +3012,18 @@
     title: hierarchical Pooled Optimal Design
     description: Based on hierarchical modeling, this package provides a few practical
       functions to find and present the optimal designs for a pooled NGS design.
+    paper: ''
+    domain: genetics, genome sequencing 
+    relevance: 'yes'
     type: 
       - optimised design 
-      - domain:
-        - genetical genomic
-        - genomic sequencing 
     main: 
       - FindOptPower
         - optimised design 
         - FindOptPower(cost, sample.size, MAF, OR, error, costPerExp = 18915, costPerPool = 970, 
         costPerX = 300, lower.P, upper.P)
       - PlotOptPower
-        - optimised design 
-        - design visualisation 
+        - optimised design, design visualisation 
         - PlotOptPower(opt.design.results, save.contour = FALSE, contour.filename = NA, plot.3d = TRUE)
       - ShowOptDesign
         - optimised design 
@@ -3002,6 +3044,9 @@
       Emax, Richards, Weibull and Inverse Quadratic regression models and also functions
       for auto-constructing Fisher information matrix and Frechet derivative based
       on some input variables and without user-interfere.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design
     main: 
@@ -3054,7 +3099,7 @@
     imports: ''
     suggests: knitr, rmarkdown
     author: Zuchao Shen [aut, cre], Ben Kelcey [aut]
-    date: 2020-3-13
+    date: 2020-03-13
     version: 1.0.2
     title: Optimal Design and Statistical Power of Multilevel Randomized Trials
     description: 'Calculate the optimal sample allocation that produces smallest variance
@@ -3068,6 +3113,9 @@
       Journal of Educational and Behavioral Statistics. (3) Champely., S. (2018).
       pwr: Basic functions for power analysis (Version 1.2-2) [Software]. Available
       from <https://CRAN.R-project.org/package=pwr>.'
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - randomised design 
       - optimised design 
@@ -3161,9 +3209,7 @@
 - OptimalDesign:
     download2020: 7512
     depends: R (>= 3.1.1)
-    imports: |-
-      grDevices, graphics, Matrix, lpSolve, matrixStats, matrixcalc,
-      plyr, quadprog, rgl, stats, utils
+    imports: grDevices, graphics, Matrix, lpSolve, matrixStats, matrixcalc, plyr, quadprog, rgl, stats, utils
     suggests: ''
     author: Radoslav Harman, Lenka Filova
     date: '2019-12-02'
@@ -3173,10 +3219,13 @@
       in this package require the 'gurobi' software and its accompanying R package.
       For their installation, please follow the instructions at <https://www.gurobi.com>
       and the file gurobi_inst.txt, respectively.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design
     main: 
-      - ?
+      - "?"
     data: 'no'
 - vdg:
     download2020: 7377
@@ -3196,6 +3245,9 @@
       Instead of using pointwise optimization to find the minimum and maximum scaled
       prediction variance curves, which can be inaccurate and time consuming, this
       package uses quantile regression as an alternative.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type: 
       - visualisation (design)
       - variance dispersion graph 
@@ -3216,10 +3268,11 @@
     description: Implements the Product of Independent beta Probabilities dose Escalation
       (PIPE) design for dual-agent Phase I trials as described in Mander AP, Sweeting
       MJ (2015) <DOI:10.1002/sim.6434>.
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - dose-finding experiment 
-      - domain:
-        - clinical trial 
     main: 
       - pipedesign 
         - dose finding 
@@ -3244,11 +3297,11 @@
       evaluating its efficiencies for the three objectives. The acronym VNM stands
       for V-algorithm using Newton Raphson method to search multiple-objective optimal
       design.
+    domain: clinical trial 
+    paper: https://www.jstatsoft.org/index.php/jss/article/view/v083i05/v83i05.pdf
+    relevance: 'yes'
     type: 
       - optimised design 
-      - domain: 
-        - clinical trial 
-      - paper: https://www.jstatsoft.org/index.php/jss/article/view/v083i05/v83i05.pdf
     main: 
       - MOPT
         - optimised design 
@@ -3300,12 +3353,13 @@
       of biomarkers with a clinical outcome (surrogate endpoint problem). The code
       can be used for a single active treatment versus control design and for a single-stage
       design.
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - group sequential design 
       - randomised design 
-      - domain:
-        - clinical trial 
-    main: ?
+    main: "?"
     data: 'no'
 - powerGWASinteraction:
     download2020: 7062
@@ -3320,10 +3374,11 @@
       studies of candidate genes and genome-wide association studies (GWAS). This
       includes power calculation for four two-step screening and testing procedures.
       It can also calculate power for GxE and GxG without any screening.
+    paper: ''
+    domain: genetics 
+    relevance: 'yes'
     type: 
       - power analysis 
-      - domain:
-        - genetical genomic
     main: 
       - powerGE
         - power analysis 
@@ -3347,10 +3402,12 @@
       methods are described in Daniel C. (1959) <doi:10.1080/00401706.1959.10489866>
       and/or Lenth R.V. (1989) <doi:10.1080/00401706.1989.10488595>, but some new
       approaches are added and integrated in one package.
+    paper: ''
+    domain: 'general'
+    relevance: '?'
     type: 
       - analysis of exepriment 
       - visualisation 
-      - irrelevant?
     main: 
       - dot.plot
         - visualisation
@@ -3378,8 +3435,11 @@
       space plots, and contour plots of scaled prediction variances for second-order
       response surface designs in spherical and cuboidal regions. Also, some standard
       response surface designs can be generated.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
-      - response surface design 
+      - response-surface design 
       - variance dispersion graph 
       - visualisation (design)
     main: 
@@ -3411,17 +3471,17 @@
       <doi:10.1002/sim.1450>; Hasler et al. (2009) <doi:10.1002/sim.3052>), binary
       (Friede and Kieser (2007) <doi:10.1002/sim.2543>), nonparametric (Muetze et
       al. (2017) <doi:10.1002/sim.7176>), exponential (Mielke and Munk (2009) <arXiv:0912.4169>).'
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - sample design 
       - sample size calculation 
       - optimised design?
       - analysis of experiment 
-      - domain:
-        - clinical trial 
     main: 
       - opt_alloc_RET
-        - sample size calculation 
-        - optimised sample size 
+        - sample size calculation, optimised sample size 
         - opt_alloc_RET(experiment, reference, placebo, Delta, distribution, h = NULL)
       - power_RET
         - power calculation 
@@ -3441,11 +3501,12 @@
     title: Phase II Clinical Trial Design Using Bayesian Methods
     description: Calculate the Bayesian posterior/predictive probability and determine
       the sample size and stopping boundaries for single-arm Phase II design.
-    type: '
-      - optimised design?
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
+    type: 
+      - optimised design
       - stopping boundaries 
-      - domain:
-        - clinical trial 
     main: 
       - PostP.design
         - stopping boundary calculation 
@@ -3463,21 +3524,21 @@
     imports: ''
     suggests: ''
     author: Bo Huang <bo.huang@pfizer.com> and Neal Thomas <neal.thomas@pfizer.com>
-    date: 2012-9-30
+    date: 2012-09-30
     version: 3.0.1
     title: Optimal Two and Three Stage Designs for Single-Arm and Two-Arm Randomized
       Controlled Trials with a Long-Term Binary Endpoint
     description: Optimal two and three stage designs monitoring time-to-event endpoints
       at a specified timepoint
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - optimised design 
       - randomised design 
-      - domain:
-        - clinical trial 
     main: 
       - OptimDes 
-        - optimised design 
-        - randomised design
+        - optimised design, randomised design
         - OptimDes(B.init, m.init, alpha, beta, param, x, target = c("EDA", "ETSL","ES"), 
         sf=c("futility","OF","Pocock"), num.arm,r=0.5, num.stage=2, pause=0, control = OptimDesControl(),...)
     data: 'no'
@@ -3489,14 +3550,16 @@
       rsm, Rdpack, Rdsdp, spam, stringr
     suggests: knitr, lhs, rmarkdown
     author: Enrique del Castillo, Peng Chen, Adam Meyers, John Hunt, and James Rapkin
-    date: ''
+    date: '2019-07-02'
     version: '1.1'
     title: Confidence Regions for Optima
     description: Computes confidence regions on the location of response surface optima.
+    paper: https://www.tandfonline.com/doi/abs/10.1080/03610918.2020.1823412?journalCode=lssp20
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - optimised design 
-      - response surface design 
-      - paper: https://www.tandfonline.com/doi/abs/10.1080/03610918.2020.1823412?journalCode=lssp20
+      - response-surface design 
     main: 
       - OptRegionQuad
         - confidence region 
@@ -3536,10 +3599,12 @@
     description: Functions for bootstrapping the power of ANOVA designs based on estimated
       means and standard deviations of the conditions. Please refer to the documentation
       of the boot.power.anova() function for further details.
+    paper: ''
+    domain: 'general'
+    relevance: 'no'
     type: 
       - power analysis 
       - analysis of experiment 
-      - irrelevant?
     main: 
       - boot.power.anova 
         - power calculation 
@@ -3559,9 +3624,11 @@
       for the power of F-test for regression model discrimination), KL-optimal designs
       (for lognormal errors) and their robust analogues can be calculated with the
       package.
+    paper: ''
+    domain: 'general'
+    relevance: '?'
     type: 
       - optimised design?
-      - irrelevant?
       - modeling 
     main: 
       - tpopt
@@ -3583,10 +3650,11 @@
     description: An implementation of Bayesian single-arm phase II design methods
       for binary outcome based on posterior probability (Thall and Simon (1994) <doi:10.2307/2533377>)
       and predictive probability (Lee and Liu (2008) <doi:10.1177/1740774508089279>).
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - optimised design?
-      - domain: 
-        - clinical trial 
     main: 
       - postprob
         - bayesian optimised design 
@@ -3608,19 +3676,19 @@
       Phase II-III designs of Lai, Lavori and Shih using generalized likelihood ratio
       statistics. Includes pdf and source files that describe the entire R implementation
       with the relevant mathematical details.
+    paper: ''
+    domain: clinical trial 
+    relevance: 'yes'
     type: 
       - seamless Phase II-III design
       - optimised design 
       - analysis of experiment 
-      - domain:   
-        - clinical trial 
     main: 
       - generateSP23Design
         - seamless Phase II-III design
         - generateSP23Design(trueParameters, trialParameters)
       - exploreSP23Design 
-        - seamless Phase II-III design
-        - optimised design 
+        - seamless Phase II-III design, optimised design 
         - exploreSP23Design(sp23Design, numberOfSimulations = 25, rngSeed = 12345, showProgress = TRUE)
       - executeSP23Design 
         - analysis of experiment 
@@ -3641,14 +3709,16 @@
     description: Gives design points from a sequential full factorial-based Latin
       hypercube design, as described in Duan, Ankenman, Sanchez, and Sanchez (2015,
       Technometrics, <doi:10.1080/00401706.2015.1108233>).
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
       - latin hypercube design
       - space filling 
       - optimised design 
     main: 
       - sFFLHDmm
-        - optimised design 
-        - latin hypercube design
+        - optimised design, latin hypercube design
         - R6 object 
       - sFFLHD_Lflex
         - latin hypercube design
@@ -3670,10 +3740,11 @@
       exchange and array exchange algorithms of Debusho, Gemechu and Haines (2016,
       unpublished). The package also provides an optional method of using the graphical
       user interface (GUI) R package tcltk to ensure that it is user friendly.
+    paper: ''
+    domain: genomic sequencing 
+    relevance: 'yes'
     type: 
       - microarray experiment 
-      - domain:
-        - genomic sequencing 
       - optimised design 
       - block design 
     main: 
@@ -3698,10 +3769,11 @@
       unpublished) algorithms after adjusting for the row-column designs setup. The
       package also provides an optional method of using the graphical user interface
       (GUI) R package tcltk to ensure that it is user friendly.
-    type: ''
+    paper: ''
+    domain: genomic sequencing 
+    relevance: 'yes'
+    type: 
       - microarray experiment 
-      - domain:
-        - genomic sequencing 
       - optimised design 
     main: 
       - optrcdmaeAT
@@ -3723,10 +3795,11 @@
       of all possible elementary treatment contrasts. The package also provides an
       optional method of using the graphical user interface (GUI) R package 'tcltk'
       to ensure that it is user friendly.
+    paper: ''
+    domain: genomic sequencing 
+    relevance: 'yes'
     type: 
       - microarray experiment 
-      - domain:
-        - genomic sequencing 
       - optimised design 
     main: 
       - soptdmaeA
@@ -3757,15 +3830,17 @@
       over the classical factorial design, as discussed by Panneton et al. (1999)
       <doi:10.13031/2013.13267> and Mead et al. (2012) <doi:10.1017/CBO9781139020879.018>
       among others.
+    paper: ''
+    domain: 'general'
+    relevance: 'yes'
     type: 
-      - response surface design 
+      - response-surface design 
       - analysis of experiment 
     main: 
       - design_ccd()
         - response surface design
         - design_ccd(j, k)
       - ccd_analysis()
-        - analysis of experiment 
-        - response surface design
+        - analysis of experiment, response surface design
         - ccd_analysis(x)
     data: 'yes'
