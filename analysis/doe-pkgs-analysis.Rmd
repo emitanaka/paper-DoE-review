@@ -1,0 +1,75 @@
+---
+title: "doe-pkgs-analysis"
+author: "Dewi Lestari Amaliah - 31251587"
+date: "15/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning = FALSE, message = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(yaml)
+library(reshape)
+library(tidyverse)
+library(lubridate)
+```
+
+```{r}
+#load the yml file and transform it as data frame
+pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
+  melt()
+
+#tidy the data frame
+pkg_tidy <- pkg_df %>%
+  pivot_wider(names_from = L3,
+              values_from = value)
+
+# pivot longer the data frame by its type 
+pkg_tidy_long_type <- pkg_tidy %>%
+  unnest(type) %>%
+  unnest(date) %>%
+  unnest(domain) %>%
+  mutate(year = year(ymd(date)))
+```
+
+```{r}
+# summarise the packages based on its type
+pkg_tidy_long_type %>%
+  filter(relevance != "no") %>%
+  group_by(type) %>%
+  count() %>%
+  arrange(desc(n))
+```
+```{r}
+#summarise the package based on its date of published 
+pkg_tidy_long_type %>%
+  filter(relevance != "no") %>%
+  group_by(year) %>%
+  count() %>%
+  ggplot(aes(x = year, y = n)) +
+  geom_line() +
+  geom_point()
+```
+
+```{r}
+pkg_tidy_long_type %>%
+  filter(relevance != "no") %>%
+  group_by(domain) %>%
+  count() %>%
+  arrange(desc(n))
+```
+
+```{r}
+pkg_tidy_long_main <- pkg_tidy %>%
+  unnest(main) %>%
+  separate(main, into = c("funct_name", "funct_type", "funct_usage"), sep = ' - ')
+```
+
+
+```{r}
+pkg_tidy_long_main %>%
+  filter(relevance != "no") %>%
+  group_by(funct_type) %>%
+  count() %>%
+  arrange(desc(n))
+```
+
