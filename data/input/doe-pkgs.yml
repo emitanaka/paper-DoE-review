@@ -601,7 +601,7 @@
         - randomised design 
         - designRandomize(allocated = NULL, recipient, nested.recipients = NULL, except = NULL, seed = NULL, unit.permutation = FALSE, ...)
       - fitted.aovlist 
-        - analysis of exeperiment
+        - analysis of experiment
         - fitted(object, error.term=NULL, ...)
     data: 'yes'
 - DoseFinding:
@@ -1044,7 +1044,7 @@
     domain: 'general'
     relevance: 'yes'
     type: 
-      - analysis of exeperiment 
+      - analysis of experiment 
       - power analysis
     main: 
       - ES.anova.oneway
@@ -3406,7 +3406,7 @@
     domain: 'general'
     relevance: '?'
     type: 
-      - analysis of exepriment 
+      - analysis of experiment 
       - visualisation 
     main: 
       - dot.plot
