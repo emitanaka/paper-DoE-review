@@ -157,7 +157,7 @@ ggplot(pkg_net, aes(from_id = L2, to_id = pkg)) +
     fontsize = 2)
 ```
 
-This method results error, and only work with the edges only. However, even with the example data, the error stil occurs (may be the bug in the package?)
+Note: This method results error, and only works with the edges only. However, even with the example data, the error stil occurs (may be the bug in the package?)
 
 ```{r}
 ## Example of issue in geomnet
@@ -186,10 +186,13 @@ routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes, dire
 set.seed(1234567)
 plot(routes_igraph, edge.arrow.size = 0.2, layout = layout_with_graphopt)
 ```
+Notes: The label overlapped, it is hard to see the network
+
 
 ## Create network using tidygraph and ggraph 
 
 ```{r}
+# create the input based on the igraph object
 routes_tidy <- routes_igraph %>% as_tbl_graph() %>%
   activate(edges)
 
@@ -207,4 +210,31 @@ ggraph(routes_tidy, layout = "stress") +
   theme_graph()
 ```
 
+# Network graph with all the packages in CRAN task view
+
+```{r}
+routes_igraph_full <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_full, directed = TRUE)
+
+routes_tidy_full <- routes_igraph_full %>% as_tbl_graph() %>%
+  activate(edges)
+
+routes_tidy_full
+```
+
+```{r}
+ggraph(routes_tidy_full, layout = "stress") + 
+  geom_edge_link(aes(color = type),
+                 arrow = arrow(length = unit(1, 'mm')), 
+                 end_cap = circle(1, 'mm')) + 
+  geom_node_point() + 
+  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
+  theme_graph()
+```
+
+Note: Hard to read. Hence, with all of the package in CRAN task view, I will make a heatmap instead. 
+
+```{r}
+pkg.mat = get.adjacency(routes_igraph_full, sparse = FALSE)
+heatmap(pkg.mat[,109:1],Rowv = NA, Colv = NA,scale="none")
+```
 
