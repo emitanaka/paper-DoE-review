@@ -1,0 +1,135 @@
+---
+title: "Package Interconnection"
+author: "Dewi Lestari Amaliah"
+date: "03/09/2021"
+output: html_document
+---
+
+```{r setup-section4, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(yaml)
+library(reshape)
+library(tidyverse)
+library(lubridate)
+library(splitstackshape)
+library(igraph)
+library(tidygraph)
+library(ggraph)
+library(networkD3)
+```
+
+
+```{r network-data}
+pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
+  melt()
+
+#tidy the data frame
+pkg_tidy <- pkg_df %>%
+  pivot_wider(names_from = L3,
+              values_from = value) %>%
+  mutate(author_ulrike = as.factor(ifelse(str_detect(author, "Ulrike"), 1, 0)))
+
+# make list of doe package 
+list_pkg <- as.list(pkg_tidy)$L2
+
+# create function to extract the depends, imports, and suggests 
+get_pkg <- function(var){
+  # select only the package name and depends/imports/suggests
+  tmp_df <- pkg_tidy %>%
+    select(L2, author_ulrike, var) %>%
+    # separate every depends/imports/suggests
+    cSplit(var, sep = " ,") 
+  
+  df <- tmp_df %>%
+    pivot_longer(c(3:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
+    filter(!is.na(pkg)) %>%
+    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
+    mutate(doe_pkg_related = ifelse(pkg %in% list_pkg, "yes", "no")) %>%
+    # filter only package whose depends/imports/suggests is a DoE
+    filter(doe_pkg_related == "yes") %>%
+    # tidy the data to only have the type: depends/imports/suggests
+    cSplit("type", sep = "_") %>%
+    select(-type_2) %>%
+    rename(type = type_1)
+
+  return(df)
+}
+
+# create data frame from the above function
+depend_df <- get_pkg("depends")
+import_df <- get_pkg("imports")
+suggest_df <- get_pkg("suggests")
+
+# bind data frames
+pkg_edges <- rbind(depend_df, import_df, suggest_df) %>%
+  select(-doe_pkg_related) %>%
+  select(pkg, L2, type, author_ulrike)
+
+# extract unique package that has depends/imports/suggests
+from <- pkg_edges %>%
+  distinct(L2)
+
+# extract unique package that being depends/imports/suggests
+to <- pkg_edges %>%
+  distinct(pkg)
+
+# create nodes from the two previous dataframe
+pkg_nodes <- full_join(from, to, by = c("L2" = "pkg")) %>%
+  left_join(pkg_tidy, by = "L2") %>%
+  select(L2, author_ulrike)
+
+# create igraph object
+routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes, directed = TRUE)
+
+# create the input based on the igraph object
+routes_tidy <- routes_igraph %>% as_tbl_graph() %>%
+  activate(edges)
+```
+
+Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
+
+
+```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates wether the package is authored by Ulrike Groumping or not."}
+# create the graph
+ggraph(routes_tidy, layout = "stress") + 
+  geom_edge_link(aes(color = type),
+                 arrow = arrow(length = unit(1, 'mm')), 
+                 end_cap = circle(1, 'mm')) + 
+  geom_node_point(aes(color = author_ulrike)) + 
+  scale_color_manual(values = c("#707B7C", "#F5B041"), labels = c("no", "yes")) +
+  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
+  theme_graph()
+```
+Figure \@fig(network-graph) shows the interplay of DoE packages. In the previous section, we noticed that  Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
+
+The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are authored by Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
+
+Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. 
+
+Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
+
+
+```{r}
+#create nodes for interactive network
+nodes_d3 <- pkg_nodes %>%
+  rowid_to_column("id") %>%
+  mutate(id = id - 1)
+
+#create edges for interactive network
+edges_d3 <-routes_tidy %>%
+  activate(edges) %>%
+  data.frame() %>%
+  mutate(from = from - 1,
+         to = to - 1)
+
+# interactive network
+forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to", 
+             NodeID = "L2", Group = "author_ulrike", 
+             opacity = 1, fontSize = 16, zoom = TRUE)
+```
+
+# Create the categorisation based on main author 
+# create the network by facetting by author 
+# if there are many authors then create the facet for example if the author write >= 3 packages. 
+# not only focus in the Ulrike alone 

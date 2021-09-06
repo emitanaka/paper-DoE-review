@@ -17,6 +17,9 @@ library(geomnet)
 library(ggnetwork)
 library(tidygraph)
 library(ggraph)
+library(networkD3)
+library(plotly)
+library(qdapRegex)
 ```
 
 ```{r}
@@ -27,7 +30,8 @@ pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
 #tidy the data frame
 pkg_tidy <- pkg_df %>%
   pivot_wider(names_from = L3,
-              values_from = value)
+              values_from = value) %>%
+  mutate(author_ulrike = as.factor(ifelse(str_detect(author, "Ulrike"), 1, 0)))
 
 # pivot longer the data frame by its type 
 pkg_tidy_long_type <- pkg_tidy %>%
@@ -90,12 +94,12 @@ list_pkg <- as.list(pkg_tidy)$L2
 get_pkg <- function(var){
   # select only the package name and depends/imports/suggests
   tmp_df <- pkg_tidy %>%
-    select(L2, var) %>%
+    select(L2, author_ulrike, var) %>%
     # separate every depends/imports/suggests
     cSplit(var, sep = " ,") 
   
   df <- tmp_df %>%
-    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
+    pivot_longer(c(3:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
     filter(!is.na(pkg)) %>%
     # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
     mutate(doe_pkg_related = ifelse(pkg %in% list_pkg, "yes", "no")) %>%
@@ -122,7 +126,8 @@ suggest_df <- get_pkg("suggests")
 
 # bind data frames
 pkg_edges <- rbind(depend_df, import_df, suggest_df) %>%
-  select(-doe_pkg_related)
+  select(-doe_pkg_related) %>%
+  select(pkg, L2, type, author_ulrike)
 
 # extract unique package that has depends/imports/suggests
 from <- pkg_edges %>%
@@ -133,9 +138,11 @@ to <- pkg_edges %>%
   distinct(pkg)
 
 # create nodes from the two previous dataframe
-pkg_nodes <- full_join(from, to, by = c("L2" = "pkg"))
+pkg_nodes <- full_join(from, to, by = c("L2" = "pkg")) %>%
+  left_join(pkg_tidy, by = "L2") %>%
+  select(L2, author_ulrike)
 
-pkg_nodes_full <- pkg_tidy %>%
+pkg_nodes_full <- pkg_tidy%>%
   select(L2)
 
 # create the network package 
@@ -205,9 +212,12 @@ ggraph(routes_tidy, layout = "stress") +
   geom_edge_link(aes(color = type),
                  arrow = arrow(length = unit(1, 'mm')), 
                  end_cap = circle(1, 'mm')) + 
-  geom_node_point() + 
+  geom_node_point(aes(color = author_ulrike)) + 
+  scale_color_manual(values = c("#707B7C", "#F5B041"), labels = c("no", "yes")) +
   geom_node_text(aes(label = name), repel = TRUE, size = 2) +
   theme_graph()
+
+
 ```
 
 # Network graph with all the packages in CRAN task view
@@ -236,5 +246,29 @@ Note: Hard to read. Hence, with all of the package in CRAN task view, I will mak
 ```{r}
 pkg.mat = get.adjacency(routes_igraph_full, sparse = FALSE)
 heatmap(pkg.mat[,109:1],Rowv = NA, Colv = NA,scale="none")
+```
+
+Next:
+1. Color the nodes based on author (Binary variable whether the pkg is authored by Ulrike or not)
+2. Using interactive graph with D3
+3. Write on the paper 
+
+
+# Interactive Plot 
+
+```{r}
+nodes_d3 <- pkg_nodes %>%
+  rowid_to_column("id") %>%
+  mutate(id = id - 1)
+
+edges_d3 <-routes_tidy %>%
+  activate(edges) %>%
+  data.frame() %>%
+  mutate(from = from - 1,
+         to = to - 1)
+
+forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to", 
+             NodeID = "L2", Group = "author_ulrike", 
+             opacity = 1, fontSize = 16, zoom = TRUE)
 ```
 

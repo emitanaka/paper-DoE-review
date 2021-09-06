@@ -220,8 +220,6 @@ ggplot(rbind(dldat_comb_bigram_desc,
 ```
 
 
-
-
 ## What are the common types of experimental designs?
 
 ## How do packages interplay with each other?
