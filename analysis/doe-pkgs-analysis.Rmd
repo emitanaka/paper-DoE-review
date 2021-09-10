@@ -3,6 +3,7 @@ title: "doe-pkgs-analysis"
 author: "Dewi Lestari Amaliah - 31251587"
 date: "15/08/2021"
 output: html_document
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE, warning = FALSE, message = FALSE}
@@ -20,6 +21,8 @@ library(ggraph)
 library(networkD3)
 library(plotly)
 library(qdapRegex)
+library(shiny)
+library(visNetwork)
 ```
 
 ```{r}
@@ -210,9 +213,64 @@ ggraph(routes_tidy, layout = "stress") +
   geom_node_point(aes(color = aut_gr)) + 
   geom_node_text(aes(label = name), repel = TRUE, size = 2) +
   theme_graph()
-
-
 ```
+
+```{r}
+aut_tidy_1st_aut <- aut_tidy_join[!duplicated(aut_tidy_join$L2), ] %>%
+  select(L2, author) 
+
+aut_gr <- aut_tidy_1st_aut %>%
+  group_by(author) %>%
+  count() %>%
+  ungroup() %>%
+  arrange(desc(n)) %>%
+  mutate(aut_gr = as.factor(ifelse(n > 1, author, "other")))
+  
+
+pkg_nodes_1aut <- left_join(aut_tidy_1st_aut, aut_gr, by = "author") %>%
+  select(L2, aut_gr) %>%
+  mutate(first_aut = factor(aut_gr, levels = c("Ulrike Groemping",
+                                           "John Lawson",
+                                           "Robert B. Gramacy",
+                                           "Delphine Dupuy",
+                                           "Ernesto Barrios",
+                                           "Kevin Wright",
+                                           "Peng Liu",
+                                           "Shwetank Lall",
+                                           "other"))) %>%
+  select(L2, first_aut)
+
+routes_igraph_1aut <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_1aut, directed = TRUE)
+
+# create the input based on the igraph object
+routes_tidy_1aut <- routes_igraph_1aut %>% as_tbl_graph() %>%
+  activate(edges)
+
+
+ggraph(routes_tidy_1aut, layout = "stress") + 
+  geom_edge_link(aes(color = type),
+                 arrow = arrow(length = unit(1, 'mm')), 
+                 end_cap = circle(1, 'mm')) + 
+  geom_node_point(aes(color = first_aut)) + 
+  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
+  theme_graph()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Network graph with all the packages in CRAN task view
 
@@ -248,21 +306,104 @@ Next:
 3. Write on the paper 
 
 
-# Interactive Plot 
+# Interactive Plot with visnetwork
 
 ```{r}
-nodes_d3 <- pkg_nodes %>%
+nodes_d3 <- pkg_nodes_1aut %>%
   rowid_to_column("id") %>%
   mutate(id = id - 1)
 
-edges_d3 <-routes_tidy %>%
+edges_d3 <-routes_tidy_1aut %>%
   activate(edges) %>%
   data.frame() %>%
   mutate(from = from - 1,
          to = to - 1)
 
 forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to", 
-             NodeID = "L2", Group = "aut_gr", 
+             NodeID = "L2", Group = "first_aut", 
              opacity = 1, fontSize = 16, zoom = TRUE)
 ```
+
+
+```{r}
+# shinyApp(
+#   ui = fluidPage(
+#     selectInput("first_aut", "Choose the author:",
+#                     choices = levels(pkg_nodes_1aut$first_aut)),
+#       mainPanel(plotOutput(outputId = "net"))
+#     ),
+#   
+#   server = function(input, output){
+#     
+#     dat <- reactive({
+#       if (input$first_aut == "Ulrike Groemping"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Ulrike Groemping", "Ulrike Groemping", "Other")))
+#       }
+#       
+#       if (input$first_aut == "John Lawson"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "John Lawson", "John Lawson", "Other")))
+#       }
+#       
+#       if (input$first_aut == "Robert B. Gramacy"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Robert B. Gramacy", "Robert B. Gramacy", "Other")))
+#       }
+#       
+#       if (input$first_aut == "Delphine Dupuy"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Delphine Dupuy", "Delphine Dupuy", "Other")))
+#       }
+#       
+#       if (input$first_aut == "Ernesto Barrios"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Ernesto Barrios", "Ernesto Barrios", "Other")))
+#       }
+#       
+#       if (input$first_aut == "Kevin Wright"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Kevin Wright", "Kevin Wright", "Other")))
+#       }
+#       
+#        if (input$first_aut == "Peng Liu"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Peng Liu", "Peng Liu", "Other")))
+#        }
+#       
+#       if (input$first_aut == "Shwetank Lall"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "Shwetank Lall", "Shwetank Lall", "Other")))
+#       }
+#       
+#       if (input$first_aut == "other"){
+#         aut <- pkg_nodes_1aut %>%
+#           mutate(author = as.factor(ifelse(first_aut == "other", "Other authors", "Other with > 1 packages")))
+#       }
+#       
+#       graph_from_data_frame(d = pkg_edges, vertices = aut, directed = TRUE) %>%
+#         as_tbl_graph() %>% activate(edges)
+#     })
+#     
+#     
+# 
+#     output$net <- renderPlot(
+#       ggraph(dat, layout = "stress") +
+#         geom_edge_link(aes(color = type),
+#                        arrow = arrow(length = unit(2, 'mm')),
+#                        end_cap = circle(1, 'mm')) +
+#         geom_node_point(aes(color = author), size = 3) +
+#         geom_node_text(aes(label = name), repel = TRUE, size = 3.5) +
+#         scale_color_manual(values = c("black", "#6C3483")) +
+#         theme_graph()
+#     )
+#   },
+#   
+#   options = list(height = 1500,
+#                  width = 1500)
+#   
+# )
+```
+
+
 
