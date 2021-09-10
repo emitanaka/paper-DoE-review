@@ -142,7 +142,7 @@
     imports: ''
     suggests: rgl, randtoolbox, lattice
     author: Jessica Franco, Delphine Dupuy, Olivier Roustant, Patrice Kiener, Guillaume
-      Damblin and Bertrand Iooss.
+      Damblin, Bertrand Iooss
     date: '2021-02-10'
     version: '1.9'
     title: Designs of Computer Experiments
@@ -179,7 +179,7 @@
     imports: ''
     suggests: rgenoud (>= 5.8-2.0), foreach, doParallel, testthat, numDeriv
     author: 'Olivier Roustant <roustant@insa-toulouse.fr>, David Ginsbourger, Yves Deville. Contributors: Clement
-      Chevalier, Yann Richet.'
+      Chevalier, Yann Richet'
     date: '2021-02-23'
     version: 1.6.0
     title: Kriging Methods for Computer Experiments
@@ -429,7 +429,7 @@
     depends: R (>= 2.14.0)
     imports: maptree
     suggests: MASS
-    author: Robert B. Gramacy <rbg@vt.edu> and Matt A. Taddy <mataddy@amazon.com>
+    author: Robert B. Gramacy <rbg@vt.edu>, Matt A. Taddy <mataddy@amazon.com>
     date: '2020-09-11'
     version: 2.4-17
     title: Bayesian Treed Gaussian Process Models
@@ -611,7 +611,7 @@
     suggests: |-
       numDeriv, Rsolnp, quadprog, parallel, multcomp, ggplot2,
       knitr, rmarkdown, MASS, testthat
-    author: Bjoern Bornkamp [aut, cre] , Jose Pinheiro [aut], Frank Bretz [aut], Ludger
+    author: Bjoern Bornkamp [aut, cre], Jose Pinheiro [aut], Frank Bretz [aut], Ludger
       Sandig [aut]
     date: '2021-06-24'
     version: 1.0-1
@@ -873,7 +873,7 @@
     depends: ''
     imports: Iso
     suggests: ''
-    author: Ying Yuan <yyuan@mdanderson.org> and Suyu Liu
+    author: Ying Yuan <yyuan@mdanderson.org>, Suyu Liu
     date: '2021-01-19'
     version: 2.7.2
     title: Bayesian Optimal INterval (BOIN) Design for Single-Agent and Drug- Combination
@@ -917,7 +917,7 @@
     depends: R (>= 3.1)
     imports: plyr,PolynomF
     suggests: R.rsp
-    author: R. N. Edmondson.
+    author: R. N. Edmondson
     date: 2021-04-07
     version: '4.9'
     title: Nested and Crossed Block Designs for Factorial and Unstructured Treatment
@@ -956,7 +956,7 @@
     depends: ''
     imports: MASS, tibble
     suggests: nbpMatching, RItools, xtable
-    author: Ryan T. Moore <rtm@american.edu> and Keith Schnakenberg
+    author: Ryan T. Moore <rtm@american.edu>, Keith Schnakenberg
     date: '2016-12-02'
     version: 0.6-3
     title: Block, Assign, and Diagnose Potential Interference in Randomized Experiments
@@ -1095,7 +1095,7 @@
     depends: R (>= 3.5.0), lhs
     imports: Rcpp (>= 0.12.9), compare, randtoolbox, parallel
     suggests: ''
-    author: Antony M. Overstall, David C. Woods, Maria Adamou & Damianos Michaelides
+    author: Antony M. Overstall, David C. Woods, Maria Adamou, Damianos Michaelides
     date: '2020-10-04'
     version: '1.10'
     title: Optimal Bayesian Experimental Design using the ACE Algorithm
@@ -1250,7 +1250,7 @@
     depends: R (>= 2.7.0), stats, matrixStats, R.methodsS3
     imports: ''
     suggests: ''
-    author: Leonardo Sandrini-Neto <leonardosandrini@gmail.com> & Mauricio G. Camargo
+    author: Leonardo Sandrini-Neto <leonardosandrini@gmail.com>, Mauricio G. Camargo
     date: '2011-02-21'
     version: 1.1.1
     title: 'GAD: Analysis of variance from general principles'
@@ -1425,7 +1425,7 @@
     depends: ''
     imports: stats, utils
     suggests: ''
-    author: Mohamed Laib, Imane Rezgui, Zebida Gheribi-Aoulmi and Herve Monod
+    author: Mohamed Laib, Imane Rezgui, Zebida Gheribi-Aoulmi, Herve Monod
     date: '2016-11-22'
     version: 1.1-1
     title: Construction Methods of some Series of PBIB Designs
@@ -1474,7 +1474,7 @@
     depends: R (>= 3.1.1), car (>= 2.0-21)
     imports: ''
     suggests: mgcv, rgl, tcltk, MASS
-    author: Robert M. Pruzek <RMPruzek@yahoo.com> and James E. Helmreich <James.Helmreich@Marist.edu>
+    author: Robert M. Pruzek <RMPruzek@yahoo.com>, James E. Helmreich <James.Helmreich@Marist.edu>
     date: '2014-08-25'
     version: '2.1'
     title: Graphical Analysis of Variance
@@ -1616,7 +1616,7 @@
       rhandsontable, knitr, rmarkdown, gridExtra, covr, devtools,
       mrgsolve
     author: Andrew C. Hooker [aut, cre, trl, cph] , Marco Foracchia [aut] , Eric Stroemberg
-      [ctb] , Martin Fink [ctb] , Giulia Lestini [ctb] (Streamlining code, added functionality,
+      [ctb], Martin Fink [ctb] , Giulia Lestini [ctb] (Streamlining code, added functionality,
       vignettes), Sebastian Ueckert [aut] (MATLAB version, <https://orcid.org/0000-0002-3712-0255>),
       Joakim Nyberg [aut]
     date: '2021-05-21'
@@ -1676,7 +1676,7 @@
     depends: methods
     imports: ''
     suggests: ''
-    author: Emil A. Cornea, Liddy M. Chen, Bahjat F. Qaqish, Haitao Chu, and Joseph
+    author: Emil A. Cornea, Liddy M. Chen, Bahjat F. Qaqish, Haitao Chu, Joseph
       G. Ibrahim
     date: '2014-10-21'
     version: '1.1'
@@ -1848,7 +1848,7 @@
     depends: R (>= 3.4.0)
     imports: ''
     suggests: ''
-    author: Marie-Karelle Riviere and Jacques-Henri Jourdan
+    author: Marie-Karelle Riviere, Jacques-Henri Jourdan
     date: '2020-01-31'
     version: 1.7-1
     title: Phase I/II Adaptive Dose-Finding Design for MTA
@@ -1880,7 +1880,7 @@
     depends: DiceKriging
     imports: ''
     suggests: gam, akima, mda, polspline
-    author: D. Dupuy and C. Helbert
+    author: Delphine Dupuy, C. Helbert
     date: '2020-05-04'
     version: '1.5'
     title: Construction and Evaluation of Metamodels
@@ -2229,7 +2229,7 @@
     depends: R (>= 3.2.3)
     imports: ''
     suggests: ''
-    author: Marie-Karelle Riviere and Jacques-Henri Jourdan
+    author: Marie-Karelle Riviere, Jacques-Henri Jourdan
     date: '2019-02-25'
     version: 3.0-0
     title: Phase I/II Adaptive Dose-Finding Design for Combination Studies
@@ -2400,7 +2400,7 @@
     depends: ''
     imports: stats
     suggests: ''
-    author: Mohamed Laib, Abla Boudraa and Zebida Gheribi-Aoulmi
+    author: Mohamed Laib, Abla Boudraa, Zebida Gheribi-Aoulmi
     date: '2016-12-17'
     version: 1.0-1
     title: Nested Resolvable Designs and their Associated Uniform Designs
@@ -2431,8 +2431,7 @@
     depends: R (>= 2.14.0), methods
     imports: ''
     suggests: akima, tgp, plgp, MASS
-    author: Robert B. Gramacy <rbgramacy@chicagobooth.edu>, Matt A. Taddy <taddy@chicagobooth.edu>
-      and Christoforos Anagnostopoulos <christoforos.anagnostopoulos06@imperial.ac.uk>
+    author: Robert B. Gramacy <rbgramacy@chicagobooth.edu>, Matt A. Taddy <taddy@chicagobooth.edu>, Christoforos Anagnostopoulos <christoforos.anagnostopoulos06@imperial.ac.uk>
     date: '2017-03-13'
     version: 1.2-10
     title: Dynamic Trees for Learning and Design
@@ -2581,7 +2580,7 @@
     depends: ''
     imports: ''
     suggests: ''
-    author: Mohamed Laib <laib.med@gmail.com>, Imane Rezgui and Zebida Gheribi-Aoulmi
+    author: Mohamed Laib <laib.med@gmail.com>, Imane Rezgui, Zebida Gheribi-Aoulmi
     date: '2015-01-19'
     version: '1.0'
     title: Resolvable partially pairwise balanced design and Space-filling design
@@ -2613,7 +2612,7 @@
     depends: ''
     imports: ''
     suggests: ''
-    author: Nadia Keddig and Werner Wosniok
+    author: Nadia Keddig, Werner Wosniok
     date: '2014-11-12'
     version: '2.0'
     title: Experimental design for binary toxicity tests
@@ -2687,7 +2686,7 @@
     depends: R (>= 2.9.0), lattice
     imports: ''
     suggests: ''
-    author: R port by Douglas Bates <bates@stat.wisc.edu> and Karen A.F. Copeland
+    author: R port by Douglas Bates <bates@stat.wisc.edu>, Karen A.F. Copeland
       <karen@boulderstats.com>
     date: '2009-08-21'
     version: 0.1-8
@@ -2739,7 +2738,7 @@
     depends: nloptr
     imports: ''
     suggests: ''
-    author: Shan Ba  <shanbatr@gmail.com> and V. Roshan Joseph
+    author: Shan Ba  <shanbatr@gmail.com>, V. Roshan Joseph
     date: '2018-09-27'
     version: 4.1-2
     title: Maximum Projection Designs
@@ -2811,7 +2810,7 @@
     imports: mvtnorm, orthopolynom, nlme, crossdes, polynom
     suggests: ''
     author: Petr Simecek <simecek@gmail.com>, Juergen Pilz <juergen.pilz@aau.at>,
-      Mingui Wang <mail.mwang@gmail.com>, Albrecht Gebhardt <albrecht.gebhardt@aau.at>.
+      Mingui Wang <mail.mwang@gmail.com>, Albrecht Gebhardt <albrecht.gebhardt@aau.at>
     date: '2018-03-17'
     version: 1.0-10
     title: Optimal Design of Experiments
@@ -3034,7 +3033,7 @@
     depends: R (>= 2.10.0), Rsolnp, Rmpfr
     imports: ''
     suggests: ''
-    author: Ehsan Masoudi, Majid Sarmad and Hooshang Talebi
+    author: Ehsan Masoudi, Majid Sarmad, Hooshang Talebi
     date: '2013-02-25'
     version: '1.0'
     title: Finding Locally D-optimal optimal designs for some nonlinear and generalized
@@ -3285,7 +3284,7 @@
     depends: methods
     imports: graphics, Rcpp
     suggests: ''
-    author: Seung Won Hyun, Weng Kee Wong, and Yarong Yang
+    author: Seung Won Hyun, Weng Kee Wong, Yarong Yang
     date: '2018-05-16'
     version: '7.1'
     title: Finding Multiple-Objective Optimal Designs for the 4-Parameter Logistic
@@ -3366,7 +3365,7 @@
     depends: R (>= 2.10), mvtnorm, pwr
     imports: stats
     suggests: ''
-    author: Charles Kooperberg <clk@fredhutch.org> and Li Hsu <lih@fredhutch.org>
+    author: Charles Kooperberg <clk@fredhutch.org>, Li Hsu <lih@fredhutch.org>
     date: '2015-07-02'
     version: 1.1.3
     title: Power Calculations for GxE and GxG Interactions for GWAS
@@ -3523,7 +3522,7 @@
     depends: mvtnorm, clinfun, stats, graphics, R (>= 2.14.1)
     imports: ''
     suggests: ''
-    author: Bo Huang <bo.huang@pfizer.com> and Neal Thomas <neal.thomas@pfizer.com>
+    author: Bo Huang <bo.huang@pfizer.com>, Neal Thomas <neal.thomas@pfizer.com>
     date: 2012-09-30
     version: 3.0.1
     title: Optimal Two and Three Stage Designs for Single-Arm and Two-Arm Randomized
@@ -3549,7 +3548,7 @@
       boot, DepthProc, fields, geometry, magrittr, mclust, nloptr,
       rsm, Rdpack, Rdsdp, spam, stringr
     suggests: knitr, lhs, rmarkdown
-    author: Enrique del Castillo, Peng Chen, Adam Meyers, John Hunt, and James Rapkin
+    author: Enrique del Castillo, Peng Chen, Adam Meyers, John Hunt, James Rapkin
     date: '2019-07-02'
     version: '1.1'
     title: Confidence Regions for Optima
@@ -3729,7 +3728,7 @@
     depends: R (>= 3.3.1), MASS, Matrix, igraph, tcltk
     imports: ''
     suggests: ''
-    author: Dibaba Bayisa Gemechu, Legesse Kassa Debusho, and Linda Haines
+    author: Dibaba Bayisa Gemechu, Legesse Kassa Debusho, Linda Haines
     date: '2017-02-07'
     version: 1.0.1
     title: Optimal Block Designs for Two-Colour cDNA Microarray Experiments
@@ -3757,7 +3756,7 @@
     depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
     imports: ''
     suggests: ''
-    author: Legesse Kassa Debusho, Dibaba Bayisa Gemechu, and Linda Haines
+    author: Legesse Kassa Debusho, Dibaba Bayisa Gemechu, Linda Haines
     date: '2017-04-12'
     version: 1.0.0
     title: Optimal Row-Column Designs for Two-Colour cDNA Microarray Experiments
@@ -3785,7 +3784,7 @@
     depends: R (>= 3.3.2), MASS, Matrix, igraph, tcltk
     imports: ''
     suggests: ''
-    author: Dibaba Bayisa Gemechu, Legesse Kassa Debusho, and Linda Haines
+    author: Dibaba Bayisa Gemechu, Legesse Kassa Debusho, Linda Haines
     date: '2017-06-10'
     version: 1.0.0
     title: Sequential Optimal Designs for Two-Colour cDNA Microarray Experiments

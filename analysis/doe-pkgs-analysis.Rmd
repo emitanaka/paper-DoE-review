@@ -94,7 +94,7 @@ list_pkg <- as.list(pkg_tidy)$L2
 get_pkg <- function(var){
   # select only the package name and depends/imports/suggests
   tmp_df <- pkg_tidy %>%
-    select(L2, author_ulrike, var) %>%
+    select(L2, author, var) %>%
     # separate every depends/imports/suggests
     cSplit(var, sep = " ,") 
   
@@ -127,7 +127,7 @@ suggest_df <- get_pkg("suggests")
 # bind data frames
 pkg_edges <- rbind(depend_df, import_df, suggest_df) %>%
   select(-doe_pkg_related) %>%
-  select(pkg, L2, type, author_ulrike)
+  select(pkg, L2, type, author)
 
 # extract unique package that has depends/imports/suggests
 from <- pkg_edges %>%
@@ -138,10 +138,39 @@ to <- pkg_edges %>%
   distinct(pkg)
 
 # create nodes from the two previous dataframe
-pkg_nodes <- full_join(from, to, by = c("L2" = "pkg")) %>%
+pkg_nodes_tmp <- full_join(from, to, by = c("L2" = "pkg")) %>%
   left_join(pkg_tidy, by = "L2") %>%
-  select(L2, author_ulrike)
+  select(L2, author)
 
+# tidy author 
+aut_tidy <- pkg_nodes_tmp %>%
+  separate_rows(author, sep=", (?=[A-Z])") %>%
+  filter(!str_detect(author, "ctb") & !str_detect(author, "National") & !str_detect(author, "Columbia")) 
+
+aut_tidy$author <- rm_angle(aut_tidy$author, replacement = "")
+aut_tidy$author <- rm_square(aut_tidy$author, replacement = "")
+
+aut_tidy <- aut_tidy %>%
+  mutate(author = ifelse(str_detect(author, "Contributor"), "Yves Deville",
+                         ifelse(str_detect(author, "based"), "Ernesto Barrios",
+                                ifelse(str_detect(author, "contributions"), "John Lawson", author))))
+                        
+
+aut_group <- aut_tidy %>%
+  group_by(author) %>%
+  count() %>%
+  arrange(desc(n)) %>%
+  mutate(aut_gr = as.factor(ifelse(n > 1, author, "other")))
+
+aut_tidy_join <- left_join(aut_tidy, aut_group, by = "author") %>%
+  group_by(L2) %>%
+  arrange(desc(n), .by_group = TRUE)
+
+pkg_nodes <- aut_tidy_join[!duplicated(aut_tidy_join$L2), ] %>%
+  select(L2, aut_gr)
+  
+
+# nodes for all of the author in DoE packages
 pkg_nodes_full <- pkg_tidy%>%
   select(L2)
 
@@ -151,49 +180,15 @@ pkg_net <- pkg_edges %>%
 ```
 
 
-## Create network using geomnet
-
-```{r}
-set.seed(12345)
-ggplot(pkg_net, aes(from_id = L2, to_id = pkg)) +
-  geom_net(layout.alg = "kamadakawai",
-    size = 2, 
-    labelon = TRUE, 
-    vjust = -0.6, 
-    directed = FALSE, 
-    fontsize = 2)
-```
-
-Note: This method results error, and only works with the edges only. However, even with the example data, the error stil occurs (may be the bug in the package?)
-
-```{r}
-## Example of issue in geomnet
-
-edges <- madmen$edges
-nodes <- madmen$vertices
-
-madmen_net <- fortify(as.edgedf(edges), nodes)
-
-set.seed(12345)
-ggplot(madmen_net, aes(from_id = from_id, to_id = to_id)) +
-  geom_net(layout.alg = "kamadakawai",
-    size = 2, 
-    labelon = TRUE, 
-    vjust = -0.6, 
-    directed = FALSE, 
-    fontsize = 2)
-```
-
-
 ## Create network using igraph
 
 ```{r}
 routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes, directed = TRUE)
 
-set.seed(1234567)
-plot(routes_igraph, edge.arrow.size = 0.2, layout = layout_with_graphopt)
+# set.seed(1234567)
+# plot(routes_igraph, edge.arrow.size = 0.2, layout = layout_with_graphopt)
+# Notes: The label overlapped, it is hard to see the network
 ```
-Notes: The label overlapped, it is hard to see the network
 
 
 ## Create network using tidygraph and ggraph 
@@ -212,8 +207,7 @@ ggraph(routes_tidy, layout = "stress") +
   geom_edge_link(aes(color = type),
                  arrow = arrow(length = unit(1, 'mm')), 
                  end_cap = circle(1, 'mm')) + 
-  geom_node_point(aes(color = author_ulrike)) + 
-  scale_color_manual(values = c("#707B7C", "#F5B041"), labels = c("no", "yes")) +
+  geom_node_point(aes(color = aut_gr)) + 
   geom_node_text(aes(label = name), repel = TRUE, size = 2) +
   theme_graph()
 
@@ -268,7 +262,7 @@ edges_d3 <-routes_tidy %>%
          to = to - 1)
 
 forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to", 
-             NodeID = "L2", Group = "author_ulrike", 
+             NodeID = "L2", Group = "aut_gr", 
              opacity = 1, fontSize = 16, zoom = TRUE)
 ```
 
