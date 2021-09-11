@@ -121,7 +121,6 @@ get_pkg <- function(var){
 ### Create network data 
 
 ```{r}
-
 # create data frame from the above function
 depend_df <- get_pkg("depends")
 import_df <- get_pkg("imports")
@@ -145,26 +144,42 @@ pkg_nodes_tmp <- full_join(from, to, by = c("L2" = "pkg")) %>%
   left_join(pkg_tidy, by = "L2") %>%
   select(L2, author)
 
-# tidy author 
+#### tidy author 
+
+
+## separate author 
 aut_tidy <- pkg_nodes_tmp %>%
+  # separate each aut/ctb/cph for each package
   separate_rows(author, sep=", (?=[A-Z])") %>%
+  # filter only role aut
   filter(!str_detect(author, "ctb") & !str_detect(author, "National") & !str_detect(author, "Columbia")) 
 
+# replace character inside angle and square bracket
 aut_tidy$author <- rm_angle(aut_tidy$author, replacement = "")
 aut_tidy$author <- rm_square(aut_tidy$author, replacement = "")
 
+# remove contributors written as sentence, also remove cph 
 aut_tidy <- aut_tidy %>%
   mutate(author = ifelse(str_detect(author, "Contributor"), "Yves Deville",
                          ifelse(str_detect(author, "based"), "Ernesto Barrios",
                                 ifelse(str_detect(author, "contributions"), "John Lawson", author))))
                         
-
+# extract author who wrote >1 packages
 aut_group <- aut_tidy %>%
   group_by(author) %>%
   count() %>%
   arrange(desc(n)) %>%
-  mutate(aut_gr = as.factor(ifelse(n > 1, author, "other")))
+  filter(n > 1)
 
+
+## tidy author in pkg_nodes_tmp 
+pkg_nodes_tmp$author <- rm_angle(pkg_nodes_tmp$author, replacement = "")
+pkg_nodes_tmp$author <- rm_square(pkg_nodes_tmp$author, replacement = "")
+
+```
+
+
+```{r}
 aut_tidy_join <- left_join(aut_tidy, aut_group, by = "author") %>%
   group_by(L2) %>%
   arrange(desc(n), .by_group = TRUE)
@@ -181,6 +196,17 @@ pkg_nodes_full <- pkg_tidy%>%
 pkg_net <- pkg_edges %>%
   full_join(pkg_nodes, by = "L2")
 ```
+
+
+> Note 
+
+Some packages are authored by the same persons. For Example, Dice
+
+
+
+
+
+
 
 
 ## Create network using igraph

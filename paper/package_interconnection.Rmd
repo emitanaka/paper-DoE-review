@@ -2,7 +2,8 @@
 title: "Package Interconnection"
 author: "Dewi Lestari Amaliah"
 date: "03/09/2021"
-output: html_document
+output: bookdown::html_document2
+bibliography: paper.bib
 ---
 
 ```{r setup-section4, include=FALSE}
@@ -17,6 +18,8 @@ library(igraph)
 library(tidygraph)
 library(ggraph)
 library(networkD3)
+library(visNetwork)
+library(qdapRegex)
 ```
 
 
@@ -27,8 +30,7 @@ pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
 #tidy the data frame
 pkg_tidy <- pkg_df %>%
   pivot_wider(names_from = L3,
-              values_from = value) %>%
-  mutate(author_ulrike = as.factor(ifelse(str_detect(author, "Ulrike"), 1, 0)))
+              values_from = value)
 
 # make list of doe package 
 list_pkg <- as.list(pkg_tidy)$L2
@@ -37,7 +39,7 @@ list_pkg <- as.list(pkg_tidy)$L2
 get_pkg <- function(var){
   # select only the package name and depends/imports/suggests
   tmp_df <- pkg_tidy %>%
-    select(L2, author_ulrike, var) %>%
+    select(L2, author, var) %>%
     # separate every depends/imports/suggests
     cSplit(var, sep = " ,") 
   
@@ -64,7 +66,7 @@ suggest_df <- get_pkg("suggests")
 # bind data frames
 pkg_edges <- rbind(depend_df, import_df, suggest_df) %>%
   select(-doe_pkg_related) %>%
-  select(pkg, L2, type, author_ulrike)
+  select(pkg, L2, type, author)
 
 # extract unique package that has depends/imports/suggests
 from <- pkg_edges %>%
@@ -75,29 +77,96 @@ to <- pkg_edges %>%
   distinct(pkg)
 
 # create nodes from the two previous dataframe
-pkg_nodes <- full_join(from, to, by = c("L2" = "pkg")) %>%
+pkg_nodes_tmp <- full_join(from, to, by = c("L2" = "pkg")) %>%
   left_join(pkg_tidy, by = "L2") %>%
-  select(L2, author_ulrike)
+  select(L2, author)
+
+### get author and count how many packages they write as the first author
+### there are many authors who wrote >1 packages but in the same packages, here, we just extract the first author
+
+# get first author 
+pkg_nodes_tmp$author <- rm_angle(pkg_nodes_tmp$author, replacement = "")
+pkg_nodes_tmp$author <- rm_square(pkg_nodes_tmp$author, replacement = "")
+pkg_nodes_tmp$author <- rm_white_punctuation(pkg_nodes_tmp$author, replacement = "")
+pkg_nodes_tmp$author <- ifelse(str_detect(pkg_nodes_tmp$author, "based"), "Ernesto Barrios", pkg_nodes_tmp$author)
+
+pkg_nodes_tmp <- pkg_nodes_tmp %>%
+  cSplit("author", sep = " ,") %>%
+  select(c(1:2)) %>%
+  rename(first_aut = author_1) 
+
+aut_gr <- pkg_nodes_tmp %>%
+  group_by(first_aut) %>%
+  count() %>%
+  ungroup() %>%
+  arrange(desc(n)) %>%
+  right_join(pkg_nodes_tmp, by = "first_aut")
+
+
+pkg_nodes_active <- aut_gr %>%
+  mutate(first_author = case_when(first_aut == "Ulrike Groemping" ~ "Ulrike Groemping",
+                                 first_aut == "John Lawson" ~ "John Lawson",
+                                 first_aut == "Robert B. Gramacy" ~ "Robert B. Gramacy",
+                                 first_aut == "Ernesto Barrios" ~ "Ernesto Barrios",
+                                 first_aut == "Kevin Wright" ~ "Kevin Wright",
+                                 first_aut == "Shwetank Lall" ~ "Shwetank Lall",
+                                 n == 1 ~ "Other")) %>%
+  mutate(first_author = factor(first_author, levels = c("Ulrike Groemping",
+                                                        "John Lawson",
+                                                        "Robert B. Gramacy",
+                                                        "Ernesto Barrios",
+                                                        "Kevin Wright",
+                                                        "Shwetank Lall",
+                                                        "Other"))) %>%
+  select(L2, first_author)
 
 # create igraph object
-routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes, directed = TRUE)
+routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_active, directed = TRUE)
 
 # create the input based on the igraph object
 routes_tidy <- routes_igraph %>% as_tbl_graph() %>%
   activate(edges)
+
+# create the nodes for interactive network
+nodes <- pkg_nodes_active %>%
+  rowid_to_column("id") %>%
+  rename(label = L2) %>%
+  mutate(font.size = 25)
+
+#create edges for interactive network
+edges <-routes_tidy %>%
+  activate(edges) %>%
+  data.frame()
+
+edges$color <- case_when(edges$type == "imports" ~ "green",
+                         edges$type == "depends" ~ "red",
+                         edges$type == "suggests" ~ "blue")
+
+ledges <- data.frame(color = c("green", "red", "blue"), 
+                     label = c("imports", "depends", "suggests")) 
+
 ```
 
-Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
+Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes_active)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
 
 
-```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates wether the package is authored by Ulrike Groumping or not."}
+```{r int-plot}
+visNetwork(nodes, edges, height = "500px", width = "100%") %>%
+  visOptions(selectedBy = "first_author") %>%
+  visLayout(randomSeed = 123) %>%
+  visEdges(shadow = FALSE,
+           arrows =list(to = list(enabled = TRUE, scaleFactor = 2))) %>%
+  visLegend(useGroups = F, addEdges = ledges)
+```
+
+
+```{r network-graph, eval = FALSE, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates wether the package is authored by Ulrike Groumping or not."}
 # create the graph
 ggraph(routes_tidy, layout = "stress") + 
   geom_edge_link(aes(color = type),
                  arrow = arrow(length = unit(1, 'mm')), 
                  end_cap = circle(1, 'mm')) + 
-  geom_node_point(aes(color = author_ulrike)) + 
-  scale_color_manual(values = c("#707B7C", "#F5B041"), labels = c("no", "yes")) +
+  geom_node_point(aes(color = first_author)) + 
   geom_node_text(aes(label = name), repel = TRUE, size = 2) +
   theme_graph()
 ```
@@ -110,24 +179,7 @@ Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `Dic
 Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
 
 
-```{r}
-#create nodes for interactive network
-nodes_d3 <- pkg_nodes %>%
-  rowid_to_column("id") %>%
-  mutate(id = id - 1)
 
-#create edges for interactive network
-edges_d3 <-routes_tidy %>%
-  activate(edges) %>%
-  data.frame() %>%
-  mutate(from = from - 1,
-         to = to - 1)
-
-# interactive network
-forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to", 
-             NodeID = "L2", Group = "author_ulrike", 
-             opacity = 1, fontSize = 16, zoom = TRUE)
-```
 
 # Create the categorisation based on main author 
 # create the network by facetting by author 
