@@ -22,6 +22,7 @@ library(visNetwork)
 library(qdapRegex)
 ```
 
+# Interaction
 
 ```{r network-data}
 pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
@@ -150,6 +151,41 @@ ledges <- data.frame(color = c("green", "red", "blue"),
 Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes_active)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
 
 
+```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates the authors who wrote more than 2 DoE packages as the first author.", fig.width=12, fig.height = 8}
+
+
+pkg_nodes_static <- aut_gr %>%
+  mutate(first_author = case_when(first_aut == "Ulrike Groemping" ~ "Ulrike Groemping",
+                                 first_aut == "John Lawson" ~ "John Lawson",
+                                 first_aut == "Robert B. Gramacy" ~ "Robert B. Gramacy",
+                                 n <=2 ~ "Other")) %>%
+  mutate(first_author = factor(first_author, levels = c("Ulrike Groemping",
+                                                        "John Lawson",
+                                                        "Robert B. Gramacy",
+                                                        "Other"))) %>%
+  select(L2, first_author)
+
+
+# create igraph object
+routes_igraph_static <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_static, directed = TRUE)
+
+# create the input based on the igraph object
+routes_tidy_static <- routes_igraph_static %>% as_tbl_graph() %>%
+  activate(edges)
+
+# create the graph
+ggraph(routes_tidy_static, layout = "stress") + 
+  geom_edge_link(aes(color = type),
+                 arrow = arrow(length = unit(3, 'mm')), 
+                 end_cap = circle(3, 'mm')) + 
+  geom_node_point(aes(color = first_author), size = 4) + 
+  geom_node_text(aes(label = name), repel = TRUE, size = 3) +
+  scale_color_manual(values = c("blue", "grey50", "tomato", "magenta")) +
+  theme_graph()
+```
+
+
+
 ```{r int-plot}
 visNetwork(nodes, edges, height = "500px", width = "100%") %>%
   visOptions(selectedBy = "first_author") %>%
@@ -159,17 +195,6 @@ visNetwork(nodes, edges, height = "500px", width = "100%") %>%
   visLegend(useGroups = F, addEdges = ledges)
 ```
 
-
-```{r network-graph, eval = FALSE, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates wether the package is authored by Ulrike Groumping or not."}
-# create the graph
-ggraph(routes_tidy, layout = "stress") + 
-  geom_edge_link(aes(color = type),
-                 arrow = arrow(length = unit(1, 'mm')), 
-                 end_cap = circle(1, 'mm')) + 
-  geom_node_point(aes(color = first_author)) + 
-  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
-  theme_graph()
-```
 Figure \@fig(network-graph) shows the interplay of DoE packages. In the previous section, we noticed that  Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
 
 The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are authored by Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
@@ -179,9 +204,3 @@ Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `Dic
 Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
 
 
-
-
-# Create the categorisation based on main author 
-# create the network by facetting by author 
-# if there are many authors then create the facet for example if the author write >= 3 packages. 
-# not only focus in the Ulrike alone 
