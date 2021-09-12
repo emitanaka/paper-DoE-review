@@ -148,7 +148,9 @@ ledges <- data.frame(color = c("green", "red", "blue"),
 
 ```
 
-Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
+Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` (`r round(nrow(pkg_nodes)/nrow(pkg_tidy)*100,2)`%) packages that interplay each other. This number is relatively lower compared to the percentage of interaction in the packages in Survey and Time Series Analysis CRAN Task View. We found that `r round(73/132*100,2)`% Survey packages that depends, imports, and suggests each other, while these interconnection is observed in `r round(212/338*100,2)`% Time Series Analysis packages. 
+
+Further, we observe the interaction in DoE package using network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
 
 
 ```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates the authors who wrote more than 2 DoE packages as the first author.", fig.width=12, fig.height = 8}
@@ -165,7 +167,7 @@ ggraph(routes_tidy, layout = "kk") +
 ```
 
 
-```{r, fig.width=12, fig.height = 7}
+```{r, fig.width=12, fig.height = 7, fig.cap= "Package network based on first authors who created more than 2 DoE packages. Packages authored by the same person tend to interplay each other."}
 
 pkg_nodes_facet <- pkg_nodes %>%
   filter(first_author %in% c("Ulrike Groemping", "John Lawson", "Robert B. Gramacy", 
@@ -199,14 +201,11 @@ ggraph(routes_tidy_facet, layout = "kk") +
 ```
 
 
-Figure \@ref(fig:network-graph) shows the interplay of DoE packages. In the previous section, we noticed that Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
+Figure \@ref(fig:network-graph) shows the interplay of DoE packages.  The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are created by the same author, Ulrike Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
 
-The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are authored by Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
-
-Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. 
+Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. This is also observed in the smaller network involves `dynaTree`, `plgp`, and `tgp`. These three interplaying package are authored by the same author as well.
 
 Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
-
 
 ```{r int-plot}
 visNetwork(nodes, edges, height = "500px", width = "100%") %>%

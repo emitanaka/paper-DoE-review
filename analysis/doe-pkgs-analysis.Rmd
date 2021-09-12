@@ -33,8 +33,7 @@ pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
 #tidy the data frame
 pkg_tidy <- pkg_df %>%
   pivot_wider(names_from = L3,
-              values_from = value) %>%
-  mutate(author_ulrike = as.factor(ifelse(str_detect(author, "Ulrike"), 1, 0)))
+              values_from = value)
 
 # pivot longer the data frame by its type 
 pkg_tidy_long_type <- pkg_tidy %>%
@@ -452,5 +451,17 @@ ts_to <- pkg_edges_ts %>%
 
 # create nodes from the two previous dataframe
 pkg_nodes_ts <- full_join(ts_from, ts_to, by = c("Package" = "pkg"))
+```
+
+
+## Create Sankey Diagram for packages' type
+
+
+```{r}
+sankey_data <- pkg_tidy_long_type %>%
+  select(year, domain, type) %>%
+  group_by(domain, type) %>%
+  count() %>%
+  ungroup()
 ```
 

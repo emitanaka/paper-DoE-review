@@ -1632,7 +1632,7 @@
     domain: pharmacometrics
     relevance: 'yes'
     type: 
-      - optimised design
+      - clinical trial
     main: 
       - "?"
     data: 'no'
@@ -2207,7 +2207,7 @@
       generate data from several scenarios and functions to run simulations which
       their objective is to determine the maximum tolerated dose (MTD).
     paper: https://www.sciencedirect.com/science/article/pii/S0169260717308349 
-    domain: clinical trial, pharmacokinetics
+    domain: clinical trial
     relevance: 'yes'
     type: 
       - dose-finding experiment 
@@ -2465,7 +2465,7 @@
       that the researcher wishes to include in the survey for reasons other than the
       current randomisation (legacy sites).
     paper: ''
-    domain: geospatial study, ecological and environmental study 
+    domain: environmental science
     relevance: 'yes'
     type: 
       - spatially balanced design 
@@ -2622,7 +2622,7 @@
       conditions), (ii) setD (estimate the minimal sample size per treatment given
       the users precision requirements) and (iii) doseD (construct an individual dose
       scheme).
-    domain: toxicity test, environmental science, toxicology research
+    domain: environmental science
     paper: https://enveurope.springeropen.com/articles/10.1186/s12302-015-0046-5
     relevance: 'yes'
     type: 
@@ -2914,7 +2914,7 @@
       For R version 3.5 or greater, please use 'if(!requireNamespace("BiocManager",
       quietly = TRUE)){install.packages("BiocManager")}; BiocManager::install("ssizeRNA")'.
     paper: https://pubmed.ncbi.nlm.nih.gov/27029470/
-    domain: genetics, genome sequencing
+    domain: genetics
     relevance: '?'
     type: 
       - sample size calculation
@@ -3012,7 +3012,7 @@
     description: Based on hierarchical modeling, this package provides a few practical
       functions to find and present the optimal designs for a pooled NGS design.
     paper: ''
-    domain: genetics, genome sequencing 
+    domain: genetics
     relevance: 'yes'
     type: 
       - optimised design 
@@ -3740,7 +3740,7 @@
       unpublished). The package also provides an optional method of using the graphical
       user interface (GUI) R package tcltk to ensure that it is user friendly.
     paper: ''
-    domain: genomic sequencing 
+    domain: genetics
     relevance: 'yes'
     type: 
       - microarray experiment 
@@ -3769,7 +3769,7 @@
       package also provides an optional method of using the graphical user interface
       (GUI) R package tcltk to ensure that it is user friendly.
     paper: ''
-    domain: genomic sequencing 
+    domain: genetics 
     relevance: 'yes'
     type: 
       - microarray experiment 
@@ -3795,7 +3795,7 @@
       optional method of using the graphical user interface (GUI) R package 'tcltk'
       to ensure that it is user friendly.
     paper: ''
-    domain: genomic sequencing 
+    domain: genetics 
     relevance: 'yes'
     type: 
       - microarray experiment 
