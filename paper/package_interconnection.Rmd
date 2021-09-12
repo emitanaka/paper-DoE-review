@@ -104,7 +104,7 @@ aut_gr <- pkg_nodes_tmp %>%
   right_join(pkg_nodes_tmp, by = "first_aut")
 
 
-pkg_nodes_active <- aut_gr %>%
+pkg_nodes <- aut_gr %>%
   mutate(first_author = case_when(first_aut == "Ulrike Groemping" ~ "Ulrike Groemping",
                                  first_aut == "John Lawson" ~ "John Lawson",
                                  first_aut == "Robert B. Gramacy" ~ "Robert B. Gramacy",
@@ -122,14 +122,14 @@ pkg_nodes_active <- aut_gr %>%
   select(L2, first_author)
 
 # create igraph object
-routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_active, directed = TRUE)
+routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes, directed = TRUE)
 
 # create the input based on the igraph object
 routes_tidy <- routes_igraph %>% as_tbl_graph() %>%
   activate(edges)
 
 # create the nodes for interactive network
-nodes <- pkg_nodes_active %>%
+nodes <- pkg_nodes %>%
   rowid_to_column("id") %>%
   rename(label = L2) %>%
   mutate(font.size = 25)
@@ -148,41 +148,54 @@ ledges <- data.frame(color = c("green", "red", "blue"),
 
 ```
 
-Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes_active)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
+Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` packages that interplay each other. To observe these interaction, we use network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
 
 
 ```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates the authors who wrote more than 2 DoE packages as the first author.", fig.width=12, fig.height = 8}
 
+# create the graph
+ggraph(routes_tidy, layout = "kk") + 
+  geom_edge_link(aes(color = type),
+                 arrow = arrow(length = unit(2, 'mm')), 
+                 end_cap = circle(2, 'mm')) + 
+  geom_node_point(aes(color = first_author), size = 4) + 
+  geom_node_text(aes(label = name), repel = TRUE, size = 3.1) +
+  scale_color_manual(values = c("blue", "tomato", "magenta", "grey50", "#48C9B0", "#C0392B", "#F1C40F")) +
+  theme_graph() 
+```
 
-pkg_nodes_static <- aut_gr %>%
-  mutate(first_author = case_when(first_aut == "Ulrike Groemping" ~ "Ulrike Groemping",
-                                 first_aut == "John Lawson" ~ "John Lawson",
-                                 first_aut == "Robert B. Gramacy" ~ "Robert B. Gramacy",
-                                 n <=2 ~ "Other")) %>%
-  mutate(first_author = factor(first_author, levels = c("Ulrike Groemping",
-                                                        "John Lawson",
-                                                        "Robert B. Gramacy",
-                                                        "Other"))) %>%
-  select(L2, first_author)
+
+```{r, fig.width=12, fig.height = 6}
+
+pkg_nodes_facet <- pkg_nodes %>%
+  filter(first_author %in% c("Ulrike Groemping", "John Lawson", "Robert B. Gramacy")) 
+
+pkg_edges_facet <- pkg_edges %>%
+  filter(L2 %in% pkg_nodes_facet$L2 &
+           pkg %in% pkg_nodes_facet$L2)
 
 
-# create igraph object
-routes_igraph_static <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_static, directed = TRUE)
 
-# create the input based on the igraph object
-routes_tidy_static <- routes_igraph_static %>% as_tbl_graph() %>%
+routes_igraph_facet <- graph_from_data_frame(d = pkg_edges_facet, 
+                                             vertices = pkg_nodes_facet, 
+                                             directed = TRUE)
+ 
+# # create the input based on the igraph object
+routes_tidy_facet <- routes_igraph_facet %>% as_tbl_graph() %>%
   activate(edges)
 
-# create the graph
-ggraph(routes_tidy_static, layout = "stress") + 
+ggraph(routes_tidy_facet, layout = "kk") + 
   geom_edge_link(aes(color = type),
                  arrow = arrow(length = unit(3, 'mm')), 
                  end_cap = circle(3, 'mm')) + 
-  geom_node_point(aes(color = first_author), size = 4) + 
-  geom_node_text(aes(label = name), repel = TRUE, size = 3) +
-  scale_color_manual(values = c("blue", "grey50", "tomato", "magenta")) +
-  theme_graph()
+  geom_node_point(aes(color = first_author), size = 4) +
+  geom_node_text(aes(label = name), repel = TRUE, size = 3.5) +
+  theme_graph() +
+  facet_nodes(~first_author) +
+  scale_color_manual(values = c("tomato", "#48C9B0", "#F1C40F"), guide = "none") +
+  th_foreground(foreground = "grey80",  border = TRUE) 
 ```
+
 
 
 
@@ -195,7 +208,7 @@ visNetwork(nodes, edges, height = "500px", width = "100%") %>%
   visLegend(useGroups = F, addEdges = ledges)
 ```
 
-Figure \@fig(network-graph) shows the interplay of DoE packages. In the previous section, we noticed that  Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
+Figure \@fig(network-graph) shows the interplay of DoE packages. In the previous section, we noticed that Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
 
 The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are authored by Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
 
