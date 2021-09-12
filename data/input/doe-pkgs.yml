@@ -1629,10 +1629,10 @@
       systems. The methods are described in Nyberg et al. (2012) <doi:10.1016/j.cmpb.2012.05.005>,
       and Foracchia et al. (2004) <doi:10.1016/S0169-2607(03)00073-7>.
     paper: https://www.sciencedirect.com/science/article/pii/S0169260703000737?via%3Dihub
-    domain: pharmacometrics
+    domain: clinical trial
     relevance: 'yes'
     type: 
-      - clinical trial
+      - optimised design
     main: 
       - "?"
     data: 'no'

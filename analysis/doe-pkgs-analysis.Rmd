@@ -463,5 +463,33 @@ sankey_data <- pkg_tidy_long_type %>%
   group_by(domain, type) %>%
   count() %>%
   ungroup()
+
+domain <- sankey_data %>%
+  distinct(domain) %>%
+  rename(node = domain)
+
+type <- sankey_data %>%
+  distinct(node = type)
+
+db_sankey <- rbind(domain, type)
+
+routes_sankey <- graph_from_data_frame(d = sankey_data, vertices = db_sankey, directed = TRUE)
+
+routes_sankey_tidy <- routes_sankey %>% as_tbl_graph() %>%
+  activate(edges)
+
+nodes_sankey <- db_sankey %>%
+  rowid_to_column("id") %>%
+  mutate(id = id - 1)
+
+edges_sankey <-routes_sankey_tidy %>%
+  activate(edges) %>%
+  data.frame() %>%
+  mutate(from = from - 1,
+         to = to - 1)
+
+sankeyNetwork(Links = edges_sankey, Nodes = nodes_sankey, Source = 'from', 
+                         Target = 'to', Value = 'n', NodeID = 'node',
+                         units = 'packages')
 ```
 
