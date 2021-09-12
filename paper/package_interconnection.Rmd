@@ -199,6 +199,13 @@ ggraph(routes_tidy_facet, layout = "kk") +
 ```
 
 
+Figure \@ref(fig:network-graph) shows the interplay of DoE packages. In the previous section, we noticed that Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
+
+The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are authored by Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
+
+Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. 
+
+Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
 
 
 ```{r int-plot}
@@ -210,12 +217,6 @@ visNetwork(nodes, edges, height = "500px", width = "100%") %>%
   visLegend(useGroups = F, addEdges = ledges)
 ```
 
-Figure \@fig(network-graph) shows the interplay of DoE packages. In the previous section, we noticed that Ulrike Groemping authored many DoE packages. We also noticed that one of her package, DoE base, is among the most downloaded DoE package on CRAN. Hence, we categorise the package whether it is authored by her or not. The network conveys that there are 5 clusters of interaction with one big cluster. 
 
-The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are authored by Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
-
-Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. 
-
-Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
 
 

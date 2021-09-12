@@ -351,85 +351,106 @@ forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to",
 ```
 
 
+# Comparison to other CRAN TASK VIEW 
+
+## Survey
+
 ```{r}
-# shinyApp(
-#   ui = fluidPage(
-#     selectInput("first_aut", "Choose the author:",
-#                     choices = levels(pkg_nodes_1aut$first_aut)),
-#       mainPanel(plotOutput(outputId = "net"))
-#     ),
-#   
-#   server = function(input, output){
-#     
-#     dat <- reactive({
-#       if (input$first_aut == "Ulrike Groemping"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Ulrike Groemping", "Ulrike Groemping", "Other")))
-#       }
-#       
-#       if (input$first_aut == "John Lawson"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "John Lawson", "John Lawson", "Other")))
-#       }
-#       
-#       if (input$first_aut == "Robert B. Gramacy"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Robert B. Gramacy", "Robert B. Gramacy", "Other")))
-#       }
-#       
-#       if (input$first_aut == "Delphine Dupuy"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Delphine Dupuy", "Delphine Dupuy", "Other")))
-#       }
-#       
-#       if (input$first_aut == "Ernesto Barrios"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Ernesto Barrios", "Ernesto Barrios", "Other")))
-#       }
-#       
-#       if (input$first_aut == "Kevin Wright"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Kevin Wright", "Kevin Wright", "Other")))
-#       }
-#       
-#        if (input$first_aut == "Peng Liu"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Peng Liu", "Peng Liu", "Other")))
-#        }
-#       
-#       if (input$first_aut == "Shwetank Lall"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "Shwetank Lall", "Shwetank Lall", "Other")))
-#       }
-#       
-#       if (input$first_aut == "other"){
-#         aut <- pkg_nodes_1aut %>%
-#           mutate(author = as.factor(ifelse(first_aut == "other", "Other authors", "Other with > 1 packages")))
-#       }
-#       
-#       graph_from_data_frame(d = pkg_edges, vertices = aut, directed = TRUE) %>%
-#         as_tbl_graph() %>% activate(edges)
-#     })
-#     
-#     
-# 
-#     output$net <- renderPlot(
-#       ggraph(dat, layout = "stress") +
-#         geom_edge_link(aes(color = type),
-#                        arrow = arrow(length = unit(2, 'mm')),
-#                        end_cap = circle(1, 'mm')) +
-#         geom_node_point(aes(color = author), size = 3) +
-#         geom_node_text(aes(label = name), repel = TRUE, size = 3.5) +
-#         scale_color_manual(values = c("black", "#6C3483")) +
-#         theme_graph()
-#     )
-#   },
-#   
-#   options = list(height = 1500,
-#                  width = 1500)
-#   
-# )
+list_pkg_survey <- ctv:::.get_pkgs_from_ctv_or_repos("OfficialStatistics", 
+                                                repos = "http://cran.rstudio.com/")[[1]]
+url <- "http://cran.rstudio.com/web/packages/packages.rds"
+db <- readRDS(url(url)) %>% 
+  as.data.frame()
+survey_pkg <- db %>%
+  filter(Package %in% list_pkg_survey) %>%
+  select(Package, Depends, Imports, Suggests)
+
+get_pkg_survey <- function(var){
+  # select only the package name and depends/imports/suggests
+  tmp_df <- survey_pkg %>%
+    select(Package, var) %>%
+    # separate every depends/imports/suggests
+    cSplit(var, sep = " ,") 
+  
+  df <- tmp_df %>%
+    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
+    filter(!is.na(pkg)) %>%
+    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
+    mutate(survey_pkg_related = ifelse(pkg %in% list_pkg_survey, "yes", "no")) %>%
+    # filter only package whose depends/imports/suggests is a DoE
+    filter(survey_pkg_related == "yes") %>%
+    # tidy the data to only have the type: depends/imports/suggests
+    cSplit("type", sep = "_") %>%
+    select(-type_2) %>%
+    rename(type = type_1)
+
+  return(df)
+}
+
+survey_depends <- get_pkg_survey("Depends")
+survey_imports <- get_pkg_survey("Imports")
+survey_suggests <- get_pkg_survey("Suggests")
+
+pkg_edges_survey <- rbind(survey_depends, survey_imports, survey_suggests)
+
+survey_from <- pkg_edges_survey %>%
+  distinct(Package)
+
+# extract unique package that being depends/imports/suggests
+survey_to <- pkg_edges_survey %>%
+  distinct(pkg)
+
+# create nodes from the two previous dataframe
+pkg_nodes_survey <- full_join(survey_from, survey_to, by = c("Package" = "pkg"))
 ```
 
 
+## Timeseries
+
+```{r}
+list_pkg_ts <- ctv:::.get_pkgs_from_ctv_or_repos("TimeSeries", 
+                                                repos = "http://cran.rstudio.com/")[[1]]
+
+ts_pkg <- db %>%
+  filter(Package %in% list_pkg_ts) %>%
+  select(Package, Depends, Imports, Suggests)
+
+get_pkg_ts <- function(var){
+  # select only the package name and depends/imports/suggests
+  tmp_df <- ts_pkg %>%
+    select(Package, var) %>%
+    # separate every depends/imports/suggests
+    cSplit(var, sep = " ,") 
+  
+  df <- tmp_df %>%
+    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
+    filter(!is.na(pkg)) %>%
+    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
+    mutate(survey_pkg_related = ifelse(pkg %in% list_pkg_ts, "yes", "no")) %>%
+    # filter only package whose depends/imports/suggests is a DoE
+    filter(survey_pkg_related == "yes") %>%
+    # tidy the data to only have the type: depends/imports/suggests
+    cSplit("type", sep = "_") %>%
+    select(-type_2) %>%
+    rename(type = type_1)
+
+  return(df)
+}
+
+ts_depends <- get_pkg_ts("Depends")
+ts_imports <- get_pkg_ts("Imports")
+ts_suggests <- get_pkg_ts("Suggests")
+
+pkg_edges_ts <- rbind(ts_depends, ts_imports, ts_suggests)
+
+ts_from <- pkg_edges_ts %>%
+  distinct(Package)
+
+# extract unique package that being depends/imports/suggests
+ts_to <- pkg_edges_ts %>%
+  distinct(pkg)
+
+# create nodes from the two previous dataframe
+pkg_nodes_ts <- full_join(ts_from, ts_to, by = c("Package" = "pkg"))
+```
 
