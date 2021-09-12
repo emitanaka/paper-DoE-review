@@ -165,10 +165,11 @@ ggraph(routes_tidy, layout = "kk") +
 ```
 
 
-```{r, fig.width=12, fig.height = 6}
+```{r, fig.width=12, fig.height = 7}
 
 pkg_nodes_facet <- pkg_nodes %>%
-  filter(first_author %in% c("Ulrike Groemping", "John Lawson", "Robert B. Gramacy")) 
+  filter(first_author %in% c("Ulrike Groemping", "John Lawson", "Robert B. Gramacy", 
+                             "Kevin Wright", "Shwetank Lall", "Ernesto Barrios")) 
 
 pkg_edges_facet <- pkg_edges %>%
   filter(L2 %in% pkg_nodes_facet$L2 &
@@ -192,7 +193,8 @@ ggraph(routes_tidy_facet, layout = "kk") +
   geom_node_text(aes(label = name), repel = TRUE, size = 3.5) +
   theme_graph() +
   facet_nodes(~first_author) +
-  scale_color_manual(values = c("tomato", "#48C9B0", "#F1C40F"), guide = "none") +
+  scale_color_manual(values = c("blue", "tomato", "magenta", "#48C9B0", "#C0392B", "#F1C40F"), 
+                     guide = "none") +
   th_foreground(foreground = "grey80",  border = TRUE) 
 ```
 
