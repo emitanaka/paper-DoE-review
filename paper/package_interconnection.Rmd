@@ -68,6 +68,7 @@ suggest_df <- get_pkg("suggests")
 pkg_edges <- rbind(depend_df, import_df, suggest_df) %>%
   select(-doe_pkg_related) %>%
   select(pkg, L2, type, author)
+  
 
 # extract unique package that has depends/imports/suggests
 from <- pkg_edges %>%
@@ -87,7 +88,7 @@ pkg_nodes_tmp <- full_join(from, to, by = c("L2" = "pkg")) %>%
 ```
 
 
-```{r network-data}
+```{r network-data-aut}
 
 ## separate author 
 aut_tidy <- pkg_nodes_tmp %>%
@@ -125,7 +126,15 @@ pkg_nodes <- aggregate(author ~ L2, aut_tidy_join, FUN = toString) %>%
                                      ifelse(str_detect(author, "Shwetank"), "Lall, Vhargese",
                                             ifelse(str_detect(author, "Kevin Wright"), "Wright",
                                                    ifelse(str_detect(author, "Peng Liu"), "Liu",
-                                                          ifelse(str_detect(author, "Ernesto"), "Barrios", "Other"))))))))
+                                                          ifelse(str_detect(author, "Ernesto"), "Barrios", "Other")))))))) %>%
+  mutate(name_add = ifelse(L2 == "plgp", "plgp (G)",
+                     ifelse(L2 == "tgp", "tgp (G,T)",
+                            ifelse(L2 == "dynaTree", "dynaTree (G,T)",
+                                   ifelse(L2 == "DiceDesign", "DiceDesign (Du,Ro)",
+                                          ifelse(L2 == "DiceEval", "DiceEval (Du)",
+                                                 ifelse(L2 == "DiceKriging", "DiceKriging (Ro;De;Ri)",
+                                                        ifelse(L2 == "DiceView", "DiceView (De;Ri)", L2))))))))
+  
   
 
 
@@ -170,7 +179,7 @@ routes_tidy <- routes_igraph %>% as_tbl_graph() %>%
 # create the nodes for interactive network
 nodes <- pkg_nodes %>%
   rowid_to_column("id") %>%
-  rename(label = L2) %>%
+  rename(label = name_add) %>%
   mutate(font.size = 25)
 
 #create edges for interactive network
@@ -200,7 +209,7 @@ ggraph(routes_tidy, layout = "kk") +
                  arrow = arrow(length = unit(2, 'mm')), 
                  end_cap = circle(2, 'mm')) + 
   geom_node_point(aes(color = note), size = 4) + 
-  geom_node_text(aes(label = name), repel = TRUE, size = 3.1) +
+  geom_node_text(aes(label = name_add), repel = TRUE, size = 3.1) +
   #scale_color_manual(values = c("blue", "tomato", "magenta", "grey50", "#48C9B0", "#C0392B", "#F1C40F")) +
   theme_graph() 
 ```
@@ -230,12 +239,13 @@ ggraph(routes_tidy_facet, layout = "kk") +
                  arrow = arrow(length = unit(3, 'mm')), 
                  end_cap = circle(3, 'mm')) + 
   geom_node_point(aes(color = note), size = 4) +
-  geom_node_text(aes(label = name), repel = TRUE, size = 3.5) +
+  geom_node_text(aes(label = name_add), repel = TRUE, size = 3.5) +
   theme_graph() +
   facet_nodes(~note) +
   #scale_color_manual(values = c("blue", "tomato", "magenta", "#48C9B0", "#C0392B", "#F1C40F"), 
                     # guide = "none") +
-  th_foreground(foreground = "grey80",  border = TRUE) 
+  th_foreground(foreground = "grey80",  border = TRUE) +
+  theme(legend.position = "none")
 ```
 
 
