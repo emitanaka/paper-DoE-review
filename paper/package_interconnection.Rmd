@@ -201,7 +201,7 @@ Interaction between packages could indicate of how developers utilize the functi
 Further, we observe the interaction in DoE package using network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
 
 
-```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates the authors who wrote more than 2 DoE packages as the first author.", fig.width=12, fig.height = 8}
+```{r network-graph, fig.cap = "Interaction network between DoE R packages. The color of edges reflect the type of interaction, i.e., depends, imports, and suggests. Nodes' color indicates the authors who wrote more than 2 DoE packages.", fig.width=12, fig.height = 8}
 
 # create the graph
 ggraph(routes_tidy, layout = "kk") + 
@@ -215,7 +215,7 @@ ggraph(routes_tidy, layout = "kk") +
 ```
 
 
-```{r, fig.width=12, fig.height = 7, fig.cap= "Package network based on first authors who created more than 2 DoE packages. Packages authored by the same person tend to interplay each other."}
+```{r, fig.width=12, fig.height = 7, fig.cap= "Package network based on authors who created more than 2 DoE packages. Packages authored by the same person tend to interplay each other."}
 
 pkg_nodes_facet <- pkg_nodes %>%
   filter(note != "Other") 
@@ -234,7 +234,7 @@ routes_igraph_facet <- graph_from_data_frame(d = pkg_edges_facet,
 routes_tidy_facet <- routes_igraph_facet %>% as_tbl_graph() %>%
   activate(edges)
 
-ggraph(routes_tidy_facet, layout = "kk") + 
+ggraph(routes_tidy_facet, layout = "stress") + 
   geom_edge_link(aes(color = type),
                  arrow = arrow(length = unit(3, 'mm')), 
                  end_cap = circle(3, 'mm')) + 
@@ -249,9 +249,9 @@ ggraph(routes_tidy_facet, layout = "kk") +
 ```
 
 
-Figure \@ref(fig:network-graph) shows the interplay of DoE packages.  The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are created by the same author, Ulrike Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. 
+Figure \@ref(fig:network-graph) shows the interplay of DoE packages.  The most downloaded DoE packages, such as `AlgDesign`, `rsm`, and `lhs` are observed to support many other packages. Dependent packages seems to use their functions to support their feature. We also observe that  `DoE.base` and `FrF2`, which are created by the same author, Ulrike Groemping, are also imported, depended, and suggested by many other packages because of their basic functionality in experimental design. Moreover, some of interacting packages, such as `DoE.wrapper` and `DoE.MIParray` are also developed by Groemping. Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. These packages also written by authors that interplay each other. 
 
-Further, packages regarding computer experiment (`DiceKriging`, `DiceEval`, `DiceView`, and `DiceDesign`) happen to interplay with each other so that they appear to form a sub-cluster. The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. This is also observed in the smaller network involves `dynaTree`, `plgp`, and `tgp`. These three interplaying package are authored by the same author as well.
+The four smaller clusters interact because of the similarity in their type and domain. For example `dfcm` and `dfpk` are used for dose-finding experiments. Regarding the similarity of its objective, although `FMC` aims to generate factorial design, this package does not interact with the packages in the big cluster, even though some packages in this cluster, such as `DoE.base`, also involve factorial design. This package instead imports `minimalRSD`, which is developed by the same author. This is also observed in the smaller network involves `dynaTree`, `plgp`, and `tgp`. These three interplaying package are authored by the same author as well.
 
 Based on this network, we can say that the interconnection of DoE package is due to functionality dependence, similarity of type or domain, and because they are developed by the same author/s. 
 

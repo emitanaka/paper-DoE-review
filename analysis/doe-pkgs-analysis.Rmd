@@ -23,6 +23,7 @@ library(plotly)
 library(qdapRegex)
 library(shiny)
 library(visNetwork)
+library(forcats)
 ```
 
 ```{r}
@@ -40,7 +41,7 @@ pkg_tidy_long_type <- pkg_tidy %>%
   unnest(type) %>%
   unnest(date) %>%
   unnest(domain) %>%
-  mutate(year = year(ymd(date)))
+  mutate(year = year(ymd(date))) 
 ```
 
 ```{r}
@@ -51,6 +52,7 @@ pkg_tidy_long_type %>%
   count() %>%
   arrange(desc(n))
 ```
+
 ```{r}
 #summarise the package based on its date of published 
 pkg_tidy_long_type %>%
