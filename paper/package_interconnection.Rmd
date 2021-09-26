@@ -210,7 +210,7 @@ ggraph(routes_tidy, layout = "kk") +
                  end_cap = circle(2, 'mm')) + 
   geom_node_point(aes(color = note), size = 4) + 
   geom_node_text(aes(label = name_add), repel = TRUE, size = 3.1) +
-  #scale_color_manual(values = c("blue", "tomato", "magenta", "grey50", "#48C9B0", "#C0392B", "#F1C40F")) +
+  scale_color_manual(values = c("blue", "tomato", "magenta", "#48C9B0", "#C0392B", "#F1C40F", "grey50", "green")) +
   theme_graph() 
 ```
 
@@ -242,10 +242,10 @@ ggraph(routes_tidy_facet, layout = "stress") +
   geom_node_text(aes(label = name_add), repel = TRUE, size = 3.5) +
   theme_graph() +
   facet_nodes(~note) +
-  #scale_color_manual(values = c("blue", "tomato", "magenta", "#48C9B0", "#C0392B", "#F1C40F"), 
-                    # guide = "none") +
-  th_foreground(foreground = "grey80",  border = TRUE) +
-  theme(legend.position = "none")
+  scale_color_manual(values = c("blue", "tomato", "magenta", "#48C9B0", 
+                                  "#C0392B", "#F1C40F", "green"), 
+                     guide = "none") +
+  th_foreground(foreground = "grey80",  border = TRUE) 
 ```
 
 

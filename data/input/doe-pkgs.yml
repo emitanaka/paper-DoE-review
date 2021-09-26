@@ -18,6 +18,8 @@
     type:
       - randomised design
       - optimised design
+    type2:
+      - optimised design
     main:
       - optBlock
         - randomised/optimised design
@@ -52,6 +54,8 @@
     domain: agriculture
     relevance: 'yes'
     type:
+      - randomised design
+    type2:
       - randomised design
     main:
       - design.ab
@@ -113,6 +117,8 @@
       - sampling design
       - optimised design
       - latin hypercube sample
+    type2:
+      - latin hypercube design
     main: 
       - randomLHS
         - randomised design, latin hypercube sample design
@@ -153,6 +159,8 @@
     relevance: 'yes'
     type:
       - space filling
+    type2:
+      - space filling
     main: 
       - dmaxDesign
         - space filling design 
@@ -189,6 +197,8 @@
     domain: computer experiment
     relevance: 'no'
     type:
+      - modeling
+    type2:
       - modeling
     main: 
       - km
@@ -239,6 +249,8 @@
     type:
       - modeling
       - visualisation 
+      - analysis of experiment
+    type2:
       - analysis of experiment
     main: 
       - ezANOVA
@@ -297,6 +309,8 @@
     relevance: 'yes'
     type:
       - fractional factorial design
+    type2:
+      - factorial design
     main: 
       - FrF2
         - fractional factorial design
@@ -343,6 +357,8 @@
     relevance: 'yes'
     type:
       - factorial design
+    type2:
+      - factorial design
     main: 
       - fac.design
         - factorial design
@@ -380,6 +396,8 @@
       - response-surface design
       - optimised design
       - analysis of experiment 
+    type2:
+      - response-surface design
     main: 
       - ccd
         - response-surface design
@@ -412,6 +430,8 @@
     domain: 'general'
     relevance: 'yes'
     type:
+      - factorial design
+    type2:
       - factorial design
     main: 
       - conf.design
@@ -447,6 +467,8 @@
     paper: https://www.jstatsoft.org/index.php/jss/article/view/v019i09/v19i09.pdf
     relevance: 'no'
     type:
+      - modeling
+    type2:
       - modeling
     main: 
       - blm
@@ -504,6 +526,8 @@
     relevance: 'no'
     type:
       - modeling
+    type2:
+      - modeling
     main: 
       - BsProb
         - modeling
@@ -534,6 +558,8 @@
     relevance: 'no'
     type:
       - fractional factorial design
+    type2:
+      - factorial design
     main: 
       - Catalogues
         - fractional factorial designs
@@ -561,6 +587,8 @@
     type:
       - response-surface design
       - visualisation (design)
+    type2: 
+      - visualisation
     main: 
       - Vdgraph
         - visualisation of response-surface design, variance dispersion graph 
@@ -596,6 +624,8 @@
       - randomised design
       - analysis of experiment
       - visualisation (design)
+    type2:
+      - randomised design
     main: 
       - designRandomize
         - randomised design 
@@ -629,6 +659,8 @@
       - dose-finding experiment
       - optimised design
       - analysis of experiment
+    type2:
+      - dose-finding experiment
     main: 
       - MCTtest
         - dose-finding
@@ -678,6 +710,8 @@
     relevance: 'no'
     type:
       - data container package
+    type2:
+      - data container package
     main: ''
     data: 'yes'
 - agridat:
@@ -703,6 +737,8 @@
     relevance: 'no'
     type:
       - data container package
+    type2: 
+      - data container package
     main: ''
     data: 'yes'
 - DoE.wrapper:
@@ -726,6 +762,8 @@
       - response-surface design
       - latin hypercube sample
       - optimised design
+    type2:
+      - wrapper package
     main: 
       - bbd.design
         - response-surface design
@@ -767,6 +805,8 @@
     relevance: 'no'
     type: 
       - GUI 
+    type2:
+      - GUI
     main: ''
     data: 'no'
 - crossdes:
@@ -788,6 +828,8 @@
       - crossover design
       - dose-finding experiment
       - analysis of experiment
+    type2:
+      - crossover design
     main: 
       - get.plan 
         - crossover design
@@ -833,6 +875,8 @@
       - book dataset
       - book example 
       - factorial design 
+    type2:
+      - data container package
     main: 
       - ffDesMatrix
         - factorial design, fractional factorial design 
@@ -857,6 +901,8 @@
     relevance: 'yes'
     type: 
       - sensory data analysis
+    type2:
+      - optimised design
     main: 
       - optimaldesign
         - optimised design 
@@ -895,7 +941,9 @@
     domain: clinical trial
     relevance: 'yes'
     type: 
-      - dose-finding experiment 
+      - dose-finding experiment
+    type2:
+      - dose-finding experiment
     main: 
       - get.boundary
         - dose-finding 
@@ -942,6 +990,8 @@
     type: 
       - randomised design
       - block design
+    type2:
+      - block design
     main: 
       - blocks
         - randomised design, block design 
@@ -971,6 +1021,8 @@
     relevance: 'yes'
     type: 
       - randomised design 
+      - block design
+    type2:
       - block design
     main: 
       - block
@@ -1017,6 +1069,8 @@
     type: 
       - dose-finding experiment 
       - continual reassessment method
+    type2: 
+      - dose-finding experiment
     main: 
       - crm 
         - dose-finding, continual reassessment method
@@ -1045,6 +1099,8 @@
     relevance: 'yes'
     type: 
       - analysis of experiment 
+      - power analysis
+    type2:
       - power analysis
     main: 
       - ES.anova.oneway
@@ -1106,6 +1162,8 @@
     relevance: 'yes'
     type: 
       - optimised design
+    type2:
+      - optimised design
     main: 
       - ace
         - optimised design 
@@ -1154,6 +1212,8 @@
     relevance: 'no'
     type: 
       - visualisation (design)
+    type2: 
+      - visualisation
     main: 
       - desplot
         - design visualisation
@@ -1183,6 +1243,8 @@
     domain: consumer behaviour 
     relevance: 'yes'
     type: 
+      - choice experiments design
+    type2:
       - choice experiments design
     main: 
       - Lma.design
@@ -1219,6 +1281,8 @@
     paper: https://www.jstatsoft.org/index.php/jss/article/view/v064i11/v64i11.pdf
     relevance: 'yes'
     type: 
+      - algortihm abstraction
+    type2:
       - algortihm abstraction
     main: 
       - makeExperimentRegistry
@@ -1266,6 +1330,8 @@
     type: 
       - analysis of experiment 
       - modeling
+    type2:
+      - analysis of experiment
     main: 
       - gad 
         - modeling 
@@ -1297,7 +1363,9 @@
     relevance: 'yes'
     type: 
       - dose-finding experiment 
-      - continual reassessment method 
+      - continual reassessment method
+    type2:
+      - dose-finding experiment
     main: 
       - bcrm 
         - continual reassessment method, dose-finding 
@@ -1335,6 +1403,8 @@
     type: 
       - block design 
       - incomplete block design 
+    type2:
+      - block design
     main: 
       - ibd 
         - incomplete block design
@@ -1366,6 +1436,8 @@
     type: 
       - book dataset
       - book example 
+    type2:
+      - data container package
     main: ''
     data: 'yes'
 - mixexp:
@@ -1383,6 +1455,8 @@
     domain: 'general'
     relevance: 'yes'
     type: 
+      - mixture design
+    type2:
       - mixture design
     main: 
       - SLD 
@@ -1412,6 +1486,8 @@
     type: 
       - optimised design 
       - response-surface design
+    type2:
+      - optimised design
     main: 
       - dMax
         - optimised design
@@ -1439,6 +1515,8 @@
       - partially balanced incomplete block design
       - incomplete block design  
       - block design 
+    type2:
+      - block design
     main: 
       - CombS
         - block design, incomplete block design 
@@ -1461,6 +1539,8 @@
     relevance: 'yes'
     type: 
       - factorial design 
+    type2:
+      - factorial design
     main: 
       - gen.level
         - factorial design 
@@ -1512,6 +1592,8 @@
     type: 
       - analysis of experiment 
       - visualisation 
+    type2:
+      - visualisation
     main: 
       - granova.1w 
         - visualisation
@@ -1539,6 +1621,8 @@
     relevance: 'yes'
     type: 
       - optimised design 
+    type2:
+      - optimised design
     main: 
       - designGG
         - optimised design
@@ -1564,6 +1648,8 @@
     relevance: 'yes'
     type: 
       - multi-arm multi-stage design 
+    type2:
+      - multi-arm multi-stage design
     main: 
       - mams
         - multi-arm multi-stage design
@@ -1592,6 +1678,8 @@
     type: 
       - adaptive seamless design
       - optimised design
+    type2:
+      - adaptive seamless design
     main: 
       - treatsel.sim
         - adaptive seamless design, optimised design 
@@ -1633,6 +1721,8 @@
     relevance: 'yes'
     type: 
       - optimised design
+    type2:
+      - optimised design
     main: 
       - "?"
     data: 'no'
@@ -1658,6 +1748,8 @@
       - variogram estimation
       - sampling design
       - optimised sampling design
+    type2:
+      - sampling design
     main: 
       - est.variograms
         - variogram estimation 
@@ -1689,6 +1781,8 @@
     relevance: '?'
     type: 
       - power analysis
+    type2:
+      - power analysis
     main: 
       - powerLongSurv
         - power analysis 
@@ -1709,6 +1803,8 @@
     paper: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2366108/pdf/nihms-43556.pdf
     relevance: 'yes'
     type: 
+      - quantitative trait locus
+    type2:
       - quantitative trait locus
     main: 
       - powercalc
@@ -1760,6 +1856,8 @@
     relevance: 'yes'
     type: 
       - randomised design 
+    type2:
+      - randomised design
     main: 
       - randomize 
         - randomised design 
@@ -1789,6 +1887,8 @@
     type: 
       - fractional factorial design
       - multi-level k-circulant supersaturated design
+    type2:
+      - factorial design
     main: 
       - mkssd 
         - fractional factorial design, multi-level k-circulant supersaturated design
@@ -1817,6 +1917,8 @@
     type:
       - sample size calculation
       - microarray experiment 
+    type2:
+      - sample size calculation
     main: 
       - ssize.oneSamp
         - sample size calculation 
@@ -1863,6 +1965,8 @@
       - dose-finding experiment
       - randomised design
       - optimised design 
+    type2:
+      - dose-finding experiment
     main: 
       - mtaBin_next
         - optimised design, optimised dose-finding 
@@ -1891,6 +1995,8 @@
     relevance: 'no'
     type:
       - modeling 
+    type2:
+      - modeling
     main: 
       - modelFit 
         - model fitting 
@@ -1931,6 +2037,8 @@
     type: 
       - optimised design 
       - accelerated life testing 
+    type2:
+      - optimised design
     main: 
       - altopt.ic
         - optimised design
@@ -1958,6 +2066,8 @@
     type: 
       - choice experiments design
       - optimised design 
+    type2:
+      - choice experiments design
     main: 
       - dcm.design
         - optimised design
@@ -1989,6 +2099,8 @@
       - dose-finding experiment 
       - target equivalence range design 
       - activity constrained for toxicity
+    type2:
+      - dose-finding experiment
     main: 
       - teqrDG
         - dose-finding, target equivalence range design 
@@ -2029,6 +2141,8 @@
       - sampling design 
       - randomised design
       - optimised design 
+    type2:
+      - sampling design
     main: 
       - bmatch 
         - sampling design, optimised design 
@@ -2060,6 +2174,8 @@
       - factorial design
       - fractional factorial design 
       - optimised design 
+    type2:
+      - response-surface design
     main: 
       - min_bbd
         - response-surface design, optimised design
@@ -2092,6 +2208,8 @@
     type: 
       - latin hypercube design 
       - optimised design 
+    type2:
+      - latin hypercube design
     main: 
       - maximinSLHD
         - latin hypercube design, optimised design
@@ -2124,6 +2242,8 @@
     type: 
       - optimised design
       - power analysis
+    type2:
+      - optimised design
     main: 
       - gen_design
         - optimised design
@@ -2179,6 +2299,8 @@
     type:
       - modeling 
       - model optimisation
+    type2:
+      - modeling
     main: 
       - PL
         - modeling, model optimisation
@@ -2211,6 +2333,8 @@
     relevance: 'yes'
     type: 
       - dose-finding experiment 
+    type2:
+      - dose-finding experiment
     main: 
       - sim.data
         - dose-finding
@@ -2240,6 +2364,8 @@
     relevance: 'yes'
     type: 
       - dose-finding experiment 
+    type2:
+      - dose-finding experiment
     main: 
       - CombIncrease_nex
         - dose-finding 
@@ -2274,6 +2400,8 @@
     relevance: 'yes'
     type: 
       - group sequential design 
+    type2:
+      - GUI
     main: 
       - groupseq 
         - group sequential design, GUI 
@@ -2296,6 +2424,8 @@
     type: 
       - analysis of experiment
       - hypohothesis testing 
+    type2: 
+      - analysis of experiment
     main: 
       - designAb
         - hypohothesis testing
@@ -2344,6 +2474,8 @@
     type: 
       - fractional factorial design
       - mixed-level k-circulant supersaturated design
+    type2:
+      - factorial design
     main: 
       - mxkssd
         - mixed-level k-circulant supersaturated design
@@ -2370,6 +2502,8 @@
     domain: 'general'
     relevance: 'yes'
     type: 
+      - optimised design
+    type2:
       - optimised design
     main: 
       - locally 
@@ -2415,6 +2549,8 @@
       - block design 
       - resolvable design
       - space filling 
+    type2:
+      - block design
     main: 
       - BIB 
         - block design
@@ -2446,6 +2582,8 @@
     type: 
       - modeling 
       - model optimisation 
+    type2:
+      - modeling
     main: 
       - dynaTrees
         - object with several methods for modeling 
@@ -2470,6 +2608,8 @@
     type: 
       - spatially balanced design 
       - survey design 
+    type2:
+      - sampling design
     main: 
       - alterInclProbs
         - spatially balanced design 
@@ -2496,6 +2636,8 @@
     type: 
       - group sequential design 
       - optimised design
+    type2:
+      - group sequential design
     main: 
       - optgs
         - group sequential design, optimised design
@@ -2534,6 +2676,8 @@
       - block design 
       - incomplete block design 
       - partially balanced incomplete block design
+    type2:
+      - block design
     main: 
       - series1
         - partially balanced incomplete block design
@@ -2572,6 +2716,8 @@
     relevance: 'no'
     type: 
       - visualisation (design)
+    type2:
+      - visualisation
     main: 
       - "?"
     data: 'no'
@@ -2593,6 +2739,8 @@
     type: 
       - resolvable design 
       - space filling 
+    type2:
+      - resolvable design
     main: 
       - PPGrectRightAng4
         - resolvable design 
@@ -2628,6 +2776,8 @@
     type: 
       - dose-finding experiment 
       - sample size calculation
+    type2:
+      - dose-finding experiment 
     main: 
       - spoD
         - sample size calculation
@@ -2663,6 +2813,8 @@
     relevance: 'yes'
     type: 
       - optimised design 
+    type2:
+      - optimised design
     main: 
       - inactivation_OED
         - optimised design
@@ -2699,6 +2851,8 @@
     type: 
       - data container package 
       - book dataset
+    type2:
+      - data container package
     main: ''
     data: 'yes'
 - docopulae:
@@ -2724,6 +2878,8 @@
     type: 
       - modeling 
       - model optimisation 
+    type2:
+      - modeling
     main: 
       - Dsensitivity
         - model optimisation
@@ -2755,6 +2911,8 @@
       - space filling 
       - optimised design
       - maximum projection design
+    type2:
+      - space filling
     main: 
       - MaxProLHD
         - maximum projection design
@@ -2801,6 +2959,8 @@
     type: 
       - continual reassessment methods
       - dose-finding experiment 
+    type2:
+      - continual reassessment methods
     main: 
       - "?"
     data: 'no'
@@ -2821,7 +2981,9 @@
     relevance: 'yes'
     type: 
       - optimised design
-      - analysis of experiment 
+      - analysis of experiment
+    type2:
+      - optimised design
     main: 
       - "?"
     data: 'yes'
@@ -2851,6 +3013,8 @@
     type: 
       - optimised design
       - factorial design 
+    type2:
+      - optimised design
     main: 
       - gurobi_MIParray 
         - factorial design
@@ -2919,6 +3083,8 @@
     type: 
       - sample size calculation
       - microarray experiment 
+    type2:
+      - sample size calculation
     main: 
       - ssize.twoSampVaryDelta
         - sample size calculation
@@ -2954,6 +3120,8 @@
     relevance: '?'
     type: 
       - sample size calculation
+    type2:
+      - sample size calculation
     main: 
       - n.multiway
         - sample size calculation
@@ -2980,6 +3148,8 @@
     relevance: 'yes'
     type: 
       - group sequential design 
+    type2: 
+      - group sequential design
     main: 
       - equivonly
         - group sequential design
@@ -3016,6 +3186,8 @@
     relevance: 'yes'
     type: 
       - optimised design 
+    type2: 
+      - optimised design
     main: 
       - FindOptPower
         - optimised design 
@@ -3047,6 +3219,8 @@
     domain: 'general'
     relevance: 'yes'
     type: 
+      - optimised design
+    type2:
       - optimised design
     main: 
       - ldemax
@@ -3120,6 +3294,8 @@
       - optimised design 
       - sample size calculation 
       - power analysis
+    type2:
+      - optimised design
     main: 
       - od.1
         - optimised design 
@@ -3223,6 +3399,8 @@
     relevance: 'yes'
     type: 
       - optimised design
+    type2:
+      - optimised design
     main: 
       - "?"
     data: 'no'
@@ -3250,6 +3428,8 @@
     type: 
       - visualisation (design)
       - variance dispersion graph 
+    type2:
+      - visualisation
     main: 
       - spv 
         - variance calculation 
@@ -3272,6 +3452,8 @@
     relevance: 'yes'
     type: 
       - dose-finding experiment 
+    type2:
+      - dose-finding experiment
     main: 
       - pipedesign 
         - dose finding 
@@ -3301,6 +3483,8 @@
     relevance: 'yes'
     type: 
       - optimised design 
+    type2:
+      - optimised design
     main: 
       - MOPT
         - optimised design 
@@ -3358,6 +3542,8 @@
     type: 
       - group sequential design 
       - randomised design 
+    type2:
+      - group sequential design
     main: "?"
     data: 'no'
 - powerGWASinteraction:
@@ -3378,6 +3564,8 @@
     relevance: 'yes'
     type: 
       - power analysis 
+    type2:
+      - power analysis
     main: 
       - powerGE
         - power analysis 
@@ -3407,6 +3595,8 @@
     type: 
       - analysis of experiment 
       - visualisation 
+    type2:
+      - analysis of experiment
     main: 
       - dot.plot
         - visualisation
@@ -3441,6 +3631,8 @@
       - response-surface design 
       - variance dispersion graph 
       - visualisation (design)
+    type2:
+      - visualisation
     main: 
       - fds.cube 
         - visualisation 
@@ -3478,6 +3670,8 @@
       - sample size calculation 
       - optimised design?
       - analysis of experiment 
+    type2:
+      - sample size calculation
     main: 
       - opt_alloc_RET
         - sample size calculation, optimised sample size 
@@ -3506,6 +3700,8 @@
     type: 
       - optimised design
       - stopping boundaries 
+    type2:
+      - optimised design
     main: 
       - PostP.design
         - stopping boundary calculation 
@@ -3535,6 +3731,8 @@
     type: 
       - optimised design 
       - randomised design 
+    type2:
+      - optimised design
     main: 
       - OptimDes 
         - optimised design, randomised design
@@ -3559,6 +3757,8 @@
     type: 
       - optimised design 
       - response-surface design 
+    type2:
+      - optimised design
     main: 
       - OptRegionQuad
         - confidence region 
@@ -3604,6 +3804,8 @@
     type: 
       - power analysis 
       - analysis of experiment 
+    type2:
+      - power analysis
     main: 
       - boot.power.anova 
         - power calculation 
@@ -3629,6 +3831,8 @@
     type: 
       - optimised design?
       - modeling 
+    type2:
+      - optimised design
     main: 
       - tpopt
         - optimised design 
@@ -3654,6 +3858,8 @@
     relevance: 'yes'
     type: 
       - optimised design?
+    type2:
+      - optimised design
     main: 
       - postprob
         - bayesian optimised design 
@@ -3682,6 +3888,8 @@
       - seamless Phase II-III design
       - optimised design 
       - analysis of experiment 
+    type2:
+      - seamless Phase II-III design
     main: 
       - generateSP23Design
         - seamless Phase II-III design
@@ -3715,6 +3923,8 @@
       - latin hypercube design
       - space filling 
       - optimised design 
+    type2:
+      - latin hypercube design
     main: 
       - sFFLHDmm
         - optimised design, latin hypercube design
@@ -3746,6 +3956,8 @@
       - microarray experiment 
       - optimised design 
       - block design 
+    type2:
+      - optimised design
     main: 
       - optbdmaeAT
         - optimised design 
@@ -3774,6 +3986,8 @@
     type: 
       - microarray experiment 
       - optimised design 
+    type2:
+      - optimised design
     main: 
       - optrcdmaeAT
         - optimised design 
@@ -3800,6 +4014,8 @@
     type: 
       - microarray experiment 
       - optimised design 
+    type2:
+      - optimised design
     main: 
       - soptdmaeA
         - optimised design 
@@ -3835,6 +4051,8 @@
     type: 
       - response-surface design 
       - analysis of experiment 
+    type2:
+      - response-surface design
     main: 
       - design_ccd()
         - response surface design

@@ -35,20 +35,25 @@ pkg_df <- yaml.load_file(here::here("data/input/doe-pkgs.yml")) %>%
 pkg_tidy <- pkg_df %>%
   pivot_wider(names_from = L3,
               values_from = value)
+  
 
 # pivot longer the data frame by its type 
 pkg_tidy_long_type <- pkg_tidy %>%
   unnest(type) %>%
   unnest(date) %>%
   unnest(domain) %>%
+  unnest(type2) %>%
   mutate(year = year(ymd(date))) 
+
+pkg_type <- pkg_tidy %>%
+  unnest(type2) %>%
+  unnest(domain)
 ```
 
 ```{r}
 # summarise the packages based on its type
-pkg_tidy_long_type %>%
-  filter(relevance != "no") %>%
-  group_by(type) %>%
+pkg_type %>%
+  group_by(type2) %>%
   count() %>%
   arrange(desc(n))
 ```
@@ -460,9 +465,9 @@ pkg_nodes_ts <- full_join(ts_from, ts_to, by = c("Package" = "pkg"))
 
 
 ```{r}
-sankey_data <- pkg_tidy_long_type %>%
-  select(year, domain, type) %>%
-  group_by(domain, type) %>%
+sankey_data <- pkg_type %>%
+  select(domain, type2) %>%
+  group_by(domain, type2) %>%
   count() %>%
   ungroup()
 
@@ -471,7 +476,7 @@ domain <- sankey_data %>%
   rename(node = domain)
 
 type <- sankey_data %>%
-  distinct(node = type)
+  distinct(node = type2)
 
 db_sankey <- rbind(domain, type)
 
