@@ -42,20 +42,18 @@ pkg_tidy_long_type <- pkg_tidy %>%
   unnest(type) %>%
   unnest(date) %>%
   unnest(domain) %>%
-  unnest(type2) %>%
   mutate(year = year(ymd(date))) 
 
-pkg_type <- pkg_tidy %>%
-  unnest(type2) %>%
-  unnest(domain)
 ```
 
 ```{r}
 # summarise the packages based on its type
-pkg_type %>%
-  group_by(type2) %>%
-  count() %>%
-  arrange(desc(n))
+pkg_type <- pkg_tidy_long_type %>%
+  group_by(L2) %>%
+  slice_head(n = 1) %>%
+  mutate(year = factor(year, level = c("2009", "2011", "2012", "2013",
+                                       "2014", "2015", "2016", "2017",
+                                       "2018", "2019", "2020", "2021")))
 ```
 
 ```{r}
@@ -466,8 +464,8 @@ pkg_nodes_ts <- full_join(ts_from, ts_to, by = c("Package" = "pkg"))
 
 ```{r}
 sankey_data <- pkg_type %>%
-  select(domain, type2) %>%
-  group_by(domain, type2) %>%
+  select(domain, type) %>%
+  group_by(domain, type) %>%
   count() %>%
   ungroup()
 
@@ -476,9 +474,45 @@ domain <- sankey_data %>%
   rename(node = domain)
 
 type <- sankey_data %>%
-  distinct(node = type2)
+  distinct(node = type)
 
 db_sankey <- rbind(domain, type)
+
+routes_sankey <- graph_from_data_frame(d = sankey_data, vertices = db_sankey, directed = TRUE)
+
+routes_sankey_tidy <- routes_sankey %>% as_tbl_graph() %>%
+  activate(edges)
+
+nodes_sankey <- db_sankey %>%
+  rowid_to_column("id") %>%
+  mutate(id = id - 1)
+
+edges_sankey <-routes_sankey_tidy %>%
+  activate(edges) %>%
+  data.frame() %>%
+  mutate(from = from - 1,
+         to = to - 1)
+
+sankeyNetwork(Links = edges_sankey, Nodes = nodes_sankey, Source = 'from', 
+                         Target = 'to', Value = 'n', NodeID = 'node',
+                         units = 'packages')
+```
+
+```{r}
+sankey_data <- pkg_type %>%
+  select(domain, year) %>%
+  group_by(domain, year) %>%
+  count() %>%
+  ungroup()
+
+domain <- sankey_data %>%
+  distinct(domain) %>%
+  rename(node = domain)
+
+year <- sankey_data %>%
+  distinct(node = year)
+
+db_sankey <- rbind(domain, year)
 
 routes_sankey <- graph_from_data_frame(d = sankey_data, vertices = db_sankey, directed = TRUE)
 
