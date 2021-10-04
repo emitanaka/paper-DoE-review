@@ -1,23 +1,11 @@
----
-title: Current status and propsects of R-packages for the design of experiments
-author:
-  - name: Emi Tanaka
-    affiliation: Monash University
-abstract: >
-    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of experiment plays a critical role in increasing the quality of experimental data.  In this article I describe the current state of the R-packages for the design of experiments through textual analysis and download trends. I discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
-preamble: |
-  % Any extra LaTeX you need in the preamble
-  
-# per R journal requirement, the bib filename should be the same as the output 
-# tex file. Don't forget to rename the bib file and change this example value.
-bibliography: paper.bib
+## ---- include = FALSE---------------------------------------------------------
+paper <- here::here("paper/index.Rmd")
+meta <- rmarkdown::yaml_front_matter(paper)
 
-output: 
-  bookdown::html_document2:
-    theme: paper
----
 
-```{r setup, cache = FALSE, include = FALSE}
+## ----child=paper--------------------------------------------------------------
+
+## ----setup, cache = FALSE, include = FALSE------------------------------------
 library(tidyverse)
 library(rvest)
 library(lubridate)
@@ -64,42 +52,27 @@ ctv <- function(view) {
 CRANpkg <- function(pkg) {
   ifelse(knitr::is_html_output(), glue("[{pkg}](https://cran.r-project.org/web/packages/{pkg}/index.html)"), glue("\\CRANpkg{[pkg]}", .open = "[", .close = "]"))
 }
-ref <- function(x) {
-  ifelse(knitr::is_html_output(), glue("\\@ref({x})"), glue("\\ref{[x]}", .open = "[", .close = "]"))
-}
-```
 
-```{r ctv}
+
+## ----ctv----------------------------------------------------------------------
 doe_pkgs <- ctv:::.get_pkgs_from_ctv_or_repos("ExperimentalDesign", 
                                               repos = "http://cran.rstudio.com/")[[1]]
 doe_pkgs <- c(doe_pkgs, "DeclareDesign")
 npkgs <- length(doe_pkgs)
-```
 
-```{r cran-data, cache = tocache}
+
+## ----cran-data, cache = tocache-----------------------------------------------
 end <- Sys.Date() - 2 # usually 1-2 days data are not available yet
 start <- end - years(2) + days(2)
 dldat <- cran_downloads(doe_pkgs, from = start, to = end)
-```
 
-```{r cran-data2, cache = tocache}
+
+## ----cran-data2, cache = tocache----------------------------------------------
 start2 <- end - years(5) + days(2)
 dldat2 <- cran_downloads(doe_pkgs, from = start2, to = end)
-```
-
-# Introduction 
-
-The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in CRAN task views where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data. This paper is concerned with the latter.
 
 
-In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "DoE packages" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
-
-The paper is organisd as follows. Section \@ref(eda)
-
-
-# Explorative analysis {#eda}
-
-```{r download-dist, dependson = "cran-data"}
+## ----download-dist, dependson = "cran-data"-----------------------------------
 dldat_sum <- dldat %>% 
   group_by(package) %>% 
   summarise(total = sum(count)) %>% 
@@ -145,13 +118,13 @@ dl2plot <- ggplot(top15, aes(name, value, group = package)) +
             size = 4) + 
   theme(panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())
-```
 
-```{r dlplots, fig.cap=glue("The above graph shows the total download counts from {start} to {end} of DoE packages."), fig.width = 6}
+
+## ----dlplots, fig.cap=glue("The above graph shows the total download counts from {start} to {end} of DoE packages."), fig.width = 6----
 dl1plot + dl2plot
-```
 
-```{r text, cache=tocache}
+
+## ----text, cache=tocache------------------------------------------------------
 url <- "http://cran.rstudio.com/web/packages/packages.rds"
 db <- readRDS(url(url)) %>% 
   as.data.frame()
@@ -161,9 +134,9 @@ doe_db <- db %>%
   mutate(Description = str_replace_all(Description, "\n", " "),
          Description = str_squish(Description),
          Title = str_replace_all(Title, "\n", " "))
-```
 
-```{r fns}
+
+## ----fns----------------------------------------------------------------------
 singularize2 <- function(x) {
     res <- singularize(x)
     res <- ifelse(res=="bia", "bias", res)
@@ -202,18 +175,15 @@ combine_dl <- function(ngram_df, desc) {
     filter(!is.na(word)) %>% 
     arrange(desc(total))
 }
-```
 
-```{r ngrams, cache=tocache, dependson="fns"}
+
+## ----ngrams, cache=tocache, dependson="fns"-----------------------------------
 bigram_title <- get_ngram(2, "Title")
 bigram_desc <- get_ngram(2, "Description")
 trigram_desc <- get_ngram(3, "Description")
-```
 
-* Not much difference between title and description.
-* Just go with description and combine bi & tri.
 
-```{r wordcloud, fig.height = 3.3}
+## ----wordcloud, fig.height = 3.3----------------------------------------------
 dldat_comb_bigram_title <- combine_dl(bigram_title, Title)
 dldat_comb_bigram_desc <- combine_dl(bigram_desc, Title)
 dldat_comb_trigram_desc <- combine_dl(trigram_desc, Title)
@@ -228,47 +198,15 @@ ggplot(rbind(dldat_comb_bigram_desc,
   guides(size = FALSE) +
   scale_color_continuous(breaks = 1:11) +
   theme(legend.position = "bottom")
-```
 
 
-## What are the common types of experimental designs?
-
-## How do packages interplay with each other?
-
-## Which packages are widely utilised?
-
-Figure `r ref("fig:dlplots")` suggests that the `r CRANpkg("AlgDesign")` followed by `r CRANpkg("agricolae")` are far more downloaded than any other DoE packages. It is worth noting that `r CRANpkg("agricolae")` imports `r CRANpkg("AlgDesign")` thus any download of `r CRANpkg("agricolae")` likely results also in a download of `r CRANpkg("AlgDesign")`. 
-
-# Software design
-
-
-
-# Discussion
-
-An experiment involves running a number of steps:
-
-1. Defining the hypothesis or question
-2. Formulating methods to test hypothesis or answer question 
-3. Planning the experimental protocol:
-  * Determining experimental resources, 
-  * specifying the data collection procedure,
-  * constructing the experimental design layout, and
-  * proposing a model for analysis.
-4. Collect data 
-5. Analyse data, interpret result and conclusion
-
-
-\newpage
-
-
-
-```{r cran-titles}
+## ----cran-titles--------------------------------------------------------------
 url <- "http://cran.rstudio.com/web/packages/packages.rds"
 db <- readRDS(url(url)) %>% 
   as.data.frame()
-```
 
-```{r bigram}
+
+## ----bigram-------------------------------------------------------------------
 stop_words_ext <- c(stop_words$word, "doi")
 
 doe_db <- db %>% 
@@ -291,9 +229,9 @@ bigram_tab <- function(data, col) {
            !str_detect(word2, "^[0-9.]+$")) %>% 
     count(word1, word2, sort = TRUE)  
 }
-```
 
-```{r bigram-title, results="asis"}
+
+## ----bigram-title, results="asis"---------------------------------------------
 btitle <- bigram_tab(doe_db, Title) %>% 
   filter(n > 3) %>% 
   mutate(word = paste(word1, word2)) %>% 
@@ -311,9 +249,9 @@ cat(c("\\begin{table}[h] \\centering ",
     "\\hspace{1cm} \\centering ",
       bdesc,
     "\\caption{My tables} \\end{table}")) 
-```
 
-```{r}
+
+## -----------------------------------------------------------------------------
 doe_imports <- doe_db %>% 
   mutate(Depends = str_replace_all(Depends, "\n", " "),
          Depends = str_replace_all(Depends, fixed("("), " ("),
@@ -332,23 +270,19 @@ doe_imports <- doe_db %>%
   filter(!is.na(imports_doe)) %>% 
   rename(from = imports_doe, to = Package) %>% 
   select(from, to)
-```
-
-```{r doe-network, eval = FALSE}
-graph_from_data_frame(doe_imports) %>% 
-  ggraph(layout = 'fr') +
-  geom_edge_link(aes(start_cap = label_rect(node1.name),
-                     end_cap = label_rect(node2.name)), 
-                 arrow = arrow(length = unit(2, 'mm')),
-                 color = "#79003e") + 
-  geom_node_text(aes(label = name),
-                 color = "#79003e") +
-  theme(panel.background = element_rect(fill = "#f6e5ee",
-                                        color = "#79003e"),
-        plot.margin = margin(20, 20, 20, 20))
-```
 
 
-
+## ----doe-network, eval = FALSE------------------------------------------------
+#> graph_from_data_frame(doe_imports) %>%
+#>   ggraph(layout = 'fr') +
+#>   geom_edge_link(aes(start_cap = label_rect(node1.name),
+#>                      end_cap = label_rect(node2.name)),
+#>                  arrow = arrow(length = unit(2, 'mm')),
+#>                  color = "#79003e") +
+#>   geom_node_text(aes(label = name),
+#>                  color = "#79003e") +
+#>   theme(panel.background = element_rect(fill = "#f6e5ee",
+#>                                         color = "#79003e"),
+#>         plot.margin = margin(20, 20, 20, 20))
 
 
