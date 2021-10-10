@@ -196,7 +196,110 @@ ledges <- data.frame(color = c("green", "red", "blue"),
 
 ```
 
-Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` (`r round(nrow(pkg_nodes)/nrow(pkg_tidy)*100,2)`%) packages that interplay each other. This number is relatively lower compared to the percentage of interaction in the packages in Survey and Time Series Analysis CRAN Task View. We found that `r round(73/132*100,2)`% Survey packages that depends, imports, and suggests each other, while these interconnection is observed in `r round(212/338*100,2)`% Time Series Analysis packages. 
+
+```{r}
+# interaction in survey CRAN task view
+
+list_pkg_survey <- ctv:::.get_pkgs_from_ctv_or_repos("OfficialStatistics", 
+                                                repos = "http://cran.rstudio.com/")[[1]]
+url <- "http://cran.rstudio.com/web/packages/packages.rds"
+db <- readRDS(url(url)) %>% 
+  as.data.frame()
+survey_pkg <- db %>%
+  filter(Package %in% list_pkg_survey) %>%
+  select(Package, Depends, Imports, Suggests)
+
+get_pkg_survey <- function(var){
+  # select only the package name and depends/imports/suggests
+  tmp_df <- survey_pkg %>%
+    select(Package, var) %>%
+    # separate every depends/imports/suggests
+    cSplit(var, sep = " ,") 
+  
+  df <- tmp_df %>%
+    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
+    filter(!is.na(pkg)) %>%
+    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
+    mutate(survey_pkg_related = ifelse(pkg %in% list_pkg_survey, "yes", "no")) %>%
+    # filter only package whose depends/imports/suggests is a DoE
+    filter(survey_pkg_related == "yes") %>%
+    # tidy the data to only have the type: depends/imports/suggests
+    cSplit("type", sep = "_") %>%
+    select(-type_2) %>%
+    rename(type = type_1)
+
+  return(df)
+}
+
+survey_depends <- get_pkg_survey("Depends")
+survey_imports <- get_pkg_survey("Imports")
+survey_suggests <- get_pkg_survey("Suggests")
+
+pkg_edges_survey <- rbind(survey_depends, survey_imports, survey_suggests)
+
+survey_from <- pkg_edges_survey %>%
+  distinct(Package)
+
+# extract unique package that being depends/imports/suggests
+survey_to <- pkg_edges_survey %>%
+  distinct(pkg)
+
+# create nodes from the two previous dataframe
+pkg_nodes_survey <- full_join(survey_from, survey_to, by = c("Package" = "pkg"))
+
+
+# Interaction in Time Series Analysis CRAN task view
+
+list_pkg_ts <- ctv:::.get_pkgs_from_ctv_or_repos("TimeSeries", 
+                                                repos = "http://cran.rstudio.com/")[[1]]
+
+ts_pkg <- db %>%
+  filter(Package %in% list_pkg_ts) %>%
+  select(Package, Depends, Imports, Suggests)
+
+get_pkg_ts <- function(var){
+  # select only the package name and depends/imports/suggests
+  tmp_df <- ts_pkg %>%
+    select(Package, var) %>%
+    # separate every depends/imports/suggests
+    cSplit(var, sep = " ,") 
+  
+  df <- tmp_df %>%
+    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
+    filter(!is.na(pkg)) %>%
+    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
+    mutate(survey_pkg_related = ifelse(pkg %in% list_pkg_ts, "yes", "no")) %>%
+    # filter only package whose depends/imports/suggests is a DoE
+    filter(survey_pkg_related == "yes") %>%
+    # tidy the data to only have the type: depends/imports/suggests
+    cSplit("type", sep = "_") %>%
+    select(-type_2) %>%
+    rename(type = type_1)
+
+  return(df)
+}
+
+ts_depends <- get_pkg_ts("Depends")
+ts_imports <- get_pkg_ts("Imports")
+ts_suggests <- get_pkg_ts("Suggests")
+
+pkg_edges_ts <- rbind(ts_depends, ts_imports, ts_suggests)
+
+ts_from <- pkg_edges_ts %>%
+  distinct(Package)
+
+# extract unique package that being depends/imports/suggests
+ts_to <- pkg_edges_ts %>%
+  distinct(pkg)
+
+# create nodes from the two previous dataframe
+pkg_nodes_ts <- full_join(ts_from, ts_to, by = c("Package" = "pkg"))
+```
+
+
+
+
+Interaction between packages could indicate of how developers utilize the functionality of one or more packages to create new features in their packages. According to @StanstrupJan2019TmTi, dependency and connectivity in terms of reusing codes and inheriting objects could reflect a well-connected and interacting community. In this paper, we observe the interaction limited to only between packages that are listed as DoE packages. Further, the type of interaction include the depended, imported, and suggested packages. Out of `r nrow(pkg_tidy)`, there are only `r nrow(pkg_nodes)` (`r round(nrow(pkg_nodes)/nrow(pkg_tidy)*100,2)`%) packages that interplay each other. This number is relatively lower compared to the percentage of interaction in the packages in Survey and Time Series Analysis CRAN Task View. We found that `r round(nrow(pkg_nodes_survey)/nrow(survey_pkg)*100,2)`% Survey packages that depends, imports, and suggests each other, while these interconnection is observed in `r round(nrow(nrow(pkg_nodes_ts)/nrow(ts_pkg)*100,2)`% Time Series Analysis packages. 
 
 Further, we observe the interaction in DoE package using network visualisation using `igraph` [@igraph], `tidygraph` [@tidygraph], and `ggraph` [@ggraph]. 
 
