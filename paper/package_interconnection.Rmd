@@ -120,23 +120,22 @@ aut_tidy_join <- left_join(aut_tidy, aut_group, by = "author") %>%
   arrange(desc(n), .by_group = TRUE) 
 
 pkg_nodes <- aggregate(author ~ L2, aut_tidy_join, FUN = toString) %>%
-  mutate(note = ifelse(str_detect(author, "Ulrike"), "Groemping",
-                       ifelse(str_detect(L2, "Dice"), "Dupuy, Roustant, Richet, Deville",
-                              ifelse(str_detect(author, "Gramacy"), "Gramacy, Taddy",
-                                     ifelse(str_detect(author, "Shwetank"), "Lall, Vhargese",
-                                            ifelse(str_detect(author, "Kevin Wright"), "Wright",
-                                                   ifelse(str_detect(author, "Peng Liu"), "Liu",
-                                                          ifelse(str_detect(author, "Ernesto"), "Barrios", "Other")))))))) %>%
-  mutate(name_add = ifelse(L2 == "plgp", "plgp (G)",
-                     ifelse(L2 == "tgp", "tgp (G,T)",
-                            ifelse(L2 == "dynaTree", "dynaTree (G,T)",
-                                   ifelse(L2 == "DiceDesign", "DiceDesign (Du,Ro)",
-                                          ifelse(L2 == "DiceEval", "DiceEval (Du)",
-                                                 ifelse(L2 == "DiceKriging", "DiceKriging (Ro;De;Ri)",
-                                                        ifelse(L2 == "DiceView", "DiceView (De;Ri)", L2))))))))
-  
-  
-
+  mutate(note = case_when(str_detect(author, "Ulrike") ~ "Groemping",
+                          str_detect(L2, "Dice") ~ "Dupuy, Roustant, Richet, Deville",
+                          str_detect(author, "Gramacy") ~ "Gramacy, Taddy",
+                          str_detect(author, "Shwetank") ~ "Lall, Vhargese",
+                          str_detect(author, "Kevin Wright") ~ "Wright",
+                          str_detect(author, "Peng Liu") ~ "Liu",
+                          str_detect(author, "Ernesto") ~ "Barrios")) %>%
+  mutate(note = ifelse(is.na(note), "Other", note)) %>%
+  mutate(name_add = case_when(L2 == "plgp" ~ "plgp (G)",
+                              L2 == "tgp" ~ "tgp (G,T)",
+                              L2 == "dynaTree" ~ "dynaTree (G,T)",
+                              L2 == "DiceDesign" ~ "DiceDesign (Du,Ro)",
+                              L2 == "DiceEval" ~ "DiceEval (Du)",
+                              L2 == "DiceKriging" ~ "DiceKriging (Ro;De;Ri)",
+                              L2 == "DiceView" ~ "DiceView (De;Ri)")) %>%
+  mutate(name_add = ifelse(is.na(name_add), L2, name_add))
 
 # # get first author 
 # pkg_nodes_tmp$author <- rm_angle(pkg_nodes_tmp$author, replacement = "")
