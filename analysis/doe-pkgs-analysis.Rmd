@@ -3,7 +3,6 @@ title: "doe-pkgs-analysis"
 author: "Dewi Lestari Amaliah - 31251587"
 date: "15/08/2021"
 output: html_document
-runtime: shiny
 ---
 
 ```{r setup, include=FALSE, warning = FALSE, message = FALSE}
@@ -58,409 +57,18 @@ pkg_type <- pkg_tidy_long_type %>%
 
 ```{r}
 #summarise the package based on its date of published 
-pkg_tidy_long_type %>%
-  filter(relevance != "no") %>%
+pkg_year <- pkg_type %>%
   group_by(year) %>%
   count() %>%
-  ggplot(aes(x = year, y = n)) +
+  ungroup()
+
+
+ggplot(pkg_year, aes(x = year, y = n, group = 1)) +
   geom_line() +
   geom_point()
 ```
 
-```{r}
-pkg_tidy_long_type %>%
-  filter(relevance != "no") %>%
-  group_by(domain) %>%
-  count() %>%
-  arrange(desc(n))
-```
-
-```{r}
-pkg_tidy_long_main <- pkg_tidy %>%
-  unnest(main) %>%
-  separate(main, into = c("funct_name", "funct_type", "funct_usage"), sep = ' - ')
-```
-
-
-```{r}
-pkg_tidy_long_main %>%
-  filter(relevance != "no") %>%
-  group_by(funct_type) %>%
-  count() %>%
-  arrange(desc(n))
-```
-## Network analysis 
-
-### Create the depends/imports/suggest data frame
-
-```{r}
-# make list of doe package 
-list_pkg <- as.list(pkg_tidy)$L2
-
-# create function to extract the depends, imports, and suggests 
-get_pkg <- function(var){
-  # select only the package name and depends/imports/suggests
-  tmp_df <- pkg_tidy %>%
-    select(L2, author, var) %>%
-    # separate every depends/imports/suggests
-    cSplit(var, sep = " ,") 
-  
-  df <- tmp_df %>%
-    pivot_longer(c(3:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
-    filter(!is.na(pkg)) %>%
-    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
-    mutate(doe_pkg_related = ifelse(pkg %in% list_pkg, "yes", "no")) %>%
-    # filter only package whose depends/imports/suggests is a DoE
-    filter(doe_pkg_related == "yes") %>%
-    # tidy the data to only have the type: depends/imports/suggests
-    cSplit("type", sep = "_") %>%
-    select(-type_2) %>%
-    rename(type = type_1)
-
-  return(df)
-}
-```
-
-
-### Create network data 
-
-```{r}
-# create data frame from the above function
-depend_df <- get_pkg("depends")
-import_df <- get_pkg("imports")
-suggest_df <- get_pkg("suggests")
-
-# bind data frames
-pkg_edges <- rbind(depend_df, import_df, suggest_df) %>%
-  select(-doe_pkg_related) %>%
-  select(pkg, L2, type, author)
-
-# extract unique package that has depends/imports/suggests
-from <- pkg_edges %>%
-  distinct(L2)
-
-# extract unique package that being depends/imports/suggests
-to <- pkg_edges %>%
-  distinct(pkg)
-
-# create nodes from the two previous dataframe
-pkg_nodes_tmp <- full_join(from, to, by = c("L2" = "pkg")) %>%
-  left_join(pkg_tidy, by = "L2") %>%
-  select(L2, author)
-
-#### tidy author 
-
-
-## separate author 
-aut_tidy <- pkg_nodes_tmp %>%
-  # separate each aut/ctb/cph for each package
-  separate_rows(author, sep=", (?=[A-Z])") %>%
-  # filter only role aut
-  filter(!str_detect(author, "ctb") & !str_detect(author, "National") & !str_detect(author, "Columbia")) 
-
-# replace character inside angle and square bracket
-aut_tidy$author <- rm_angle(aut_tidy$author, replacement = "")
-aut_tidy$author <- rm_square(aut_tidy$author, replacement = "")
-
-# remove contributors written as sentence, also remove cph 
-aut_tidy <- aut_tidy %>%
-  mutate(author = ifelse(str_detect(author, "Contributor"), "Yves Deville",
-                         ifelse(str_detect(author, "based"), "Ernesto Barrios",
-                                ifelse(str_detect(author, "contributions"), "John Lawson", author))))
-                        
-# extract author who wrote >1 packages
-aut_group <- aut_tidy %>%
-  group_by(author) %>%
-  count() %>%
-  arrange(desc(n)) %>%
-  filter(n > 1)
-
-
-## tidy author in pkg_nodes_tmp 
-pkg_nodes_tmp$author <- rm_angle(pkg_nodes_tmp$author, replacement = "")
-pkg_nodes_tmp$author <- rm_square(pkg_nodes_tmp$author, replacement = "")
-
-```
-
-
-```{r}
-aut_tidy_join <- left_join(aut_tidy, aut_group, by = "author") %>%
-  group_by(L2) %>%
-  arrange(desc(n), .by_group = TRUE)
-
-pkg_nodes <- aut_tidy_join[!duplicated(aut_tidy_join$L2), ] %>%
-  select(L2, aut_gr)
-  
-
-# nodes for all of the author in DoE packages
-pkg_nodes_full <- pkg_tidy%>%
-  select(L2)
-
-# create the network package 
-pkg_net <- pkg_edges %>%
-  full_join(pkg_nodes, by = "L2")
-```
-
-
-> Note 
-
-Some packages are authored by the same persons. For Example, Dice
-
-
-
-
-
-
-
-
-## Create network using igraph
-
-```{r}
-routes_igraph <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes, directed = TRUE)
-
-# set.seed(1234567)
-# plot(routes_igraph, edge.arrow.size = 0.2, layout = layout_with_graphopt)
-# Notes: The label overlapped, it is hard to see the network
-```
-
-
-## Create network using tidygraph and ggraph 
-
-```{r}
-# create the input based on the igraph object
-routes_tidy <- routes_igraph %>% as_tbl_graph() %>%
-  activate(edges)
-
-routes_tidy
-```
-
-
-```{r}
-ggraph(routes_tidy, layout = "stress") + 
-  geom_edge_link(aes(color = type),
-                 arrow = arrow(length = unit(1, 'mm')), 
-                 end_cap = circle(1, 'mm')) + 
-  geom_node_point(aes(color = aut_gr)) + 
-  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
-  theme_graph()
-```
-
-```{r}
-aut_tidy_1st_aut <- aut_tidy_join[!duplicated(aut_tidy_join$L2), ] %>%
-  select(L2, author) 
-
-aut_gr <- aut_tidy_1st_aut %>%
-  group_by(author) %>%
-  count() %>%
-  ungroup() %>%
-  arrange(desc(n)) %>%
-  mutate(aut_gr = as.factor(ifelse(n > 1, author, "other")))
-  
-
-pkg_nodes_1aut <- left_join(aut_tidy_1st_aut, aut_gr, by = "author") %>%
-  select(L2, aut_gr) %>%
-  mutate(first_aut = factor(aut_gr, levels = c("Ulrike Groemping",
-                                           "John Lawson",
-                                           "Robert B. Gramacy",
-                                           "Delphine Dupuy",
-                                           "Ernesto Barrios",
-                                           "Kevin Wright",
-                                           "Peng Liu",
-                                           "Shwetank Lall",
-                                           "other"))) %>%
-  select(L2, first_aut)
-
-routes_igraph_1aut <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_1aut, directed = TRUE)
-
-# create the input based on the igraph object
-routes_tidy_1aut <- routes_igraph_1aut %>% as_tbl_graph() %>%
-  activate(edges)
-
-
-ggraph(routes_tidy_1aut, layout = "stress") + 
-  geom_edge_link(aes(color = type),
-                 arrow = arrow(length = unit(1, 'mm')), 
-                 end_cap = circle(1, 'mm')) + 
-  geom_node_point(aes(color = first_aut)) + 
-  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
-  theme_graph()
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Network graph with all the packages in CRAN task view
-
-```{r}
-routes_igraph_full <- graph_from_data_frame(d = pkg_edges, vertices = pkg_nodes_full, directed = TRUE)
-
-routes_tidy_full <- routes_igraph_full %>% as_tbl_graph() %>%
-  activate(edges)
-
-routes_tidy_full
-```
-
-```{r}
-ggraph(routes_tidy_full, layout = "stress") + 
-  geom_edge_link(aes(color = type),
-                 arrow = arrow(length = unit(1, 'mm')), 
-                 end_cap = circle(1, 'mm')) + 
-  geom_node_point() + 
-  geom_node_text(aes(label = name), repel = TRUE, size = 2) +
-  theme_graph()
-```
-
-Note: Hard to read. Hence, with all of the package in CRAN task view, I will make a heatmap instead. 
-
-```{r}
-pkg.mat = get.adjacency(routes_igraph_full, sparse = FALSE)
-heatmap(pkg.mat[,109:1],Rowv = NA, Colv = NA,scale="none")
-```
-
-Next:
-1. Color the nodes based on author (Binary variable whether the pkg is authored by Ulrike or not)
-2. Using interactive graph with D3
-3. Write on the paper 
-
-
-# Interactive Plot with visnetwork
-
-```{r}
-nodes_d3 <- pkg_nodes_1aut %>%
-  rowid_to_column("id") %>%
-  mutate(id = id - 1)
-
-edges_d3 <-routes_tidy_1aut %>%
-  activate(edges) %>%
-  data.frame() %>%
-  mutate(from = from - 1,
-         to = to - 1)
-
-forceNetwork(Links = edges_d3, Nodes = nodes_d3, Source = "from", Target = "to", 
-             NodeID = "L2", Group = "first_aut", 
-             opacity = 1, fontSize = 16, zoom = TRUE)
-```
-
-
-# Comparison to other CRAN TASK VIEW 
-
-## Survey
-
-```{r}
-list_pkg_survey <- ctv:::.get_pkgs_from_ctv_or_repos("OfficialStatistics", 
-                                                repos = "http://cran.rstudio.com/")[[1]]
-url <- "http://cran.rstudio.com/web/packages/packages.rds"
-db <- readRDS(url(url)) %>% 
-  as.data.frame()
-survey_pkg <- db %>%
-  filter(Package %in% list_pkg_survey) %>%
-  select(Package, Depends, Imports, Suggests)
-
-get_pkg_survey <- function(var){
-  # select only the package name and depends/imports/suggests
-  tmp_df <- survey_pkg %>%
-    select(Package, var) %>%
-    # separate every depends/imports/suggests
-    cSplit(var, sep = " ,") 
-  
-  df <- tmp_df %>%
-    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
-    filter(!is.na(pkg)) %>%
-    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
-    mutate(survey_pkg_related = ifelse(pkg %in% list_pkg_survey, "yes", "no")) %>%
-    # filter only package whose depends/imports/suggests is a DoE
-    filter(survey_pkg_related == "yes") %>%
-    # tidy the data to only have the type: depends/imports/suggests
-    cSplit("type", sep = "_") %>%
-    select(-type_2) %>%
-    rename(type = type_1)
-
-  return(df)
-}
-
-survey_depends <- get_pkg_survey("Depends")
-survey_imports <- get_pkg_survey("Imports")
-survey_suggests <- get_pkg_survey("Suggests")
-
-pkg_edges_survey <- rbind(survey_depends, survey_imports, survey_suggests)
-
-survey_from <- pkg_edges_survey %>%
-  distinct(Package)
-
-# extract unique package that being depends/imports/suggests
-survey_to <- pkg_edges_survey %>%
-  distinct(pkg)
-
-# create nodes from the two previous dataframe
-pkg_nodes_survey <- full_join(survey_from, survey_to, by = c("Package" = "pkg"))
-```
-
-
-## Timeseries
-
-```{r}
-list_pkg_ts <- ctv:::.get_pkgs_from_ctv_or_repos("TimeSeries", 
-                                                repos = "http://cran.rstudio.com/")[[1]]
-
-ts_pkg <- db %>%
-  filter(Package %in% list_pkg_ts) %>%
-  select(Package, Depends, Imports, Suggests)
-
-get_pkg_ts <- function(var){
-  # select only the package name and depends/imports/suggests
-  tmp_df <- ts_pkg %>%
-    select(Package, var) %>%
-    # separate every depends/imports/suggests
-    cSplit(var, sep = " ,") 
-  
-  df <- tmp_df %>%
-    pivot_longer(c(2:ncol(tmp_df)), names_to = "type", values_to = "pkg") %>%
-    filter(!is.na(pkg)) %>%
-    # check if the depends/imports/suggests is also a DoE package (is in list_pkg)
-    mutate(survey_pkg_related = ifelse(pkg %in% list_pkg_ts, "yes", "no")) %>%
-    # filter only package whose depends/imports/suggests is a DoE
-    filter(survey_pkg_related == "yes") %>%
-    # tidy the data to only have the type: depends/imports/suggests
-    cSplit("type", sep = "_") %>%
-    select(-type_2) %>%
-    rename(type = type_1)
-
-  return(df)
-}
-
-ts_depends <- get_pkg_ts("Depends")
-ts_imports <- get_pkg_ts("Imports")
-ts_suggests <- get_pkg_ts("Suggests")
-
-pkg_edges_ts <- rbind(ts_depends, ts_imports, ts_suggests)
-
-ts_from <- pkg_edges_ts %>%
-  distinct(Package)
-
-# extract unique package that being depends/imports/suggests
-ts_to <- pkg_edges_ts %>%
-  distinct(pkg)
-
-# create nodes from the two previous dataframe
-pkg_nodes_ts <- full_join(ts_from, ts_to, by = c("Package" = "pkg"))
-```
-
-
 ## Create Sankey Diagram for packages' type
-
 
 ```{r}
 sankey_data <- pkg_type %>%
@@ -498,39 +106,54 @@ sankeyNetwork(Links = edges_sankey, Nodes = nodes_sankey, Source = 'from',
                          units = 'packages')
 ```
 
+# The domain of package based on year 
+
 ```{r}
-sankey_data <- pkg_type %>%
-  select(domain, year) %>%
-  group_by(domain, year) %>%
+pkg_type_year <- pkg_type %>%
+  group_by(year, domain) %>%
   count() %>%
-  ungroup()
+  ungroup() %>%
+  left_join(pkg_year, by="year", suffix = c("_dom", "_year")) %>%
+  mutate(pct = round(n_dom/n_year*100, 0)) %>%
+  mutate(dom = case_when(domain == "general" ~ "Gral",
+                         domain == "clinical trial" ~ "CT",
+                         domain == "genetics" ~ "Gtic",
+                         domain == "computer experiment" ~ "CE",
+                         domain == "agriculture" ~ "Ag",
+                         domain == "industrial experiment" ~ "IE",
+                         domain == "environmental science" ~ "Env.S",
+                         domain == "consumer behaviour" ~ "CB",
+                         domain == "equivalence studies" ~ "Eq.S",
+                         domain == "geospatial study" ~ "GS",
+                         domain == "microbiology" ~ "Mbg",
+                         domain == "sensory studies" ~ "SS"))
 
-domain <- sankey_data %>%
-  distinct(domain) %>%
-  rename(node = domain)
+ggplot(pkg_type_year, aes(x = pct, y = dom)) +
+  geom_col() +
+  facet_wrap(~year, scales = "free_y") +
+  theme_bw()
 
-year <- sankey_data %>%
-  distinct(node = year)
 
-db_sankey <- rbind(domain, year)
-
-routes_sankey <- graph_from_data_frame(d = sankey_data, vertices = db_sankey, directed = TRUE)
-
-routes_sankey_tidy <- routes_sankey %>% as_tbl_graph() %>%
-  activate(edges)
-
-nodes_sankey <- db_sankey %>%
-  rowid_to_column("id") %>%
-  mutate(id = id - 1)
-
-edges_sankey <-routes_sankey_tidy %>%
-  activate(edges) %>%
-  data.frame() %>%
-  mutate(from = from - 1,
-         to = to - 1)
-
-sankeyNetwork(Links = edges_sankey, Nodes = nodes_sankey, Source = 'from', 
-                         Target = 'to', Value = 'n', NodeID = 'node',
-                         units = 'packages')
+pkg_type_year %>%
+  mutate(dom = reorder(dom, pct)) %>%
+  group_by(year, dom) %>%
+  arrange(desc(pct)) %>%
+  ungroup() %>%
+  mutate(dom = factor(paste(dom, year, sep = "__"), 
+                       levels = rev(paste(dom, year, sep = "__")))) %>%
+  ggplot(aes(dom, pct)) +
+  geom_col() +
+  geom_text(aes(label=pct), size = 3, color = "black", 
+            hjust = -0.05, vjust=-0.05) +
+  facet_wrap(~year, scales = "free_y") +
+  scale_x_discrete(labels = function(x) gsub("__.+$", "", x)) +
+  coord_flip() +
+  theme_bw() +
+  xlab("Domain") +
+  ylab("Percentage") +
+  theme(panel.grid.major.y = element_blank()) 
+ 
 ```
+
+
 
