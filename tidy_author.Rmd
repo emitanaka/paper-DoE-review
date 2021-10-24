@@ -1,0 +1,73 @@
+---
+title: "tidy_author"
+author: "Dewi Amaliah"
+date: "24/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(qdapRegex)
+library(entity)
+```
+
+```{r}
+url <- "http://cran.rstudio.com/web/packages/packages.rds"
+db <- readRDS(url(url)) %>% 
+  as.data.frame()
+
+ctvs <- map_dfr(ctv::available.views(repos = "http://cran.rstudio.com/"), 
+                  ~tibble(name = .x[["name"]],
+                          topic = .x[["topic"]],
+                          pkgs = map(name, ~ctv:::.get_pkgs_from_ctv_or_repos(.x, 
+                                                repos = "http://cran.rstudio.com/")[[1]])))
+
+ctvdf <- ctvs %>% 
+  unnest_longer(pkgs) %>% 
+  left_join(select(db, Package, Author, Depends, Imports, Suggests), 
+            by = c("pkgs" = "Package")) %>% 
+  mutate(across(c(Depends, Imports, Suggests),
+                ~str_split(.x, ", "))) %>% 
+  mutate(across(c(Depends, Imports, Suggests),
+                ~map(.x, function(apkg) str_extract(apkg, "^[A-Za-z0-9]+")))) %>%
+  # remove angle bracket
+  mutate(author_tidy = rm_angle(Author, replacement = ""),
+         # remove square bracket
+         author_tidy = rm_square(author_tidy, replacement = ""),
+         # remove bracket
+         author_tidy = rm_bracket(author_tidy, replacement = ""),
+         author_tidy = str_replace(author_tidy, "&", ","),
+         author_tidy = str_replace(author_tidy, '\\\\', ""),
+         # remove white space before comma
+         author_tidy = rm_white_comma(author_tidy, replacement = ""),
+         # replace "and" with comma
+         author_tidy = str_replace(author_tidy, " and", ","),
+         # remove extra comma 
+         author_tidy = str_replace(author_tidy, ",,", ","),
+         author_tidy2 = ifelse(str_detect(author_tidy, "riginal") | 
+                                 str_detect(author_tidy, " by") | 
+                                 str_detect(author_tidy, "with") | 
+                                 str_detect(author_tidy, " under"), 
+                               person_entity(author_tidy), 
+                               author_tidy))
+
+
+ctvdf_sentences <- ctvdf %>%
+  filter(str_detect(author_tidy, "riginal") | str_detect(author_tidy, " by") | str_detect(author_tidy, "with") | str_detect(author_tidy, " under"))
+
+
+ctvdf_sentences_test <- ctvdf_sentences %>%
+  mutate(author_tidy2 = person_entity(author_tidy)) %>%
+  mutate(author_tidy3 = str_replace(author_tidy, "with contributions from", ","),
+         author_tidy3 = str_replace(author_tidy, "Original by", ""))
+
+
+ctvdf_with <- ctvdf %>%
+  filter(str_detect(author_tidy, "with"))
+
+# try to filter English words 
+
+print(ctvdf_with$author_tidy)
+```
+
