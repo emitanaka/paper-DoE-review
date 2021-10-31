@@ -40,12 +40,12 @@ ctvdf <- ctvs %>%
          author_tidy = str_replace_all(author_tidy, "\\.*$", ""),
          author_tidy = str_replace_all(author_tidy, ",,", ","),
          author_tidy = str_replace_all(author_tidy, " \\)", ""),
+         author_tidy = str_replace_all(author_tidy, "\\\\", ""),
          author_tidy = str_replace_all(author_tidy, "\\s*,", ","),
          author_tidy = str_squish(author_tidy))
 
 
-# words_to_delete <- c("Original by ",
-#                      "Compiled by ",
+# words_to_delete <- c("Compiled by ",
 #                      "is the sole author, creator of the BOOM project. Some code in the BOOM libraries has been modified from other open source projects. These include Cephes, NEWUOA, a modified version of the R math libraries . Original copyright notices have been maintained in all source files. In these cases, copyright claimed by Steven L. Scott is limited to modifications made to the original code. Google claims copyright for code written while Steven L. Scott was employed at Google from 2008 - 2018, but BOOM is not an officially supported Google project",
 #                      " original C code for ARMS by ",
 #                      "with contributions from ",
@@ -57,25 +57,167 @@ ctvdf <- ctvs %>%
 #                      " with contributions from ",
 #                      "based on Fortran code by")
 
+library(yaml)
 
 ctvdf_sentences <- ctvdf %>%
-  filter(str_detect(author_tidy, "riginal") | str_detect(author_tidy, " by ") | str_detect(author_tidy, "with") |
-           str_detect(author_tidy, "under")| str_detect(author_tidy, "sole") | 
-           str_detect(author_tidy,"written") | str_detect(author_tidy, "port") | str_detect(author_tidy, " work")|
-           str_detect(author_tidy,"suggestion")|str_detect(author_tidy,"code"))
-
-
-ctvdf_sentences_test <- ctvdf_sentences %>%
-  mutate(author_tidy2 = person_entity(author_tidy)) %>%
-  mutate(author_tidy3 = str_replace(author_tidy, "with contributions from", ","),
-         author_tidy3 = str_replace(author_tidy, "Original by", ""))
-
-
-ctvdf_with <- ctvdf %>%
-  filter(str_detect(author_tidy, "with"))
-
-# try to filter English words 
+  filter(str_detect(author_tidy, "riginal") | 
+           str_detect(author_tidy, " by ") | 
+           str_detect(author_tidy, "with ") |
+           str_detect(author_tidy, " under ") | 
+           str_detect(author_tidy, "sole") | 
+           str_detect(author_tidy,"written") | 
+           str_detect(author_tidy, "port") | 
+           str_detect(author_tidy, " work")|
+           str_detect(author_tidy,"suggestion") | 
+           str_detect(author_tidy,"code") | 
+           str_detect(author_tidy, " from ")) %>%
+  select(pkgs, author_tidy) %>%
+  distinct()
 
 print(ctvdf_sentences$author_tidy)
+
+# manually tidy the author in sentences due to the variability
+
+tidy_aut <- tribble(~tidy_aut,
+                    "Kjetil Halvorsen",
+                    "Steven L. Scott",
+                    "Giovanni Petris, Luca Tardella, Wally Gilks",
+                    "Joseph L. Schafer",
+                    "David I. Hastie, Silvia Liverani, Sylvia Richardson, Aurore J. Lavigne, Lucy Leigh, Lamiae Azizi, Xi Liu, Ruizhu Huang, Austin Gratton, Wei Jing",
+                    "Simon Jackman, Alex Tahk, Achim Zeileis, Christina Maimone, Jim Fearon, Zoe Meers",
+                    "Andrew Gelman, Sibylle Sturtz, Uwe Ligges, Gregor Gorjanc, Jouni Kerman",
+                    "Madeleine Thompson, G. W. Stewart",
+                    "Severine Demeyer, Alexandre Allard, Bertrand Iooss",
+                    "Thomas Lumley, Alan Miller",
+                    "Alessandra R. Brazzale, Ruggero Bellio, Douglas Bates",
+                    "Barry W. Brown, James Lovato, Kathy Russel, Kjetil B Halvorsen",
+                    "Daniel G. Muenz, Ray Griner, Huichao Chen, Lijuan Deng, Sachiko Miyahara, Scott R. Evans, Lingling Li, Hajime Uno, Laura M. Smeaton",
+                    "Michal Juraska, Peter B. Gilbert, Xiaomin Lu, Min Zhang, Marie Davidian, Anastasios A. Tsiatis",
+                    "Peter Langfelder, Bin Zhang, Steve Horvath",
+                    "Campo Elias Pardo, Pedro Cesar del Campo, Camilo Jose Torres, Ivan Diaz, Mauricio Sadinle, Jhonathan Medina",
+                    "Fionn Murtagh, R development team, Peter Langfelder",
+                    "Steve Su, Diethelm Wuertz, Martin Maechler, Rmetrics core team members, Juha Karvanen,
+                    Robert King, Benjamin Dean, R core team",
+                    "Peter Macdonald, Juan Du",
+                    "Ulric Lund, Claudio Agostinelli",
+                    "Marius Hofert, Ivan Kojadinovic, Martin Maechler, Jun Yan, Johanna G. Nešlehová, Rebecca Morger",
+                    "Alec Stephenson, Chris Ferro",
+                    "Alessandra R. Brazzale, Douglas Bates",
+                    "Yohan Chalabi, Christophe Dutang, Petr Savicky, Diethelm Wuertz, M. Matsumoto, M. Saito, D. Knuth.", 
+                    "Robert King, Emily Anderson",
+                    "Stefan Wilhelm, Manjunath B G",
+                    "Rob Tibshirani, Friedrich Leisch",
+                    "Roger Koenker, Stephen Portnoy, Pin Tian Ng, Blaise Melly, Achim Zeileis, Philip Grosjean, Cleve Moler, Yousef Saad, Victor Chernozhukov, Ivan Fernandez-Val, Brian D Ripley", 
+                    "Ariane Straub, Torsten Hothorn", 
+                    "Stéphane Dray, Anne-Béatrice Dufour, Jean Thioulouse, with contributions from Thibaut Jombart, Sandrine Pavoine, Jean R. Lobry, Sébastien Ollier, Daniel Borcard, Pierre Legendre, Stéphanie Bougeard, Aurélie Siberchicot, Daniel Chessel",
+                    "C.J.F. ter Braak, A.P. Schaffers, Gavin L. Simpson, Ron Wehrens, Bjorn-Helge Mevik",
+                    "Stephen Milborrow, Trevor Hastie, Rob Tibshirani, Thomas Lumley", 
+                    "Janet E. Heffernan, Alec G. Stephenson",
+                    "Jeff Laake, Devin Johnson, Paul Conn, Jay Rotella",
+                    "Trevor Hastie, Robert Tibshirani, Friedrich Leisch, Kurt Hornik, Brian D. Ripley,  Balasubramanian Narasimhan",
+                    "Leo Breiman, Adele Cutler, Andy Liaw, Matthew Wiener",
+                    "Jeff Laake, Eldar Rakhimberdiev, Ben Augustine, Daniel Turek, Brett McClintock, Bret Collier, Jay Rotella, David Pavlacky, Andrew Paul, Luke Eberhart-Phillips, Jake Ivan, Connor Wood",
+                    "Bertrand Iooss, Sebastien Da Veiga, Alexandre Janon, Gilles Pujol, Baptiste Broto, Khalid Boumhaout, Thibault Delage, Reda El Amri, Jana Fruth, Laurent Gilquin, Joseph Guillaume, Margot Herin, Marouane Il Idrissi, Loic Le Gratiet, Paul Lemaitre, Amandine Marrel, Anouar Meynaoui, Barry L. Nelson, Filippo Monari, Roelof Oomen, Oldrich Rakovec, Bernardo Ramos, Olivier Roustant, Eunhye Song, Jeremy Staum, Roman Sueur, Taieb Touati, Vanessa Verges, Frank Weber",
+                    "Ernesto Barrios, Daniel Meyer",
+                    "Douglas Bates, Karen A.F. Copeland",
+                    "John Lawson, G. Vining",
+                    "Jeff Enos, David Kane, Kyle Campbell, Daniel Gerlanc, Aaron Schwartz, Daniel Suo, Alexei Colin, Luyi Zhao",
+                    "Matt Dowle, Arun Srinivasan, Jan Gorecki, Michael Chirico, Pasha Stetsenko, Tom Short, Steve Lianoglou, Eduard Antonyan, Markus Bonsch, Hugh Parsonage, Scott Ritchie, Kun Ren, Xianying Tan, Rick Saporta, Otto Seiskari, Xianghui Dong, Michel Lang, Watal Iwasaki, Seth Wenchel, Karl Broman, Tobias Schmidt, David Arenburg, Ethan Smith, Francois Cocquemas, Matthieu Gomez, Philippe Chataignon, Nello Blaser, Dmitry Selivanov, Andrey Riabushenko, Cheng Lee, Declan Groves, Daniel Possenriede, Felipe Parages, Denes Toth, Mus Yaramaz-David, Ayappan Perumal, James Sams, Martin Morgan, Michael Quinn, Javrucebo, Marc Outins, Roy Storey, Manish Saraswat, Morgan Jacob, Michael Schubmehl, Davis Vaughan, Toby Hocking, Leonardo Silvestri, Tyson Barrett, Jim Hester, Anthony Damico, Sebastian Freundt, David Simons, Elliott Sales de Andrade, Cole Miller, Jens Peder Meldgaard, Vaclav Tlapak, Kevin Ushey, Dirk Eddelbuettel, Ben Schwen",
+                    "Jan Beran, Brandon Whitcher, Martin Maechler",
+                    "Sarah Brockhaus, David Ruegamer, Almond Stoecker, Torsten Hothorn", 
+                    "Alessio Boattini, Federico C. F. Calboli, Vincente Canto Cassola, Martin Maechler",  
+                    "Jing Hua Zhao, Kurt Hornik, Brian Ripley",
+                    "Gregory Warnes, Gregor Gorjanc, Friedrich Leisch, Michael Man",
+                    "Jon Clayden, K. Kosako, K. Takata",
+                    "K. Burkett, B. McNeney, J. Graham, Zhijian Chen",
+                    "John Maindonald, Randall Johnson",
+                    "Thomas Hoffmann, Christoph Lange",
+                    "Karl W Broman, Hao Wu, Gary Churchill, Saunak Sen, Danny Arends, Robert Corty, Timothee Flutre, Ritsert Jansen, Pjotr Prins, Lars Ronnegard, Rohan Shah, Laura Shannon, Quoc Tran, Aaron Wolen, Brian Yandell, R Core Team",
+                    "Augustin Luna, Kristin K. Nicodemus,",
+                    "David W. Scott, Albrecht Gebhardt, Stephen Kaluzny",
+                    "Dan Carr, Nicholas Lewin-Koh, Martin Maechler, Deepayan Sarkar",
+                    "Martin Maechler, Kurt Hornik, Brian Ripley",
+                    "Nele Schuwirth, Peter Reichert, Simone Langhans, Christian Michel", 
+                    "Michael U. Kemp, E. Emiel van Loon, Judy Shamoun-Baranes, Willem Bouten",
+                    "Justin Lokhorst, Bill Venables, Berwin Turlach, Martin Maechler",  
+                    "Zhu Wang, Achim Zeileis, Simon Jackman, Brian Ripley, Patrick Breheny",
+                    "Marijke Welvaert, Joke Durnez, Beatrijs Moerkerke, Yves Rosseel, Geert Verdoolaege",
+                    "Thomas Quinn, Kristin Nicodemus, Glaucia Martins, Carlos Maia", 
+                    "Mark Stevenson, Evan Sergeant, Telmo Nunes, Cord Heuer, Jonathon Marshall, Javier Sanchez, Ron Thornton, Jeno Reiczigel, Jim Robison-Cox, Paola Sebastiani, Peter Solymos, Kazuki Yoshida, Geoff Jones, Sarah Pirikahu, Simon Firestone, Ryan Kyle, Johann Popp, Mathew Jay, Charles Reynard, Allison Cheung, Nagendra Singanallur, Aniko Szabo",
+                    "Ted Harding, Fernando Tusell, Joseph L. Schafer",
+                    "Il-Youp Kwak, Wuming Gong",
+                    "Joseph L. Schafer", 
+                    "Alvaro A. Novo, Joseph L. Schafer",
+                    "Joseph L. Schafer",
+                    "Christian Buchta, Michael Hahsler, Daniel Diaz",
+                    "Naisyin Wang, Adrian Raftery, Chris Fraley",
+                    "Gregory R. Warnes, Ben Bolker, Thomas Lumley, Randall C. Johnson, Intramural Research Program", 
+                    "Marek Gagolewski, Bartek Tartanus",
+                    "Bill Venables, Kurt Hornik, Georgi Boshnakov",
+                    "John P. Nolan, Alan Genz",
+                    "R. J. Renka, Albrecht Gebhardt, Stephen Eglen, Sergei Zuyev, Denis White",
+                    "Stephen Tueller",
+                    "Josh Pasek, Alex Tahk, R core team, Gene Culter, Marcus Schwemmle",
+                    "Ben B. Hansen, Mark Fredrickson, Josh Buckner, Josh Errickson, Adam Rauh, Peter Solenberger, Dimitri P. Bertsekas, Paul Tseng",
+                    "Berwin A. Turlach, Andreas Weingessel, Cleve Moler)",
+                    "Charles J. Geyer, Glen D. Meeden, Komei Fukuda",
+                    "Jon Clayden, Ivan Zelinka",
+                    "Guillaume Guenard, Pierre Legendre",
+                    "Julien Clavel, Aaron King, Emmanuel Paradis",
+                    "Claudia van Borkulo, Sacha Epskamp, Alexander Robitzsch",
+                    "Seung W. Choi, Laura E. Gibbons, Paul K. Crane",
+                    "Kenneth Knoblauch, Laurence T. Maloney, Laurence T. Maloney, J. N. Yang",
+                    "Anton Grau Larsen, Jacob Lunding, Christoph Ellersgaard, Stefan Andrade",
+                    "Benjamin Hofner",
+                    "Eliot J B McIntire, Alex M Chubaty, Tati Micheletti, Ceres Barros, Ian Eddy, Minister of Natural Resources Canada",
+                    "Eliot J B McIntire, the Minister of Natural Resources Canada",
+                    "Johan Zetterqvist, Arvid Sjölander, Alexander Ploner",
+                    "Rob J Hyndman, Heather Booth, Leonie Tickle, John Maindonald",
+                    "Vincent J Carey, Thomas Lumley, Brian Ripley, Cleve Moler",
+                    "James E. Helmreich, Robert M. Pruzek, KuangNan Xiong",
+                    "Adrian Bowman, Adelchi Azzalini, B. D. Ripley, Adrian Bowman, Adelchi Azzalini",
+                    "Clement Calenge, Scott Fortmann-Roe",
+                    "Clement Calenge, Mathieu Basille",
+                    "Clement Calenge, Stephane Dray, Manuela Royer",
+                    "Clement Calenge, Mathieu Basille",
+                    "Virgilio Gómez-Rubio, Juan Ferrándiz-Ferragud, Antonio López-Quílez, Roger Bivand",
+                    "Marcelino de la Cruz Rot, Philip M. Dixon, Jose M. Blanco-Moreno",
+                    "Richard Detomasi, Ministerio de Desarrollo Social, Infraestrutura de Datos Espaciales, Servicio Geográfico Militar, Ministerio de Transporte y Obras Públicas, Instituto Nacional de Estadística,  Instituto Geográfico Militar, Ministerio de Vivienda, Ordenamiento Territorial y Medio Ambiente",
+                    "Edzer Pebesma, Jon Olav Skoien, Olivier Baume, A.Chorti, D.T. Hristopulos, H. Kazianka, S.J. Melles, G. Spiliopoulos",
+                    "Christian Graul, Francois Guillem",
+                    "Richard A. Becker, Allan R. Wilks, Ray Brownrigg",
+                    "Doug McIlroy, Ray Brownrigg, Thomas P Minka, Roger Bivand",
+                    "Richard A. Becker, Allan R. Wilks, Ray Brownrigg, Thomas P Minka, Alex Deckmyn",
+                    "Ian Fellows, Jan Peter Stotz",
+                    "Seong-Yun Hong, David O'Sullivan, Benjamin Jarvis, Changlock Choi",
+                    "James J. Majure, Iowa State University, Albrecht Gebhardt",
+                    "Moreno I. Coco, Nicholas D. Duran, Rick Dale, Denis O'Hora, Michael J. Spivey.",
+                    "Mai Zhou, Yifan Yang",
+                    "William H. Barton, Dr. Mai Zhou",
+                    "Isabelle Clerc-Urmès, Michel Grzebyk, Guy Hédelin, CENSUR working survival group",
+                    "Klein, Moeschberger, Jun Yan",
+                    "Gareth Ambler, Axel Benner",
+                    "Kenneth Hess, R. Gentleman",
+                    "Patrick J. Heagerty, Paramita Saha-Chaudhuri",
+                    "Patrick J. Heagerty, Paramita Saha-Chaudhuri",
+                    "Thomas Scheike, Torben Martinussen, Jeremy Silver, Klaus Holst",
+                    "F.L. Ramsey, D.W. Schafer, Jeannie Sifneos, Berwin A. Turlach, Nicholas Horton, Kate Aloisio, Ruobing Zhang, Randall Pruim",
+                    "F.L. Ramsey, D.W. Schafer, Jeannie Sifneos, Berwin A. Turlach, Nicholas Horton, Linda Loi, Kate Aloisio, Ruobing Zhang, Randall Pruim",
+                    "Vasilis Dakos, S.R. Carpenter, T. Cline, L. Lahti",
+                    "Thomas Ruf, Press et al.",
+                    "Mustafa Gokce Baydogan",
+                    "Roger D. Peng, Aidan McDermott",
+                    "Dirk Eddelbuettel, Bill Evans, Mike Birdgeneau, Henrik Bengtsson, Seth Wenchel, Colin Gillespie, Chan-Yub Park",
+                    "Bob Rudis, Jay Jacobs, David Severski, Quinn Weber, Konrad Karczewski, Shinya Uryu, Gregory Jefferis, Ed Niles, Rick Saporta, Jonathan Sidi, Matt Kaye, Xinye Li, Andrie de Vries",
+                    "Andrew Thomas, Dave Lunn, David Spiegelhalter, Nicky Best, Uwe Ligges, Sibylle Sturtz, Andrew Gelman, Gregor Gorjanc, Chris Jackson. Linux port, Chris Jackson",
+                    "Andrew Gelman, Sibylle Sturtz, Uwe Ligges, Gregor Gorjanc, Jouni Kerman, Neal Thomas")
+
+tidy_aut2 <- cbind(ctvdf_sentences, tidy_aut) %>%
+  select(pkgs, tidy_aut)
+
+ctvdf_author <- left_join(ctvdf, tidy_aut2, by = "pkgs") %>%
+  mutate(tidy_aut = if_else(is.na(tidy_aut), author_tidy, tidy_aut),
+         tidy_aut = str_replace_all(tidy_aut, ",,", ","))
 ```
+
 
