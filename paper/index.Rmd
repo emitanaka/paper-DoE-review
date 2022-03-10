@@ -4,12 +4,7 @@ author:
   - name: Emi Tanaka
     affiliation: Monash University
 abstract: >
-    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of experiment plays a critical role in increasing the quality of experimental data.  In this article I describe the current state of the R-packages for the design of experiments through textual analysis and download trends. I discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
-preamble: |
-  % Any extra LaTeX you need in the preamble
-  
-# per R journal requirement, the bib filename should be the same as the output 
-# tex file. Don't forget to rename the bib file and change this example value.
+    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through textual analysis and assessment of download trends. We discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
 bibliography: paper.bib
 
 output: 
@@ -53,8 +48,9 @@ theme_set(
         axis.ticks = element_line(color = "black", size = 0.7),
         axis.title = element_text(color = "black", face = "bold"),
         strip.background = element_rect(color = "black",
-                                        fill = "black"),
-        strip.text = element_text(color = "white"),
+                                        fill = "white"),
+        strip.text = element_text(color = "black", 
+                                  margin = margin(5, 5, 5, 5)),
         plot.title.position = "plot",
         plot.title = element_text(color = "black", hjust = 0)))
 
@@ -77,34 +73,111 @@ npkgs <- length(doe_pkgs)
 ```
 
 ```{r cran-data, cache = tocache}
-end <- Sys.Date() - 2 # usually 1-2 days data are not available yet
-start <- end - years(2) + days(2)
+end <- Sys.Date() - 3 # usually 1-2 days data are not available yet
+start <- end - years(2)
 dldat <- cran_downloads(doe_pkgs, from = start, to = end)
 ```
 
 ```{r cran-data2, cache = tocache}
-start2 <- end - years(5) + days(2)
+start2 <- end - years(5) 
 dldat2 <- cran_downloads(doe_pkgs, from = start2, to = end)
 ```
 
-# Introduction 
-
-The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in CRAN task views where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data. This paper is concerned with the latter.
-
-
-In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "DoE packages" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
-
-The paper is organisd as follows. Section \@ref(eda)
-
-
-# Explorative analysis {#eda}
-
-```{r download-dist, dependson = "cran-data"}
+```{r data-summary}
 dldat_sum <- dldat %>% 
   group_by(package) %>% 
   summarise(total = sum(count)) %>% 
   arrange(desc(total)) %>% 
   mutate(rank = 1:n())
+
+dldat_sum5 <- dldat2 %>% 
+  group_by(package) %>% 
+  summarise(total = sum(count)) %>% 
+  arrange(desc(total)) %>% 
+  mutate(rank = 1:n())
+
+top_2years <- pull(dldat_sum, package)
+top_5years <- pull(dldat_sum5, package)
+```
+
+```{r pkg-updates, cache = tocache}
+ntop <- 8
+pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
+pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
+pkg_updates <- map(top_2years[1:ntop], function(pkg) {
+    last_update <- read_html(glue(pkg_url)) %>% 
+      html_table() %>% 
+      .[[1]] %>% 
+      filter(X1=="Published:") %>% 
+      pull(X2) %>% 
+      ymd()
+      
+    archive_dates <- tryCatch({ 
+        read_html(glue(pkg_archive)) %>% 
+          html_table() %>%
+          .[[1]] %>% 
+          pull(`Last modified`) %>% 
+          ymd_hm() %>% 
+          na.omit() %>% 
+          as.Date()
+      }, error = function(e) {
+        NULL
+      })
+    c(archive_dates, last_update)
+  })
+names(pkg_updates) <- top_2years[1:ntop]
+
+updates <- unlist(pkg_updates) %>% 
+  enframe("package", "update") %>% 
+  # unlist converts date to integers
+  mutate(update = as.Date(update, origin = "1970-01-01"),
+         # need to get rid of the numbers appended to pkg names
+         package = str_extract(package, paste0(top_2years[1:ntop], collapse="|")),
+         package = factor(package, levels = top_2years[1:ntop])) %>% 
+  filter(between(update, start2, end))
+
+```
+
+
+# Introduction 
+
+The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in [CRAN task views](https://cran.r-project.org/web/views/) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data where the subject and experimental factors tend to be in the control of the experimenter. This paper is concerned with the latter.
+
+
+In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "**DoE packages**" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
+
+The paper is organised as follows. Section \@ref(eda) explores some analysis of the most downloaded DoE packages, followed by discussion of the discussion of the software design of these packages in Section \@ref(design), and concluding with a discussion in Section \@ref(discussion) of future prospects. 
+
+
+# Explorative analysis {#eda}
+
+The Comprehensive R Archive Network (CRAN) is a network of servers located across the world that store R and R-packages. 
+
+```{r download-trend, fig.width = 10,  dependson = "cran-data", fig.height = 8}
+dldat2 %>% 
+  filter(package %in% top_2years[1:ntop]) %>% 
+  mutate(package = factor(package, levels = top_2years[1:ntop])) %>%
+ggplot(aes(date, count + 1)) +
+  geom_line(data = rename(dldat2, pkg = package),
+            color = "grey80",
+            aes(group = pkg)) +
+  geom_line(data = ~rename(., pkg = package),
+            color = "grey60",
+            aes(group = pkg)) +
+  geom_vline(data = updates, 
+             aes(xintercept = update),
+             color = "red", linetype = "dashed") +
+  geom_line() +
+  scale_y_log10() +
+  scale_x_date(expand = c(0, 0)) + 
+  facet_grid(package ~ .) +
+  theme(legend.position = "bottom")
+```
+
+
+
+```{r download-dist, dependson = "cran-data"}
+
 
 dl1plot <- ggplot(dldat_sum, aes(x = "", y = total/1000)) + 
   geom_violin() +
@@ -112,18 +185,14 @@ dl1plot <- ggplot(dldat_sum, aes(x = "", y = total/1000)) +
   scale_y_log10(label = comma) + 
   labs(x = "",
        y = "Download counts in the last 2 year ('000s)", title = "(A)") + 
-  geom_text_repel(data = slice_max(dldat_sum, total, n = 13), 
+  geom_text_repel(data = ~slice_max(., total, n = 13), 
                   nudge_x = rep(c(0.2, -0.2, 0.2, -0.2, 0.15), c(3, 2, 2, 3, 3)),
                   size = 4,
                   aes(label = package)) + 
   theme(axis.ticks.length.x = unit(0, "mm"))
 
 
-dldat_sum5 <- dldat2 %>% 
-  group_by(package) %>% 
-  summarise(total = sum(count)) %>% 
-  arrange(desc(total)) %>% 
-  mutate(rank = 1:n())
+
 
 top15 <- dldat_sum %>% 
   left_join(dldat_sum5, by = "package") %>% 
@@ -138,7 +207,7 @@ dl2plot <- ggplot(top15, aes(name, value, group = package)) +
   scale_y_reverse(breaks = 1:15) +
   scale_x_discrete(expand = expansion(c(0.1, 0.5))) +
   labs(x = "", y = "Ranking", title = "(B)") +
-  geom_text(data = filter(top15, name=="Last 5 years"),
+  geom_text(data = ~filter(., name=="Last 5 years"),
             aes(label = package), 
             hjust = 0, 
             nudge_x = 0.1,
@@ -239,11 +308,13 @@ ggplot(rbind(dldat_comb_bigram_desc,
 
 Figure `r ref("fig:dlplots")` suggests that the `r CRANpkg("AlgDesign")` followed by `r CRANpkg("agricolae")` are far more downloaded than any other DoE packages. It is worth noting that `r CRANpkg("agricolae")` imports `r CRANpkg("AlgDesign")` thus any download of `r CRANpkg("agricolae")` likely results also in a download of `r CRANpkg("AlgDesign")`. 
 
-# Software design
+# Software design {#design}
 
 
 
-# Discussion
+# Discussion {#discussion}
+
+The analysis showed that ... . There are several limitations to the exploratory analysis. These include that the download data are limited to the RStudio CRAN download logs, one of XXX mirrors (albeit most popular), and the study is based on CRAN packages listed in the DoE CRAN task view -- there may well be some R-packages that are not on CRAN or part of the task view. Further exploration could expand the study for packages that may be outside this list. 
 
 An experiment involves running a number of steps:
 
