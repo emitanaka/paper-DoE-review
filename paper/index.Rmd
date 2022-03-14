@@ -13,22 +13,9 @@ output:
 ---
 
 ```{r setup, cache = FALSE, include = FALSE}
-library(tidyverse)
-library(rvest)
-library(lubridate)
-library(cranlogs)
+library(targets)
 library(glue)
-library(scales)
-library(colorspace)
-library(tidytext)
-library(pluralize)
-library(kableExtra)
-library(igraph)
-library(ggraph)
-library(ggrepel)
-library(patchwork)
-library(ggwordcloud)
-tocache <- TRUE
+library(tidyverse)
 knitr::opts_chunk$set(echo = FALSE, 
                       cache = FALSE,
                       cache.path = "cache/",
@@ -39,20 +26,7 @@ knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
                       warning = FALSE)
 
-theme_set(
-  theme(panel.background = element_rect(fill = NA),
-        panel.grid = element_line(color = "lightgray"),
-        axis.text = element_text(color = "black"),
-        axis.line = element_line(color = "black", size = 0.7),
-        axis.ticks.length = unit(1.4, "mm"),
-        axis.ticks = element_line(color = "black", size = 0.7),
-        axis.title = element_text(color = "black", face = "bold"),
-        strip.background = element_rect(color = "black",
-                                        fill = "white"),
-        strip.text = element_text(color = "black", 
-                                  margin = margin(5, 5, 5, 5)),
-        plot.title.position = "plot",
-        plot.title = element_text(color = "black", hjust = 0)))
+npkgs <- tar_read(npkgs)
 
 ctv <- function(view) {
   ifelse(knitr::is_html_output(), glue("[{view}](https://cran.r-project.org/web/views/{view}.html)"), glue("\\ctv{[view]}", .open = "[", .close = "]"))
@@ -65,83 +39,11 @@ ref <- function(x) {
 }
 ```
 
-```{r ctv}
-doe_pkgs <- ctv:::.get_pkgs_from_ctv_or_repos("ExperimentalDesign", 
-                                              repos = "http://cran.rstudio.com/")[[1]]
-doe_pkgs <- c(doe_pkgs, "DeclareDesign")
-npkgs <- length(doe_pkgs)
-```
-
-```{r cran-data, cache = tocache}
-end <- Sys.Date() - 3 # usually 1-2 days data are not available yet
-start <- end - years(2)
-dldat <- cran_downloads(doe_pkgs, from = start, to = end)
-```
-
-```{r cran-data2, cache = tocache}
-start2 <- end - years(5) 
-dldat2 <- cran_downloads(doe_pkgs, from = start2, to = end)
-```
-
-```{r data-summary}
-dldat_sum <- dldat %>% 
-  group_by(package) %>% 
-  summarise(total = sum(count)) %>% 
-  arrange(desc(total)) %>% 
-  mutate(rank = 1:n())
-
-dldat_sum5 <- dldat2 %>% 
-  group_by(package) %>% 
-  summarise(total = sum(count)) %>% 
-  arrange(desc(total)) %>% 
-  mutate(rank = 1:n())
-
-top_2years <- pull(dldat_sum, package)
-top_5years <- pull(dldat_sum5, package)
-```
-
-```{r pkg-updates, cache = tocache}
-ntop <- 8
-pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
-pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
-pkg_updates <- map(top_2years[1:ntop], function(pkg) {
-    last_update <- read_html(glue(pkg_url)) %>% 
-      html_table() %>% 
-      .[[1]] %>% 
-      filter(X1=="Published:") %>% 
-      pull(X2) %>% 
-      ymd()
-      
-    archive_dates <- tryCatch({ 
-        read_html(glue(pkg_archive)) %>% 
-          html_table() %>%
-          .[[1]] %>% 
-          pull(`Last modified`) %>% 
-          ymd_hm() %>% 
-          na.omit() %>% 
-          as.Date()
-      }, error = function(e) {
-        NULL
-      })
-    c(archive_dates, last_update)
-  })
-names(pkg_updates) <- top_2years[1:ntop]
-
-updates <- unlist(pkg_updates) %>% 
-  enframe("package", "update") %>% 
-  # unlist converts date to integers
-  mutate(update = as.Date(update, origin = "1970-01-01"),
-         # need to get rid of the numbers appended to pkg names
-         package = str_extract(package, paste0(top_2years[1:ntop], collapse="|")),
-         package = factor(package, levels = top_2years[1:ntop])) %>% 
-  filter(between(update, start2, end))
-
-```
 
 
 # Introduction 
 
-The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in [CRAN task views](https://cran.r-project.org/web/views/) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data where the subject and experimental factors tend to be in the control of the experimenter. This paper is concerned with the latter.
+The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in [CRAN task views](https://cran.r-project.org/web/views/) (a volunteered maintained list of R-packages by topic) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data where the subject and experimental factors tend to be in the control of the experimenter. This paper is concerned with the latter.
 
 
 In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "**DoE packages**" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
@@ -154,29 +56,12 @@ The paper is organised as follows. Section \@ref(eda) explores some analysis of 
 The Comprehensive R Archive Network (CRAN) is a network of servers located across the world that store R and R-packages. 
 
 ```{r download-trend, fig.width = 10,  dependson = "cran-data", fig.height = 8}
-dldat2 %>% 
-  filter(package %in% top_2years[1:ntop]) %>% 
-  mutate(package = factor(package, levels = top_2years[1:ntop])) %>%
-ggplot(aes(date, count + 1)) +
-  geom_line(data = rename(dldat2, pkg = package),
-            color = "grey80",
-            aes(group = pkg)) +
-  geom_line(data = ~rename(., pkg = package),
-            color = "grey60",
-            aes(group = pkg)) +
-  geom_vline(data = updates, 
-             aes(xintercept = update),
-             color = "red", linetype = "dashed") +
-  geom_line() +
-  scale_y_log10() +
-  scale_x_date(expand = c(0, 0)) + 
-  facet_grid(package ~ .) +
-  theme(legend.position = "bottom")
+tar_read(plot_download_trend)
 ```
 
 
 
-```{r download-dist, dependson = "cran-data"}
+```{r download-dist, dependson = "cran-data", eval = FALSE}
 
 
 dl1plot <- ggplot(dldat_sum, aes(x = "", y = total/1000)) + 
@@ -216,23 +101,13 @@ dl2plot <- ggplot(top15, aes(name, value, group = package)) +
         panel.grid.minor = element_blank())
 ```
 
-```{r dlplots, fig.cap=glue("The above graph shows the total download counts from {start} to {end} of DoE packages."), fig.width = 6}
+```{r dlplots, fig.cap=glue("The above graph shows the total download counts from {start} to {end} of DoE packages."), eval = FALSE, fig.width = 6}
 dl1plot + dl2plot
 ```
 
-```{r text, cache=tocache}
-url <- "http://cran.rstudio.com/web/packages/packages.rds"
-db <- readRDS(url(url)) %>% 
-  as.data.frame()
 
-doe_db <- db %>% 
-  filter(Package %in% doe_pkgs) %>% 
-  mutate(Description = str_replace_all(Description, "\n", " "),
-         Description = str_squish(Description),
-         Title = str_replace_all(Title, "\n", " "))
-```
 
-```{r fns}
+```{r fns, eval = FALSE}
 singularize2 <- function(x) {
     res <- singularize(x)
     res <- ifelse(res=="bia", "bias", res)
@@ -273,7 +148,7 @@ combine_dl <- function(ngram_df, desc) {
 }
 ```
 
-```{r ngrams, cache=tocache, dependson="fns"}
+```{r ngrams, cache=tocache, dependson="fns", eval = FALSE}
 bigram_title <- get_ngram(2, "Title")
 bigram_desc <- get_ngram(2, "Description")
 trigram_desc <- get_ngram(3, "Description")
@@ -329,17 +204,8 @@ An experiment involves running a number of steps:
 5. Analyse data, interpret result and conclusion
 
 
-\newpage
 
-
-
-```{r cran-titles}
-url <- "http://cran.rstudio.com/web/packages/packages.rds"
-db <- readRDS(url(url)) %>% 
-  as.data.frame()
-```
-
-```{r bigram}
+```{r bigram, eval = FALSE}
 stop_words_ext <- c(stop_words$word, "doi")
 
 doe_db <- db %>% 
@@ -364,7 +230,7 @@ bigram_tab <- function(data, col) {
 }
 ```
 
-```{r bigram-title, results="asis"}
+```{r bigram-title, results="asis", eval = FALSE}
 btitle <- bigram_tab(doe_db, Title) %>% 
   filter(n > 3) %>% 
   mutate(word = paste(word1, word2)) %>% 
@@ -384,7 +250,7 @@ cat(c("\\begin{table}[h] \\centering ",
     "\\caption{My tables} \\end{table}")) 
 ```
 
-```{r}
+```{r, eval = FALSE}
 doe_imports <- doe_db %>% 
   mutate(Depends = str_replace_all(Depends, "\n", " "),
          Depends = str_replace_all(Depends, fixed("("), " ("),

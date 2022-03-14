@@ -1,0 +1,49 @@
+---
+title: Current status and propsects of R-packages for the design of experiments
+author:
+  - name: Emi Tanaka
+    affiliation: Monash University
+abstract: >
+    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through textual analysis and assessment of download trends. We discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
+bibliography: paper.bib
+
+output: 
+  bookdown::html_document2:
+    theme: paper
+---
+
+```{r setup, cache = FALSE, include = FALSE}
+library(targets)
+library(glue)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache = FALSE,
+                      cache.path = "cache/",
+                      fig.align = 'center', 
+                      fig.pos = 'htbp', 
+                      fig.path = "figures/",
+                      fig.width = 6,
+                      message = FALSE,
+                      warning = FALSE)
+
+
+ctv <- function(view) {
+  ifelse(knitr::is_html_output(), glue("[{view}](https://cran.r-project.org/web/views/{view}.html)"), glue("\\ctv{[view]}", .open = "[", .close = "]"))
+}
+CRANpkg <- function(pkg) {
+  ifelse(knitr::is_html_output(), glue("[{pkg}](https://cran.r-project.org/web/packages/{pkg}/index.html)"), glue("\\CRANpkg{[pkg]}", .open = "[", .close = "]"))
+}
+ref <- function(x) {
+  ifelse(knitr::is_html_output(), glue("\\@ref({x})"), glue("\\ref{[x]}", .open = "[", .close = "]"))
+}
+```
+
+
+
+# Introduction 
+
+The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in [CRAN task views](https://cran.r-project.org/web/views/) (a volunteered maintained list of R-packages by topic) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data where the subject and experimental factors tend to be in the control of the experimenter. This paper is concerned with the latter.
+
+
+
+
