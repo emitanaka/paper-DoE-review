@@ -25,9 +25,18 @@ ctv_list <- function(ctv) {
 }
 
 cran_downloads_duration <- function(pkgs, duration) {
-  end <- Sys.Date() - 3 
+  end <- as.Date("2022-03-01")  
   start <- end - years(duration)
   cran_downloads(pkgs, from = start, to = end)  
+}
+
+cran_ed_scrub_duration <- function(duration) {
+  end <- as.Date("2022-03-01")  
+  start <- end - years(duration)
+  cranscrub::ctvExperimentalDesign %>% 
+    rename(count = n_unique) %>% 
+    select(-n_total) %>% 
+    dplyr::filter(between(date, start, end))
 }
 
 cran_downloads_rank <- function(data) {
@@ -36,6 +45,19 @@ cran_downloads_rank <- function(data) {
     summarise(total = sum(count)) %>% 
     arrange(desc(total)) %>% 
     mutate(rank = 1:n())
+}
+
+stl_model <- function(data, pkg, updates, trend, season) {
+  data %>% 
+    as_tsibble(index = date, key = package) %>% 
+    filter(package == pkg) %>% 
+    model(STL(count ~ trend(window = trend) + season(window = season),
+              robust = TRUE)) %>% 
+    components() %>% 
+    autoplot() + 
+    geom_vline(data = filter(updates, package == pkg), 
+               aes(xintercept = update), color = "red")
+  
 }
 
 
@@ -74,17 +96,17 @@ pkg_updates <- function(pkgs, duration) {
            # need to get rid of the numbers appended to pkg names
            package = str_extract(package, paste0(pkgs, collapse="|")),
            package = factor(package, levels = pkgs)) %>% 
-    filter(update >= Sys.Date() - years(duration))
+    filter(update >= as.Date("2022-03-01") - years(duration))
 }
 
 
-download_trend <- function(datsum, updates) {
+download_trend <- function(data, updates) {
   top_pkgs <- unique(updates$package)
-  datsum %>% 
+  data %>% 
     filter(package %in% top_pkgs) %>% 
     mutate(package = factor(package, levels = top_pkgs)) %>%
     ggplot(aes(date, count + 1)) +
-    geom_line(data = rename(datsum, pkg = package),
+    geom_line(data = rename(data, pkg = package),
               color = "grey80",
               aes(group = pkg)) +
     geom_line(data = ~rename(., pkg = package),
