@@ -47,11 +47,22 @@ cran_downloads_rank <- function(data) {
     mutate(rank = 1:n())
 }
 
-stl_model <- function(data, pkg, updates, trend, season) {
+cran_downloads_rank_by_year <- function(data) {
   data %>% 
-    as_tsibble(index = date, key = package) %>% 
+    mutate(year = year(date)) %>% 
+    group_by(package, year) %>% 
+    summarise(total = sum(count)) %>% 
+    arrange(desc(total), year) %>% 
+    group_by(year) %>% 
+    mutate(rank = 1:n()) %>% 
+    ungroup()
+}
+
+plot_stl_model <- function(data, pkg, updates, trend, speriod1, speriod2) {
+  data %>% 
     filter(package == pkg) %>% 
-    model(STL(count ~ trend(window = trend) + season(window = season),
+    as_tsibble(index = date) %>% 
+    model(STL(count ~ trend(window = !!trend) + season(period = !!speriod1) + season(period = !!speriod2),
               robust = TRUE)) %>% 
     components() %>% 
     autoplot() + 
@@ -60,7 +71,15 @@ stl_model <- function(data, pkg, updates, trend, season) {
   
 }
 
-
+plot_download_distribution <- function(data) {
+  data %>% 
+    mutate(year = as.factor(year)) %>% 
+    ggplot(aes(x = year, y = total)) + 
+    geom_violin() +
+    geom_boxplot(width = 0.1) + 
+    labs(x = "Year", y = "Downloads") + 
+    scale_y_log10(label = comma) 
+}
 
 
 pkg_updates <- function(pkgs, duration) {

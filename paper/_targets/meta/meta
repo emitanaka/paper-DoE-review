@@ -3,11 +3,14 @@ cran_download_data2|stem|cbe09dee1391cfc5|a84b6b542c6636cf|ea6f33a80bea7ee7|-338
 cran_download_data5|stem|e17be75b578cf2e2|1f2e1546fa38f66e|ea6f33a80bea7ee7|1809486200||t19094.259557769s|3853307f2449f71e|286281|rds|local|vector|||34.328||
 cran_downloads_duration|function|e8248f17cb25c8d2|||||||||||||||
 cran_downloads_rank|function|f9172fd7752b3db7|||||||||||||||
+cran_downloads_rank_by_year|function|5250497cafc988c1|||||||||||||||
 cran_ed_scrub_duration|function|aa32d5dd131c9958|||||||||||||||
+cran_rank_yearly|stem|ef869bb3713bf832|51266d492d966264|4c78d6953c4c1d8c|2120323972||t19095.2146053925s|1f946df50a7d5c2e|5228|rds|local|vector|||2.05||
 cran_rank2|stem|36a971cec81fa275|98cb7a7f06ea368c|a0cb3c13a5802f6b|341327052||t19094.2595580179s|b2bc4415b83995d3|1327|rds|local|vector|||0.014||
 cran_rank5|stem|ba773d53e6e79fe8|3020023bf333505b|85ab4bfc796828b1|-1311410240||t19094.2595582136s|279168da361054c9|1369|rds|local|vector|||0.012||
 cran_scrub_data2|stem|d00d1eee55b8ab8c|d4f1e1a9180a98a7|4cccbbc4d05ab2c5|-1436375163||t19094.2745431729s|93ab408c1bcf6ec4|111040|rds|local|vector|||1.856||
 cran_scrub_data5|stem|26e17d5158439c44|34ed76ba6944126d|4cccbbc4d05ab2c5|-1537959063||t19094.2745458153s|25af2fb8f443d92c|253300|rds|local|vector|||0.018||
+cran_srank_yearly|stem|32dc8ca2c0be9685|3519f1294f073e41|2dbfaf99ea268fd1|152834846||t19095.2245549911s|89bc2131c98ead65|5457|rds|local|vector|||2.006||
 cran_srank2|stem|17db323d03e500d3|af394f8b1d496d03|68c9a7340dad36f2|-1791145430||t19094.2745469016s|4585df39966fd58e|1335|rds|local|vector|||0.016||
 cran_srank5|stem|9ab5dc95ce172c83|b64ad8e9cee7152a|45196747297e3470|-1218245011||t19094.2745472482s|54c0774f645871cc|1350|rds|local|vector|||0.017||
 ctv_list|function|f931906433c74d8b|||||||||||||||
@@ -20,10 +23,17 @@ pkg_archive|object|d23285b741774afb|||||||||||||||
 pkg_db|function|6ecff5bfd7f88fe4|||||||||||||||
 pkg_updates|function|7b1db1940007e888|||||||||||||||
 pkg_url|object|f72f03ffd9de1496|||||||||||||||
+plot_download_dist|stem|37c0def8b5cf5cb3|95e014465faf2416|26b2746a39d9b7a9|595384226||t19095.2340771089s|cb55c537d0651e3a|105036|rds|local|vector|||1.98||
+plot_download_distribution|function|a88b8d818994d255|||||||||||||||
 plot_download_trend|stem|af72406d8764f202|2e0c4949960cad4d|477fefa6432c1196|-1441546789||t19094.2598070654s|dccfba15ce90a1ec|1620605|rds|local|vector|||0.064||
 plot_scrub_trend|stem|2fdc6d44850e47b7|c0dfb50e347ec3d0|5fb9e5e1ca157492|841837311||t19094.2745574877s|aa348db544d90c97|1441704|rds|local|vector|||0.068||
 plot_setup|function|9b0422ba3e0f43d1|||||||||||||||
+plot_stl_77|stem|77a73c482455e1fd|196aa6f59a33e57a|1976d11ba601f8db|-534241293||t19095.1351148622s|e2d32fab7184b550|757551|rds|local|vector|||3.485||
+plot_stl_7periodic|stem|eb85983bab02e344|3f6875ecdffffb02|1976d11ba601f8db|895748736||t19095.1351198147s|c32c460cebec82e4|645191|rds|local|vector|||0.176||
+plot_stl_7wy|stem|0ee3327ada56799a|f821385507d459d2|3bdfbae5646509e9|1144282957||t19095.1436475312s|ac8f29ac335034fb|758450|rds|local|vector|||2.15||
+plot_stl_model|function|3614f4c2342cb7dd|||||||||||||||
 report|stem|f2a64d4f95660110|12303aacd46c061a|29f5dcb18cba9873|-237041703|paper.html*paper.Rmd*paper_files|t19094.2601237906s|30f6190d88f1190f|2209037|file|local|vector|||27.365|The labels design, discussion not found|
 top2yrs|stem|70dd60b5ecede31e|1289022282ffffce|65aaa3efd4a2f80e|-1881085390||t19094.259558284s|6556730b296d7213|119|rds|local|vector|||0.001||
 top5yrs|stem|742d2f2071b7198a|855207a0f9c50e94|028b748a989f46b3|-1232943397||t19094.259558342s|045b07e719c4cc68|120|rds|local|vector|||0||
+updates_all|stem||c24e8370f64af972|26ebef1628c33669|-1616666070||t19095.2388412675s||0|rds|local|vector|||263.423||1m22mProblem while computing ..1  update  as.Date20220301 yearsduration.1mCaused by error in 1m1mif sumvalues  truncvalues ...22m33m39m argument is not interpretable as logical
 updates2|stem|13fa1b5959d5f8dd|d731219fed5400bf|e5cae2dd219ac477|-1177338552||t19094.2597980368s|b14f2eba8df23511|416|rds|local|vector|||20.705||
