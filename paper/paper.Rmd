@@ -58,6 +58,10 @@ The paper is organised as follows. Section \@ref(eda) explores some analysis of 
 
 The Comprehensive R Archive Network (CRAN) is a network of servers located across the world that store R and R-packages. 
 
-```{r download-trend, fig.width = 10,  dependson = "cran-data", fig.height = 8}
-tar_read(plot_download_trend)
+```{r download-share, fig.width = 10, fig.height = 8, fig.cap = "The distribution of the number of downloads for each DoE package by year; any package that was released in the same year was removed in that year so that each download count is for the full year. The label on the bottom of the plot shows the Gini index for downloads. The Gini index is consistent a little above 60% each year indicating that there a relatively small number of packages are downloaded most. "}
+tar_read(plot_download_dist)
+```
+
+```{r rank-over-time, fig.width = 10, fig.height = 8, fig.cap = "The plot shows the rank of top 10 downloaded packages by year. Most of the top 10 ranking packages have been in top 10 for the last 5 years with `lhs` steadily climbing up the ranks."}
+tar_read(plot_rank_dist)
 ```

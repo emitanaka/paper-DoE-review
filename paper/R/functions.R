@@ -1,7 +1,6 @@
 
 plot_setup <- function() {
-  theme_set(
-    theme(panel.background = element_rect(fill = NA),
+  theme(panel.background = element_rect(fill = NA),
           panel.grid = element_line(color = "lightgray"),
           axis.text = element_text(color = "black"),
           axis.line = element_line(color = "black", size = 0.7),
@@ -13,7 +12,7 @@ plot_setup <- function() {
           strip.text = element_text(color = "black", 
                                     margin = margin(5, 5, 5, 5)),
           plot.title.position = "plot",
-          plot.title = element_text(color = "black", hjust = 0)))
+          plot.title = element_text(color = "black", hjust = 0))
 }
 
 
@@ -47,15 +46,18 @@ cran_downloads_rank <- function(data) {
     mutate(rank = 1:n())
 }
 
-cran_downloads_rank_by_year <- function(data) {
+cran_downloads_rank_by_year <- function(data, first_release) {
   data %>% 
     mutate(year = year(date)) %>% 
     group_by(package, year) %>% 
     summarise(total = sum(count)) %>% 
     arrange(desc(total), year) %>% 
+    left_join(first_release, by = "package") %>% 
     group_by(year) %>% 
     mutate(rank = 1:n()) %>% 
-    ungroup()
+    ungroup() %>% 
+    filter(year > year(first)) %>% 
+    filter(year != year(Sys.Date()))
 }
 
 plot_stl_model <- function(data, pkg, updates, trend, speriod1, speriod2) {
@@ -71,18 +73,62 @@ plot_stl_model <- function(data, pkg, updates, trend, speriod1, speriod2) {
   
 }
 
-plot_download_distribution <- function(data) {
+plot_download_distribution <- function(data, ginidata) {
   data %>% 
     mutate(year = as.factor(year)) %>% 
     ggplot(aes(x = year, y = total)) + 
     geom_violin() +
     geom_boxplot(width = 0.1) + 
     labs(x = "Year", y = "Downloads") + 
-    scale_y_log10(label = comma) 
+    scale_y_log10(label = comma) +
+    geom_label(data = mutate(ginidata, year = as.factor(year)), 
+              aes(y = 900, label = scales::percent(gini, 0.1)))
+}
+
+plot_lorenz_curve <- function(data, year) {
+  
+  dat <- data %>% 
+    filter(year == .env$year) 
+    
+  data.frame(p = ineq::Lc(dat$total)$p, L = ineq::Lc(dat$total)$L) %>% 
+    ggplot(aes(p, L)) +
+    geom_point() +
+    geom_line() +
+    geom_abline()
+}
+
+gini_coef <- function(data) {
+  dat <- data %>% 
+    group_by(year) %>% 
+    summarise(gini = ineq::Gini(total)) 
+}
+
+plot_rank_distribution <- function(data, nrank = 10, stat) {
+  dat <- data %>% 
+    mutate(year = as.factor(year)) %>% 
+    filter(rank <= nrank)
+  g <- ggplot(dat, aes(x = year, y = {{stat}}, color = package, group = package)) + 
+    geom_point() + 
+    geom_line() +
+    labs(x = "Year", y = "Download rank by year") +
+    scale_color_manual(values = c("#E69F00", "#56B4E9", "#009E73", 
+                                  "#F0E442", "#0072B2", "#D55E00", 
+                                  "#CC79A7", "#000000", "#888888",
+                                  "#88CCEE", "#CC6677", "#DDCC77"),
+                       breaks = dat %>% 
+                         filter(year == 2021) %>% 
+                         arrange(desc(total)) %>% 
+                         pull(package) %>% 
+                         union(dat$package))
+  if(rlang::as_string(rlang::ensym(stat))=="rank") {
+    g + scale_y_reverse(breaks = 1:nrank)
+  } else {
+    g + scale_y_log10(label = comma)
+  }
 }
 
 
-pkg_updates <- function(pkgs, duration) {
+pkg_updates <- function(pkgs) {
   pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
   pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
   res <- map(pkgs, function(pkg) {
@@ -104,7 +150,7 @@ pkg_updates <- function(pkgs, duration) {
     }, error = function(e) {
       NULL
     })
-  c(archive_dates, last_update)
+    c(archive_dates, last_update)
   })
   names(res) <- pkgs
   
@@ -114,7 +160,11 @@ pkg_updates <- function(pkgs, duration) {
     mutate(update = as.Date(update, origin = "1970-01-01"),
            # need to get rid of the numbers appended to pkg names
            package = str_extract(package, paste0(pkgs, collapse="|")),
-           package = factor(package, levels = pkgs)) %>% 
+           package = factor(package, levels = pkgs)) 
+}
+
+pkg_updates_duration <- function(pkgs, duration) {
+  pkg_updates(pkgs) %>% 
     filter(update >= as.Date("2022-03-01") - years(duration))
 }
 
