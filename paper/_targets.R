@@ -43,6 +43,15 @@ list(
   tar_target(plot_download_trend, download_trend(cran_download_data5, updates2) + plot_setup()),
   tar_target(plot_scrub_trend, download_trend(cran_scrub_data5, updates2) + plot_setup()),
   tar_target(plot_stl_7wy, plot_stl_model(cran_scrub_data5, "agricolae", updates2, 7, "week", "year") + plot_setup()),
+  
+  tar_target(bigram_title, get_ngram(2, "Title")),
+  tar_target(bigram_desc, get_ngram(2, "Description")),
+  tar_target(trigram_desc, get_ngram(3, "Description")),
+  
+  tar_target(dldat_comb_bigram_title,  combine_dl(bigram_title, Title)),
+  tar_target(dldat_comb_bigram_desc,  combine_dl(bigram_desc, Title)),
+  tar_target(dldat_comb_trigram_desc,  combine_dl(trigram_desc, Title)),
+  
 
   tar_render(report, "paper.Rmd")
 )
