@@ -7,13 +7,14 @@ tar_option_set(packages = c("tidyverse", "rvest", "lubridate",
                             "tidytext", "pluralize", "kableExtra", 
                             "igraph", "ggraph", "ggrepel", "patchwork",
                             "ggwordcloud", "fable", "feasts", "lubridate",
-                            "ineq"))
+                            "ineq", "cranscrub"))
 
 
 list(
   tar_target(doe_pkgs,  ctv_list("ExperimentalDesign")),
   tar_target(npkgs, length(doe_pkgs)),
-  tar_target(doe_db, pkg_db(doe_pkgs)),
+  tar_target(doe_db, cranscrub::pkg_db(doe_pkgs)),
+  tar_target(updates_all, get_pkg_updates(doe_pkgs)),
   tar_target(cran_download_data2, cran_downloads_duration(doe_pkgs, 2)),
   tar_target(cran_download_data5, cran_downloads_duration(doe_pkgs, 5)),
   tar_target(cran_scrub_data2, cran_ed_scrub_duration(2)),
@@ -22,7 +23,6 @@ list(
   tar_target(cran_rank5, cran_downloads_rank(cran_download_data5)),
   tar_target(cran_srank2, cran_downloads_rank(cran_scrub_data2)),
   tar_target(cran_srank5, cran_downloads_rank(cran_scrub_data5)),
-  tar_target(updates_all, pkg_updates(doe_pkgs)),
   tar_target(first_release, updates_all %>% 
                group_by(package) %>% 
                summarise(first = min(update)) %>% 
@@ -44,13 +44,13 @@ list(
   tar_target(plot_scrub_trend, download_trend(cran_scrub_data5, updates2) + plot_setup()),
   tar_target(plot_stl_7wy, plot_stl_model(cran_scrub_data5, "agricolae", updates2, 7, "week", "year") + plot_setup()),
   
-  tar_target(bigram_title, get_ngram(2, "Title")),
-  tar_target(bigram_desc, get_ngram(2, "Description")),
-  tar_target(trigram_desc, get_ngram(3, "Description")),
-  
-  tar_target(dldat_comb_bigram_title,  combine_dl(bigram_title, Title)),
-  tar_target(dldat_comb_bigram_desc,  combine_dl(bigram_desc, Title)),
-  tar_target(dldat_comb_trigram_desc,  combine_dl(trigram_desc, Title)),
+  # tar_target(bigram_title, get_ngram(2, "Title")),
+  # tar_target(bigram_desc, get_ngram(2, "Description")),
+  # tar_target(trigram_desc, get_ngram(3, "Description")),
+  # 
+  # tar_target(dldat_comb_bigram_title,  combine_dl(bigram_title, Title)),
+  # tar_target(dldat_comb_bigram_desc,  combine_dl(bigram_desc, Title)),
+  # tar_target(dldat_comb_trigram_desc,  combine_dl(trigram_desc, Title)),
   
 
   tar_render(report, "paper.Rmd")

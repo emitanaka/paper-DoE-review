@@ -15,13 +15,21 @@ plot_setup <- function() {
           plot.title = element_text(color = "black", hjust = 0))
 }
 
-
-
-
 ctv_list <- function(ctv) {
   ctv:::.get_pkgs_from_ctv_or_repos(ctv, 
                                     repos = "http://cran.rstudio.com/")[[1]]  
 }
+
+get_pkg_updates <- function(pkgs, message = FALSE) {
+  res <- lapply(pkgs, function(pkg) {
+    message(paste("Package", pkg))
+    pkgsearch::cran_package_history(pkg) %>% 
+      select(package = Package, update = date) %>% 
+      mutate(update = as.Date(update))
+  })
+  do.call("rbind", res)
+}
+
 
 cran_downloads_duration <- function(pkgs, duration) {
   end <- as.Date("2022-03-01")  
@@ -127,48 +135,6 @@ plot_rank_distribution <- function(data, nrank = 10, stat) {
   }
 }
 
-
-pkg_updates <- function(pkgs) {
-  pkg_url <- "https://cran.r-project.org/web/packages/{pkg}/index.html"
-  pkg_archive <- "https://cran.r-project.org/src/contrib/Archive/{pkg}/"
-  res <- map(pkgs, function(pkg) {
-    last_update <- read_html(glue(pkg_url)) %>% 
-      html_table() %>% 
-      .[[1]] %>% 
-      filter(X1=="Published:") %>% 
-      pull(X2) %>% 
-      ymd()
-    
-    archive_dates <- tryCatch({ 
-      read_html(glue(pkg_archive)) %>% 
-        html_table() %>%
-        .[[1]] %>% 
-        pull(`Last modified`) %>% 
-        ymd_hm() %>% 
-        na.omit() %>% 
-        as.Date()
-    }, error = function(e) {
-      NULL
-    })
-    c(archive_dates, last_update)
-  })
-  names(res) <- pkgs
-  
-  unlist(res) %>% 
-    enframe("package", "update") %>% 
-    # unlist converts date to integers
-    mutate(update = as.Date(update, origin = "1970-01-01"),
-           # need to get rid of the numbers appended to pkg names
-           package = str_extract(package, paste0(pkgs, collapse="|")),
-           package = factor(package, levels = pkgs)) 
-}
-
-pkg_updates_duration <- function(pkgs, duration) {
-  pkg_updates(pkgs) %>% 
-    filter(update >= as.Date("2022-03-01") - years(duration))
-}
-
-
 download_trend <- function(data, updates) {
   top_pkgs <- unique(updates$package)
   data %>% 
@@ -191,19 +157,6 @@ download_trend <- function(data, updates) {
     theme(legend.position = "bottom")
 }
 
-pkg_db <- function(pkgs) {
-  url <- "http://cran.rstudio.com/web/packages/packages.rds"
-  db <- readRDS(url(url)) %>% 
-    as.data.frame()
-  
-  db %>% 
-    filter(Package %in% pkgs) %>% 
-    mutate(Description = str_replace_all(Description, "\n", " "),
-           Description = str_squish(Description),
-           Title = str_replace_all(Title, "\n", " "))  
-}
-
-
 
 
 singularize2 <- function(x) {
@@ -211,8 +164,9 @@ singularize2 <- function(x) {
   res <- ifelse(res=="bia", "bias", res)
   ifelse(res=="baye", "bayes", res)
 }
-stop_words_rex <- c(paste0("^", stop_words$word, "$"), "^doi", "^[0-9.]+$")
+
 get_ngram <- function(ngram, desc = c("Title", "Description")) {
+  stop_words_rex <- c(paste0("^", stop_words$word, "$"), "^doi", "^[0-9.]+$")
   desc <- match.arg(desc)
   words <- paste0("word", 1:ngram)
   doe_db %>% 
@@ -226,6 +180,11 @@ get_ngram <- function(ngram, desc = c("Title", "Description")) {
     count(!!!map(words, as.name), sort = TRUE) %>% 
     mutate(word = do.call("paste", map(words, ~eval(parse(text = .x))))) %>% 
     select(word, n) 
+}
+
+pkg_updates_duration <- function(pkgs, duration) {
+  pkg_updates(pkgs) %>% 
+    filter(update >= as.Date("2022-03-01") - years(duration))
 }
 
 combine_dl <- function(ngram_df, desc) {
