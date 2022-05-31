@@ -1,5 +1,5 @@
 ---
-title: Current status and propsects of R-packages for the design of experiments
+title: Current status and prospects of R-packages for the design of experiments
 author:
   - name: Emi Tanaka
     affiliation: Monash University
@@ -8,29 +8,49 @@ author:
 abstract: >
     Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through textual analysis and assessment of download trends. We discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
 bibliography: paper.bib
-
+knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_file = file.path(dirname(inputFile), 'index.html')) })
+keywords: ["experimental design", "CRAN task view", "user interface"]
 output: 
-  bookdown::html_document2:
+  bookdown::html_document2: 
     theme: paper
+  # below is to have a JSS paper style template
+  pagedown::jss_paged:
+    template: assets/html-template.html
+    csl: assets/html-template.csl
+    self_contained: false
 ---
+
+
+```{css, echo = FALSE}
+h1, h2, h3, div > * {
+ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+
+```
 
 ```{r setup, cache = FALSE, include = FALSE}
 library(targets)
 library(glue)
 library(tidyverse)
+library(patchwork)
+library(tidygraph)
+library(ggraph)
+source("R/plot.R")
 knitr::opts_chunk$set(echo = FALSE, 
-                      cache = FALSE,
+                      cache = TRUE,
                       cache.path = "cache/",
                       fig.align = 'center', 
                       fig.pos = 'htbp', 
                       fig.path = "figures/",
                       fig.width = 6,
+                      fig.height = 6.5,
                       message = FALSE,
                       warning = FALSE)
 
 
 ctv <- function(view) {
-  ifelse(knitr::is_html_output(), glue("[{view}](https://cran.r-project.org/web/views/{view}.html)"), glue("\\ctv{[view]}", .open = "[", .close = "]"))
+  ifelse(knitr::is_html_output(), glue("[{view}](https://cran.r-project.org/web/views/{view}.html)"), glue("ctv{[view]}", .open = "[", .close = "]"))
 }
 CRANpkg <- function(pkg) {
   ifelse(knitr::is_html_output(), glue("[{pkg}](https://cran.r-project.org/web/packages/{pkg}/index.html)"), glue("\\CRANpkg{[pkg]}", .open = "[", .close = "]"))
@@ -40,28 +60,223 @@ ref <- function(x) {
 }
 
 tar_load(npkgs)
+tar_load(gini_yearly)
+tar_load(gini_yearly_ctv)
 ```
 
 
 
 # Introduction 
 
-The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in [CRAN task views](https://cran.r-project.org/web/views/) (a volunteered maintained list of R-packages by topic) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Survey designs often, although not always, aim to collect observational data whilst experimental designs exclusively center on experimental data where the subject and experimental factors tend to be in the control of the experimenter. This paper is concerned with the latter.
+The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in the [CRAN task views](https://cran.r-project.org/web/views/) (a volunteered maintained list of R-packages by topic) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Experimental designs exclusively center on the collection of experimental data where the subject and experimental factors tend to be in the control of the experimenter. A subset of experimental designs are segregated into `r ctv("ClinicalTrials")`, where the focus is on clinical trials with primary interest in sample size calculations. This paper focuses on the packages in `r ctv("ExperimentalDesign")`, henceforth referred to as "**DoE packages**".
+
+In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
 
 
-In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments, henceforth referred to as "**DoE packages**" in this paper. The sheer quantity and variation in the output experimental design in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited outputs. Thus, the study of DoE packages is also revealing into the current status of the field of experimental design.
+The paper is organised as follows. Section `r ref("data")` briefly describes the data source used for the analysis in Section \@ref(eda); Section \@ref(eda) presents some insights into the state of the current DoE packages; Section \@ref(design) discuss the software design of DoE packages, and we conclude with a discussion in Section \@ref(discussion) of future prospects. 
 
-The paper is organised as follows. Section \@ref(eda) explores some analysis of the most downloaded DoE packages, followed by discussion of the discussion of the software design of these packages in Section \@ref(design), and concluding with a discussion in Section \@ref(discussion) of future prospects. 
+# Data {#data}
+
+To study the DoE packages, we analyse data using three sources of data as described next. 
+
+## RStudio CRAN download logs
+
+The Comprehensive R Archive Network (CRAN) is a network of servers located across the world that store mirrored versions of R and R-packages. The most popular network is the RStudio mirror (the default server for those that use the RStudio IDE). The RStudio mirror is also the only server that provides a comprehensive daily download logs of R and R-packages since October 2012. The summary data can be easily accessed with the `cranlogs` package [@cranlogs]. This paper uses the data from the beginning of 2013 to end of 2021 (a total of 9 years) for the DoE packages. 
+
+## Package descriptions
+
+All CRAN packages have a title, description, package connections (suggests, dependency and imports) and more in the DESCRIPTION file. We use the text data from the title and description (as accessed in `r as.Date(file.info("_targets/objects/ngram_download_data")$mtime)`) in Section \@ref(topics).
+
+## CRAN task views
+
+The list of packages in each CRAN task views (as of `r as.Date(file.info("_targets/objects/ctv_pkgs_data")$mtime)`) are used to contrast the characteristics of DoE packages in Section \@ref(silo). 
 
 
-# Explorative analysis {#eda}
+# Explorative data analysis {#eda}
 
-The Comprehensive R Archive Network (CRAN) is a network of servers located across the world that store R and R-packages. 
+All results presented are derived from exploratory data analysis of observational data; consequently, all interpretations are somewhat speculative and 
+may not be indicative of the true state of the field of experimental design. In particular, any analysis over time are confounded by the fact that the nature of users and package management have also changed over the years. It should be noted that some DoE packages may have been archived or removed from the task view over the years so any cross-sectional analysis presented may not reflect the set of all DoE packages at that particular time period (although we assume such incidences are low). 
 
-```{r download-share, fig.width = 10, fig.height = 8, fig.cap = "The distribution of the number of downloads for each DoE package by year; any package that was released in the same year was removed in that year so that each download count is for the full year. The label on the bottom of the plot shows the Gini index for downloads. The Gini index is consistent a little above 60% each year indicating that there a relatively small number of packages are downloaded most. "}
+
+A subset of DoE packages is not primarily about design of experiments but about the analysis of experimental data. A complete delineation of these packages is difficult as many have some functions that can aid decisions or constructions of experimental designs (and any categorisation is prone to our subjective bias) so we opted not to remove any DoE packages in the analysis.
+
+## Small, but diverse, set of packages are sufficient for most designs {#popular}
+
+There have been at least 50 DoE packages since 2013 but most of the downloads are concentrated in just a handful of packages. For example, Figure \@ref(fig:plot-lorenz) shows a Lorenz curve [@Lorenz1905-tc] for the total package downloads in 2021 of `r tar_read(gini_yearly) %>% filter(year==2021) %>% pull(n)` DoE packages (first released prior to 2021); we can see from Figure \@ref(fig:plot-lorenz) that bottom 90\% of DoE packages (in terms of total download count in 2021) only share about 30\% of total downloads across all DoE packages -- in another words, 70\% of the total downloads are due to 11 packages (10% of the DoE packages).
+
+```{r plot-lorenz, fig.height = 4, fig.width = 4, fig.cap = "Lorenz curve of the total download count for DoE packages in 2021. The red line corresponds to the line of perfect equality."}
+tar_read(plot_lorenz2021) +
+  plot_setup() +
+  labs(y = "Cumulative share of downloads (%)",
+       x = "Percentage of DoE packages") +
+  theme(plot.margin = margin(r = 20, t = 20)) +
+  scale_x_continuous(breaks = seq(0, 100, by = 10)) +
+  scale_y_continuous(breaks = seq(0, 100, by = 10))
+```
+
+ If we consider package downloads as a measure of "wealth", then we can consider using the Gini index [@Gini1921-mf] as a measure of download inequality across packages. The ratio of the red region over the total colored regions in Figure \@ref(fig:plot-lorenz) corresponds to the Gini index for 2021. A Gini index of 0\% indicates equality in downloads across packages while a value of 100\% indicates maximal inequality (all downloads are due to one package). In Figure \@ref(fig:download-share), we see that the distributions of the downloads each year have a heavy right tail with the Gini index ranging from `r scales::percent(min(gini_yearly$gini), 0.1)` to `r scales::percent(max(gini_yearly$gini), 0.1)` across the years 2013 to 2021, indicating that there is a high level of inequality of downloads across packages, particularly with more pronounced inequality in the last 5 years.
+
+```{r download-share, fig.width = 5.5, fig.height = 4, fig.cap = "The distribution of the number of downloads for each DoE package by year. Packages were removed in any year if it was released in that year or later so that each download count is for the full year. The label on the bottom of the plot shows the Gini index for downloads and the number of packages with full year of download count in the corresponding year. In the last 5 years, the Gini index is consistent above 60\\% each year indicating that most downloads are due to a relatively small number of packages."}
 tar_read(plot_download_dist)
 ```
 
-```{r rank-over-time, fig.width = 10, fig.height = 8, fig.cap = "The plot shows the rank of top 10 downloaded packages by year. Most of the top 10 ranking packages have been in top 10 for the last 5 years with `lhs` steadily climbing up the ranks."}
+While in absolute terms the Gini index is high for `r ctv("ExperimentalDesign")`, the inequality is not as severe as other CRAN task views as shown in Figure \@ref(fig:fig-gini-all-ctvs). We can see in Figure \@ref(fig:fig-gini-all-ctvs) that the Gini index is generally increasing for DoE packages (as is generally the case for other CRAN task views although this is hard to see from this plot).
+
+```{r fig-gini-all-ctvs, fig.height = 8, fig.cap = "The points show the Gini index of the download counts by year facetted by CRAN task view with the color showing the number of packages. The grey line shows the distribution of the Gini index across years for all other CRAN task views. The facets are ordered by increasing value of the Gini index in 2021."}
+gini_yearly_ctv %>% 
+  ungroup() %>%  
+  arrange(ctv, year) %>% 
+  mutate(ctv = fct_reorder(ctv, gini, last),
+         year = factor(year),
+         gini = 100 * gini) %>%  
+  ggplot(aes(year, gini)) + 
+  geom_line(data = ~rename(.x, ctv2 = ctv), 
+            aes(group = ctv2), color = "grey") +
+  facet_wrap(~ctv, ncol = 4) + 
+  geom_line(aes(group = ctv)) + 
+  geom_point(aes(color = n))  +
+  plot_setup() +
+  labs(x = "Year", y = "Gini index (%)", color = "# of packages") +
+  guides(color = guide_colorbar(direction = "horizontal")) +
+  theme(legend.position = c(0.5, 0), 
+        legend.justification = "left",
+        strip.text = element_text(size = 7),
+        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  scale_colour_distiller(palette = "YlOrRd", direction = 1) 
+```
+
+
+
+From Figures \@ref(fig:download-share) and \@ref(fig:fig-gini-all-ctvs), we could draw some indicative states of the field of experimental designs with possible counterfactual interpretations:
+
+* The increase in the number of packages that are not highly downloaded may mean that **_there are more packages to construct niche experimental designs_**. Some examples of these packages include `qtlDesign`, `PwrGSD` and `Crossover` made for QTL experiments, group sequential designs and crossover trials, respectively. These packages would naturally have a smaller number of potential users. Counterfactual to this, the increase could be due to other external factors, such as an increase in a number of skilled contributors, a change in CRAN policy or management to add packages (either to CRAN and/or task view), and/or that new packages are still yet to amass users. While there is an argument that low download counts are due to the low utility and/or quality of the packages, packages in CRAN task views are selected by expert maintainers; thus we can reasonably assume that any package listed in CRAN task view are of a decent utility and quality. 
+* If the downloads are reflective of the experimental designs used in practice, **_small set of packages appear to be sufficient for most to construct the full set of designs of experiments needed in practice_**. Packages of course evolve and the top downloaded packages have had regular updates that may have broadened its scope. 
+* While small subset of DoE packages are most frequently used, none of these packages are dominant in the field (judging from comparisons with other CRAN task views). This suggests that there are **_diverse approaches to designing experiments_**. This observation doesn't take into account other approaches to generating experimental designs, like the proprietary GUI software, CycDesignN, which may be widely used.
+
+## There is a lack of adaptation of new or innovative designs  {#ranking}
+
+We can see in Figure \@ref(fig:rank-over-time) that most of the top 10 ranking packages have been in the top 10 for the last 9 years with `lhs` steadily climbing up the ranks in the last few years.
+
+```{r rank-over-time, fig.width = 5.5, fig.height = 4.5, fig.cap = "The plot shows the rank of top 10 downloaded packages by year. "}
 tar_read(plot_rank_dist)
 ```
+
+
+```{r established-packages, fig.height = 5, fig.cap = "The above figure shows the total download (in log scale) of a package in the corresponding year against the first release date of the package. The blue line corresponds to the fit of a simple linear regression model. In any given year, "}
+tar_read(cran_rank_yearly) %>%
+  mutate(nupdates = map2_int(package, year, ~{
+    tar_read(updates_all) %>% 
+      filter(package == .x,
+             lubridate::year(update) <= .y) %>% 
+      nrow()
+  })) %>% 
+  ggplot(aes(first, total/1000)) +
+  geom_point(aes(color = nupdates)) + 
+  facet_wrap(~year, scale = "free_y") +
+  geom_smooth(se = FALSE, 
+              method = "lm", 
+              formula = y ~ x) +
+  scale_y_log10() + 
+  scale_color_continuous(trans = "log10") + 
+  plot_setup() +
+  labs(x = "First release date",
+       y = "Total download (1000s)",
+       color = "# of updates")
+```
+
+* The lack of change in the top ranking packages are indicative that **_there has been a lack of innovation in the field of experimental design_**. 
+
+
+
+
+## Computer experiments are on the rise {#topics}
+
+```{r wordcloud-over-time, fig.width = 5.5, fig.height = 5, fig.cap = "The above figures shows the word cloud of bigrams from the title and descriptions of the CRAN packages. The color shows how often the bigram appears across the DoE packages and the size are relative to the total download count of the packages that contain the bigram."}
+tar_read(plot_wordcloud2) + 
+  scale_size_area(max_size = 8) +
+  scale_color_continuous(breaks = c(2, 4, 6, 8, 10, 12)) +
+  theme(legend.text = element_text(size = 10),
+        legend.title = element_text(size = 12))
+```
+
+## Development of experimental designs occur in silos {#silo}
+
+```{r ctv-summ-table}
+tar_read(ctv_summary_table) %>% 
+  knitr::kable(col.names = c("Name", "Topic", "# of packages", "Total # of contributors" , "Average # of contributors", "Intra-connectivity (%)"), 
+               caption = "A summary table for the CRAN task view that shows in order: the name of the task view, the full topic name, the total of packages, the total number of contributors, the average number of contributors, and the intra-connectivity. The intra-connectivity measures the percentage of packages that depends, suggest or imports at least one other package within the same task view. A low intra-connectivity suggests that development within the topic mostly occur in silos whilst high  intra-connectivity suggests that there are more interactions within the topic.",
+               digits = c(0, 0, 0, 1, 2, 0),
+               booktabs = TRUE ) %>%
+ kableExtra::kable_styling(latex_options = c("striped", "scale_down")) %>% 
+ kableExtra::column_spec(2, width = "12em") %>% 
+ kableExtra::column_spec(3:6, width = "5em")
+  
+```
+
+```{r ctv-summ-plot, fig.width = 5.5, fig.height = 6, fig.cap = "The figure above is a visualisation of Table 1. The task views in the bottom-left corner are topics that are more indicative of contributors working in silos."}
+tar_read(ctv_summary_table) %>% 
+  ggplot(aes(avg_contributors, intra_perc)) +
+  geom_point(aes(size = ncontributors,
+                 color = n)) +
+  ggnewscale::new_scale_color() + 
+  ggrepel::geom_text_repel(aes(label = name,
+                               color = name=="ExperimentalDesign"),
+                           force = 150,
+                           max.iter = 20000) +
+  guides(color = "none") + 
+  scale_color_manual(values = c("black", "#CC3311")) + 
+  labs(x = "Average number of contributors",
+       y = "Intra-connectivity (%)",
+       size = "Total number of contributors",
+       color_new = "Total number of packages") +
+  plot_setup() +
+  theme(legend.position = "bottom",
+        legend.box = "vertical",
+        legend.box.just = "left")
+```
+
+```{r plot-doe-network, fig.width = 6, fig.height = 6, fig.cap  = "Package connections (depends, suggests and imports) within the DoE packages. DoE packages that do not depend, suggest or import another DoE package is not shown."}
+tar_read(plot_doe_network) +
+  theme(legend.position = "bottom")
+```
+
+# Interface design  {#design}
+
+In software design, there are two interface designs to consider: user interface (UI) and application programming interface (API). UI is concerned with the usage of the software by the user, while the API is concerned with how different programs interact and is predominately of the interest to the developer. In this section, we discuss these interface designs broadly, with examples illustrated from the top downloaded packages (as shown in Figure \@ref(fig:rank-over-time)). We exclude `ez` and `DiceKriging` from the discussion as the former  is predominately visualisation of experimental data and latter is about the analysis of computer experiments in addition to belonging to the same suite of packages as `DiceDesign`. 
+
+
+
+
+## The case of specialised designs
+
+
+Computer experiments, as discussed in Section \@ref(topics), which generally involve space filling designs have been on the rise. The exemplar for this type of designs are `lhs` and `DiceDesign`.  
+
+Factorial experiments offer a challenge in the construction and allocation of the treatment factors. This is reflected in a number of packages that specifically addresses this challenge. These include `DoE.base` [@DoE.base], `FrF2` [@FrF2] for fractional 2-level factorial designs, `conf.design` [@conf.design], `FrF2.catlg128` [@FrF2.catlg128] and `BHH2` [@BHH2].
+
+Response surface design, as illustrated by `rsm` [@rsm], is a type of experiment that involve variables with continuous measures.
+
+Finally, another specialised design is sequential design (also called adaptive sampling), which is best represented by `tgp` [@tgp] -- these require prior information, which are used to inform the next experimental design. Follow-up experiments, which can also be classified as a sequential design, is implemented by `BsMD` [@BsMD].
+
+## The case of menu functions
+
+`agricolae` [@agricolae]
+
+## The case of general designs
+
+`AlgDesign` [@AlgDesign]
+
+
+`DoE.wrapper` [@DoE.wrapper]
+
+
+
+# Discussion {#discussion}
+
+Volunteer maintained -- some experimental design packages may not be included in the CRAN task view. 
+
+# Acknowledgement
+
+This paper uses the `targets` framework [@targets] for reproducibility, `knitr` [@knitr] and `rmarkdown` [@rmarkdown] for creating reproducible documents, `ggplot2` [@ggplot2] for visualisation and `kableExtra` [@kableExtra] for customising the table. All code to reproduce this paper is found at https://github.com/emitanaka/paper-DoE-review.
+
+# References
