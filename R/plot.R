@@ -145,18 +145,17 @@ plot_word_cloud_over_years <- function(data) {
 
 plot_word_cloud <- function(data) {
   data %>% 
-    filter(perc >= 1) %>% 
-    ggplot(aes(label = word, size = perc, color = n)) +
+    filter(perc >= 1, n > 1) %>% 
+    ggplot(aes(label = word, color = perc, size = n)) +
     geom_text_wordcloud(shape = "square",
-                        show.legend = TRUE,
-                        rm_outside = TRUE) +
+                        show.legend = TRUE) + #,
+                        #rm_outside = TRUE) +
     scale_size_area(max_size = 18) +
     guides(size = "none") +
-    colorspace::scale_color_continuous_sequential(breaks = round(seq(2, 13, length.out = 4)),
-                                                  palette = "Blues") +
+    #colorspace::scale_color_continuous_sequential(breaks = round(seq(2, 13, length.out = 4)),
+    #                                              palette = "Blues") +
     theme(legend.position = "bottom",
           text = element_text(size = 18)) +
-    labs(color = "# of packages") +
     guides(color = guide_colorbar(title.position = "top")) 
 }
 
