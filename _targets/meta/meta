@@ -95,7 +95,7 @@ plot_word_cloud_over_years|function|73f5a68ae40d3785|||||||||||||||
 plot_wordcloud|stem|09f3f5bb084a24aa|3a98edaf08fd3563|34cec5f7dd383ce8|1293886977||t19115.1892732725s|4806b945657d29fa|121789|rds|local|vector|||0.043||
 plot_wordcloud2|stem|93cbb417fc2464e3|834ec80cf6d08f5b|2aca31a96cd4e753|464892059||t19145.3677835639s|7624e3cb64da3447|99978|rds|local|vector|||0.043||
 plot_wordcloud2years|stem|b363a6b9395c3cea|26682d396887440b|8bac620c3a974212|-1029953017||t19135.1554077676s|a1bc24010d569bf1|162409|rds|local|vector|||0.049||
-plot_wordcloud3|stem|61c4711cf38d1ea3|91dfdc2f4a2a4a41|242f52de3a2bb827|2068082615||t19145.3677845671s|beb8597c0a4336ca|150110|rds|local|vector|||0.025||
+plot_wordcloud3|stem|61c4711cf38d1ea3|91dfdc2f4a2a4a41|242f52de3a2bb827|2068082615||t19149.2288366033s|beb8597c0a4336ca|150110|rds|local|vector|||0.042||
 report|stem|d6c4020906af9831|6d080c77edf9130a|9d709ea839864689|-237041703|paper.html*paper.Rmd*paper_files|t19122.1772597821s|5dacfd794d49caa3|2035478|file|local|vector|||15.431|The labels design, discussion not found|
 singularize2|function|fa7aa65cda385464|||||||||||||||
 survey_db|stem|de67502522517e07|92df38c74d20513f|be8d38a166cfa14f|801071218||t19122.145058155s|938f49aa4355fdd9|63549|rds|local|vector|||1.396||
@@ -103,10 +103,10 @@ survey_pkg_network|stem|80b5f0224fa7ed6e|66ab6f6b1ec76629|8e29ffa67dccacef|20025
 survey_pkgs|stem|c67694af5fbdc77e|d83fd05f2de06168|c3b5fc02cdc369c1|1518870736||t19122.1450414776s|d01284f728c4d3b7|911|rds|local|vector|||2.393||
 top2yrs|stem|70dd60b5ecede31e|1289022282ffffce|18ee87d2949ec877|-1881085390||t19135.1472522659s|6556730b296d7213|119|rds|local|vector|||0.001||
 top5yrs|stem|ad948a0cedc2ebf1|855207a0f9c50e94|6cbf2edac581e2b7|-1232943397||t19135.1472523746s|045b07e719c4cc68|120|rds|local|vector|||0||
-trigram_all|stem|768bb8a01c87aa3b|9032c119dfdc06a0|4c271d0ecaee4e02|1650778111||t19115.3223885296s|0f335119e7fd4ee9|21104|rds|local|vector|||8.255||
+trigram_all|stem|768bb8a01c87aa3b|9032c119dfdc06a0|4c271d0ecaee4e02|1650778111||t19149.2285194546s|0f335119e7fd4ee9|21104|rds|local|vector|||8.199||
 trigram_desc|stem|69d6e02025dbb232|f12874f23b545f21|4c271d0ecaee4e02|-824937033||t19115.3224738732s|7885fa3c17279697|19828|rds|local|vector|||7.365||
 trigram_title|stem||df56affd921366f1|f4f8609b132aa1d7|768908391||t19115.0271863716s||0|rds|local|vector|||0.12||1m22mProblem while computing ..1  acrossnum_rangeword, 1ngram,singularize2.1mCaused by error in 1m1macross22m1m22m33m39m Problem while computing column word1.1mCaused by error in 1m1mcontext_eval22m33m39m TypeError Cannot read property toLowerCase of null
-unigram_all|stem|c86794a451890068|016ce9b82810bd9f|4c271d0ecaee4e02|1434523661||t19115.3222259132s|30fd429776a83f03|13988|rds|local|vector|||2.956||
+unigram_all|stem|c86794a451890068|016ce9b82810bd9f|4c271d0ecaee4e02|1434523661||t19149.228424351s|30fd429776a83f03|13988|rds|local|vector|||2.927||
 updates_all|stem|6bc75cffcfda8afb|605871b3084f6743|d048ec5b76146d60|-1616666070||t19114.9692008984s|63b8d2735b77e129|8533|rds|local|vector|||55.653||
 updates_all_ctv|stem|79ee818d4b9e4756|1ed9ab2dba8ded72|49f8923c40646964|-1935151146||t19137.0948403721s|d630ba886637f7f8|485428|rds|local|vector|||1664.326||
 updates_duration_5|stem|e17868abee22cddc|f1e597c10ba3b2cb|e9eb68263b4d8848|-861532069||t19115.0166129731s|e334c4b74a456131|365|rds|local|vector|||19.733||

@@ -116,7 +116,9 @@ ngram_data <- function(data, ngram, desc = c("Title", "Description", "Both")) {
            Description = tolower(Description),
            # end of title and beginning of description could form a ngram so avoid
            # this with a dummy word
-           Both = paste(Title, DUMMYWORD, Description)) %>% 
+           Both = paste(Title, DUMMYWORD, Description)) %>%
+    # n_min = 2 -- decided not to do this and do it separately to make 
+    # word separation below easier
     unnest_tokens(word, desc, token = "ngrams", n = ngram) %>% 
     separate(word, words, sep = " ") %>% 
     mutate(across(num_range("word", 1:ngram), singularize2)) %>% 

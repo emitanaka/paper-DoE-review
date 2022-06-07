@@ -1,18 +1,18 @@
 ---
-title: Current status and prospects of R-packages for the design of experiments
+title: Current state and prospects of R-packages for the design of experiments
 author:
   - name: Emi Tanaka
     affiliation: Monash University
   - name: Dewi Amaliah 
     affiliation: Monash University
 abstract: >
-    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through exploratory data analysis of package downloads, package metadata, and comparison of characteristics with other topics. We discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
+    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through an exploratory data analysis of package downloads, package metadata, and comparison of characteristics with other topics. We observe that experimental designs in practice appear to be sufficiently manufactured by a small number of packages and the development of experimental designs occur in silos. We discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
 bibliography: paper.bib
 knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_file = file.path(dirname(inputFile), 'index.html')) })
-keywords: ["experimental design", "CRAN task view", "user interface"]
+keywords: ["experimental design", "CRAN task view", "user interface", "application programming interface", "software design"]
 output: 
-  #bookdown::html_document2: 
-  #  theme: paper
+  bookdown::html_document2: 
+    theme: paper
   # below is to have a JSS paper style template
   pagedown::jss_paged:
     template: assets/html-template.html
@@ -27,6 +27,7 @@ h1, h2, h3, div > * {
  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 ```
+
 
 ```{r setup, cache = FALSE, include = FALSE}
 library(targets)
@@ -67,9 +68,16 @@ tar_load(gini_yearly_ctv)
 
 # Introduction 
 
-The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in the [CRAN task views](https://cran.r-project.org/web/views/) (a volunteered maintained list of R-packages by topic) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` and R-packages in survey designs are in `r ctv("OfficialStatistics")`. Experimental designs exclusively center on the collection of experimental data where many of the experimental factors tend to be in the control of the experimenter. A subset of experimental designs are segregated into `r ctv("ClinicalTrials")`, where the focus is on clinical trials with primary interest in sample size calculations. This paper focuses on the packages in `r ctv("ExperimentalDesign")`, henceforth referred to as "DoE packages".
+The critical role of data collection is well captured in the expression "garbage in, garbage out" -- in other words, if the collected data is rubbish then no analysis, however complex it may be, can make something out of it. A carefully crafted data collection scheme is therefore critical to optimise the information from data. Of all the data collection schemes, the field of experimental designs is specifically devoted to planning an experiment largely based on the founding principles by @Fisher1935-qc or an optimisation framework like those described in @Pukelsheim2006-sv. These experimental designs are often constructed with the aid of a statistical software, such as R [@R], so software usage can aid in understanding the practice of experimental design. Given the large gain that can be made from collecting higher quality experimental data, we benefit from understanding the current state of the experimental designs in practice.
 
-In the CRAN task view of `r ctv("ExperimentalDesign")`, there are `r npkgs` R packages for experimental design and analysis of data from experiments. The sheer quantity and variation of experimental designs in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited type of designs. Thus, the study of DoE packages can be revealing into the current status of the field of experimental design.
+<!-- Unlike many other data collection schemes, experiments provides the greatest control and consequently, a greater opportunity to statistically optimise the information drawn from the experimental data. -->
+
+
+Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in the [Comprehensive R Archive Network (CRAN) task views](https://cran.r-project.org/web/views/) (a volunteer maintained list of R-packages by topic; see Table S1 in the Supplementary Materials for the full list of available topics) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` task view and R-packages in survey designs are in `r ctv("OfficialStatistics")` task view. A subset of experimental designs are segregated into `r ctv("ClinicalTrials")` task view, where the focus is on clinical trials with primary interest in sample size calculations. This paper focuses on the packages in `r ctv("ExperimentalDesign")` task view, henceforth referred to as "DoE packages".
+
+In `r ctv("ExperimentalDesign")` task view, there are `r npkgs` R packages for experimental design and analysis of data from experiments. The sheer quantity and variation of experimental designs in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited type of designs. Thus, the study of DoE packages, based on quantitative and qualitative data, can give us an objective view to the state of the current experimental designs in practice. 
+
+A utility of software can also be described in terms of its design, such as the user interface (UI) and application programming interface (API). UI is concerned with the interaction of the software by the user, while the API is concerned with how different programs interact and is predominately of the interest to the developer. These interface designs is an abstraction to specifying the desired experimental design and its choices enable how a user expresses the specification of the experimental design.
 
 
 The paper is organised as follows. Section \@ref(data) briefly describes the data source used for the analysis in Section \@ref(eda); Section \@ref(eda) presents some insights into the state of the current DoE packages by exploratory data analysis of package download data, text descriptions and comparisons with other CRAN task views; Section \@ref(design) discuss the interface designs of DoE packages, and we conclude with a discussion in Section \@ref(discussion) of future prospects. 
@@ -121,26 +129,23 @@ tar_read(plot_download_dist)
 
 While in absolute terms the Gini index is high for `r ctv("ExperimentalDesign")`, the inequality is not as severe as other CRAN task views as shown in Figure \@ref(fig:fig-gini-all-ctvs). We can see in Figure \@ref(fig:fig-gini-all-ctvs) that the Gini index is generally increasing for DoE packages (as is generally the case for other CRAN task views as shown in Figure S1 in the Supplementary Materials).
 
-```{r fig-gini-all-ctvs, fig.height = 8, fig.cap = "The points show the Gini index of the download counts by year facetted by CRAN task view with the color showing the number of packages. The grey line shows the distribution of the Gini index across years for all other CRAN task views. The facets are ordered by increasing value of the Gini index in 2021."}
+```{r fig-gini-all-ctvs, fig.height = 4, fig.width = 4, fig.cap = "The points show the Gini index of the download counts by year for ExperimentalDesign CRAN task view with the color showing the number of packages. The grey line shows the distribution of the Gini index across years for all other CRAN task views. See Figure S2 in the Supplementary Material for the line graph for the Gini index across years by each CRAN task view."}
 gini_yearly_ctv %>% 
   ungroup() %>%  
   arrange(ctv, year) %>% 
   mutate(ctv = fct_reorder(ctv, gini, last),
          year = factor(year),
          gini = 100 * gini) %>%  
-  ggplot(aes(year, gini)) + 
-  geom_line(data = ~rename(.x, ctv2 = ctv), 
-            aes(group = ctv2), color = "grey") +
-  facet_wrap(~ctv, ncol = 4) + 
-  geom_line(aes(group = ctv)) + 
-  geom_point(aes(color = n))  +
+  ggplot(aes(year, gini, group = ctv)) + 
+  geom_line(color = "grey") +
+  geom_line(data = ~filter(.x, ctv=="ExperimentalDesign")) + 
+  geom_point(data = ~filter(.x, ctv=="ExperimentalDesign"),
+             aes(color = n))  +
   plot_setup() +
-  labs(x = "Year", y = "Gini index (%)", color = "# of packages") +
+  labs(x = "Year", y = "Gini index (%)", color = "# of packages",
+       title = "ExperimentalDesign CRAN task view") +
   guides(color = guide_colorbar(direction = "horizontal")) +
-  theme(legend.position = c(0.5, 0), 
-        legend.justification = "left",
-        strip.text = element_text(size = 7),
-        axis.text.x = element_text(angle = 90, vjust = 0.5)) +
+  theme(legend.position = "bottom") +
   scale_colour_distiller(palette = "YlOrRd", direction = 1) 
 ```
 
@@ -255,7 +260,7 @@ In software design, there are two interface designs to consider: user interface 
 
 In this section, we present some examples the user interface of widely used specialised designs, namely, computer experiments, factorial experiments, response surface designs and sequential designs.
 
-Computer experiments, as discussed in Section \@ref(topics), which generally involve space filling designs have been on the rise. The exemplar for this type of designs are `lhs` and `DiceDesign`.  
+Computer experiments, as discussed in Section \@ref(topics), which generally involve space filling designs, have been on the rise. The exemplar for this type of designs are `lhs` and `DiceDesign`. For the `lhs` package, functions like `randomLHS()`, `optimumLHS()`, and `maximinLHS()`, require users to specify the sample size ($n$) and the number of variables ($p$) then it generates a Latin hypercube sample, based on different optimisation schemes (in this case, random, S optimal and maxmin criteria, respectively; see package documentation for more details). Similarly for the `DiceDesign`, there is a comprehensive list of space-filling designs such as `dmaxDesign()`, `lhsDesign()`, `straussDesign()` and `wspDesign()` with input of $n$ and $p$ as before (among extra parameters for some) that implement algorithms that either maximise the entropy, produce a random Latin hypercube sample, based on Strauss process and WSP algorithm, respectively. These designs all output a $n \times p$ matrix with values between 0 and 1. 
 
 Factorial experiments offer a challenge in the construction and allocation of the treatment factors. This is reflected in a number of packages that specifically addresses this challenge. These include `DoE.base` [@DoE.base], `FrF2` [@FrF2] for fractional 2-level factorial designs, `conf.design` [@conf.design], `FrF2.catlg128` [@FrF2.catlg128] and `BHH2` [@BHH2].
 
