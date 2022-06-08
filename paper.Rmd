@@ -6,7 +6,7 @@ author:
   - name: Dewi Amaliah 
     affiliation: Monash University
 abstract: >
-    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through an exploratory data analysis of package downloads, package metadata, and comparison of characteristics with other topics. We observe that experimental designs in practice appear to be sufficiently manufactured by a small number of packages and the development of experimental designs occur in silos. We discuss also the software design of widely utilised R packages in the field of experimental design and conclude with discussion of some future prospects for the field.
+    Re-running an experiment is generally costly and in some cases impossible due to limited resources, so the design of an experiment plays a critical role in increasing the quality of experimental data.  In this article we describe the current state of the R-packages for the design of experiments through an exploratory data analysis of package downloads, package metadata, and the comparison of characteristics with other topics. We observe that experimental designs in practice appear to be sufficiently manufactured by a small number of packages and the development of experimental designs occur in silos. We discuss also the interface designs of widely utilised R packages in the field of experimental design and discuss its future prospects for the field.
 bibliography: paper.bib
 knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_file = file.path(dirname(inputFile), 'index.html')) })
 keywords: ["experimental design", "CRAN task view", "user interface", "application programming interface", "software design"]
@@ -58,6 +58,10 @@ CRANpkg <- function(pkg) {
 ref <- function(x) {
   ifelse(knitr::is_html_output(), glue("\\@ref({x})"), glue("\\ref{[x]}", .open = "[", .close = "]"))
 }
+url <- function(x) {
+  ifelse(knitr::is_html_output(), x, glue("\\url{[x]}", .open = "[", .close = "]"))
+}
+
 
 tar_load(npkgs)
 tar_load(gini_yearly)
@@ -73,11 +77,13 @@ The critical role of data collection is well captured in the expression "garbage
 <!-- Unlike many other data collection schemes, experiments provides the greatest control and consequently, a greater opportunity to statistically optimise the information drawn from the experimental data. -->
 
 
-Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in the [Comprehensive R Archive Network (CRAN) task views](https://cran.r-project.org/web/views/) (a volunteer maintained list of R-packages by topic; see Table S1 in the Supplementary Materials for the full list of available topics) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` task view and R-packages in survey designs are in `r ctv("OfficialStatistics")` task view. A subset of experimental designs are segregated into `r ctv("ClinicalTrials")` task view, where the focus is on clinical trials with primary interest in sample size calculations. This paper focuses on the packages in `r ctv("ExperimentalDesign")` task view, henceforth referred to as "DoE packages".
+Methods for data collection can be dichotomised by the type of data collected -- namely, experimental or observational -- or alternatively, categorised as experimental design (including quasi-experimental design) or survey design. This dichotomisation, to a great extent, is seen in the [Comprehensive R Archive Network (CRAN) task views](https://cran.r-project.org/web/views/) (a volunteer maintained list of R-packages by topic) where R-packages in experimental design are in `r ctv("ExperimentalDesign")` task view and R-packages in survey designs are in `r ctv("OfficialStatistics")` task view. The full list of available topics can be see in Table S1 in the Supplementary Materials and also accessed via the `ctv` package [@ctv]. A subset of experimental designs are segregated into `r ctv("ClinicalTrials")` task view, where the focus is on clinical trials with primary interest in sample size calculations. This paper focuses on the packages in `r ctv("ExperimentalDesign")` task view, henceforth referred to as "DoE packages".
 
 In `r ctv("ExperimentalDesign")` task view, there are `r npkgs` R packages for experimental design and analysis of data from experiments. The sheer quantity and variation of experimental designs in the R-packages are arguably unmatched with any other programming languages, e.g. in Python [@python], only a handful of libraries that generate design of experiment exist (namely `pyDOE`, `pyDOE2`, `dexpy`, `experimenter` and `GPdoemd`) with limited type of designs. Thus, the study of DoE packages, based on quantitative and qualitative data, can give us an objective view to the state of the current experimental designs in practice. 
 
-A utility of software can also be described in terms of its design, such as the user interface (UI) and application programming interface (API). UI is concerned with the interaction of the software by the user, while the API is concerned with how different programs interact and is predominately of the interest to the developer. These interface designs is an abstraction to specifying the desired experimental design and its choices enable how a user expresses the specification of the experimental design.
+
+A utility of software can also be described by its design to facilitate clear expression and interpretation of the desired experimental design. Certain programming language design can hinder or discourage development of a reliable program [@Wasserman1975-xr].  The immense popularity of `tidyverse` [a collection of R-packages for various stages of data analysis that place enormous emphasis on the interface design by @Wickham2019-mj] is a testament to the impact an interface design can have in practice. 
+
 
 
 The paper is organised as follows. Section \@ref(data) briefly describes the data source used for the analysis in Section \@ref(eda); Section \@ref(eda) presents some insights into the state of the current DoE packages by exploratory data analysis of package download data, text descriptions and comparisons with other CRAN task views; Section \@ref(design) discuss the interface designs of DoE packages, and we conclude with a discussion in Section \@ref(discussion) of future prospects. 
@@ -155,7 +161,7 @@ From Figures \@ref(fig:download-share) and \@ref(fig:fig-gini-all-ctvs), we coul
 
 * The increase in the number of packages that are not highly downloaded may mean that **_there are more packages to construct niche experimental designs_**. Some examples of these packages include `qtlDesign`, `PwrGSD` and `Crossover` made for QTL experiments, group sequential designs and crossover trials, respectively. These packages would naturally have a smaller number of potential users. Counterfactual to this, the increase could be due to other external factors, such as an increase in a number of skilled contributors, a change in CRAN policy or management to add packages (either to CRAN and/or task view), and/or that new packages are still yet to amass users. While there is an argument that low download counts are due to the low utility and/or quality of the packages, packages in CRAN task views are selected by expert maintainers; thus we can reasonably assume that any package listed in CRAN task view are of a decent utility and quality. 
 * If the downloads are reflective of the experimental designs used in practice, **_small set of packages appear to be sufficient for most to construct the full set of designs of experiments needed in practice_**. Packages of course evolve and the top downloaded packages have had regular updates that may have broadened its scope. 
-* While small subset of DoE packages are most frequently used, none of these packages are dominant in the field (judging from comparisons with other CRAN task views). This suggests that there are **_diverse approaches to designing experiments_**. This observation doesn't take into account other approaches to generating experimental designs, like the proprietary GUI software, CycDesignN, which may be widely used.
+* While small subset of DoE packages are most frequently used, none of these packages are dominant in the field (judging from comparisons with other CRAN task views). This suggests that there are **_diverse approaches to designing experiments_**. This observation doesn't take into account other approaches to generating experimental designs, like the proprietary software, CycDesignN [@cycdesignn] and SAS [@sas1985sas], which may be widely used.
 
 ## There is a lack of adaptation of new or innovative designs  {#ranking}
 
@@ -251,7 +257,12 @@ tar_read(plot_doe_network) +
 
 # Interface design  {#design}
 
-In software design, there are two interface designs to consider: user interface (UI) and application programming interface (API). UI is concerned with the usage of the software by the user, while the API is concerned with how different programs interact and is predominately of the interest to the developer. In this section, we discuss these interface designs broadly, with examples illustrated from the top downloaded packages (as shown in Figure \@ref(fig:rank-over-time)). We exclude `ez` and `DiceKriging` from the discussion as the former  is predominately visualisation of experimental data and latter is about the analysis of computer experiments in addition to belonging to the same suite of packages as `DiceDesign`. 
+
+
+In software design, there are two interface designs to consider: user interface (UI) and application programming interface (API). UI is concerned with the interaction of the software by the user, while the API is concerned with how different programs interact and is predominately of the interest to the developer. The UI design is an abstraction to specifying the desired experimental design and its choices enable how a user expresses the specification of the experimental design. 
+
+In this section, we discuss these interface designs broadly, with examples illustrated from the top downloaded packages (shown in Figure \@ref(fig:rank-over-time)). We exclude `ez` and `DiceKriging` from the discussion as the former  is predominately visualisation of experimental data and latter is about the analysis of computer experiments in addition to belonging to the same suite of packages as `DiceDesign`. 
+
 
 
 
@@ -287,6 +298,6 @@ Volunteer maintained -- some experimental design packages may not be included in
 
 # Acknowledgement
 
-This paper uses the `targets` framework [@targets] for reproducibility, `knitr` [@knitr] and `rmarkdown` [@rmarkdown] for creating reproducible documents, `ggplot2` [@ggplot2] for visualisation and `kableExtra` [@kableExtra] for customising the table. All code to reproduce this paper is found at https://github.com/emitanaka/paper-DoE-review.
+This paper uses the `targets` framework [@targets] for reproducibility, `knitr` [@knitr] and `rmarkdown` [@rmarkdown] for creating reproducible documents, `ggplot2` [@ggplot2], `ggraph` [@ggraph], `ggwordcloud` [@ggwordcloud] and `colorspace` [@colorspace] for visualisation, `kableExtra` [@kableExtra] for customising the table in the Supplementary Material and `tidyverse` [@Wickham2019-mj], `tidytext` [@tidytext], `pluralize` [@pluralize], and `ineq` [@ineq] for data processing and manipulation, and `cranlogs` [@cranlogs] and `ctv` [@ctv] for extracting data. All code to reproduce this paper is found at `r url("https://github.com/emitanaka/paper-DoE-review")`.
 
 # References
