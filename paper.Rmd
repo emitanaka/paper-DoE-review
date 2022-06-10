@@ -264,32 +264,32 @@ In software design, there are two interface designs to consider: user interface 
 In this section, we discuss these interface designs broadly, with examples illustrated from the top downloaded packages (shown in Figure \@ref(fig:rank-over-time)). We exclude `ez` and `DiceKriging` from the discussion as the former  is predominately visualisation of experimental data and latter is about the analysis of computer experiments in addition to belonging to the same suite of packages as `DiceDesign`. 
 
 
+`DoE.wrapper` [@DoE.wrapper]
 
 
 
-## The case of specialised designs
-
-In this section, we present some examples the user interface of widely used specialised designs, namely, computer experiments, factorial experiments, response surface designs and sequential designs.
+## The case of space-filling and optimal designs
 
 Computer experiments, as discussed in Section \@ref(topics), which generally involve space filling designs, have been on the rise. The exemplar for this type of designs are `lhs` and `DiceDesign`. For the `lhs` package, functions like `randomLHS()`, `optimumLHS()`, and `maximinLHS()`, require users to specify the sample size ($n$) and the number of variables ($p$) then it generates a Latin hypercube sample, based on different optimisation schemes (in this case, random, S optimal and maxmin criteria, respectively; see package documentation for more details). Similarly for the `DiceDesign`, there is a comprehensive list of space-filling designs such as `dmaxDesign()`, `lhsDesign()`, `straussDesign()` and `wspDesign()` with input of $n$ and $p$ as before (among extra parameters for some) that implement algorithms that either maximise the entropy, produce a random Latin hypercube sample, based on Strauss process and WSP algorithm, respectively. These designs all output a $n \times p$ matrix with values between 0 and 1. 
 
-Factorial experiments offer a challenge in the construction and allocation of the treatment factors. This is reflected in a number of packages that specifically addresses this challenge. These include `DoE.base` [@DoE.base], `FrF2` [@FrF2] for fractional 2-level factorial designs, `conf.design` [@conf.design], `FrF2.catlg128` [@FrF2.catlg128] and `BHH2` [@BHH2].
 
-Response surface design, as illustrated by `rsm` [@rsm], is a type of experiment that involve variables with continuous measures.
+The `AlgDesign` [@AlgDesign] package offers three primary functions for generating optimal designs: `optBlock()`, `optFederov()` and `optMonteCarlo()`. These functions in general require a formula in terms of the supplied terms with the choice of criterion (D, A and I for the latter two). The difference lies in the search algorithm for the optimal design.
 
-Finally, another specialised design is sequential design (also called adaptive sampling), which is best represented by `tgp` [@tgp] -- these require prior information, which are used to inform the next experimental design. Follow-up experiments, which can also be classified as a sequential design, is implemented by `BsMD` [@BsMD].
+## The case of factorial designs 
+
+Factorial experiments offer a challenge in the construction and allocation of the treatment factors. This is reflected in a number of packages that specifically addresses this challenge. These include `DoE.base` [@DoE.base] for full factorial and (regular and irregular) orthogonal array designs via `fac.design()` and `oa.design()`, respectively, `FrF2` [@FrF2] for fractional 2-level factorial designs using `FrF2()`, `FrF2Large()` or `pb()` Plankett-Burnman designs [@Plackett1946-ly], `conf.design` [@conf.design] for symmetric confounded factorial designs via `conf.design()`, and `BHH2` [@BHH2] to generate full or fractional 2-level factorial design matrix via `ffDesMatrix()`. All these designs generally requires the user to input the number of factors and if the design is allowed to vary in the number of levels, the input of the number of levels for each factor. The construction of some of these designs are catalogue-based, e.g. `oa.design()` in `DoE.base` and the entire package `FrF2.catlg128` [@FrF2.catlg128] is a list of fractional 2-level factorial designs.
+
+
+Response surface design, as illustrated by `rsm` [@rsm], is a factorial experiment but the focus of it is to analyse using response surface modelling. The two well known response surface designs are Box-Behnken design [@Box1960-wr] and
+central-composite designs [@Box1951-ji] via `bbd()` and `ccd()` for central-composite designs providing formula.
+
+## The case of sequential designs
+
+Another specialised design is sequential design (also called adaptive sampling), which is best represented by `tgp` [@tgp] -- these require prior information, which are used to inform the next experimental design using `tgp.design()` and `dopt.gp()` which requires users to supply candidate samples to sub-sample from and a model or design from a prior design. Follow-up experiments, which can also be classified as a sequential design, is implemented by `BsMD` [@BsMD]. In `BsMD`, the follow-up design is determined by a model discriminant approach using `MD()`.
 
 ## The case of menu functions
 
-The `agricolae` package [@agricolae] was the most downloaded DoE packages in 2013 to 2018 (Figure \@ref(fig:rank-over-time)) and possibly prior to 2013 (data unavailable). This package is the prime example of constructing designs based on menu functions, e.g. `design.crd()`, `design.rcbd()` and `design.split()` construct a completely randomised design, randomised complete block design and split-plot design, respectively. Users typically supply the treatment labels and the number of replications as argument to these functions. 
-
-## The case of general designs
-
-`AlgDesign` [@AlgDesign]
-
-
-`DoE.wrapper` [@DoE.wrapper]
-
+The `agricolae` package [@agricolae] was the most downloaded DoE packages in 2013 to 2018 (Figure \@ref(fig:rank-over-time)) and possibly prior to 2013 (data unavailable). This package is the prime example of constructing designs based on menu functions, e.g. `design.crd()`, `design.rcbd()` and `design.split()` construct a completely randomised design, randomised complete block design and split-plot design, respectively. Users typically supply the treatment labels (or number of treatments in the case of `design.split()`) and the number of replications as argument to these functions. 
 
 
 # Discussion {#discussion}
