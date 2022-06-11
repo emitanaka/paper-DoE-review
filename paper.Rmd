@@ -14,10 +14,11 @@ output:
   #bookdown::html_document2: 
   #  theme: paper
   # below is to have a JSS paper style template
-  pagedown::jss_paged:
+  pagedown::html_paged:
     template: assets/html-template.html
     csl: assets/html-template.csl
     self_contained: false
+    css: ["assets/html-template.css"]
 ---
 
 
