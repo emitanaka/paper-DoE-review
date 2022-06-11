@@ -1,0 +1,45 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = ""
+)
+library(tidyverse)
+paper <- here::here("paper.Rmd")
+meta <- rmarkdown::yaml_front_matter(paper)
+```
+
+
+# `r meta$title`
+
+This is the repo for the paper titled "`r meta$title`". You can find the arxiv version of the paper in `paper/arxiv/arxiv.pdf`. To reproduce the results of the paper, you will need to run the analysis by calling 
+
+```r
+targets::tar_make()
+```
+
+The paper uses the developmental version of the [`cranscrub` package in the branch `paper-doe-review`](https://github.com/numbats/cranscrub/tree/paper-doe-review) which can be installed by 
+
+```r
+remotes::install_github("numbats/cranscrub", ref = "paper-doe-review")
+```
+
+
+## Authors
+
+```{r, echo = FALSE}
+map_chr(meta$author, ~{
+  paste0("- ", .x$name, ", ", .x$affiliation)
+}) %>% 
+  cli::cli_li() 
+```
+
+## Abstract
+
+`r meta$abstract`
+
