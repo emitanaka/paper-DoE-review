@@ -1,7 +1,7 @@
 ---
 authors:
   - name: Emi Tanaka
-    thanks: emitanaka.org
+    thanks: Corresponding author
     department: Department of Econometrics and Business Statistics
     affiliation: Monash University
     location: Clayton, VIC 3800
@@ -12,10 +12,12 @@ authors:
     location: Clayton, VIC 3800
 header-includes: |
   \usepackage{colortbl}
+  \usepackage{bera}
   \usepackage{xcolor}
   \usepackage{hyperref}
   \usepackage[utf8]{inputenc}
   \def\tightlist{}
+  \newcommand{\ctv}[1]{\href{http://CRAN.R-project.org/view=#1}{\emph{#1}}}
 bibliography: ../../paper.bib
 biblio-style: unsrt
 #preamble: >
