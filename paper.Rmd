@@ -11,8 +11,8 @@ bibliography: paper.bib
 knit: (function(inputFile, encoding) { rmarkdown::render(inputFile, encoding = encoding, output_file = file.path(dirname(inputFile), 'index.html')) })
 keywords: ["experimental design", "CRAN task view", "user interface", "application programming interface", "software design"]
 output: 
-  bookdown::html_document2: 
-    theme: paper
+  #bookdown::html_document2: 
+  #  theme: paper
   # below is to have a JSS paper style template
   pagedown::jss_paged:
     template: assets/html-template.html
@@ -294,7 +294,11 @@ The `agricolae` package [@agricolae] was the most downloaded DoE packages in 201
 
 # Discussion {#discussion}
 
-Volunteer maintained -- some experimental design packages may not be included in the CRAN task view. 
+Through the exploratory data analysis of three data sources (package download logs, package metadata and CRAN task views) outlined in Section \@ref(data), we have observed that the the total download of DoE packages are concentrated only on a handful of R-packages although these represent a diverse set in comparison with other CRAN task views. Furthermore, the data suggests that the field of experimental design is the least collaborative field; out of all CRAN task views, it has one of the least average number of authors and the lowest intra-connectivity (any dependency on other packages within its own task view). 
+There are a number of limitations and short coming in our exploratory data analysis. First, CRAN task views are volunteer maintained so some experimental design packages may not be included in the DoE packages. Second, we only use the RStudio CRAN mirror download, which may bias our observations. Third, our analysis are limited to R-packages alone, although the sheer quantity and variation of experimental design is unmatched with any other programming languages. Finally, all our statements should be treated as speculative rather than conclusive; the data are all observational so no conclusive, generalisable statement are possible. Regardless, the data driven nature of our analysis give an objective insight into the field of experimental design. 
+
+The interface design (discussed in Section \@ref(design)) reveals that the most widely used DoE packages generally have functions that is 1) a menu format (i.e. the name of the function correspond to a particular recipe of the design or optimal search algorithm) and 2) context is often a second-thought (e.g. only the number of factors is needed and the package will assign pseudo factor names or an argument exists for optional input of character vector that corresponds to the factor names). 
+
 
 # Acknowledgement
 

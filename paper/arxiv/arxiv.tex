@@ -13,7 +13,7 @@
 \usepackage{microtype}      % microtypography
 \usepackage{graphicx}
 
-\title{Current status and prospects of R-packages for the design of
+\title{Current state and prospects of R-packages for the design of
 experiments}
 
 \author{
@@ -84,11 +84,13 @@ Re-running an experiment is generally costly and in some cases
 impossible due to limited resources, so the design of an experiment
 plays a critical role in increasing the quality of experimental data. In
 this article we describe the current state of the R-packages for the
-design of experiments through exploratory data analysis of package
-downloads, package metadata, and comparison of characteristics with
-other topics. We discuss also the software design of widely utilised R
-packages in the field of experimental design and conclude with
-discussion of some future prospects for the field.
+design of experiments through an exploratory data analysis of package
+downloads, package metadata, and the comparison of characteristics with
+other topics. We observe that experimental designs in practice appear to
+be sufficiently manufactured by a small number of packages and the
+development of experimental designs occur in silos. We discuss also the
+interface designs of widely utilised R packages in the field of
+experimental design and discuss its future prospects for the field.
 \end{abstract}
 
 
@@ -98,32 +100,54 @@ discussion of some future prospects for the field.
 The critical role of data collection is well captured in the expression
 ``garbage in, garbage out'' -- in other words, if the collected data is
 rubbish then no analysis, however complex it may be, can make something
-out of it. Methods for data collection can be dichotomised by the type
-of data collected -- namely, experimental or observational -- or
-alternatively, categorised as experimental design (including
-quasi-experimental design) or survey design. This dichotomisation, to a
-great extent, is seen in the
-\href{https://cran.r-project.org/web/views/}{CRAN task views} (a
-volunteered maintained list of R-packages by topic) where R-packages in
-experimental design are in ctv\{ExperimentalDesign\} and R-packages in
-survey designs are in ctv\{OfficialStatistics\}. Experimental designs
-exclusively center on the collection of experimental data where many of
-the experimental factors tend to be in the control of the experimenter.
-A subset of experimental designs are segregated into
-ctv\{ClinicalTrials\}, where the focus is on clinical trials with
-primary interest in sample size calculations. This paper focuses on the
-packages in ctv\{ExperimentalDesign\}, henceforth referred to as ``DoE
+out of it. A carefully crafted data collection scheme is therefore
+critical to optimise the information from data. Of all the data
+collection schemes, the field of experimental designs is specifically
+devoted to planning an experiment largely based on the founding
+principles by Fisher (1935) or an optimisation framework like those
+described in Pukelsheim (2006). These experimental designs are often
+constructed with the aid of a statistical software, such as R (R Core
+Team 2021), so software usage can aid in understanding the practice of
+experimental design. Given the large gain that can be made from
+collecting higher quality experimental data, we benefit from
+understanding the current state of the experimental designs in practice.
+
+Methods for data collection can be dichotomised by the type of data
+collected -- namely, experimental or observational -- or alternatively,
+categorised as experimental design (including quasi-experimental design)
+or survey design. This dichotomisation, to a great extent, is seen in
+the \href{https://cran.r-project.org/web/views/}{Comprehensive R Archive
+Network (CRAN) task views} (a volunteer maintained list of R-packages by
+topic) where R-packages in experimental design are in
+ctv\{ExperimentalDesign\} task view and R-packages in survey designs are
+in ctv\{OfficialStatistics\} task view. The full list of available
+topics can be see in Table S1 in the Supplementary Materials and also
+accessed via the \texttt{ctv} package (Zeileis 2005). A subset of
+experimental designs are segregated into ctv\{ClinicalTrials\} task
+view, where the focus is on clinical trials with primary interest in
+sample size calculations. This paper focuses on the packages in
+ctv\{ExperimentalDesign\} task view, henceforth referred to as ``DoE
 packages''.
 
-In the CRAN task view of ctv\{ExperimentalDesign\}, there are 114 R
-packages for experimental design and analysis of data from experiments.
-The sheer quantity and variation of experimental designs in the
-R-packages are arguably unmatched with any other programming languages,
-e.g.~in Python (Rossum 1995), only a handful of libraries that generate
-design of experiment exist (namely \texttt{pyDOE}, \texttt{pyDOE2},
+In ctv\{ExperimentalDesign\} task view, there are 114 R packages for
+experimental design and analysis of data from experiments. The sheer
+quantity and variation of experimental designs in the R-packages are
+arguably unmatched with any other programming languages, e.g.~in Python
+(Rossum 1995), only a handful of libraries that generate design of
+experiment exist (namely \texttt{pyDOE}, \texttt{pyDOE2},
 \texttt{dexpy}, \texttt{experimenter} and \texttt{GPdoemd}) with limited
-type of designs. Thus, the study of DoE packages can be revealing into
-the current status of the field of experimental design.
+type of designs. Thus, the study of DoE packages, based on quantitative
+and qualitative data, can give us an objective view to the state of the
+current experimental designs in practice.
+
+A utility of software can also be described by its design to facilitate
+clear expression and interpretation of the desired experimental design.
+Certain programming language design can hinder or discourage development
+of a reliable program (Wasserman 1975). The immense popularity of
+\texttt{tidyverse} (a collection of R-packages for various stages of
+data analysis that place enormous emphasis on the interface design by
+Wickham et al. 2019) is a testament to the impact an interface design
+can have in practice.
 
 The paper is organised as follows. Section @ref(data) briefly describes
 the data source used for the analysis in Section @ref(eda); Section
@@ -247,7 +271,7 @@ task views as shown in Figure S1 in the Supplementary Materials).
 
 }
 
-\caption{The points show the Gini index of the download counts by year facetted by CRAN task view with the color showing the number of packages. The grey line shows the distribution of the Gini index across years for all other CRAN task views. The facets are ordered by increasing value of the Gini index in 2021.}\label{fig:fig-gini-all-ctvs}
+\caption{The points show the Gini index of the download counts by year for ExperimentalDesign CRAN task view with the color showing the number of packages. The grey line shows the distribution of the Gini index across years for all other CRAN task views. See Figure S2 in the Supplementary Material for the line graph for the Gini index across years by each CRAN task view.}\label{fig:fig-gini-all-ctvs}
 \end{figure}
 
 From Figures @ref(fig:download-share) and @ref(fig:fig-gini-all-ctvs),
@@ -284,7 +308,8 @@ designs with possible counterfactual interpretations:
   with other CRAN task views). This suggests that there are
   \textbf{\emph{diverse approaches to designing experiments}}. This
   observation doesn't take into account other approaches to generating
-  experimental designs, like the proprietary GUI software, CycDesignN,
+  experimental designs, like the proprietary software, CycDesignN
+  (Whittaker, Williams, and John 2022) and SAS (SAS Institute 1985),
   which may be widely used.
 \end{itemize}
 
@@ -395,47 +420,96 @@ in silos.
 
 In software design, there are two interface designs to consider: user
 interface (UI) and application programming interface (API). UI is
-concerned with the usage of the software by the user, while the API is
-concerned with how different programs interact and is predominately of
-the interest to the developer. In this section, we discuss these
-interface designs broadly, with examples illustrated from the top
-downloaded packages (as shown in Figure @ref(fig:rank-over-time)). We
-exclude \texttt{ez} and \texttt{DiceKriging} from the discussion as the
-former is predominately visualisation of experimental data and latter is
-about the analysis of computer experiments in addition to belonging to
-the same suite of packages as \texttt{DiceDesign}.
+concerned with the interaction of the software by the user, while the
+API is concerned with how different programs interact and is
+predominately of the interest to the developer. The UI design is an
+abstraction to specifying the desired experimental design and its
+choices enable how a user expresses the specification of the
+experimental design.
 
-\hypertarget{the-case-of-specialised-designs}{%
-\subsection{The case of specialised
-designs}\label{the-case-of-specialised-designs}}
+In this section, we discuss these interface designs broadly, with
+examples illustrated from the top downloaded packages (shown in Figure
+@ref(fig:rank-over-time)). We exclude \texttt{ez} and
+\texttt{DiceKriging} from the discussion as the former is predominately
+visualisation of experimental data and latter is about the analysis of
+computer experiments in addition to belonging to the same suite of
+packages as \texttt{DiceDesign}.
 
-In this section, we present some examples the user interface of widely
-used specialised designs, namely, computer experiments, factorial
-experiments, response surface designs and sequential designs.
+\texttt{DoE.wrapper} (Grömping 2020)
+
+\hypertarget{the-case-of-space-filling-and-optimal-designs}{%
+\subsection{The case of space-filling and optimal
+designs}\label{the-case-of-space-filling-and-optimal-designs}}
 
 Computer experiments, as discussed in Section @ref(topics), which
-generally involve space filling designs have been on the rise. The
+generally involve space filling designs, have been on the rise. The
 exemplar for this type of designs are \texttt{lhs} and
 \texttt{DiceDesign}. For the \texttt{lhs} package, functions like
-\texttt{randomLHS()}, \texttt{optimumLHS()}, and \texttt{maximinLHS()}
+\texttt{randomLHS()}, \texttt{optimumLHS()}, and \texttt{maximinLHS()},
+require users to specify the sample size (\(n\)) and the number of
+variables (\(p\)) then it generates a Latin hypercube sample, based on
+different optimisation schemes (in this case, random, S optimal and
+maxmin criteria, respectively; see package documentation for more
+details). Similarly for the \texttt{DiceDesign}, there is a
+comprehensive list of space-filling designs such as
+\texttt{dmaxDesign()}, \texttt{lhsDesign()}, \texttt{straussDesign()}
+and \texttt{wspDesign()} with input of \(n\) and \(p\) as before (among
+extra parameters for some) that implement algorithms that either
+maximise the entropy, produce a random Latin hypercube sample, based on
+Strauss process and WSP algorithm, respectively. These designs all
+output a \(n \times p\) matrix with values between 0 and 1.
+
+The \texttt{AlgDesign} (Wheeler 2022) package offers three primary
+functions for generating optimal designs: \texttt{optBlock()},
+\texttt{optFederov()} and \texttt{optMonteCarlo()}. These functions in
+general require a formula in terms of the supplied terms with the choice
+of criterion (D, A and I for the latter two). The difference lies in the
+search algorithm for the optimal design.
+
+\hypertarget{the-case-of-factorial-designs}{%
+\subsection{The case of factorial
+designs}\label{the-case-of-factorial-designs}}
 
 Factorial experiments offer a challenge in the construction and
 allocation of the treatment factors. This is reflected in a number of
 packages that specifically addresses this challenge. These include
-\texttt{DoE.base} (Grömping 2018), \texttt{FrF2} (Grömping 2014) for
-fractional 2-level factorial designs, \texttt{conf.design} (Venables
-2013), \texttt{FrF2.catlg128} (Grömping 2022) and \texttt{BHH2} (Barrios
-2016).
+\texttt{DoE.base} (Grömping 2018) for full factorial and (regular and
+irregular) orthogonal array designs via \texttt{fac.design()} and
+\texttt{oa.design()}, respectively, \texttt{FrF2} (Grömping 2014) for
+fractional 2-level factorial designs using \texttt{FrF2()},
+\texttt{FrF2Large()} or \texttt{pb()} Plankett-Burnman designs (Plackett
+and Burman 1946), \texttt{conf.design} (Venables 2013) for symmetric
+confounded factorial designs via \texttt{conf.design()}, and
+\texttt{BHH2} (Barrios 2016) to generate full or fractional 2-level
+factorial design matrix via \texttt{ffDesMatrix()}. All these designs
+generally requires the user to input the number of factors and if the
+design is allowed to vary in the number of levels, the input of the
+number of levels for each factor. The construction of some of these
+designs are catalogue-based, e.g.~\texttt{oa.design()} in
+\texttt{DoE.base} and the entire package \texttt{FrF2.catlg128}
+(Grömping 2022) is a list of fractional 2-level factorial designs.
 
 Response surface design, as illustrated by \texttt{rsm} (Lenth 2009), is
-a type of experiment that involve variables with continuous measures.
+a factorial experiment but the focus of it is to analyse using response
+surface modelling. The two well known response surface designs are
+Box-Behnken design (Box and Behnken 1960) and central-composite designs
+(Box and Wilson 1951) via \texttt{bbd()} and \texttt{ccd()} for
+central-composite designs providing formula.
 
-Finally, another specialised design is sequential design (also called
-adaptive sampling), which is best represented by \texttt{tgp} (Gramacy
-and Taddy 2010) -- these require prior information, which are used to
-inform the next experimental design. Follow-up experiments, which can
-also be classified as a sequential design, is implemented by
-\texttt{BsMD} (Barrios 2020).
+\hypertarget{the-case-of-sequential-designs}{%
+\subsection{The case of sequential
+designs}\label{the-case-of-sequential-designs}}
+
+Another specialised design is sequential design (also called adaptive
+sampling), which is best represented by \texttt{tgp} (Gramacy and Taddy
+2010) -- these require prior information, which are used to inform the
+next experimental design using \texttt{tgp.design()} and
+\texttt{dopt.gp()} which requires users to supply candidate samples to
+sub-sample from and a model or design from a prior design. Follow-up
+experiments, which can also be classified as a sequential design, is
+implemented by \texttt{BsMD} (Barrios 2020). In \texttt{BsMD}, the
+follow-up design is determined by a model discriminant approach using
+\texttt{MD()}.
 
 \hypertarget{the-case-of-menu-functions}{%
 \subsection{The case of menu
@@ -448,22 +522,42 @@ This package is the prime example of constructing designs based on menu
 functions, e.g.~\texttt{design.crd()}, \texttt{design.rcbd()} and
 \texttt{design.split()} construct a completely randomised design,
 randomised complete block design and split-plot design, respectively.
-Users typically supply the treatment labels and the number of
-replications as argument to these functions.
-
-\hypertarget{the-case-of-general-designs}{%
-\subsection{The case of general
-designs}\label{the-case-of-general-designs}}
-
-\texttt{AlgDesign} (Wheeler 2022)
-
-\texttt{DoE.wrapper} (Grömping 2020)
+Users typically supply the treatment labels (or number of treatments in
+the case of \texttt{design.split()}) and the number of replications as
+argument to these functions.
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
 
-Volunteer maintained -- some experimental design packages may not be
-included in the CRAN task view.
+Through the exploratory data analysis of three data sources (package
+download logs, package metadata and CRAN task views) outlined in Section
+@ref(data), we have observed that the the total download of DoE packages
+are concentrated only on a handful of R-packages although these
+represent a diverse set in comparison with other CRAN task views.
+Furthermore, the data suggests that the field of experimental design is
+the least collaborative field; out of all CRAN task views, it has one of
+the least average number of authors and the lowest intra-connectivity
+(any dependency on other packages within its own task view). There are a
+number of limitations and short coming in our exploratory data analysis.
+First, CRAN task views are volunteer maintained so some experimental
+design packages may not be included in the DoE packages. Second, we only
+use the RStudio CRAN mirror download, which may bias our observations.
+Third, our analysis are limited to R-packages alone, although the sheer
+quantity and variation of experimental design is unmatched with any
+other programming languages. Finally, all our statements should be
+treated as speculative rather than conclusive; the data are all
+observational so no conclusive, generalisable statement are possible.
+Regardless, the data driven nature of our analysis give an objective
+insight into the field of experimental design.
+
+The interface design (discussed in Section @ref(design)) reveals that
+the most widely used DoE packages generally have functions that is 1) a
+menu format (i.e.~the name of the function correspond to a particular
+recipe of the design or optimal search algorithm) and 2) context is
+often a second-thought (e.g.~only the number of factors is needed and
+the package will assign pseudo factor names or an argument exists for
+optional input of character vector that corresponds to the factor
+names).
 
 \hypertarget{acknowledgement}{%
 \section{Acknowledgement}\label{acknowledgement}}
@@ -471,10 +565,16 @@ included in the CRAN task view.
 This paper uses the \texttt{targets} framework (Landau 2021) for
 reproducibility, \texttt{knitr} (Xie 2015) and \texttt{rmarkdown} (Xie,
 Allaire, and Grolemund 2018) for creating reproducible documents,
-\texttt{ggplot2} (Wickham 2016) for visualisation and
-\texttt{kableExtra} (Zhu 2021) for customising the table. All code to
-reproduce this paper is found at
-\url{https://github.com/emitanaka/paper-DoE-review}.
+\texttt{ggplot2} (Wickham 2016), \texttt{ggraph} (Pedersen 2021),
+\texttt{ggwordcloud} (Le Pennec and Slowikowski 2019) and
+\texttt{colorspace} (Zeileis et al. 2020) for visualisation,
+\texttt{kableExtra} (Zhu 2021) for customising the table in the
+Supplementary Material and \texttt{tidyverse} (Wickham et al. 2019),
+\texttt{tidytext} (Silge and Robinson 2016), \texttt{pluralize} (Rudis
+and Embrey 2020), and \texttt{ineq} (Zeileis 2014) for data processing
+and manipulation, and \texttt{cranlogs} (Csárdi 2019) and \texttt{ctv}
+(Zeileis 2005) for extracting data. All code to reproduce this paper is
+found at \url{https://github.com/emitanaka/paper-DoE-review}.
 
 \hypertarget{references}{%
 \section*{References}\label{references}}
@@ -490,6 +590,17 @@ Hunter II}. \url{https://CRAN.R-project.org/package=BHH2}.
 ---------. 2020. \emph{BsMD: Bayes Screening and Model Discrimination}.
 \url{https://CRAN.R-project.org/package=BsMD}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Box1960-wr}{}}%
+Box, G E P, and D W Behnken. 1960. {``Some New Three Level Designs for
+the Study of Quantitative Variables.''} \emph{Technometrics: A Journal
+of Statistics for the Physical, Chemical, and Engineering Sciences} 2
+(4): 455--75. \url{https://doi.org/10.2307/1266454}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Box1951-ji}{}}%
+Box, G E P, and K B Wilson. 1951. {``On the Experimental Attainment of
+Optimum Conditions.''} \emph{Journal of the Royal Statistical Society.
+Series B, Statistical Methodology} 13 (1): 1--45.
+
 \leavevmode\vadjust pre{\hypertarget{ref-cranlogs}{}}%
 Csárdi, Gábor. 2019. \emph{Cranlogs: Download Logs from the 'RStudio'
 'CRAN' Mirror}. \url{https://CRAN.R-project.org/package=cranlogs}.
@@ -498,6 +609,9 @@ Csárdi, Gábor. 2019. \emph{Cranlogs: Download Logs from the 'RStudio'
 de Mendiburu, Felipe. 2021. \emph{Agricolae: Statistical Procedures for
 Agricultural Research}.
 \url{https://CRAN.R-project.org/package=agricolae}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Fisher1935-qc}{}}%
+Fisher, Ronald. 1935. \emph{The Design of Experiments}. Oliver; Boyd.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Gini1921-mf}{}}%
 Gini, Corrado. 1921. {``Measurement of Inequality of Incomes.''}
@@ -537,6 +651,11 @@ Make-Like Function-Oriented Pipeline Toolkit for Reproducibility and
 High-Performance Computing.''} \emph{Journal of Open Source Software} 6
 (57): 2959. \url{https://doi.org/10.21105/joss.02959}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-ggwordcloud}{}}%
+Le Pennec, Erwan, and Kamil Slowikowski. 2019. \emph{Ggwordcloud: A Word
+Cloud Geom for 'Ggplot2'}.
+\url{https://CRAN.R-project.org/package=ggwordcloud}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-rsm}{}}%
 Lenth, Russell V. 2009. {``Response-Surface Methods in {R}, Using
 {rsm}.''} \emph{Journal of Statistical Software} 32 (7): 1--17.
@@ -547,22 +666,68 @@ Lorenz, M O. 1905. {``Methods of Measuring the Concentration of
 Wealth.''} \emph{Publications of the American Statistical Association} 9
 (70): 209--19. \url{https://doi.org/10.2307/2276207}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-ggraph}{}}%
+Pedersen, Thomas Lin. 2021. \emph{Ggraph: An Implementation of Grammar
+of Graphics for Graphs and Networks}.
+\url{https://CRAN.R-project.org/package=ggraph}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Plackett1946-ly}{}}%
+Plackett, R L, and J P Burman. 1946. {``The Design of Optimum
+Multifactorial Experiments.''} \emph{Biometrika} 33 (4): 302--25.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Pukelsheim2006-sv}{}}%
+Pukelsheim, Friedrich. 2006. \emph{Optimal Design of Experiments}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-R}{}}%
+R Core Team. 2021. \emph{R: A Language and Environment for Statistical
+Computing}. Vienna, Austria: R Foundation for Statistical Computing.
+\url{https://www.R-project.org/}.
+
 \leavevmode\vadjust pre{\hypertarget{ref-python}{}}%
 Rossum, G. van. 1995. {``Python Tutorial.''} CS-R9526. Amsterdam:
 Centrum voor Wiskunde en Informatica (CWI).
+
+\leavevmode\vadjust pre{\hypertarget{ref-pluralize}{}}%
+Rudis, Bob, and Blake Embrey. 2020. \emph{Pluralize: Pluralize and
+'Singularize' Any (English) Word}.
+\url{https://CRAN.R-project.org/package=pluralize}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sas1985sas}{}}%
+SAS Institute. 1985. \emph{SAS User's Guide: Statistics}. Vol. 2. Sas
+Inst.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tidytext}{}}%
+Silge, Julia, and David Robinson. 2016. {``Tidytext: Text Mining and
+Analysis Using Tidy Data Principles in r.''} \emph{JOSS} 1 (3).
+\url{https://doi.org/10.21105/joss.00037}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-conf.design}{}}%
 Venables, Bill. 2013. \emph{Conf.design: Construction of Factorial
 Designs}. \url{https://CRAN.R-project.org/package=conf.design}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-Wasserman1975-xr}{}}%
+Wasserman, Anthony I. 1975. {``Issues in Programming Language Design -
+an Overview.''} In.
+
 \leavevmode\vadjust pre{\hypertarget{ref-AlgDesign}{}}%
 Wheeler, Bob. 2022. \emph{AlgDesign: Algorithmic Experimental Design}.
 \url{https://CRAN.R-project.org/package=AlgDesign}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cycdesignn}{}}%
+Whittaker, D., E. R. Williams, and J. A John. 2022. \emph{CycDesign: A
+Package for the Computer Generation of Experimental Designs,} (version
+7.0). \url{https://vsni.co.uk/software/cycdesign}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-ggplot2}{}}%
 Wickham, Hadley. 2016. \emph{Ggplot2: Elegant Graphics for Data
 Analysis}. Springer-Verlag New York.
 \url{https://ggplot2.tidyverse.org}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Wickham2019-mj}{}}%
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy
+D'agostino McGowan, Romain Francois, Garrett Grolemund, et al. 2019.
+{``Welcome to the Tidyverse.''} \emph{Journal of Open Source Software} 4
+(43): 1686.
 
 \leavevmode\vadjust pre{\hypertarget{ref-knitr}{}}%
 Xie, Yihui. 2015. \emph{Dynamic Documents with {R} and Knitr}. 2nd ed.
@@ -572,6 +737,21 @@ Boca Raton, Florida: Chapman; Hall/CRC. \url{https://yihui.org/knitr/}.
 Xie, Yihui, J. J. Allaire, and Garrett Grolemund. 2018. \emph{R
 Markdown: The Definitive Guide}. Boca Raton, Florida: Chapman; Hall/CRC.
 \url{https://bookdown.org/yihui/rmarkdown}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ctv}{}}%
+Zeileis, Achim. 2005. {``{CRAN} Task Views.''} \emph{R News} 5 (1):
+39--40. \url{https://CRAN.R-project.org/doc/Rnews/}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ineq}{}}%
+---------. 2014. \emph{Ineq: Measuring Inequality, Concentration, and
+Poverty}. \url{https://CRAN.R-project.org/package=ineq}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-colorspace}{}}%
+Zeileis, Achim, Jason C. Fisher, Kurt Hornik, Ross Ihaka, Claire D.
+McWhite, Paul Murrell, Reto Stauffer, and Claus O. Wilke. 2020.
+{``{colorspace}: A Toolbox for Manipulating and Assessing Colors and
+Palettes.''} \emph{Journal of Statistical Software} 96 (1): 1--49.
+\url{https://doi.org/10.18637/jss.v096.i01}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-kableExtra}{}}%
 Zhu, Hao. 2021. \emph{kableExtra: Construct Complex Table with 'Kable'
