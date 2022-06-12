@@ -112,6 +112,7 @@ list(
   
   
   tar_render(report, "paper.Rmd"),
+  tar_render(supp, "supp.Rmd"),
   tar_render(arxiv, "paper/arxiv/arxiv.Rmd"),
   NULL
 )

@@ -140,7 +140,7 @@ task view, there are 114 R packages for experimental design and analysis
 of data from experiments. The sheer quantity and variation of
 experimental designs in the R-packages are arguably unmatched with any
 other programming languages, e.g.~in Python (Rossum 1995), only a
-handful of libraries that generate design of experiment exist (namely
+handful of packages that generate design of experiment exist (namely
 \texttt{pyDOE}, \texttt{pyDOE2}, \texttt{dexpy}, \texttt{experimenter}
 and \texttt{GPdoemd}) with limited type of designs. Thus, the study of
 DoE packages, based on quantitative and qualitative data, can give us an
@@ -327,7 +327,12 @@ designs}\label{ranking}}
 
 We can see in Figure \ref{fig:rank-over-time} that most of the top 10
 ranking packages have been in the top 10 for the last 9 years with
-\texttt{lhs} steadily climbing up the ranks in the last few years.
+\texttt{lhs} steadily climbing up the ranks in the last few years. It
+should be noted that the download of one package can prompt a download
+of another package; the most notable dependency network is
+\texttt{AlgDesign} and \texttt{agricolae}, where the former is an import
+for the latter. The full dependency network within the DoE packages is
+shown later in Figure @ref(fig:plot-doe-network).
 
 \begin{figure}[htbp]
 
