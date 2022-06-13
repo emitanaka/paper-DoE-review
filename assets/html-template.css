@@ -302,3 +302,8 @@ table {
     width: calc(var(--pagedjs-width) + 2 * var(--screen-pages-spacing));
   }
 }
+
+
+h1, h2, h3, div > * {
+ font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}

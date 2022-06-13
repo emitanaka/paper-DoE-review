@@ -103,20 +103,26 @@ plot_rank_distribution <- function(data, nrank = 10, stat) {
   dat <- data %>% 
     mutate(year = as.factor(year)) %>% 
     filter(rank <= nrank)
-  g <- ggplot(dat, aes(x = year, y = {{stat}}, color = package, group = package)) + 
+  pkgs_repeat_toprank <- dat %>% 
+    count(package) %>% 
+    filter(n > 1) %>% 
+    pull(package)
+  g <- dat %>% 
+    filter(package %in% pkgs_repeat_toprank) %>% 
+    ggplot(aes(x = year, y = {{stat}}, color = package, group = package)) + 
     geom_point() + 
     geom_line() +
     labs(x = "Year", y = "Download rank by year") +
     scale_color_manual(values = c("#E69F00", "#56B4E9", "#009E73", 
                                   "#F0E442", "#0072B2", "#D55E00", 
                                   "#CC79A7", "#000000", "#888888",
-                                  "#88CCEE", "#CC6677", "#DDCC77", 
-                                  "#117733", "#DDAA33", "#BB5566"),
-                       breaks = dat %>% 
-                         filter(year == 2021) %>% 
+                                  "#88CCEE", "#CC6677", "seagreen4", 
+                                  "violetred4"),
+                       breaks = data %>% 
+                         filter(package %in% pkgs_repeat_toprank,
+                                year == 2021) %>% 
                          arrange(desc(total)) %>% 
-                         pull(package) %>% 
-                         union(dat$package))
+                         pull(package))
   if(rlang::as_string(rlang::ensym(stat))=="rank") {
     g + scale_y_reverse(breaks = 1:nrank)
   } else {

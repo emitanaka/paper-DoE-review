@@ -63,17 +63,18 @@ list(
   tar_target(top2yrs, cran_rank2$package[1:ntop]),
   tar_target(top5yrs, cran_rank5$package[1:ntop]),
   tar_target(updates_duration_5, pkg_updates_duration(top2yrs, duration = 5)),
-  tar_target(gini_yearly, gini_coef(cran_rank_yearly)), 
   tar_target(gini_yearly_ctv, gini_coef_by_ctv(cran_rank_yearly_all)), 
+  tar_target(gini_yearly_doe, gini_yearly_ctv %>% 
+               filter(ctv == "ExperimentalDesign")),
   tar_target(plot_lorenz2021, plot_lorenz_curve(cran_rank_yearly, 2021)), 
   tar_target(plot_download_dist_all, plot_download_distribution(cran_rank_yearly_all, gini_yearly_ctv) + 
                plot_setup() + facet_wrap(~ctv, ncol = 4)),
-  tar_target(plot_download_dist, plot_download_distribution(cran_rank_yearly, gini_yearly) + plot_setup()),
+  tar_target(plot_download_dist, plot_download_distribution(cran_rank_yearly, gini_yearly_doe) + plot_setup()),
   tar_target(plot_rank_dist, plot_rank_distribution(cran_rank_yearly, stat = rank) + plot_setup()),
   tar_target(plot_rank_download_dist, plot_rank_distribution(cran_rank_yearly, stat = total) + plot_setup()),
   tar_target(plot_download_trend_5, plot_download_trend(cran_download_data5, updates_duration_5) + plot_setup()),
   ## scrub data
-  tar_target(plot_scrub_download_dist, plot_download_distribution(cran_scrub_rank_yearly, gini_yearly) + plot_setup()),
+  tar_target(plot_scrub_download_dist, plot_download_distribution(cran_scrub_rank_yearly, gini_yearly_doe) + plot_setup()),
   tar_target(plot_scrub_rank_dist, plot_rank_distribution(cran_scrub_rank_yearly, stat = rank) + plot_setup()),
   tar_target(plot_scrub_trend, plot_download_trend(cran_scrub_data5, updates_duration_5) + plot_setup()),
   #tar_target(plot_scrub_trend_middle, plot_download_trend(cran_scrub_data5, updates_duration_middle) + plot_setup()),
