@@ -98,9 +98,9 @@ window.PagedConfig = {
 </script>
 
 <script src="paper_files/header-attrs-2.11/header-attrs.js"></script>
-<script src="paper_files/paged-0.16/js/config.js"></script>
-<script src="paper_files/paged-0.16/js/paged.js"></script>
-<script src="paper_files/paged-0.16/js/hooks.js"></script>
+<script src="paper_files/paged-0.15/js/config.js"></script>
+<script src="paper_files/paged-0.15/js/paged.js"></script>
+<script src="paper_files/paged-0.15/js/hooks.js"></script>
 
 
 
@@ -213,7 +213,7 @@ Figure 3.3: The points show the Gini index of the download counts by year for Ex
 </div>
 </div>
 <div id="ranking" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> There is a lack of adaptation of new or innovative experimental designs</h2>
+<h2><span class="header-section-number">3.2</span> The field of experimental design is slow-changing</h2>
 <p>We can see in Figure <a href="#fig:rank-over-time">3.4</a> that most of the top 10 ranking packages have been in the top 10 for the last 9 years with <code>lhs</code> steadily climbing up the ranks in the last few years. It should be noted that the download of one package can prompt a download of another package; the most notable dependency network is <code>AlgDesign</code> and <code>agricolae</code>, where the former is an import for the latter. The full dependency network within the DoE packages is shown later in Figure <a href="#fig:plot-doe-network">3.8</a>.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:rank-over-time"></span>
 <img src="figures/rank-over-time-1.png" alt="The plot shows the rank of top 10 downloaded packages by year. Packages that do not appear in top 10 for at least two periods are omitted from the plot. Most packages are consistently in the top 10 for the period shown." width="528" />
@@ -221,24 +221,31 @@ Figure 3.3: The points show the Gini index of the download counts by year for Ex
 Figure 3.4: The plot shows the rank of top 10 downloaded packages by year. Packages that do not appear in top 10 for at least two periods are omitted from the plot. Most packages are consistently in the top 10 for the period shown.
 </p>
 </div>
-<p>Figure <a href="#fig:established-packages">3.5</a> shows a moderate negative correlation between the first release date and the (log of) total download counts of DoE packages in any given year from 2013 to 2021. This suggest that in general, a package released earlier are more likely to be used today (possibly for legacy reasons or the general inertia for adoption of new packages). We can also see in Figure <a href="#fig:established-packages">3.5</a> the most downloaded packages were generally released in 2004 to 2010.</p>
-<div class="figure" style="text-align: center"><span style="display:block;" id="fig:established-packages"></span>
-<img src="figures/established-packages-1.png" alt="The above figure shows the total download (in log scale) of a package in the corresponding year against the first release date of the package. The blue line corresponds to the least squares fit of a simple linear regression model. The label in the right-hand upper corner shows the sample correlation coefficient between the first release date and the log (with base 10) of the total download count. The high-leverage point on the far left belongs to `conf.design`, authored by one of the earlier contributors to R." width="576" />
+<p>Figure <a href="#fig:release-date-vs-download">3.5</a> shows a moderate negative correlation between the first release date and the (log of) total download counts of DoE packages in any given year from 2013 to 2021. This suggest that in general, a package released earlier are more likely to be used today (possibly for legacy reasons or the general inertia to adopt new packages). We can also see in Figure <a href="#fig:release-date-vs-download">3.5</a> the most downloaded packages were generally released in 2004 to 2010.</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:release-date-vs-download"></span>
+<img src="figures/release-date-vs-download-1.png" alt="The above figure shows the total download (in log scale) of a package in the corresponding year against the first release date of the package. The blue line corresponds to the least squares fit of a simple linear regression model. The label in the right-hand upper corner shows the sample correlation coefficient between the first release date and the log (with base 10) of the total download count. The high-leverage point on the far left belongs to `conf.design`, authored by one of the earlier contributors to R." width="576" />
 <p class="caption">
 Figure 3.5: The above figure shows the total download (in log scale) of a package in the corresponding year against the first release date of the package. The blue line corresponds to the least squares fit of a simple linear regression model. The label in the right-hand upper corner shows the sample correlation coefficient between the first release date and the log (with base 10) of the total download count. The high-leverage point on the far left belongs to <code>conf.design</code>, authored by one of the earlier contributors to R.
 </p>
 </div>
-<p>The lack of change in the top ranking packages are indicative that there has been generally little need for new or innovative experimental design needs for the mass. We do however also see that the the top downloaded packages generally have more updates so it is possible that the packages have improved or broadened the scope of its usage.</p>
+<p>The consistency in the top 10 ranking packages (Figure <a href="#fig:rank-over-time">3.4</a>) and the fact that most downloaded DoE packages are first released more than 10 years ago (Figure <a href="#fig:release-date-vs-download">3.5</a>) indicates that either the existing packages filled the needs of mass in practice or no new packages were compelling for many to switch their practice. We do however also see that the the top downloaded packages generally have more updates (see Figure <a href="#fig:release-date-vs-download">3.5</a>) so it is possible that the packages have improved or broadened the scope of its usage.</p>
 </div>
 <div id="topics" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Computer experiments and optimal designs are of interest</h2>
-<p>Figure <a href="#fig:wordcloud-over-time">3.6</a> shows some common purposes of DoE packages, based on bigrams in the package title and description. A bigram is only shown as the frequency of single word was not insightful and there were not many trigrams common across packages. Not surprisingly, the bigram “experimental design” was the most common. More interestingly, “optimal design” appeared across different packages (indicated by the size of the word in Figure <a href="#fig:wordcloud-over-time">3.6</a>), and the bigrams “latin hypercube” and “computer experiment” used across a few packages that are downloaded frequently (indicated by the color of the word in Figure <a href="#fig:wordcloud-over-time">3.6</a>). Although there exists a separate <a href="https://cran.r-project.org/web/views/ClinicalTrials.html">ClinicalTrials</a> task view, the DoE packages clearly include some packages that are of interest to clinical trials as shown by the size of the bigram “clinical trial” in Figure <a href="#fig:wordcloud-over-time">3.6</a>.</p>
+<h2><span class="header-section-number">3.3</span> Optimal designs are of interest</h2>
+<p>Figure <a href="#fig:wordcloud-over-time">3.6</a> shows some common purposes of DoE packages, based on bigrams in the package title and description. We show only the bigrams as unigram was not insightful and there were not many trigrams common across packages. In counting the bigrams, we processed the text data as follows:</p>
+<ol style="list-style-type: decimal">
+<li>We standardised the words to lower case and removed pluralization.</li>
+<li>Multiple mentions of the same bigram within a package was counted as one (e.g. <code>AlgDesign</code> mentions “experimental design” four times in the title and the description but this is counted as one).</li>
+<li>Bigrams that consist the stop words (provided in <code>tidytext::stop_words</code> in addition to other words we deemed irrelevant, e.g. “provide”, “e.g.”, “calculate” and so on; full list is shown in the code provided in the link under Section <a href="#pkgs">7</a>) are removed.</li>
+</ol>
+<p>Not surprisingly, the bigram “experimental design” was the most common. More interestingly, “optimal design” and “sequential design” appeared across different packages (indicated by the size of the word in Figure <a href="#fig:wordcloud-over-time">3.6</a>), and the bigrams “latin hypercube” and “computer experiment” are used across a few packages that are downloaded frequently (indicated by the color of the word in Figure <a href="#fig:wordcloud-over-time">3.6</a>). Sequential design, Latin hypercube sampling and computer experiments (which generally include space filling designs like Latin hypercube sampling) are designs that generally operate by optimising a user-selected criterion and can be classified as optimal designs.</p>
 <div class="figure" style="text-align: center"><span style="display:block;" id="fig:wordcloud-over-time"></span>
 <img src="figures/wordcloud-over-time-1.png" alt="The above figure shows the word cloud of bigrams from the title and descriptions of the DoE packages. The size shows how often the bigram appears across the DoE packages and the color are relative to the total download count in 2021 of the packages that contain the bigram." width="528" />
 <p class="caption">
 Figure 3.6: The above figure shows the word cloud of bigrams from the title and descriptions of the DoE packages. The size shows how often the bigram appears across the DoE packages and the color are relative to the total download count in 2021 of the packages that contain the bigram.
 </p>
 </div>
+<p>Although there exists a separate <a href="https://cran.r-project.org/web/views/ClinicalTrials.html">ClinicalTrials</a> task view, the DoE packages clearly include some packages that are of interest to clinical trials as shown by the size of the bigram “clinical trial” (and related bigrams like “dose finding” and “phase ii”) in Figure <a href="#fig:wordcloud-over-time">3.6</a>.</p>
 </div>
 <div id="silo" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Development of experimental designs occur in silos</h2>
@@ -291,7 +298,7 @@ There are a number of limitations and short coming in our exploratory data analy
 <h1><span class="header-section-number">6</span> Supplemental materials</h1>
 <p>The supplementary materials can be found <a href="supp.pdf">here</a>.</p>
 </div>
-<div id="acknowledgement" class="section level1" number="7">
+<div id="pkgs" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Acknowledgement</h1>
 <p>This paper uses <code>targets</code> <span class="citation">(Landau 2021)</span> and <code>renv</code> <span class="citation">(Ushey 2022)</span> for reproducibility, <code>knitr</code> <span class="citation">(Xie 2015)</span> and <code>rmarkdown</code> <span class="citation">(Xie, Allaire, and Grolemund 2018)</span> for creating reproducible documents, <code>ggplot2</code> <span class="citation">(Wickham 2016)</span>, <code>ggraph</code> <span class="citation">(Pedersen 2021)</span>, <code>ggwordcloud</code> <span class="citation">(Le Pennec and Slowikowski 2019)</span> and <code>colorspace</code> <span class="citation">(Zeileis et al. 2020)</span> for visualisation, <code>kableExtra</code> <span class="citation">(Zhu 2021)</span> for customising the table in the Supplementary Material and <code>tidyverse</code> <span class="citation">(Wickham et al. 2019)</span>, <code>tidytext</code> <span class="citation">(Silge and Robinson 2016)</span>, <code>pluralize</code> <span class="citation">(Rudis and Embrey 2020)</span>, and <code>ineq</code> <span class="citation">(Zeileis 2014)</span> for data processing and manipulation, and <code>cranlogs</code> <span class="citation">(Csárdi 2019)</span> and <code>ctv</code> <span class="citation">(Zeileis 2005)</span> for extracting data. All code to reproduce this paper is found at <a href="https://github.com/emitanaka/paper-DoE-review" class="uri">https://github.com/emitanaka/paper-DoE-review</a>.</p>
 </div>

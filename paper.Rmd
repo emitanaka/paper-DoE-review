@@ -155,7 +155,7 @@ gini_yearly_ctv %>%
 
 
 
-## There is a lack of adaptation of new or innovative experimental designs  {#ranking}
+## The field of experimental design is slow-changing  {#ranking}
 
 We can see in Figure `r ref("fig:rank-over-time")` that most of the top 10 ranking packages have been in the top 10 for the last 9 years with `lhs` steadily climbing up the ranks in the last few years. It should be noted that the download of one package can prompt a download of another package; the most notable dependency network is `AlgDesign` and `agricolae`, where the former is an import for the latter. The full dependency network within the DoE packages is shown later in Figure \@ref(fig:plot-doe-network). 
 
@@ -163,9 +163,9 @@ We can see in Figure `r ref("fig:rank-over-time")` that most of the top 10 ranki
 tar_read(plot_rank_dist) + labs(color = "Package")
 ```
 
-Figure `r ref("fig:established-packages")` shows a moderate negative correlation between the first release date and the (log of) total download counts of DoE packages in any given year from 2013 to 2021. This suggest that in general, a package released earlier are more likely to be used today (possibly for legacy reasons or the general inertia for adoption of new packages). We can also see in Figure `r ref("fig:established-packages")` the most downloaded packages were generally released in 2004 to 2010. 
+Figure `r ref("fig:release-date-vs-download")` shows a moderate negative correlation between the first release date and the (log of) total download counts of DoE packages in any given year from 2013 to 2021. This suggest that in general, a package released earlier are more likely to be used today (possibly for legacy reasons or the general inertia to adopt new packages). We can also see in Figure `r ref("fig:release-date-vs-download")` the most downloaded packages were generally released in 2004 to 2010. 
 
-```{r established-packages, fig.height = 5, fig.cap = "The above figure shows the total download (in log scale) of a package in the corresponding year against the first release date of the package. The blue line corresponds to the least squares fit of a simple linear regression model. The label in the right-hand upper corner shows the sample correlation coefficient between the first release date and the log (with base 10) of the total download count. The high-leverage point on the far left belongs to `conf.design`, authored by one of the earlier contributors to R."}
+```{r release-date-vs-download, fig.height = 5, fig.cap = "The above figure shows the total download (in log scale) of a package in the corresponding year against the first release date of the package. The blue line corresponds to the least squares fit of a simple linear regression model. The label in the right-hand upper corner shows the sample correlation coefficient between the first release date and the log (with base 10) of the total download count. The high-leverage point on the far left belongs to `conf.design`, authored by one of the earlier contributors to R."}
 tar_read(cran_rank_yearly) %>%
   mutate(nupdates = map2_int(package, year, ~{
     tar_read(updates_all) %>% 
@@ -196,14 +196,20 @@ tar_read(cran_rank_yearly) %>%
   theme(legend.position = "bottom")
 ```
 
-The lack of change in the top ranking packages are indicative that there has been generally little need for new or innovative experimental design needs for the mass. We do however also see that the the top downloaded packages generally have more updates so it is possible that the packages have improved or broadened the scope of its usage. 
+The consistency in the top 10 ranking packages (Figure `r ref("fig:rank-over-time")`) and the fact that most downloaded DoE packages are first released more than 10 years ago (Figure `r ref("fig:release-date-vs-download")`) indicates that either the existing packages filled the needs of mass in practice or no new packages were compelling for many to switch their practice. We do however also see that the the top downloaded packages generally have more updates (see Figure `r ref("fig:release-date-vs-download")`) so it is possible that the packages have improved or broadened the scope of its usage. 
 
 
 
 
-## Computer experiments and optimal designs are of interest {#topics}
+## Optimal designs are of interest {#topics}
 
-Figure `r ref("fig:wordcloud-over-time")` shows some common purposes of DoE packages, based on bigrams in the package title and description. A bigram is only shown as the frequency of single word was not insightful and there were not many trigrams common across packages. Not surprisingly, the bigram "experimental design" was the most common. More interestingly, "optimal design" appeared across different packages (indicated by the size of the word in Figure `r ref("fig:wordcloud-over-time")`), and the bigrams "latin hypercube" and "computer experiment" used across a few packages that are downloaded frequently (indicated by the color of the word in Figure `r ref("fig:wordcloud-over-time")`). Although there exists a separate `r ctv("ClinicalTrials")` task view, the DoE packages clearly include some packages that are of interest to clinical trials as shown by the size of the bigram "clinical trial" in Figure `r ref("fig:wordcloud-over-time")`.
+Figure `r ref("fig:wordcloud-over-time")` shows some common purposes of DoE packages, based on bigrams in the package title and description. We show only the bigrams as unigram was not insightful and there were not many trigrams common across packages. In counting the bigrams, we processed the text data as follows:
+
+1. We standardised the words to lower case and removed pluralization. 
+2. Multiple mentions of the same bigram within a package was counted as one (e.g. `AlgDesign` mentions "experimental design" four times in the title and the description but this is counted as one). 
+3. Bigrams that consist the stop words (provided in `tidytext::stop_words` in addition to other words we deemed irrelevant, e.g. "provide", "e.g.", "calculate" and so on; full list is shown in the code provided in the link under Section `r ref("pkgs")`) are removed.
+
+Not surprisingly, the bigram "experimental design" was the most common. More interestingly, "optimal design" and "sequential design" appeared across different packages (indicated by the size of the word in Figure `r ref("fig:wordcloud-over-time")`), and the bigrams "latin hypercube" and "computer experiment" are used across a few packages that are downloaded frequently (indicated by the color of the word in Figure `r ref("fig:wordcloud-over-time")`). Sequential design, Latin hypercube sampling and computer experiments (which generally include space filling designs like Latin hypercube sampling) are designs that generally operate by optimising a user-selected criterion and can be classified as optimal designs. 
 
 ```{r wordcloud-over-time, fig.width = 5.5, fig.height = 5, fig.cap = "The above figure shows the word cloud of bigrams from the title and descriptions of the DoE packages. The size shows how often the bigram appears across the DoE packages and the color are relative to the total download count in 2021 of the packages that contain the bigram."}
 tar_read(plot_wordcloud2) + 
@@ -213,6 +219,7 @@ tar_read(plot_wordcloud2) +
   labs(color = "Total downloads (%)")
 ```
 
+Although there exists a separate `r ctv("ClinicalTrials")` task view, the DoE packages clearly include some packages that are of interest to clinical trials as shown by the size of the bigram "clinical trial" (and related bigrams like "dose finding" and "phase ii") in Figure `r ref("fig:wordcloud-over-time")`.
 
 ## Development of experimental designs occur in silos {#silo}
 
@@ -297,7 +304,7 @@ The supplementary materials can be found [here](supp.pdf).
 
 `r if(knitr::is_latex_output()) '-->'`
 
-# Acknowledgement
+# Acknowledgement {#pkgs}
 
 This paper uses `targets` [@targets] and `renv` [@renv] for reproducibility, `knitr` [@knitr] and `rmarkdown` [@rmarkdown] for creating reproducible documents, `ggplot2` [@ggplot2], `ggraph` [@ggraph], `ggwordcloud` [@ggwordcloud] and `colorspace` [@colorspace] for visualisation, `kableExtra` [@kableExtra] for customising the table in the Supplementary Material and `tidyverse` [@Wickham2019-mj], `tidytext` [@tidytext], `pluralize` [@pluralize], and `ineq` [@ineq] for data processing and manipulation, and `cranlogs` [@cranlogs] and `ctv` [@ctv] for extracting data. All code to reproduce this paper is found at `r url("https://github.com/emitanaka/paper-DoE-review")`.
 
