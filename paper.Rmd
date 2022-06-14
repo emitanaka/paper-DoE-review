@@ -223,7 +223,7 @@ Although there exists a separate `r ctv("ClinicalTrials")` task view, the DoE pa
 
 ## Development of experimental designs occur in silos {#silo}
 
-Figure `r ref("fig:ctv-summ-plot")` shows that the `r ctv("ExperimentalDesign")` have the lowest average number of contributors among all CRAN task views. In addition, we can also see in Figure `r ref("fig:ctv-summ-plot")`  that the `r ctv("ExperimentalDesign")` task view has one of the least intra-connectivity (the percentage of packages that make use of other packages within the same task view). The full connection of DoE packages with other DoE packages is shown in Figure `r ref("fig:plot-doe-network")`. These observations suggest that the field of experimental design is one of the least collaborative field and package development generally occur in silos. 
+Figure `r ref("fig:ctv-summ-plot")` shows that the `r ctv("ExperimentalDesign")` task view has the lowest average number of contributors among all `r n_distinct(gini_yearly_ctv$ctv)` CRAN task views. In addition, we can also see in Figure `r ref("fig:ctv-summ-plot")`  that the `r ctv("ExperimentalDesign")` task view has one of the least intra-connectivity (the percentage of packages that make use of other packages within the same task view). The full connection of DoE packages with other DoE packages is shown in Figure `r ref("fig:plot-doe-network")`. These observations suggest that the **_field of experimental design is one of the least collaborative field_** and package development generally occur in silos. 
 
 
 
@@ -249,7 +249,7 @@ tar_read(ctv_summary_table) %>%
         legend.box.just = "left")
 ```
 
-```{r plot-doe-network, fig.width = 6, fig.height = 6, fig.cap  = "Package connections (depends, suggests and imports) within the DoE packages. DoE packages that do not depend, suggest or import another DoE package is not shown."}
+```{r plot-doe-network, fig.width = 6, fig.height = 6, fig.cap  = "Package connections (depends, suggests and imports) within the DoE packages. The direction of the arrow shows the connection of packags where the package on the tail of the arrow is a depedency, suggestion or import for the package on the head of the arrow.  DoE packages that do not depend, suggest or import another DoE package is not shown."}
 tar_read(plot_doe_network) +
   theme(legend.position = "bottom")
 ```
@@ -260,7 +260,7 @@ tar_read(plot_doe_network) +
 
 In software design, there are two interface designs to consider: user interface (UI) and application programming interface (API). UI is concerned with the interaction of the software by the user, while the API is concerned with how different programs interact and is predominately of the interest to the developer. The UI design is an abstraction to specifying the desired experimental design and its choices enable how a user expresses the specification of the experimental design. 
 
-In this section, we discuss these interface designs broadly, with examples illustrated from the top downloaded packages (shown in Figure `r ref("fig:rank-over-time")`). We exclude `ez` and `DiceKriging` from the discussion as the former  is predominately visualisation of experimental data and latter is about the analysis of computer experiments in addition to belonging to the same suite of packages as `DiceDesign` [@DiceDesign]. 
+In this section, we discuss these interface designs broadly, with examples illustrated from the top downloaded packages (shown in Figure `r ref("fig:rank-over-time")`). We exclude `ez` and `DiceKriging` from the discussion as the former  is predominately visualisation of experimental data and the latter is about the analysis of computer experiments in addition to belonging to the same suite of packages as `DiceDesign` [@DiceDesign]. 
 
 
 
