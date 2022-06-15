@@ -1,5 +1,5 @@
 ---
-title: Supplmentary material for "Current status and prospects of R-packages for the design of experiments"
+title: Supplementary material for "Current status and prospects of R-packages for the design of experiments"
 author:
   - Emi Tanaka
   - Dewi Amaliah 
@@ -38,6 +38,7 @@ library(tidyverse)
 library(patchwork)
 library(tidygraph)
 library(ggraph)
+library(pander)
 source("R/plot.R")
 knitr::opts_chunk$set(echo = FALSE, 
                       cache = TRUE,
@@ -57,12 +58,6 @@ ref <- function(x) {
 tar_load(npkgs)
 tar_load(gini_yearly)
 tar_load(gini_yearly_ctv)
-
-
-#renvLock <- jsonlite::read_json("renv.lock")
-#sink("pkgs.bib")
-#knitr::write_bib(names(renvLock$Packages))
-#sink()
 ```
 
 ```{r fig-gini-all-ctvs, fig.height = 8, fig.cap = "The points show the Gini index of the download counts by year facetted by CRAN task view with the color showing the number of packages. The grey line shows the distribution of the Gini index across years for all other CRAN task views. The facets are ordered by increasing value of the Gini index in 2021."}
@@ -103,7 +98,10 @@ tar_read(ctv_summary_table) %>%
 # Session information {-}
 
 ```{r session-info, echo = FALSE}
+
 renv_lock <- jsonlite::read_json("renv.lock")
-pander::pander(sessionInfo(package = names(renv_lock$Packages)), compact = FALSE)
+pkgs <- intersect(setdiff(names(renv_lock$Packages), "cranscrub"),
+                  rownames(available.packages(repos = "https://cran.rstudio.com/")))
+pander::pander(sessionInfo(package = pkgs), compact = FALSE)
 ```
 
