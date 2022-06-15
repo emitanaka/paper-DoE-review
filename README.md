@@ -31,11 +31,17 @@ remotes::install_github("numbats/cranscrub", ref = "paper-doe-review")
 Re-running an experiment is generally costly and in some cases
 impossible due to limited resources, so the design of an experiment
 plays a critical role in increasing the quality of experimental data. In
-this article we describe the current state of the R-packages for the
+this paper we describe the current state of the R-packages for the
 design of experiments through an exploratory data analysis of package
 downloads, package metadata, and the comparison of characteristics with
 other topics. We observe that experimental designs in practice appear to
 be sufficiently manufactured by a small number of packages and the
-development of experimental designs occur in silos. We discuss also the
-interface designs of widely utilised R packages in the field of
-experimental design and discuss its future prospects for the field.
+development of experimental designs often occur in silos. We discuss
+also the interface designs of widely utilised R packages in the field of
+experimental design and discuss its future prospects to advance the
+field in practice.
+
+## Supplementary material
+
+The supplementarial material can be found
+[here](https://emitanaka.org/paper-DoE-review/supp.pdf).

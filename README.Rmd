@@ -43,3 +43,7 @@ map_chr(meta$author, ~{
 
 `r meta$abstract`
 
+
+## Supplementary material
+
+The supplementarial material can be found [here](https://emitanaka.org/paper-DoE-review/supp.pdf).
