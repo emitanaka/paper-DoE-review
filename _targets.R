@@ -9,7 +9,7 @@ tar_option_set(packages = c("tidyverse", "rvest", "lubridate",
                             "igraph", "ggraph", "ggrepel", "patchwork",
                             "ggwordcloud", "fable", "feasts", "lubridate",
                             "ineq", "cranscrub", "tidygraph", "ggraph", 
-                            "rlang", "igraph"))
+                            "rlang"))
 
 
 list(
@@ -66,7 +66,10 @@ list(
   tar_target(gini_yearly_ctv, gini_coef_by_ctv(cran_rank_yearly_all)), 
   tar_target(gini_yearly_doe, gini_yearly_ctv %>% 
                filter(ctv == "ExperimentalDesign")),
-  tar_target(plot_lorenz2021, plot_lorenz_curve(cran_rank_yearly, 2021)), 
+  tar_target(doe_lorenz2021, cran_rank_yearly_all %>% 
+               filter(ctv == "ExperimentalDesign", year == 2021) %>% 
+               lorenz_data()), 
+  tar_target(plot_lorenz2021, plot_lorenz_curve(doe_lorenz2021)),
   tar_target(plot_download_dist_all, plot_download_distribution(cran_rank_yearly_all, gini_yearly_ctv) + 
                plot_setup() + facet_wrap(~ctv, ncol = 4)),
   tar_target(plot_download_dist, plot_download_distribution(cran_rank_yearly, gini_yearly_doe) + plot_setup()),
@@ -110,9 +113,8 @@ list(
   tar_target(plot_cluster_network, plot_pkg_network_by_ctv("Cluster")),
   tar_target(plot_ts_network, plot_pkg_network_by_ctv("TimeSeries")),
   
-  
-  
   tar_render(report, "paper.Rmd"),
+  tar_render(index, rmarkdown::render("paper.Rmd", output_file = 'index.html')),
   tar_render(supp, "supp.Rmd"),
   tar_render(arxiv, "paper/arxiv/arxiv.Rmd"),
   NULL

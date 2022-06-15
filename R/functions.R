@@ -6,6 +6,10 @@ ctv_list <- function(ctv) {
                                     repos = "http://cran.rstudio.com/")[[1]]  
 }
 
+lorenz_data <- function(data) {
+  data.frame(p = ineq::Lc(data$total)$p, L = ineq::Lc(data$total)$L) 
+}
+
 pkg_first_release <- function(data) {
   data %>% 
     group_by(package) %>% 

@@ -42,38 +42,18 @@ plot_download_distribution <- function(data, ginidata) {
                                            "\nn=", n)))
 }
 
-plot_lorenz_curve <- function(data, year) {
+plot_lorenz_curve <- function(data) {
   
-  dat <- data %>% 
-    filter(year == .env$year)
-  
-  data <- data.frame(p = ineq::Lc(dat$total)$p, L = ineq::Lc(dat$total)$L) 
-  anndata <- data %>% 
-    arrange(desc(L)) %>% 
-    filter(L < 0.5) %>% 
-    slice(1)
   ggplot(data, aes(p * 100, L * 100)) +
     geom_abline(color = "red") +
+    geom_ribbon(aes(ymin = 0, ymax = L * 100),
+                fill = "#FFC107", alpha = 0.5) +
+    geom_ribbon(aes(ymin = L * 100, ymax = p * 100),
+                 fill = "#D81B60", alpha = 0.5) +
     geom_line() + 
     geom_point() +
-    geom_ribbon(aes(ymin = 0, ymax = L * 100),
-                fill = "#009E73", alpha = 0.5) +
-    geom_ribbon(aes(ymin = L * 100, ymax = p * 100),
-                 fill = "#D55E00", alpha = 0.5) +
     annotate("text", x = 75, y = 80, label = "Line of perfect equality",
-             angle = 45)# +
-    # geom_segment(data = anndata,
-    #              aes(x = p * 100, xend = p * 100,
-    #                  y = 0, yend = L * 100),
-    #              linetype = "dashed") +
-    # geom_segment(data = anndata,
-    #              aes(x = 0, xend = p * 100,
-    #                  y = L * 100, yend = L * 100),
-    #              linetype = "dashed") +
-    # scale_x_continuous(breaks = c(0, 25, 50, 75, round(anndata$p * 100), 100), 
-    #                    expand = c(0, 0)) +
-    # scale_y_continuous(breaks = c(0, 25, round(anndata$L * 100), 50, 75, 100),
-    #                    expand = c(0, 0))
+             angle = 45)
   
 }
 
