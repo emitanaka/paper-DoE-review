@@ -43,5 +43,5 @@ field in practice.
 
 ## Supplementary material
 
-The supplementarial material can be found
+The supplementary material can be found
 [here](https://emitanaka.org/paper-DoE-review/supp.pdf).
