@@ -4,9 +4,13 @@
 # Current state and prospects of R-packages for the design of experiments
 
 This is the repo for the paper titled “Current state and prospects of
-R-packages for the design of experiments”. You can find the arxiv
-version of the paper in `paper/arxiv/arxiv.pdf`. To reproduce the
-results of the paper, you will need to run the analysis by calling
+R-packages for the design of experiments”.
+
+📜 You can find the arxiv version of the paper
+[here](https://arxiv.org/abs/2206.07532).
+
+To reproduce the results of the paper, you will need to run the analysis
+by calling
 
 ``` r
 targets::tar_make()
