@@ -9,6 +9,15 @@ R-packages for the design of experiments”.
 📜 You can find the arxiv version of the paper
 [here](https://arxiv.org/abs/2206.07532).
 
+The paper uses the developmental version of the [`cranscrub` package in
+the branch
+`paper-doe-review`](https://github.com/numbats/cranscrub/tree/paper-doe-review).
+This can be installed by
+
+``` r
+remotes::install_github("numbats/cranscrub", ref = "paper-doe-review")
+```
+
 To reproduce the results of the paper, you will need to run the analysis
 by calling
 
@@ -16,14 +25,14 @@ by calling
 targets::tar_make()
 ```
 
-The paper uses the developmental version of the [`cranscrub` package in
-the branch
-`paper-doe-review`](https://github.com/numbats/cranscrub/tree/paper-doe-review)
-which can be installed by
+The primary functions for analysis are:
 
-``` r
-remotes::install_github("numbats/cranscrub", ref = "paper-doe-review")
-```
+-   `R/functions.R`
+-   `R/plot.R`
+-   `_targets.R`
+
+The contents of the paper can be found in `paper.Rmd` and the
+supplementary materials in `supp.Rmd`.
 
 ## Authors
 
