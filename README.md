@@ -27,17 +27,16 @@ targets::tar_make()
 
 The primary functions for analysis are:
 
--   `R/functions.R`
--   `R/plot.R`
--   `_targets.R`
+- `R/functions.R`
+- `_targets.R`
 
 The contents of the paper can be found in `paper.Rmd` and the
 supplementary materials in `supp.Rmd`.
 
 ## Authors
 
-    • - Emi Tanaka, Monash University
-    • - Dewi Amaliah, Monash University
+- Emi Tanaka, Monash University
+- Dewi Amaliah, Monash University
 
 ## Abstract
 

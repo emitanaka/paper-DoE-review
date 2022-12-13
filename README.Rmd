@@ -37,18 +37,17 @@ targets::tar_make()
 The primary functions for analysis are:
 
 * `R/functions.R`
-* `R/plot.R`
 * `_targets.R`
 
 The contents of the paper can be found in `paper.Rmd` and the supplementary materials in `supp.Rmd`. 
 
 ## Authors
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, results="asis"}
 map_chr(meta$author, ~{
   paste0("- ", .x$name, ", ", .x$affiliation)
 }) %>% 
-  cli::cli_li() 
+  cat(sep = "\n")
 ```
 
 ## Abstract
