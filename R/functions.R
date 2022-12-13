@@ -1,25 +1,31 @@
 
-
-
-ctv_list <- function(ctv) {
-  ctv:::.get_pkgs_from_ctv_or_repos(ctv, 
-                                    repos = "http://cran.rstudio.com/")[[1]]  
+save_output <- function(obj) {
+  # file name derived from object
+  fn <- rlang::as_string(rlang::enexpr(obj))
+  saveRDS(obj, here::here(glue::glue("output/{fn}.rds")))
 }
 
-lorenz_data <- function(data) {
-  data.frame(p = ineq::Lc(data$total)$p, L = ineq::Lc(data$total)$L) 
+ctv_pkgs <- function(ctv_table, ctv_name) {
+  ctv_table %>% 
+    filter(name == ctv_name) %>% 
+    pull(packages) %>% 
+    .[[1]]
 }
 
-pkg_first_release <- function(data) {
-  data %>% 
-    group_by(package) %>% 
-    summarise(first = min(update)) %>% 
-    ungroup()
+ctv_pkg_db <- function(ctv_table) {
+  unlist(ctv_table$packages) %>% 
+    unique() %>% 
+    cranscrub::pkg_db() %>% 
+    cranscrub::pkg_db_clean_depends() %>% 
+    cranscrub::pkg_db_clean_imports() %>% 
+    cranscrub::pkg_db_clean_suggests() %>% 
+    cranscrub::pkg_db_clean_author()
 }
 
-pkg_update_dates <- function(pkgs, message = FALSE) {
-  res <- lapply(pkgs, function(pkg) {
-    message(paste("Package", pkg))
+
+pkg_update_dates <- function(pkgs, message = TRUE) {
+  res <- map(pkgs, function(pkg) {
+    if(message) message(paste("Package", pkg))
     pkgsearch::cran_package_history(pkg) %>% 
       select(package = Package, update = date) %>% 
       mutate(update = as.Date(update))
@@ -27,80 +33,75 @@ pkg_update_dates <- function(pkgs, message = FALSE) {
   do.call("rbind", res)
 }
 
-
-cran_downloads_duration <- function(pkgs, start_year) {
-  # it can have trouble downloading long periods so break it up by year
-  map_dfr(start_year:2021, ~{
-    start <- as.Date(paste0(.x, "-01-01"))
-    end <- as.Date(paste0(.x, "-12-31"))
-    cran_downloads(pkgs, from = start, to = end)  
+pkg_cran_downloads <- function(pkgs, start, end) {
+  # it can have trouble downloading long periods so break it up by year for 
+  # a package at a time
+  map_dfr(pkgs, function(apkg) {
+    map_dfr(start:end, ~{
+      start_date <- as.Date(paste0(.x, "-01-01"))
+      end_date <- as.Date(paste0(.x, "-12-31"))
+      cran_downloads(apkg, from = start_date, to = end_date)  
+    })
   })
-  
 }
 
-cran_ed_scrub_duration <- function(duration) {
-  end <- as.Date("2022-03-01")  
-  start <- end - years(duration)
-  cranscrub::ctvExperimentalDesign %>% 
-    rename(count = n_unique) %>% 
-    select(-n_total) %>% 
-    dplyr::filter(between(date, start, end))
+
+ctv_combine_pkg_data <- function(ctv_table,
+                                 pkg_downloads,
+                                 pkg_db_clean,
+                                 pkg_updates) {
+  nest_pkg_downloads <- nest(pkg_downloads, downloads = -package)
+  nest_pkg_updates <- nest(pkg_updates, updates = -package)
+  select_pkg_db <- select(pkg_db_clean, 
+                          package = Package, Title, Description, AuthorClean,
+                          DependsVec, ImportsVec, SuggestsVec)
+  ctv_table %>% 
+    unnest(packages) %>% 
+    rename(package = packages) %>% 
+    left_join(nest_pkg_downloads, by = "package") %>% 
+    left_join(nest_pkg_updates, by = "package") %>% 
+    left_join(select_pkg_db, by = "package") %>% 
+    mutate(first = map_dbl(updates, ~min(.x$update)),
+           first = as.Date(first, origin = "1970-01-01"))
+    
 }
 
-cran_downloads_rank <- function(data) {
-  data %>% 
-    group_by(package) %>% 
-    summarise(total = sum(count)) %>% 
-    arrange(desc(total)) %>% 
-    mutate(rank = 1:n())
-}
 
-cran_downloads_rank_by_year <- function(data, first_release) {
-  data %>% 
-    mutate(year = year(date)) %>% 
-    group_by(package, year) %>% 
-    summarise(total = sum(count)) %>% 
-    arrange(desc(total), year) %>% 
-    left_join(first_release, by = "package") %>% 
-    group_by(year) %>% 
-    mutate(rank = 1:n()) %>% 
+ctv_downloads_rank_by_year <- function(ctv_pkg_data) {
+  ctv_pkg_data %>% 
+    unnest_longer(downloads) %>% 
+    mutate(year = year(downloads$date)) %>% 
+    group_by(name, topic, package, year, first) %>% 
+    summarise(total = sum(downloads$count),
+              nupdates = map2_dbl(updates, year, ~{
+                if(is.null(.x$update)) return(0)
+                sum(year(.x$update) <= .y)
+              })) %>% 
     ungroup() %>% 
-    filter(year > year(first)) %>% 
-    filter(year != year(Sys.Date()))
-}
-
-cran_downloads_rank_by_year_ctv <- function(data, first_release) {
-  data %>% 
-    mutate(year = year(date)) %>% 
-    group_by(package, year) %>% 
-    summarise(total = sum(count),
-              ctv = unique(ctv)) %>% 
+    distinct() %>% 
+    filter(year > year(first),
+           year != year(Sys.Date())) %>% 
     arrange(desc(total), year) %>% 
-    left_join(first_release, by = "package") %>% 
-    group_by(year, ctv) %>% 
+    group_by(year, name) %>% 
     mutate(rank = 1:n()) %>% 
-    ungroup() %>% 
-    filter(year > year(first)) %>% 
-    filter(year != year(Sys.Date()))
+    ungroup() 
 }
 
-
-gini_coef <- function(data) {
-  data %>% 
-    group_by(year) %>% 
+ctv_gini_by_year <- function(ctv_rank_yearly) {
+  ctv_rank_yearly %>% 
+    group_by(name, year) %>% 
     summarise(gini = ineq::Gini(total),
-              n = n()) 
+              n = n()) %>% 
+    ungroup()
 }
 
-gini_coef_by_ctv <- function(data) {
-  data %>% 
-    group_by(year, ctv) %>% 
-    summarise(gini = ineq::Gini(total),
-              n = n()) 
+ctv_lorenz_by_year <- function(ctv_rank_yearly) {
+  ctv_rank_yearly %>% 
+    group_by(name, year) %>% 
+    summarise(lorenz_data = data.frame(p = ineq::Lc(total)$p, 
+                                       L = ineq::Lc(total)$L)) %>% 
+    ungroup()
 }
-
-
-
 
 
 
@@ -126,22 +127,18 @@ ngram_data <- function(data, ngram, desc = c("Title", "Description", "Both")) {
     unnest_tokens(word, desc, token = "ngrams", n = ngram) %>% 
     separate(word, words, sep = " ") %>% 
     mutate(across(num_range("word", 1:ngram), singularize2)) %>% 
-    distinct(!!!map(c("Package", words), as.name)) %>% 
-    # allow stop words in between
+    distinct(!!!map(c("package", words), as.name)) %>% 
+    # allow stop words in between - not relant for bigrams
     filter(if_all(num_range("word", c(1, ngram)), 
                   ~!str_detect(., paste0(stop_words_rex, collapse = "|")))) %>% 
     mutate(word = do.call("paste", map(words, ~eval(parse(text = .x))))) %>% 
     filter(!str_detect(word, DUMMYWORD)) %>% 
     group_by(word) %>% 
-    summarise(n = n(), pkgs = list(Package)) %>% 
+    summarise(n = n(), pkgs = list(package)) %>% 
     arrange(desc(n)) %>% 
     mutate(ngram = ngram)
 }
 
-pkg_updates_duration <- function(pkgs, duration) {
-  pkg_updates(pkgs) %>% 
-    filter(update >= as.Date("2022-03-01") - years(duration))
-}
 
 ngram_with_download_data <- function(ngram_df, download_df) {
   total_downloads <- download_df %>% 
@@ -162,30 +159,14 @@ ngram_with_download_data <- function(ngram_df, download_df) {
 }
 
 
-ctv_pkgs_df <- function(topics = NULL) {
-  if(is.null(topics)) {
-    imap_dfr(cranscrub::ctv_names(show_topic = TRUE), 
-             ~data.frame(name = .y, topic = .x, package = cranscrub::ctv_pkgs(.y)))
-  } else {
-    imap_dfr(topics, 
-             ~data.frame(name = .y, topic = .x, package = cranscrub::ctv_pkgs(.y)))
-    
-  }
-}
 
-ctv_summary <- function(data) {
-  
-  db <- cranscrub::pkg_db(data$package) %>% 
-    left_join(data, by = c("Package" = "package")) %>% 
-    cranscrub::pkg_db_clean_depends() %>% 
-    cranscrub::pkg_db_clean_imports() %>% 
-    cranscrub::pkg_db_clean_suggests() %>% 
-    cranscrub::pkg_db_clean_author()
-  
-  db %>% 
-    mutate(nauthor = map_int(db$AuthorClean, ~length(.x[[1]]))) %>% 
+
+
+ctv_summary <- function(ctv_pkg_data) {
+  ctv_pkg_data %>% 
+    mutate(nauthor = map_int(AuthorClean, ~length(.x[[1]]))) %>% 
     rowwise() %>% 
-    mutate(intra_connect = any(c(DependsVec, ImportsVec, SuggestsVec) %in% data$package[data$name==name])) %>% 
+    mutate(intra_connect = any(c(DependsVec, ImportsVec, SuggestsVec) %in% ctv_pkg_data$package[ctv_pkg_data$name==name])) %>% 
     group_by(name, topic) %>% 
     summarise(n = n(), 
               ncontributors = length(unique(unlist(AuthorClean))), 
@@ -196,19 +177,16 @@ ctv_summary <- function(data) {
   
 }
 
-pkg_network <- function(db) {
-  out <- db %>% 
-    cranscrub::pkg_db_clean_depends() %>% 
-    cranscrub::pkg_db_clean_imports() %>% 
-    cranscrub::pkg_db_clean_suggests() %>% 
-    select(Package, contains("Vec"))
+pkg_network <- function(data) {
+  out <- data %>% 
+    select(package, contains("Vec"))
   
   get_pkg_edges <- function(type) {
     out %>% 
       filter(!map_lgl({{type}}, ~if(length(.x)==1) identical(.x, list(character(0))) else FALSE)) %>% 
-      select(from = {{type}}, to = Package) %>% 
+      select(from = {{type}}, to = package) %>% 
       unnest_longer(from) %>% 
-      filter(from %in% db$Package) %>% 
+      filter(from %in% data$package) %>% 
       mutate(Type = as_string(ensym(type)) %>% 
                str_replace("Vec", ""))
   }

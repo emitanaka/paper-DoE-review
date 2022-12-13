@@ -33,15 +33,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Supplementary material for ``Current status and prospects of R-packages for the design of experiments''},
-  pdfauthor={Emi Tanaka; Dewi Amaliah},
-  pdfkeywords={experimental design, CRAN task view, user interface},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
@@ -92,6 +83,15 @@
 \fi
 \usepackage[]{biblatex}
 \addbibresource{pkgs.bib}
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Supplementary material for ``Current status and prospects of R-packages for the design of experiments''},
+  pdfauthor={Emi Tanaka; Dewi Amaliah},
+  pdfkeywords={experimental design, CRAN task view, user interface},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Supplementary material for ``Current status and prospects of R-packages for the design of experiments''}
 \author{Emi Tanaka \and Dewi Amaliah}
@@ -125,53 +125,56 @@ Name & Topic & \# of packages & Total \# of contributors & Average \# of contrib
 \endfoot
 \bottomrule
 \endlastfoot
-\cellcolor{gray!6}{ExperimentalDesign} & \cellcolor{gray!6}{Design of Experiments (DoE) \& Analysis of Experimental Data} & \cellcolor{gray!6}{112} & \cellcolor{gray!6}{211} & \cellcolor{gray!6}{2.27} & \cellcolor{gray!6}{29}\\
-SportsAnalytics & Sports Analytics & 78 & 149 & 2.32 & 17\\
-\cellcolor{gray!6}{MedicalImaging} & \cellcolor{gray!6}{Medical Image Analysis} & \cellcolor{gray!6}{32} & \cellcolor{gray!6}{53} & \cellcolor{gray!6}{2.44} & \cellcolor{gray!6}{44}\\
-MetaAnalysis & Meta-Analysis & 157 & 351 & 2.63 & 43\\
-\cellcolor{gray!6}{ChemPhys} & \cellcolor{gray!6}{Chemometrics and Computational Physics} & \cellcolor{gray!6}{75} & \cellcolor{gray!6}{162} & \cellcolor{gray!6}{2.65} & \cellcolor{gray!6}{28}\\
+\cellcolor{gray!6}{ExperimentalDesign} & \cellcolor{gray!6}{Design of Experiments (DoE) \& Analysis of Experimental Data} & \cellcolor{gray!6}{105} & \cellcolor{gray!6}{192} & \cellcolor{gray!6}{2.23} & \cellcolor{gray!6}{30}\\
+SportsAnalytics & Sports Analytics & 87 & 160 & 2.25 & 16\\
+\cellcolor{gray!6}{MedicalImaging} & \cellcolor{gray!6}{Medical Image Analysis} & \cellcolor{gray!6}{31} & \cellcolor{gray!6}{48} & \cellcolor{gray!6}{2.32} & \cellcolor{gray!6}{45}\\
+ChemPhys & Chemometrics and Computational Physics & 73 & 144 & 2.45 & 25\\
+\cellcolor{gray!6}{ClinicalTrials} & \cellcolor{gray!6}{Clinical Trial Design, Monitoring, and Analysis} & \cellcolor{gray!6}{55} & \cellcolor{gray!6}{121} & \cellcolor{gray!6}{2.58} & \cellcolor{gray!6}{33}\\
 \addlinespace
-ClinicalTrials & Clinical Trial Design, Monitoring, and Analysis & 59 & 141 & 2.76 & 31\\
-\cellcolor{gray!6}{Distributions} & \cellcolor{gray!6}{Probability Distributions} & \cellcolor{gray!6}{257} & \cellcolor{gray!6}{597} & \cellcolor{gray!6}{2.88} & \cellcolor{gray!6}{45}\\
-Survival & Survival Analysis & 239 & 558 & 2.92 & 73\\
-\cellcolor{gray!6}{ExtremeValue} & \cellcolor{gray!6}{Extreme Value Analysis} & \cellcolor{gray!6}{37} & \cellcolor{gray!6}{89} & \cellcolor{gray!6}{2.95} & \cellcolor{gray!6}{41}\\
-Optimization & Optimization and Mathematical Programming & 136 & 328 & 3.04 & 29\\
+MetaAnalysis & Meta-Analysis & 153 & 338 & 2.59 & 44\\
+\cellcolor{gray!6}{Distributions} & \cellcolor{gray!6}{Probability Distributions} & \cellcolor{gray!6}{250} & \cellcolor{gray!6}{580} & \cellcolor{gray!6}{2.88} & \cellcolor{gray!6}{46}\\
+Survival & Survival Analysis & 234 & 556 & 2.95 & 71\\
+\cellcolor{gray!6}{ExtremeValue} & \cellcolor{gray!6}{Extreme Value Analysis} & \cellcolor{gray!6}{37} & \cellcolor{gray!6}{89} & \cellcolor{gray!6}{2.97} & \cellcolor{gray!6}{41}\\
+Hydrology & Hydrological Data and Modeling & 96 & 236 & 3.03 & 20\\
 \addlinespace
-\cellcolor{gray!6}{TimeSeries} & \cellcolor{gray!6}{Time Series Analysis} & \cellcolor{gray!6}{339} & \cellcolor{gray!6}{793} & \cellcolor{gray!6}{3.04} & \cellcolor{gray!6}{58}\\
-OfficialStatistics & Official Statistics \& Survey Statistics & 131 & 325 & 3.06 & 40\\
-\cellcolor{gray!6}{Hydrology} & \cellcolor{gray!6}{Hydrological Data and Modeling} & \cellcolor{gray!6}{100} & \cellcolor{gray!6}{252} & \cellcolor{gray!6}{3.09} & \cellcolor{gray!6}{24}\\
-NumericalMathematics & Numerical Mathematics & 115 & 271 & 3.14 & 63\\
-\cellcolor{gray!6}{Databases} & \cellcolor{gray!6}{Databases with R} & \cellcolor{gray!6}{43} & \cellcolor{gray!6}{95} & \cellcolor{gray!6}{3.23} & \cellcolor{gray!6}{77}\\
+\cellcolor{gray!6}{Optimization} & \cellcolor{gray!6}{Optimization and Mathematical Programming} & \cellcolor{gray!6}{136} & \cellcolor{gray!6}{329} & \cellcolor{gray!6}{3.04} & \cellcolor{gray!6}{29}\\
+Pharmacokinetics & Analysis of Pharmacokinetic Data & 27 & 72 & 3.04 & 19\\
+\cellcolor{gray!6}{TimeSeries} & \cellcolor{gray!6}{Time Series Analysis} & \cellcolor{gray!6}{333} & \cellcolor{gray!6}{791} & \cellcolor{gray!6}{3.08} & \cellcolor{gray!6}{57}\\
+OfficialStatistics & Official Statistics \& Survey Statistics & 129 & 328 & 3.11 & 38\\
+\cellcolor{gray!6}{NumericalMathematics} & \cellcolor{gray!6}{Numerical Mathematics} & \cellcolor{gray!6}{115} & \cellcolor{gray!6}{273} & \cellcolor{gray!6}{3.14} & \cellcolor{gray!6}{63}\\
 \addlinespace
-WebTechnologies & Web Technologies and Services & 201 & 428 & 3.25 & 90\\
-\cellcolor{gray!6}{NaturalLanguageProcessing} & \cellcolor{gray!6}{Natural Language Processing} & \cellcolor{gray!6}{56} & \cellcolor{gray!6}{130} & \cellcolor{gray!6}{3.30} & \cellcolor{gray!6}{62}\\
-Bayesian & Bayesian Inference & 213 & 621 & 3.35 & 49\\
-\cellcolor{gray!6}{FunctionalData} & \cellcolor{gray!6}{Functional Data Analysis} & \cellcolor{gray!6}{40} & \cellcolor{gray!6}{109} & \cellcolor{gray!6}{3.38} & \cellcolor{gray!6}{60}\\
-Robust & Robust Statistical Methods & 59 & 136 & 3.41 & 75\\
+DifferentialEquations & Differential Equations & 26 & 71 & 3.27 & 54\\
+\cellcolor{gray!6}{Bayesian} & \cellcolor{gray!6}{Bayesian Inference} & \cellcolor{gray!6}{207} & \cellcolor{gray!6}{589} & \cellcolor{gray!6}{3.29} & \cellcolor{gray!6}{49}\\
+WebTechnologies & Web Technologies and Services & 197 & 429 & 3.30 & 87\\
+\cellcolor{gray!6}{Tracking} & \cellcolor{gray!6}{Processing and Analysis of Tracking Data} & \cellcolor{gray!6}{47} & \cellcolor{gray!6}{146} & \cellcolor{gray!6}{3.34} & \cellcolor{gray!6}{45}\\
+Databases & Databases with R & 41 & 94 & 3.34 & 78\\
 \addlinespace
-\cellcolor{gray!6}{Psychometrics} & \cellcolor{gray!6}{Psychometric Models and Methods} & \cellcolor{gray!6}{230} & \cellcolor{gray!6}{567} & \cellcolor{gray!6}{3.41} & \cellcolor{gray!6}{69}\\
-Tracking & Processing and Analysis of Tracking Data & 46 & 149 & 3.46 & 48\\
-\cellcolor{gray!6}{Cluster} & \cellcolor{gray!6}{Cluster Analysis \& Finite Mixture Models} & \cellcolor{gray!6}{108} & \cellcolor{gray!6}{305} & \cellcolor{gray!6}{3.47} & \cellcolor{gray!6}{39}\\
-Econometrics & Econometrics & 152 & 363 & 3.50 & 81\\
-\cellcolor{gray!6}{Finance} & \cellcolor{gray!6}{Empirical Finance} & \cellcolor{gray!6}{158} & \cellcolor{gray!6}{426} & \cellcolor{gray!6}{3.61} & \cellcolor{gray!6}{57}\\
+\cellcolor{gray!6}{NaturalLanguageProcessing} & \cellcolor{gray!6}{Natural Language Processing} & \cellcolor{gray!6}{55} & \cellcolor{gray!6}{129} & \cellcolor{gray!6}{3.35} & \cellcolor{gray!6}{62}\\
+CausalInference & Causal Inference & 156 & 439 & 3.35 & 24\\
+\cellcolor{gray!6}{Psychometrics} & \cellcolor{gray!6}{Psychometric Models and Methods} & \cellcolor{gray!6}{225} & \cellcolor{gray!6}{561} & \cellcolor{gray!6}{3.46} & \cellcolor{gray!6}{70}\\
+Robust & Robust Statistical Methods & 56 & 129 & 3.46 & 75\\
+\cellcolor{gray!6}{Cluster} & \cellcolor{gray!6}{Cluster Analysis \& Finite Mixture Models} & \cellcolor{gray!6}{106} & \cellcolor{gray!6}{303} & \cellcolor{gray!6}{3.50} & \cellcolor{gray!6}{39}\\
 \addlinespace
-MissingData & Missing Data & 210 & 740 & 3.99 & 42\\
-\cellcolor{gray!6}{SpatioTemporal} & \cellcolor{gray!6}{Handling and Analyzing Spatio-Temporal Data} & \cellcolor{gray!6}{81} & \cellcolor{gray!6}{269} & \cellcolor{gray!6}{4.04} & \cellcolor{gray!6}{70}\\
-Spatial & Analysis of Spatial Data & 197 & 618 & 4.26 & 83\\
-\cellcolor{gray!6}{GraphicalModels} & \cellcolor{gray!6}{Graphical Models} & \cellcolor{gray!6}{32} & \cellcolor{gray!6}{109} & \cellcolor{gray!6}{4.38} & \cellcolor{gray!6}{78}\\
-Pharmacokinetics & Analysis of Pharmacokinetic Data & 29 & 109 & 4.55 & 21\\
+Econometrics & Econometrics & 150 & 387 & 3.67 & 84\\
+\cellcolor{gray!6}{Finance} & \cellcolor{gray!6}{Empirical Finance} & \cellcolor{gray!6}{154} & \cellcolor{gray!6}{438} & \cellcolor{gray!6}{3.85} & \cellcolor{gray!6}{57}\\
+FunctionalData & Functional Data Analysis & 39 & 130 & 3.97 & 59\\
+\cellcolor{gray!6}{MissingData} & \cellcolor{gray!6}{Missing Data} & \cellcolor{gray!6}{207} & \cellcolor{gray!6}{735} & \cellcolor{gray!6}{4.00} & \cellcolor{gray!6}{42}\\
+Epidemiology & Epidemiology & 76 & 264 & 4.24 & 55\\
 \addlinespace
-\cellcolor{gray!6}{HighPerformanceComputing} & \cellcolor{gray!6}{High-Performance and Parallel Computing with R} & \cellcolor{gray!6}{83} & \cellcolor{gray!6}{315} & \cellcolor{gray!6}{4.75} & \cellcolor{gray!6}{63}\\
-DifferentialEquations & Differential Equations & 27 & 114 & 4.96 & 56\\
-\cellcolor{gray!6}{Environmetrics} & \cellcolor{gray!6}{Analysis of Ecological and Environmental Data} & \cellcolor{gray!6}{93} & \cellcolor{gray!6}{383} & \cellcolor{gray!6}{5.02} & \cellcolor{gray!6}{74}\\
-MachineLearning & Machine Learning \& Statistical Learning & 102 & 488 & 5.63 & 50\\
-\cellcolor{gray!6}{TeachingStatistics} & \cellcolor{gray!6}{Teaching Statistics} & \cellcolor{gray!6}{46} & \cellcolor{gray!6}{236} & \cellcolor{gray!6}{6.35} & \cellcolor{gray!6}{57}\\
+\cellcolor{gray!6}{SpatioTemporal} & \cellcolor{gray!6}{Handling and Analyzing Spatio-Temporal Data} & \cellcolor{gray!6}{74} & \cellcolor{gray!6}{258} & \cellcolor{gray!6}{4.27} & \cellcolor{gray!6}{72}\\
+Spatial & Analysis of Spatial Data & 192 & 608 & 4.32 & 82\\
+\cellcolor{gray!6}{GraphicalModels} & \cellcolor{gray!6}{Graphical Models} & \cellcolor{gray!6}{31} & \cellcolor{gray!6}{108} & \cellcolor{gray!6}{4.48} & \cellcolor{gray!6}{81}\\
+HighPerformanceComputing & High-Performance and Parallel Computing with R & 86 & 315 & 4.64 & 62\\
+\cellcolor{gray!6}{Environmetrics} & \cellcolor{gray!6}{Analysis of Ecological and Environmental Data} & \cellcolor{gray!6}{92} & \cellcolor{gray!6}{386} & \cellcolor{gray!6}{5.11} & \cellcolor{gray!6}{74}\\
 \addlinespace
-ReproducibleResearch & Reproducible Research & 102 & 524 & 6.49 & 76\\
-\cellcolor{gray!6}{ModelDeployment} & \cellcolor{gray!6}{Model Deployment with R} & \cellcolor{gray!6}{31} & \cellcolor{gray!6}{146} & \cellcolor{gray!6}{6.55} & \cellcolor{gray!6}{74}\\*
+MachineLearning & Machine Learning \& Statistical Learning & 101 & 494 & 5.73 & 50\\
+\cellcolor{gray!6}{TeachingStatistics} & \cellcolor{gray!6}{Teaching Statistics} & \cellcolor{gray!6}{45} & \cellcolor{gray!6}{237} & \cellcolor{gray!6}{6.51} & \cellcolor{gray!6}{58}\\
+ModelDeployment & Model Deployment with R & 31 & 146 & 6.58 & 74\\
+\cellcolor{gray!6}{ReproducibleResearch} & \cellcolor{gray!6}{Reproducible Research} & \cellcolor{gray!6}{101} & \cellcolor{gray!6}{540} & \cellcolor{gray!6}{6.72} & \cellcolor{gray!6}{76}\\*
 \end{longtable}
 
-
+!6\}\{ReproducibleResearch\} \& \cellcolor{gray!6}{Reproducible Research} \& \cellcolor{gray!6}{101} \& \cellcolor{gray!6}{540} \& \cellcolor{gray!6}{6.72} \& \cellcolor{gray!6}{76}\textbackslash*
+\textbackslash end\{longtable\}
 
 \hypertarget{session-information}{%
 \section*{Session information}\label{session-information}}
