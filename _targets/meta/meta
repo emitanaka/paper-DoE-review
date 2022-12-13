@@ -1,7 +1,7 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 .Random.seed|object|3281d7428bbfb32c|||||||||||||||
 access_date_pkg_downloads|stem|3dde3ba6d33c8d81|3a2240db8c23e8c2|0b5d8d5ca1fc6aec|150070317||t19339.2501157407s|e655bbbdcbba1d63|81|rds|local|vector|||2.683||
-arxiv|stem|7b1a8f09246e1d9d|ae82b905c9d5ca73|4745aa592080ea1d|59367159|paper/arxiv/arxiv.pdf*paper/arxiv/arxiv.Rmd*paper/arxiv/arxiv_files|t19339.9213897819s|397c5121207054e7|288956|file|local|vector|||3.667||
+arxiv|stem|7b1a8f09246e1d9d|ae82b905c9d5ca73|4745aa592080ea1d|59367159|paper/arxiv/arxiv.pdf*paper/arxiv/arxiv.Rmd*paper/arxiv/arxiv_files|t19339.9213897819s|d8d24560c883abea|283365|file|local|vector|||3.667||
 bigram_all|stem|a9451b65b49522d9|472650a33e7201eb|4c271d0ecaee4e02|-283026083||t19115.322292875s|9aa220a4c0a35169|15388|rds|local|vector|||5.777||
 bigram_desc|stem|22f10062861ab84b|e9e4e0f0c5f51275|4c271d0ecaee4e02|-1068816238||t19115.3225361769s|aefa0462bdaaa38f|14770|rds|local|vector|||5.375||
 bigram_dl_data_title|stem||85e00a0fc9fc2e42|846fb38c958f3fcf|1301892640||t19114.9693987613s||0|rds|local|vector|||0.015||object doe_db not found
@@ -67,7 +67,7 @@ gini_coef_by_ctv|function|defb10198b61a0c6|||||||||||||||
 gini_yearly|stem|ab7bb523626b0be8|371e4e9e444aab01|a33f653cd4e7f5b3|923583525||t19135.2356944444s|a4a39f08f0842972|274|rds|local|vector|||0.017||
 gini_yearly_ctv|stem|d89fd435bb5b04ec|69e5c44a674278ff|eab3eb66b6143878|597794877||t19158.0198908695s|628f31e81a50fa78|4822|rds|local|vector|||0.048||
 gini_yearly_doe|stem|b6afb436fe783239|09dd453c7af96fa6|0854bb0cb3904e15|-1709303825||t19158.0198927912s|8d0aba61fa8a9196|444|rds|local|vector|||0.006||
-index|stem|588a6cdfb741c64c|86a0c04bc38a7d67|4745aa592080ea1d|-1857023687|index.html*index.html|t19339.9213452557s|2f25d3b55b55b077|7697694|file|local|vector|||8.043||
+index|stem|08aa98639f9a29cd|824eb0265f0ab976|c3b5fc02cdc369c1|-1857023687||t19339.9228017875s|303de8fdb625d7f0|113|rds|local|vector|||8.926||
 lorenz_data|function|1f38013abc335977|||||||||||||||
 lorenz_value|function|5568f24ac51083a8|||||||||||||||
 middle2yrs|stem|5c41f7b8de96475d|324f15901f65f30f|175cc7acf53f1897|-1254840736||t19135.1472521908s|4956b68a23f9e1fc|122|rds|local|vector|||0||

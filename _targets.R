@@ -46,7 +46,7 @@ list(
   tar_target(save_access_date_pkg_downloads, save_output(access_date_pkg_downloads)),
 
   tar_render(report, "paper.Rmd"),
-  tar_render(index, rmarkdown::render("paper.Rmd", output_file = 'index.html')),
+  tar_target(index, rmarkdown::render("paper.Rmd", output_file = 'index.html')),
   tar_render(supp, "supp.Rmd"),
   tar_render(arxiv, "paper/arxiv/arxiv.Rmd"),
   NULL
