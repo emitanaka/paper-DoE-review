@@ -1,7 +1,7 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
 .Random.seed|object|3281d7428bbfb32c|||||||||||||||
-access_date_pkg_downloads|stem|3dde3ba6d33c8d81|3a2240db8c23e8c2|0b5d8d5ca1fc6aec|150070317||t19339.2501221386s|e655bbbdcbba1d63|81|rds|local|vector|||2.683||
-arxiv|stem|92e0d4c35acdcb10|ae82b905c9d5ca73|4745aa592080ea1d|59367159|paper/arxiv/arxiv.pdf*paper/arxiv/arxiv.Rmd*paper/arxiv/arxiv_files|t19158.0197605566s||285062|file|local|vector|||0.117||argument files is missing, with no default
+access_date_pkg_downloads|stem|3dde3ba6d33c8d81|3a2240db8c23e8c2|0b5d8d5ca1fc6aec|150070317||t19339.2501157407s|e655bbbdcbba1d63|81|rds|local|vector|||2.683||
+arxiv|stem|7b1a8f09246e1d9d|ae82b905c9d5ca73|4745aa592080ea1d|59367159|paper/arxiv/arxiv.pdf*paper/arxiv/arxiv.Rmd*paper/arxiv/arxiv_files|t19339.9213897819s|397c5121207054e7|288956|file|local|vector|||3.667||
 bigram_all|stem|a9451b65b49522d9|472650a33e7201eb|4c271d0ecaee4e02|-283026083||t19115.322292875s|9aa220a4c0a35169|15388|rds|local|vector|||5.777||
 bigram_desc|stem|22f10062861ab84b|e9e4e0f0c5f51275|4c271d0ecaee4e02|-1068816238||t19115.3225361769s|aefa0462bdaaa38f|14770|rds|local|vector|||5.375||
 bigram_dl_data_title|stem||85e00a0fc9fc2e42|846fb38c958f3fcf|1301892640||t19114.9693987613s||0|rds|local|vector|||0.015||object doe_db not found
@@ -34,28 +34,28 @@ ctv|function|666ec40ffd4b1eee|||||||||||||||
 ctv_combine_pkg_data|function|0454abbd5c551599|||||||||||||||
 ctv_downloads_rank_by_year|function|2d7e3e66c18f0ce6|||||||||||||||
 ctv_gini_by_year|function|f4630fba2cf474e8|||||||||||||||
-ctv_gini_yearly|stem|fd794c66fdd9e05d|e89d18a15ae00a47|381aa3d24d25bf82|-989996600||t19339.2971159235s|dde03f248ddb098c|4102|rds|local|vector|||0.048||
+ctv_gini_yearly|stem|fd794c66fdd9e05d|e89d18a15ae00a47|381aa3d24d25bf82|-989996600||t19338.3202752242s|dde03f248ddb098c|4102|rds|local|vector|||0.048||
 ctv_list|function|f931906433c74d8b|||||||||||||||
 ctv_lorenz_by_year|function|00766336f84bb9ce|||||||||||||||
-ctv_lorenz_yearly|stem|d68a6014d75b7d41|a1396b854eea5c85|63695b542df02623|-9810234||t19339.2971152523s|5540796b2a16a508|274377|rds|local|vector|||0.117||
-ctv_pkg_data|stem|ab03602cd4a2f312|3eb8852d25071160|e4be1ce32f48d1fd|1933250129||t19338.3386805556s|cf1eaf13e29065aa|52341856|rds|local|vector|||0.868|no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf|
+ctv_lorenz_yearly|stem|d68a6014d75b7d41|a1396b854eea5c85|63695b542df02623|-9810234||t19338.3202746437s|5540796b2a16a508|274377|rds|local|vector|||0.117||
+ctv_pkg_data|stem|ab03602cd4a2f312|3eb8852d25071160|e4be1ce32f48d1fd|1933250129||t19338.338684943s|cf1eaf13e29065aa|52341856|rds|local|vector|||0.868|no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf. no nonmissing arguments to min returning Inf|
 ctv_pkg_db|function|b7625d9e33a1230b|||||||||||||||
 ctv_pkgs|function|a0c354b17238ee6f|||||||||||||||
 ctv_pkgs_data|stem|2b0cbcb4b12d77ce|ba448229c62e511d|0f06185e5e3834cf|-117085758||t19137.0755749682s|cc6fada2a8772c9d|25647|rds|local|vector|||15.454||
 ctv_pkgs_df|function|89f6af9f88d955e7|||||||||||||||
-ctv_rank_yearly|stem|fc2c1f487ba86d97|f6a0c2345f5a073a|2e4cbace6f986295|1024758773||t19339.2969862154s|12fcf0a0bb3e22f4|349213|rds|local|vector|||224.632||
+ctv_rank_yearly|stem|fc2c1f487ba86d97|f6a0c2345f5a073a|2e4cbace6f986295|1024758773||t19339.2969791667s|12fcf0a0bb3e22f4|349213|rds|local|vector|||224.632||
 ctv_summary|function|b99e72e3895c7c2a|||||||||||||||
-ctv_summary_table|stem|b5b2cadf243c1c94|63de3ec9fe0147fc|b73d131727c0cd18|1678013411||t19338.3615856481s|d082d6505e31db3b|2172|rds|local|vector|||0.477||
-ctv_table|stem|78fafd30a8b78b1b|2e6fc75c161545c4|c3b5fc02cdc369c1|-1198856112||t19179.204849537s|242a68a34c521bed|26717|rds|local|vector|||3.958||
-doe_bigram_all|stem|b8a8a673d98ac5e5|aa35e58645cbfdaa|899b393ab473b906|-1793156704||t19338.3332638889s|4985f2ce7fa4a8d2|14114|rds|local|vector|||5.438||
-doe_bigram_all_with_download_data|stem|0a259367b9a4c516|89b0a99f5ff7e2ac|6a85ee7991f185a5|1004530127||t19339.2971135611s|4bb398feb33f4214|51989|rds|local|vector|||10.936||
+ctv_summary_table|stem|b5b2cadf243c1c94|63de3ec9fe0147fc|b73d131727c0cd18|1678013411||t19338.3615927786s|d082d6505e31db3b|2172|rds|local|vector|||0.477||
+ctv_table|stem|78fafd30a8b78b1b|2e6fc75c161545c4|c3b5fc02cdc369c1|-1198856112||t19179.2048559196s|242a68a34c521bed|26717|rds|local|vector|||3.958||
+doe_bigram_all|stem|b8a8a673d98ac5e5|aa35e58645cbfdaa|899b393ab473b906|-1793156704||t19338.3387482809s|4985f2ce7fa4a8d2|14114|rds|local|vector|||5.438||
+doe_bigram_all_with_download_data|stem|0a259367b9a4c516|89b0a99f5ff7e2ac|6a85ee7991f185a5|1004530127||t19338.3391419496s|4bb398feb33f4214|51989|rds|local|vector|||10.936||
 doe_db|stem|b92820aa0ac956dc|096dcaf7069df166|47ec9511f4915b44|-1559729660||t19114.9692454998s|ff1e013ca5501840|43744|rds|local|vector|||3.838||
 doe_ginis|object|a60724f248e5dc29|||||||||||||||
 doe_lorenz2021|stem|e334e75531953c06|ad98d4006a1076df|518a64319a2db0a6|1285834295||t19158.0331706833s|f37ec1c8cd67f23d|1527|rds|local|vector|||0.008||
-doe_npkgs|stem|9b803ab50b3e1519|3caf2b397ed792c3|1bfa4c82e022352e|704455853||t19179.2049074074s|44989414465ff33d|49|rds|local|vector|||0||
+doe_npkgs|stem|9b803ab50b3e1519|3caf2b397ed792c3|1bfa4c82e022352e|704455853||t19179.2049189757s|44989414465ff33d|49|rds|local|vector|||0||
 doe_npkgs_2021|object|67e4ecadab7494f2|||||||||||||||
-doe_pkg_network|stem|2ad4111d9f292254|81fcdb042320cf4e|1a0e57f88c45b940|802379017||t19338.3615856481s|7caa605b206032a4|988|rds|local|vector|||0.115||
-doe_pkgs|stem|3063663d71bfc50f|6cacb3d925c385f7|8e7fe93d9145c664|2085961104||t19179.204849537s|a51f02ce9a36d18d|748|rds|local|vector|||0.022||
+doe_pkg_network|stem|2ad4111d9f292254|81fcdb042320cf4e|1a0e57f88c45b940|802379017||t19338.3615871526s|7caa605b206032a4|988|rds|local|vector|||0.115||
+doe_pkgs|stem|3063663d71bfc50f|6cacb3d925c385f7|8e7fe93d9145c664|2085961104||t19338.0586077513s|a51f02ce9a36d18d|748|rds|local|vector|||0.022||
 download_trend|function|5579a0fa043d166e|||||||||||||||
 first_release|stem|1c2ae378c764e91c|19003978e0458d0d|922d65791c15f5a2|-1059636675||t19114.9692465054s|a5c3eb7bcd545a4c|1323|rds|local|vector|||0.007||
 first_release_all|stem|b33e7b373d0d5965|fd5bd4f7a62f3ef6|7604b5c7baaad991|595601338||t19137.112726933s|4dec0e26ecb99f1c|30685|rds|local|vector|||0.146||
@@ -67,7 +67,7 @@ gini_coef_by_ctv|function|defb10198b61a0c6|||||||||||||||
 gini_yearly|stem|ab7bb523626b0be8|371e4e9e444aab01|a33f653cd4e7f5b3|923583525||t19135.2356944444s|a4a39f08f0842972|274|rds|local|vector|||0.017||
 gini_yearly_ctv|stem|d89fd435bb5b04ec|69e5c44a674278ff|eab3eb66b6143878|597794877||t19158.0198908695s|628f31e81a50fa78|4822|rds|local|vector|||0.048||
 gini_yearly_doe|stem|b6afb436fe783239|09dd453c7af96fa6|0854bb0cb3904e15|-1709303825||t19158.0198927912s|8d0aba61fa8a9196|444|rds|local|vector|||0.006||
-index|stem|a298dc9a118c7a0e|9355aa0dae8da958|4745aa592080ea1d|-1857023687|index.html*index.html|t19339.3329428574s|3d9051a297a3f2c3|7698048|file|local|vector|||8.063||
+index|stem|588a6cdfb741c64c|86a0c04bc38a7d67|4745aa592080ea1d|-1857023687|index.html*index.html|t19339.9213452557s|2f25d3b55b55b077|7697694|file|local|vector|||8.043||
 lorenz_data|function|1f38013abc335977|||||||||||||||
 lorenz_value|function|5568f24ac51083a8|||||||||||||||
 middle2yrs|stem|5c41f7b8de96475d|324f15901f65f30f|175cc7acf53f1897|-1254840736||t19135.1472521908s|4956b68a23f9e1fc|122|rds|local|vector|||0||
@@ -81,12 +81,12 @@ ntop|stem|4d834c735335b0f5|7c74220eb026d8d0|ef46db3751d8e999|1969295217||t19065.
 pkg_archive|object|d23285b741774afb|||||||||||||||
 pkg_cran_downloads|function|afb235f751569d4f|||||||||||||||
 pkg_db|function|6ecff5bfd7f88fe4|||||||||||||||
-pkg_db_clean|stem|573aa1542d54400d|cdcf06a6d6387f39|3c7580f9216cc61c|-692507736||t19338.0594097222s|f87d768688407cca|2339568|rds|local|vector|||4.165||
-pkg_downloads|stem|afae28e339c21118|d16e45469cb8af96|2b0fa9b66562e993|-1875223145||t19338.2703009259s|bcbc433167455573|14003085|rds|local|vector|||18214.142||
+pkg_db_clean|stem|573aa1542d54400d|cdcf06a6d6387f39|3c7580f9216cc61c|-692507736||t19338.0594097883s|f87d768688407cca|2339568|rds|local|vector|||4.165||
+pkg_downloads|stem|afae28e339c21118|d16e45469cb8af96|2b0fa9b66562e993|-1875223145||t19338.2703067041s|bcbc433167455573|14003085|rds|local|vector|||18214.142||
 pkg_first_release|function|103fe5f269969a29|||||||||||||||
 pkg_network|function|6ca5e52351117bad|||||||||||||||
 pkg_update_dates|function|27664c8d98dde2d2|||||||||||||||
-pkg_updates|stem|ebf5bfc63d624b78|a99fe2d2c170ea6a|d816b6b015e50676|1210571976||t19338.2850925926s|2451fe3ac6f4281b|301140|rds|local|vector|||1100.605||
+pkg_updates|stem|ebf5bfc63d624b78|a99fe2d2c170ea6a|d816b6b015e50676|1210571976||t19338.2851019425s|2451fe3ac6f4281b|301140|rds|local|vector|||1100.605||
 pkg_updates_duration|function|574b754eb265a86e|||||||||||||||
 pkg_url|object|f72f03ffd9de1496|||||||||||||||
 pkgs_repeat_toprank|object|08cb2aac5f0e6476|||||||||||||||
@@ -128,19 +128,19 @@ plot_wordcloud2|stem|93cbb417fc2464e3|834ec80cf6d08f5b|2aca31a96cd4e753|46489205
 plot_wordcloud2years|stem|b363a6b9395c3cea|26682d396887440b|8bac620c3a974212|-1029953017||t19135.1554077676s|a1bc24010d569bf1|162409|rds|local|vector|||0.049||
 plot_wordcloud3|stem|61c4711cf38d1ea3|91dfdc2f4a2a4a41|242f52de3a2bb827|2068082615||t19149.2288366033s|beb8597c0a4336ca|150110|rds|local|vector|||0.042||
 ref|function|2baaccdce63770fe|||||||||||||||
-report|stem|9456e2bd778c81a3|2933626042eda379|fdde7623bb486817|-237041703|paper.html*paper.Rmd*paper_files|t19158.3829193048s|d4e44d2965c7258f|1886195|file|local|vector|||0.558||
+report|stem|4fd4c3d4f844ca8f|7a9372b01a437afc|4745aa592080ea1d|-237041703|paper.html*paper.Rmd|t19339.9214563918s|271a94d57c85ea00|3091894|file|local|vector|||5.728||
 rpkg|function|3baa0ff582691105|||||||||||||||
-save_access_date_pkg_downloads|stem|4ac1eb883db90b0f|9eeb6bf08470f442|6e9b007ae4534c2d|-781261911||t19339.2501226184s|a1c456b03adbfbf8|44|rds|local|vector|||0.017||
-save_ctv_gini_yearly|stem|4ac1eb883db90b0f|b3165490c2aa6eab|5edfdce7e06133c5|-1811841714||t19338.3190972222s|a1c456b03adbfbf8|44|rds|local|vector|||0.005||
-save_ctv_lorenz_yearly|stem|4ac1eb883db90b0f|951608f5f02c1a00|c31184958dc2968b|-2038249144||t19338.3190972222s|a1c456b03adbfbf8|44|rds|local|vector|||0.034||
-save_ctv_pkg_data|stem|4ac1eb883db90b0f|cdd9647ff10d7a32|470866994d9b96a9|-1632359289||t19338.3190972222s|a1c456b03adbfbf8|44|rds|local|vector|||16.008||
-save_ctv_rank_yearly|stem|4ac1eb883db90b0f|fc0938e3711c74a3|0f67d1464c8d69aa|-1586421133||t19339.2971177249s|a1c456b03adbfbf8|44|rds|local|vector|||0.147||
-save_ctv_summary_table|stem|4ac1eb883db90b0f|3c607a1e6d6a6e2d|aa88ef4c1e3528a6|1116132318||t19338.3615856481s|a1c456b03adbfbf8|44|rds|local|vector|||0.005||
-save_doe_bigram_all_with_download_data|stem|4ac1eb883db90b0f|c82d8325c3109239|8afe676bb24c726f|-56521492||t19338.3615856481s|a1c456b03adbfbf8|44|rds|local|vector|||0.018||
-save_doe_pkg_network|stem|4ac1eb883db90b0f|38dc98555306b72c|495bce44d8884794|440732224||t19338.3615856481s|a1c456b03adbfbf8|44|rds|local|vector|||0.012||
+save_access_date_pkg_downloads|stem|4ac1eb883db90b0f|9eeb6bf08470f442|6e9b007ae4534c2d|-781261911||t19339.2501157407s|a1c456b03adbfbf8|44|rds|local|vector|||0.017||
+save_ctv_gini_yearly|stem|4ac1eb883db90b0f|b3165490c2aa6eab|5edfdce7e06133c5|-1811841714||t19338.3202758473s|a1c456b03adbfbf8|44|rds|local|vector|||0.005||
+save_ctv_lorenz_yearly|stem|4ac1eb883db90b0f|951608f5f02c1a00|c31184958dc2968b|-2038249144||t19338.3202757196s|a1c456b03adbfbf8|44|rds|local|vector|||0.034||
+save_ctv_pkg_data|stem|4ac1eb883db90b0f|cdd9647ff10d7a32|470866994d9b96a9|-1632359289||t19338.339030035s|a1c456b03adbfbf8|44|rds|local|vector|||16.008||
+save_ctv_rank_yearly|stem|4ac1eb883db90b0f|fc0938e3711c74a3|0f67d1464c8d69aa|-1586421133||t19338.3191054722s|a1c456b03adbfbf8|44|rds|local|vector|||0.147||
+save_ctv_summary_table|stem|4ac1eb883db90b0f|3c607a1e6d6a6e2d|aa88ef4c1e3528a6|1116132318||t19338.3615932728s|a1c456b03adbfbf8|44|rds|local|vector|||0.005||
+save_doe_bigram_all_with_download_data|stem|4ac1eb883db90b0f|c82d8325c3109239|8afe676bb24c726f|-56521492||t19338.3615936714s|a1c456b03adbfbf8|44|rds|local|vector|||0.018||
+save_doe_pkg_network|stem|4ac1eb883db90b0f|38dc98555306b72c|495bce44d8884794|440732224||t19338.3615930074s|a1c456b03adbfbf8|44|rds|local|vector|||0.012||
 save_output|function|6269fb5a997d279d|||||||||||||||
 singularize2|function|fa7aa65cda385464|||||||||||||||
-supp|stem|48d028c92b84dcbf|031affd6fd60f3a3|4745aa592080ea1d|-1472017036|supp.pdf*supp.Rmd|t19339.3313150176s|8584c164adb9bb05|75619|file|local|vector|||7.715|LaTeX Warning Label tabctvsummtable multiply defined.. LaTeX Warning Label tabctvsummtable multiply defined.. LaTeX Warning Empty bibliography on input line 600.. LaTeX Warning There were multiplydefined labels.|
+supp|stem|48d028c92b84dcbf|031affd6fd60f3a3|4745aa592080ea1d|-1472017036|supp.pdf*supp.Rmd|t19339.3313078704s|8584c164adb9bb05|75619|file|local|vector|||7.715|LaTeX Warning Label tabctvsummtable multiply defined.. LaTeX Warning Label tabctvsummtable multiply defined.. LaTeX Warning Empty bibliography on input line 600.. LaTeX Warning There were multiplydefined labels.|
 survey_db|stem|de67502522517e07|92df38c74d20513f|be8d38a166cfa14f|801071218||t19122.145058155s|938f49aa4355fdd9|63549|rds|local|vector|||1.396||
 survey_pkg_network|stem|80b5f0224fa7ed6e|66ab6f6b1ec76629|8e29ffa67dccacef|2002582045||t19122.1450606953s|0e7cb3ed2d36bfb5|1451|rds|local|vector|||0.157||
 survey_pkgs|stem|c67694af5fbdc77e|d83fd05f2de06168|c3b5fc02cdc369c1|1518870736||t19122.1450414776s|d01284f728c4d3b7|911|rds|local|vector|||2.393||

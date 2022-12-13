@@ -135,7 +135,7 @@ task view, henceforth referred to as ``DoE packages''.
 
 In
 \href{http://CRAN.R-project.org/view=ExperimentalDesign}{\emph{ExperimentalDesign}}
-task view, there are 114 R packages for experimental design and analysis
+task view, there are 105 R packages for experimental design and analysis
 of data from experiments. The sheer quantity and variation of
 experimental designs in the R-packages are arguably unmatched with any
 other programming languages, e.g.~in Python, only a handful of packages
@@ -192,17 +192,17 @@ years) for the packages in the CRAN task views.
 All CRAN packages have a title, description, package connections
 (suggests, depends and imports of other packages) and other
 meta-information in the DESCRIPTION file. We use the text data from the
-title and description (as accessed in 2022-05-23) in Section
+title and description (as accessed in 2022-12-12) in Section
 \ref{topics}.
 
 \hypertarget{cran-task-views}{%
 \subsection{CRAN task views}\label{cran-task-views}}
 
 CRAN task views are volunteer maintained list of R-packages on CRAN
-relevant to the corresponding topic. There are a total 37 CRAN task
+relevant to the corresponding topic. There are a total 39 CRAN task
 views. Table S1 in the Supplementary Materials list the full available
 topics from the \texttt{ctv} package (Zeileis 2005). The list of
-packages in each CRAN task views (as of 2022-05-25) are used to contrast
+packages in each CRAN task views (as of 2022-12-12) are used to contrast
 the characteristics of DoE packages in Sections \ref{popular} and
 \ref{silo}.
 
@@ -235,11 +235,11 @@ experimental designs in practice}\label{popular}}
 There are at least 50 DoE packages since 2013 but most of the downloads
 are concentrated in just a handful of packages. For example, Figure
 \ref{fig:plot-lorenz} shows a Lorenz curve (Lorenz 1905) for the total
-package downloads in 2021 of 113 DoE packages (first released prior to
+package downloads in 2021 of 102 DoE packages (first released prior to
 2021); we can see from Figure \ref{fig:plot-lorenz} that bottom 90\% of
 DoE packages (in terms of total download count in 2021) only share about
-27\% of total downloads across all DoE packages -- in another words,
-73\% of the total downloads are due to 11 packages (10\% of the DoE
+32\% of total downloads across all DoE packages -- in another words,
+68\% of the total downloads are due to 10 packages (10\% of the DoE
 packages).
 
 \begin{figure}[htbp]
@@ -259,7 +259,7 @@ index for 2021. A Gini index of 0\% indicates equality in downloads
 across packages while a value of 100\% indicates maximal inequality (all
 downloads are due to one package). In Figure \ref{fig:download-share},
 we see that the distributions of the package downloads each year have a
-heavy right tail with the Gini index ranging from 42.6\% to 74.1\%
+heavy right tail with the Gini index ranging from 32.7\% to 69.1\%
 across the years 2013 to 2021, indicating that there is a high level of
 inequality of package downloads, particularly with more pronounced
 inequality in the last 6 years.
@@ -298,7 +298,7 @@ previous releases.
 
 While in absolute terms the Gini index is high for
 \href{http://CRAN.R-project.org/view=ExperimentalDesign}{\emph{ExperimentalDesign}}
-task view (42.6\% to 74.1\%), the inequality is not as severe as other
+task view (32.7\% to 69.1\%), the inequality is not as severe as other
 CRAN task views as shown in Figure \ref{fig:fig-gini-all-ctvs}. We can
 see in Figure \ref{fig:fig-gini-all-ctvs} that the Gini index is
 generally increasing for DoE packages (as is generally the case for
@@ -431,7 +431,7 @@ silos}\label{silo}}
 
 Figure \ref{fig:ctv-summ-plot} shows that the
 \href{http://CRAN.R-project.org/view=ExperimentalDesign}{\emph{ExperimentalDesign}}
-task view has the lowest average number of contributors among all 37
+task view has the lowest average number of contributors among all 39
 CRAN task views. In addition, we can also see in Figure
 \ref{fig:ctv-summ-plot} that the
 \href{http://CRAN.R-project.org/view=ExperimentalDesign}{\emph{ExperimentalDesign}}
@@ -698,14 +698,10 @@ and manipulation, and \texttt{cranlogs} (Csárdi 2019) and \texttt{ctv}
 (Zeileis 2005) for extracting data. All code to reproduce this paper is
 found at \url{https://github.com/emitanaka/paper-DoE-review}.
 
-\hypertarget{references}{%
-\section*{References}\label{references}}
-\addcontentsline{toc}{section}{References}
-
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
 \leavevmode\vadjust pre{\hypertarget{ref-BHH2}{}}%
-Barrios, Ernesto. 2016. \emph{Bhh2: Useful Functions for Box, Hunter and
+Barrios, Ernesto. 2016. \emph{BHH2: Useful Functions for Box, Hunter and
 Hunter II}. \url{https://CRAN.R-project.org/package=BHH2}.
 
 \leavevmode\vadjust pre{\hypertarget{ref-BsMD}{}}%
@@ -917,7 +913,7 @@ and Pipe Syntax}. \url{https://CRAN.R-project.org/package=kableExtra}.
 \end{CSLReferences}
 
 \bibliographystyle{unsrt}
-\bibliography{../../paper.bib}
+\bibliography{paper.bib}
 
 
 \end{document}

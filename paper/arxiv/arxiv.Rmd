@@ -18,7 +18,7 @@ header-includes: |
   \usepackage[utf8]{inputenc}
   \def\tightlist{}
   \newcommand{\ctv}[1]{\href{http://CRAN.R-project.org/view=#1}{\emph{#1}}}
-bibliography: ../../paper.bib
+bibliography: paper.bib
 biblio-style: unsrt
 #preamble: >
 output: 
@@ -27,6 +27,10 @@ output:
 ---
 
 ```{r, include = FALSE}
+file.copy(here::here("paper.bib"), here::here("paper/arxiv/paper.bib"))
+file.copy(here::here("supp.pdf"), here::here("paper/arxiv/anc/supp.pdf"))
+zip("anc", "anc/")
+
 paper <- here::here("paper.Rmd")
 meta <- rmarkdown::yaml_front_matter(paper)
 ```
