@@ -113,7 +113,7 @@ The utility of the software can also be described by its design to facilitate th
 
 
 
-The remainder of this paper is organized as follows. `r secref("data", "data")` briefly describes the data source used for the analysis; `r secref("eda", "Exploratory data analysis" )` presents some insights into the state of the current DoE packages by the exploratory data analysis of package download data, text descriptions and comparisons with other CRAN task views; `r secref("design", "Interface design")` discusses the interface designs of widely used DoE packages, and we conclude with a discussion in `r secref("discussion", "Discussion")` of future prospects in the software development of experimental designs. 
+The remainder of this paper is organized as follows. `r secref("data", "Data")` briefly describes the data source used for the analysis; `r secref("eda", "Exploratory data analysis" )` presents some insights into the state of the current DoE packages by the exploratory data analysis of package download data, text descriptions and comparisons with other CRAN task views; `r secref("design", "Interface design")` discusses the interface designs of widely used DoE packages, and we conclude with a discussion in `r secref("discussion", "Discussion")` of future prospects in the software development of experimental designs. 
 
 # Data {#data}
 
