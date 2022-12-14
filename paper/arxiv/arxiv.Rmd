@@ -18,6 +18,7 @@ header-includes: |
   \usepackage[utf8]{inputenc}
   \def\tightlist{}
   \newcommand{\ctv}[1]{\href{http://CRAN.R-project.org/view=#1}{\emph{#1}}}
+  \newcommand{\CRANpkg}[1]{\href{https://cran.r-project.org/web/packages/#1/index.html}{\texttt{#1}}}
 bibliography: paper.bib
 biblio-style: unsrt
 #preamble: >
@@ -41,6 +42,9 @@ abstract: >
   `r meta$abstract`
 ---
 
-```{r child=paper}
+```{r, echo= FALSE, results="asis"}
+params <- list()
+params$ref_setup_fn <- "paper/arxiv/ref-setup.R"
+cat(knitr::knit_child(paper, envir = environment(), quiet = TRUE))
 ```
 
